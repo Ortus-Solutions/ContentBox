@@ -1,138 +1,161 @@
-$cb-base-color-green-kelly-95: #ecf8e4;
-$cb-base-color-green-kelly-80: #97d669;
-$cb-base-color-green-kelly-65: #6DBE46;
-$cb-base-color-green-kelly-50: #548f27;
-$cb-base-color-green-kelly-40: #467821;
-$cb-base-color-green-kelly-30: #39611b;
-$cb-base-color-green-kelly-10: #1f350f;
+/******************** Core Color Palette ****************************/
 
-$cb-base-color-midnight-green-95: #eff5f7;
-$cb-base-color-midnight-green-80: #acc9d3;
-$cb-base-color-midnight-green-60: #6a9eb1;
-$cb-base-color-midnight-green-50: #4a89a0;
-$cb-base-color-midnight-green-40: #29758e;
-$cb-base-color-midnight-green-30: #085e7c;
-$cb-base-color-midnight-green-10: #043445;
+$cb-color-green-kelly-95: #ecf8e4;
+$cb-color-green-kelly-80: #97d669;
+$cb-color-green-kelly-65: #6DBE46; 
+$cb-color-green-kelly-50: #548f27;
+$cb-color-green-kelly-40: #467821;
+$cb-color-green-kelly-30: #39611b;
+$cb-color-green-kelly-10: #1f350f;
 
-$cb-base-color-blue-grey-95: #f2f4f6;
-$cb-base-color-blue-grey-90: #d8dde3;
-$cb-base-color-blue-grey-80: #bdc6cf;
-$cb-base-color-blue-grey-70: #a3afbc;
-$cb-base-color-blue-grey-60: #8999aa;
-$cb-base-color-blue-grey-50: #708397;
-$cb-base-color-blue-grey-40: #586e86;
-$cb-base-color-blue-grey-30: #405974;
-$cb-base-color-blue-grey-20: #284563;
-$cb-base-color-blue-grey-10: #1a314a;
+$cb-color-midnight-green-95: #eff5f7;
+$cb-color-midnight-green-80: #acc9d3;
+$cb-color-midnight-green-60: #6a9eb1;
+$cb-color-midnight-green-50: #4a89a0;
+$cb-color-midnight-green-40: #29758e;
+$cb-color-midnight-green-30: #085e7c;
+$cb-color-midnight-green-10: #043445;
 
-$cb-base-color-grey-30: #555454;
-$cb-base-color-grey-40: #717070;
-$cb-base-color-grey-80: #d1d1d1;
-$cb-base-color-grey-90: #e8e8e8;
-$cb-base-color-grey-95: #f2f2f2;
-$cb-base-color-white: #ffffff;
+$cb-color-blue-95: #eaf6fd;
+$cb-color-blue-80: #8dcdf3;
+$cb-color-blue-60: #229fe7;
+$cb-color-blue-50: #1687c9;
+$cb-color-blue-40: #1272a9;
+$cb-color-blue-30: #0f5b88;
+$cb-color-blue-10: #08334d;
 
-$cb-base-shadow-sm: 0px 3px 1px -2px rgb(  0 0 0 / 0.2 ), 0px 2px 2px 0px rgb(  0 0 0  / 0.14 ), 0px 1px 5px 0px rgb(  0 0 0 / 0.12 );
-$cb-base-shadow-md:  0px 2px 4px -1px rgb( 0 0 0 / 0.2), 0px 4px 5px 0px rgb(  0 0 0 / 0.14), 0px 1px 10px 0px rgb(  0 0 0 / 0.12 );
+$cb-color-blue-grey-95: #f2f4f6;
+$cb-color-blue-grey-90: #d8dde3;
+$cb-color-blue-grey-80: #bdc6cf;
+$cb-color-blue-grey-70: #a3afbc;
+$cb-color-blue-grey-60: #8999aa;
+$cb-color-blue-grey-50: #708397;
+$cb-color-blue-grey-40: #586e86;
+$cb-color-blue-grey-30: #405974;
+$cb-color-blue-grey-20: #284563;
+$cb-color-blue-grey-10: #1a314a;
 
-$cb-base-radius-no: 0rem;
-$cb-base-radius-md: 1rem;
-$cb-base-radius-lg: 1.5rem;
+$cb-color-grey-30: #555454;
+$cb-color-grey-40: #717070;
+$cb-color-grey-80: #d1d1d1;
+$cb-color-grey-90: #e8e8e8;
+$cb-color-grey-95: #f2f2f2;
 
-$cb-base-spacer-xs: .25rem;
-$cb-base-spacer-sm: .5rem;
-$cb-base-spacer-md: 1rem;
-$cb-base-spacer-lg: 1.5rem;
+$cb-color-white: #ffffff;
 
-$cb-base-size-font-base: 1rem; // Assumes the browser default, typically `16px`
-$cb-base-size-font-sm: $cb-base-size-font-base * .875;
-$cb-base-size-font-lg: $cb-base-size-font-base * 1.25;
+/******************** Core Size ****************************/
 
-$cb-base-sidebar-width: 240px;
-$cb-base-sidebarmini-width: 50px;
+$cb-spacer-xs: .25rem;
+$cb-spacer-sm: .5rem;
+$cb-spacer-md: 1rem;
+$cb-spacer-lg: 1.5rem;
 
-$cb-semantic-color-neutral-weak: $cb-base-color-grey-90;
+$cb-radius-no: 0rem;
+$cb-radius-xs: .25rem;
+$cb-radius-sm: .5rem;
+$cb-radius-md: 1rem;
+$cb-radius-lg: 1.5rem;
 
-$cb-semantic-color-tertiary: $cb-base-color-green-kelly-40;
-$cb-semantic-color-tertiary-light: $cb-base-color-green-kelly-80;
-$cb-semantic-color-tertiary-strong: $cb-base-color-green-kelly-10;
-$cb-semantic-color-tertiary-weak: $cb-base-color-green-kelly-95;
+$cb-size-font-base: 1rem; // Assumes the browser default, typically `16px`
+$cb-size-font-sm: $cb-size-font-base * .875;
+$cb-size-font-lg: $cb-size-font-base * 1.25;
 
-$cb-semantic-color-primary: $cb-base-color-midnight-green-30;
-$cb-semantic-color-primary-light: $cb-base-color-midnight-green-80;
-$cb-semantic-color-primary-strong: $cb-base-color-midnight-green-10;
-$cb-semantic-color-primary-weak: $cb-base-color-midnight-green-95;
+$cb-shadow-xs: 0px 2px 6px rgb(  0 0 0 / 0.14 );
+$cb-shadow-sm: 0px 3px 1px -2px rgb(  0 0 0 / 0.2 ), 0px 2px 2px 0px rgb(  0 0 0  / 0.14 ), 0px 1px 5px 0px rgb(  0 0 0 / 0.12 );
+$cb-shadow-sm: 0px 3px 1px -2px rgb(  0 0 0 / 0.2 ), 0px 2px 2px 0px rgb(  0 0 0  / 0.14 ), 0px 1px 5px 0px rgb(  0 0 0 / 0.12 );
+$cb-shadow-md:  0px 2px 4px -1px rgb( 0 0 0 / 0.2), 0px 4px 5px 0px rgb(  0 0 0 / 0.14), 0px 1px 10px 0px rgb(  0 0 0 / 0.12 );
 
-$cb-semantic-color-on-tertiary: $cb-base-color-green-kelly-95;
-$cb-semantic-color-on-primary: $cb-base-color-midnight-green-95;
+$cb-sidebar-width: 240px;
+$cb-sidebarmini-width: 50px;
 
-$cb-semantic-color-fill-tertiary: $cb-base-color-green-kelly-65;
-$cb-semantic-color-fill-primary: $cb-base-color-midnight-green-50;
+/******************** Semantic Color  ****************************/
 
-$cb-semantic-brand-color-primary: $cb-base-color-green-kelly-65;
+$cb-color-primary: $cb-color-midnight-green-30;
+$cb-color-primary-weaker: $cb-color-midnight-green-95;
+$cb-color-primary-weak: $cb-color-midnight-green-80;
+$cb-color-primary-strong: $cb-color-midnight-green-10;
+$cb-color-primary-accent: $cb-color-green-kelly-65;
 
-$cb-semantic-color-border: $cb-base-color-grey-80;
-$cb-semantic-color-font-base: $cb-base-color-grey-30;
-$cb-semantic-color-link: $cb-base-color-midnight-green-40;
-$cb-semantic-color-link-hover: $cb-base-color-midnight-green-10;
+$cb-color-tertiary: $cb-color-green-kelly-40;
+$cb-color-tertiary-weak: $cb-color-green-kelly-80;
+$cb-color-tertiary-strong: $cb-color-green-kelly-10;
+$cb-color-tertiary-weaker: $cb-color-green-kelly-95;
+$cb-color-tertiary-accent: $cb-color-green-kelly-65;
 
-$cb-semantic-background-color: $cb-base-color-blue-grey-95;
-$cb-semantic-accent-color: $cb-semantic-color-fill-tertiary;
-$cb-semantic-surface-color: $cb-base-color-white; 
+$cb-color-neutral-weak: $cb-color-grey-90;
 
-$cb-component-button-color-filled-bg-primary: $cb-semantic-color-primary;
-$cb-component-button-color-filled-text-primary: $cb-base-color-white;
-$cb-component-button-color-tinted-bg-primary: $cb-semantic-color-primary-weak;
-$cb-component-button-color-tinted-text-primary: $cb-semantic-color-primary;
-$cb-component-button-color-outlined-text-primary: $cb-semantic-color-primary;
-$cb-component-button-color-outlined-border-primary: $cb-semantic-color-primary;
+$cb-color-info-accent: $cb-color-blue-50;
+$cb-color-succes-accent: $cb-color-green-kelly-65;
 
-$cb-component-button-font-size: $cb-base-size-font-base;
-$cb-component-button-size-border-radius: $cb-base-radius-lg;
-$cb-component-button-space-padding-x: $cb-base-spacer-md;
-$cb-component-button-space-padding-y: $cb-base-spacer-sm;
-$cb-component-dropdown-item-color-hover: $cb-semantic-color-primary-weak;
+$cb-color-on-tertiary: $cb-color-green-kelly-95;
+$cb-color-on-primary: $cb-color-midnight-green-95;
 
-$cb-component-card-bg-color: $cb-semantic-surface-color;
-$cb-component-card-border-color: $cb-semantic-color-border;
+$cb-color-fill-tertiary: $cb-color-green-kelly-65;
+$cb-color-fill-primary: $cb-color-midnight-green-50;
 
-$cb-component-panel-border-radius: $cb-base-radius-no;
-$cb-component-panel-heading-radius: $cb-base-radius-no;
-$cb-component-panel-heading-bg-default: $cb-base-color-grey-90;
-$cb-component-panel-heading-bg-default-collapsed: $cb-base-color-grey-90;
-$cb-component-panel-heading-bg-primary: $cb-semantic-color-primary-weak;
-$cb-component-panel-heading-bg-primary-collapsed: $cb-semantic-surface-color;
-$cb-component-panel-heading-text-onDefault: $cb-semantic-color-font-base;
-$cb-component-panel-heading-text-onPrimary: $cb-semantic-color-font-base;
-$cb-component-panel-heading-text-transform: none;
+$cb-brand-color-primary: $cb-color-green-kelly-65;
 
-$cb-component-tabs-border-radius: $cb-base-radius-no;
-$cb-component-tabs-link-color-active: $cb-semantic-color-font-base;
-$cb-component-tabs-link-border-color-active: $cb-semantic-accent-color;
+$cb-color-border: $cb-color-grey-80;
+$cb-color-font-base: $cb-color-grey-30;
+$cb-color-link: $cb-color-midnight-green-40;
+$cb-color-link-hover: $cb-color-midnight-green-10;
+
+$cb-background-color: $cb-color-blue-grey-95;
+$cb-surface-color: $cb-color-white; 
+
+/******************** Component  ****************************/
+$cb-button-color-filled-bg-primary: $cb-color-primary;
+$cb-button-color-filled-text-primary: $cb-color-white;
+$cb-button-color-tinted-bg-primary: $cb-color-primary-weaker;
+$cb-button-color-tinted-text-primary: $cb-color-primary;
+$cb-button-color-outlined-text-primary: $cb-color-primary;
+$cb-button-color-outlined-border-primary: $cb-color-primary;
+
+$cb-button-font-size: $cb-size-font-base;
+$cb-button-size-border-radius: $cb-radius-xs;
+$cb-button-space-padding-x: $cb-spacer-md;
+$cb-button-space-padding-y: $cb-spacer-sm;
+$cb-dropdown-item-color-hover: $cb-color-primary-weaker;
+
+$cb-card-bg-color: $cb-surface-color;
+$cb-card-border-color: $cb-color-border;
+
+$cb-panel-border-radius: $cb-radius-xs;
+$cb-panel-heading-radius: $cb-radius-xs;
+$cb-panel-heading-bg-default: $cb-color-blue-grey-90;
+$cb-panel-heading-bg-default-collapsed: $cb-color-blue-grey-90;
+$cb-panel-heading-bg-primary: $cb-color-primary-weaker;
+$cb-panel-heading-bg-primary-collapsed: $cb-surface-color;
+$cb-panel-heading-text-onDefault: $cb-color-font-base;
+$cb-panel-heading-text-onPrimary: $cb-color-font-base;
+$cb-panel-heading-text-transform: none;
+
+$cb-tabs-border-radius: $cb-radius-no;
+$cb-tabs-link-color-active: $cb-color-font-base;
+$cb-tabs-link-border-color-active: $cb-color-tertiary-accent;
    
-$cb-component-sidebar-color-bg: $cb-semantic-surface-color;
-$cb-component-sidebar-subnav-color-bg: $cb-semantic-background-color;
-$cb-component-sidebar-link-color: $cb-semantic-color-font-base;
-$cb-component-sidebar-link-color-hover: $cb-semantic-color-on-primary;
-$cb-component-sidebar-link-color-bg-hover: $cb-semantic-color-primary-strong;
-$cb-component-sidebar-link-color-bg-active: $cb-semantic-color-primary-strong;
-$cb-component-sidebar-link-color-active: $cb-semantic-color-on-primary;
+$cb-sidebar-color-bg: $cb-surface-color;
+$cb-sidebar-subnav-color-bg: $cb-background-color;
+$cb-sidebar-link-color: $cb-color-font-base;
+$cb-sidebar-link-color-hover: $cb-color-on-primary;
+$cb-sidebar-link-color-bg-hover: $cb-color-primary-strong;
+$cb-sidebar-link-color-bg-active: $cb-color-primary-strong;
+$cb-sidebar-link-color-active: $cb-color-on-primary;
 
 
    //Colors
    //$defaultColor:#bdc3c7; //grey
    $defaultColor: #a4a8aa;
    $defaultColorHover:lighten($defaultColor,5%); //light grey
-   $primaryColor: $cb-semantic-color-primary; //turquoise (main app color)
+   $primaryColor: $cb-color-primary; //turquoise (main app color)
    $primaryColorHover:lighten($primaryColor,5%); //light turquoise (main app hover color)
    $primaryColorLight:lighten($primaryColor,30%); //light turquoise (main app hover color)
-   $successColor:#2dcc70; //green
+   $successColor:$cb-color-succes-accent; //green
    $successColorHover:lighten($successColor,5%); //light green
    $warningColor:#f1c40f; //yellow
    $warningColorHover:lighten($warningColor,5%); //light yellow
    $warningBackgroundColor:lighten($warningColor,40%); //very light yellow
-   //$infoColor:#3598db; //blue
-   $infoColor:#3566db; //blue
+   $infoColor:$cb-color-info-accent; //blue
    $infoColorHover:lighten($infoColor,5%); //light blue
    $dangerColor:#e84c3d; //red
    $dangerColorHover:lighten($dangerColor,5%); //light red

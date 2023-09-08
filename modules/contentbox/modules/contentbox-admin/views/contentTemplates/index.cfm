@@ -87,7 +87,7 @@
 												<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-															<i class="fa fa-file-export fa-lg"></i> Export All
+															<i class="fas fa-file-export fa-lg"></i> Export All
 														</a>
 													</li>
 													<li>
@@ -95,7 +95,7 @@
 															@click="exportSelected()"
 															class="cursor-pointer"
 														>
-															<i class="fa fa-file-export fa-lg"></i> Export Selected
+															<i class="fas fa-file-export fa-lg"></i> Export Selected
 														</a>
 													</li>
 												</cfif>
@@ -205,7 +205,7 @@
 															class="btn btn-icon btn-more dropdown-toggle"
 															data-toggle="dropdown"
 														>
-															#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+															<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 															<span class="visually-hidden">Template Actions</span>
 														</button>
 														<ul class="dropdown-menu text-left pull-right">

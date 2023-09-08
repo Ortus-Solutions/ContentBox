@@ -39,7 +39,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name		= "permissionFilter",
-									class		= "form-control rounded quicksearch",
+									class		= "form-control quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>
@@ -63,12 +63,12 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -143,7 +143,7 @@
 												data-toggle="dropdown"
 												title="Actions"
 											>
-												#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+												<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 												<span class="visually-hidden">Actions</span>
 											</button>
 									    	<ul class="dropdown-menu text-left pull-right">
@@ -165,7 +165,7 @@
 														<a
 															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
 															target="_blank">
-															<i class="fa fa-file-export fa-lg"></i> Export
+															<i class="fas fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>

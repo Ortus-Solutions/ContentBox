@@ -18,7 +18,7 @@
           fill: #343434;
         }
         .cb-swirl, .cb-text-box {
-          fill: $cb-semantic-brand-color-primary;
+          fill: $cb-brand-color-primary;
         }
         .cb-text-content {
           fill: #272727;
@@ -48,7 +48,7 @@
       background-color: #fff;
       border: none;
       box-shadow: none;
-      margin-left: $cb-base-spacer-sm;
+      margin-left: $cb-spacer-sm;
       padding: 0px;
 
       @media( pointer: coarse ) {

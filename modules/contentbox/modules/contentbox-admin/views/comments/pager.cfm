@@ -79,7 +79,7 @@
 				</cfif>
 
 				<div class="btn-group">
-					<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+					<a class="btn btn-sm btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
 						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 					<ul class="dropdown-menu text-left pull-right">

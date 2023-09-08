@@ -165,7 +165,7 @@
 						class="dragHandle btn btn-icon btn-sm"
 						title="Click and drag to change menu order"
 					>
-						#cbAdminComponent( "ui/Icon", { name : "ChevronUpDown" } )#
+						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 
 					<!--- Page Actions --->
@@ -175,7 +175,7 @@
 							data-toggle="dropdown"
 							title="Page Actions"
 						>
-							#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+							<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 							<span class="visually-hidden">Page Actions</span>
 						</button>
 
@@ -235,7 +235,7 @@
 										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
 										target="_blank"
 									>
-										<i class="fa fa-file-export fa-lg"></i> Export
+										<i class="fas fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>

@@ -39,7 +39,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "roleFilter",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
@@ -64,12 +64,12 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -149,7 +149,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 											<span class="visually-hidden">Role Actions</span>
 										</button>
 								    	<ul class="dropdown-menu text-left pull-right">
@@ -183,7 +183,7 @@
 															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.json"
 															target="_blank"
 														>
-															<i class="fa fa-file-export fa-lg"></i> Export
+															<i class="fas fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>

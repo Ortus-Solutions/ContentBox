@@ -62,7 +62,7 @@
                                         <div class="form-group m0 mr5">
                                             #html.textField(
                                                 name        = "settingSearch",
-                                                class       = "form-control rounded quicksearch",
+                                                class       = "form-control quicksearch",
                                                 placeholder = "Quick Search",
                                                 value       = event.getValue( "search", "" )
                                             )#
@@ -92,7 +92,7 @@
 
 											<div class="btn-group">
 
-												<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+												<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##">
                                                     <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
@@ -102,12 +102,12 @@
 													<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
 															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-																<i class="fa fa-file-export fa-lg"></i> Export All
+																<i class="fas fa-file-export fa-lg"></i> Export All
 															</a>
 														</li>
 														<li>
 															<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-																<i class="fa fa-file-export fa-lg"></i> Export Selected
+																<i class="fas fa-file-export fa-lg"></i> Export Selected
 															</a>
 														</li>
 													</cfif>
@@ -264,7 +264,7 @@
                                         #html.textField(
                                             name        = "eventFilter",
                                             size        = "30",
-                                            class       = "form-control rounded",
+                                            class       = "form-control",
 											placeholder = "Quick Filter"
                                         )#
                                     </div>

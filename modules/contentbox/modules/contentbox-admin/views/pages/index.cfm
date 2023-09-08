@@ -35,7 +35,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "searchContent",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
@@ -84,12 +84,12 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="mb5">
 													<a href="#event.buildLink( prc.xehPageExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehPageExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -216,7 +216,7 @@
 		</div>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medrt"></i> Help Tips</h3>
+		        <h3 class="panel-title"><i class="fa fas fa-life-ring"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">

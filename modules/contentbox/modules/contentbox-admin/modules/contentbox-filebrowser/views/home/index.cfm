@@ -162,7 +162,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div class="form-group pull-right">
 			#html.textField(
 				name 		= "fbQuickFilter",
-				class 		= "form-control quicksearch rounded",
+				class 		= "form-control quicksearch",
 				placeholder = "Quick Filter"
 			)#
 		</div>

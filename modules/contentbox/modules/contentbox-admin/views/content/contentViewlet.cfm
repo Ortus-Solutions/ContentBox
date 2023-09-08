@@ -124,7 +124,7 @@
 						data-toggle="dropdown"
 						title="Page Actions"
 					>
-						#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+						<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 						<span class="visually-hidden">Page Actions</span>
 					</button>
 

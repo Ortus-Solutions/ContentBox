@@ -39,7 +39,7 @@
 							<div class="form-group m0 mr5">
 								<input
 									name="categorySearch"
-									class="form-control rounded quicksearch"
+									class="form-control quicksearch"
 									placeholder="Quick Search"
 									x-model="searchQuery"
 									@input.debounce="searchCategories()"
@@ -97,7 +97,7 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
@@ -105,7 +105,7 @@
 														@click="exportSelected()"
 														class="cursor-pointer"
 													>
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -226,7 +226,7 @@
 													data-toggle="dropdown"
 													title="Category Actions"
 												>
-													#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+													<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 													<span class="visually-hidden">Category Actions</span>
 												</button>
 												<ul class="dropdown-menu text-left pull-right">
@@ -248,7 +248,7 @@
 																:href="`#event.buildLink( prc.xehExport )#/categoryID/${category.categoryID}.json`"
 																target="_blank"
 															>
-																<i class="fa fa-file-export fa-lg"></i> Export
+																<i class="fas fa-file-export fa-lg"></i> Export
 															</a>
 														</li>
 													</cfif>

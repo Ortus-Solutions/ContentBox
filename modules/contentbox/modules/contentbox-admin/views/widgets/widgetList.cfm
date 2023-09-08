@@ -11,7 +11,7 @@
 					name="widgetFilter"
 					id="widgetFilter"
 					type="text"
-					class="form-control rounded"
+					class="form-control"
 					placeholder="Quick Filter"
 					aria-describedby="sizing-addon3"
 				>

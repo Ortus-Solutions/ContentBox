@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-file-export fa-lg"></i> ContentBox Export
+			<i class="fas fa-file-export fa-lg"></i> ContentBox Export
 		</h1>
 	</div>
 </div>

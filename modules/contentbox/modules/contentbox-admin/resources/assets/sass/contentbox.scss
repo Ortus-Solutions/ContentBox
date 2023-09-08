@@ -45,7 +45,9 @@ p{
 .table > thead > tr > th {
 	border-bottom: 0px solid #ddd;
 }
-
+.table.dataTable thead > tr > th.sorting_disabled {
+	padding-right: 8px;
+}
 .breakCellWords{
 	max-width: 1px;
 	word-wrap: break-word;
@@ -99,15 +101,13 @@ p{
 /******************** FORM CONTROLS ****************************/
 
 .form-control{
-	border-radius: 5px;
-	font-size: 13px !important;
 	background-color: #fff;
 	border-color: #d2d6dc;
 	color: black;
 }
 .form-control:focus{
-	box-shadow: 0 0 2px 0px #1ABC9C !important;
-	border-color: #1ABC9C;
+	box-shadow: 0 0 2px 0px $cb-color-tertiary-accent !important;
+	border-color: $cb-color-tertiary-accent;
 }
 
 .quicksearch{
@@ -139,7 +139,10 @@ label{
 	font-weight: 600;
 }
 
-
+/******************** LABELS ****************************/
+.label {
+	@include roundBorders($cb-radius-md);
+}
 /******************** LINKS ****************************/
 
 a.btn.btn-danger:link,
@@ -338,7 +341,7 @@ input:checked ~ .toggle-path {
 }
 .close:hover {
 	font-weight: 900;
-	color: #1ABC9C;
+	color: $cb-color-link-hover;
 }
 
 .alpine-modal {

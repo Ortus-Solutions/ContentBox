@@ -34,7 +34,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "siteFilter",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
@@ -62,7 +62,7 @@
 													href="#event.buildLink( prc.xehExportAll )#.json"
 													target="_blank"
 												>
-													<i class="fa fa-file-export fa-lg"></i>
+													<i class="fas fa-file-export fa-lg"></i>
 													Export All
 												</a>
 											</li>
@@ -164,7 +164,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Site Actions">
-											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 											<span class="visually-hidden">Site Actions</span>
 										</button>
 										<ul class="dropdown-menu text-left pull-right">
@@ -196,7 +196,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.json"
 														target="_blank"
 													>
-														<i class="fa fa-file-export fa-lg"></i> Export
+														<i class="fas fa-file-export fa-lg"></i> Export
 													</a>
 												</li>
 											</cfif>

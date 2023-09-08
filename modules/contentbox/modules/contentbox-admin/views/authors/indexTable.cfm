@@ -72,7 +72,7 @@
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="User Actions">
-						#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+						<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 						<span class="visually-hidden">User Actions</span>
 					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
@@ -110,7 +110,7 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 							<li>

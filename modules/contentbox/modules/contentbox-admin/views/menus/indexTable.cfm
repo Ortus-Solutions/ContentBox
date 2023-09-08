@@ -33,7 +33,7 @@
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
                         <button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Menu Actions">
-                            #cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+                            <i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
                             <span class="visually-hidden">Menu Actions</span>
                         </button>
                         <ul class="dropdown-menu text-left pull-right">
@@ -50,7 +50,7 @@
                                     <!--- Export --->
                                     <li>
 										<a href="#event.buildLink( prc.xehMenuExport )#/menuID/#menu.getMenuID()#.json" target="_blank">
-											<i class="fa fa-file-export fa-lg"></i> Export
+											<i class="fas fa-file-export fa-lg"></i> Export
 										</a>
 									</li>
                                 </cfif>

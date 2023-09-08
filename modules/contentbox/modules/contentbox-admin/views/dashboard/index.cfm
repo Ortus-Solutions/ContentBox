@@ -190,7 +190,7 @@
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
 				<h3 class="panel-title">
-					<i class="fa fa-medrt fa-lg"></i> #$r( "dashboard.index.needHelp@admin" )#
+					<i class="fa fas fa-life-ring fa-lg"></i> #$r( "dashboard.index.needHelp@admin" )#
 				</h3>
 		    </div>
 		    <div class="panel-body">

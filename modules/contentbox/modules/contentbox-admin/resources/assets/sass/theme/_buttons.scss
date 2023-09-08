@@ -1,16 +1,16 @@
 .btn {
     border: none;
     box-shadow: none;
-    font-size: $cb-component-button-font-size;
-    @include roundBorders( $cb-component-button-size-border-radius );
-    padding: $cb-component-button-space-padding-y $cb-component-button-space-padding-x;
+    font-size: $cb-button-font-size;
+    @include roundBorders( $cb-button-size-border-radius );
+    padding: $cb-button-space-padding-y $cb-button-space-padding-x;
     -webkit-font-smoothing: subpixel-antialiased;
     -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
     transition: border .25s linear, color .25s linear, background-color .25s linear, box-shadow 0.2s ease-in-out 0s;
     
     &:hover, &:focus, &:active, &.active {
         outline: none;
-        box-shadow: $cb-base-shadow-sm;
+        box-shadow: $cb-shadow-sm;
     }
     &.disabled, &[disabled], fieldset[disabled] .btn {
         opacity: 0.7;
@@ -19,31 +19,31 @@
 }
 .btn-filled-primary {
     @include buttonFilled( 
-        $cb-component-button-color-filled-bg-primary, 
-        $cb-component-button-color-filled-text-primary,
-        $cb-semantic-color-fill-primary
+        $cb-button-color-filled-bg-primary, 
+        $cb-button-color-filled-text-primary,
+        $cb-color-fill-primary
     );
 }
 .btn-tinted-primary {
     @include buttonFilled( 
-        $cb-component-button-color-tinted-bg-primary, 
-        $cb-component-button-color-tinted-text-primary,
-        $cb-semantic-color-fill-primary
+        $cb-button-color-tinted-bg-primary, 
+        $cb-button-color-tinted-text-primary,
+        $cb-color-fill-primary
     );
 }
 .btn-outlined-primary {
     background-color: transparent;
-    border : 1px solid $cb-component-button-color-outlined-border-primary;
-    color: $cb-component-button-color-outlined-text-primary;
+    border : 1px solid $cb-button-color-outlined-border-primary;
+    color: $cb-button-color-outlined-text-primary;
 
     &:hover, &:focus, &:active {
-        background-color: darken( desaturate( $cb-component-button-color-filled-bg-primary, 0.5 ), 10 );
-        border-color: $cb-component-button-color-filled-bg-primary;
-        color: $cb-component-button-color-filled-text-primary;
+        background-color: darken( desaturate( $cb-button-color-filled-bg-primary, 0.5 ), 10 );
+        border-color: $cb-button-color-filled-bg-primary;
+        color: $cb-button-color-filled-text-primary;
     }
 }
 .btn-link {
-    color: $cb-semantic-color-link;
+    color: $cb-color-link;
     
     &:hover, &:focus, &:active, &.active {
         box-shadow: none;
@@ -55,6 +55,7 @@
 }
 .btn-primary, a.btn-primary {
     @extend .btn-filled-primary;
+    box-shadow: $cb-shadow-xs;
 }
 .btn-secondary, a.btn-secondary {
     @extend .btn-tinted-primary;
@@ -330,13 +331,13 @@ fieldset[disabled] .btn-warning.active {
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;
-   @include roundBorders(16px);
+   @include roundBorders($cb-radius-xs);
 }
 .btn-xs {
     padding: 1px 5px;
     font-size: 12px;
     line-height: 1.5;
-   @include roundBorders(16px);
+   @include roundBorders($cb-radius-xs);
 }
 
 
@@ -350,7 +351,7 @@ fieldset[disabled] .btn-warning.active {
     -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
     -o-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-    padding: $cb-base-spacer-sm;
+    padding: $cb-spacer-sm;
 }
 .dropdown-menu>li {
     &.dropdown-header {
@@ -359,13 +360,13 @@ fieldset[disabled] .btn-warning.active {
 	}
     > a {
         @include roundBorders(0);
-		padding: ( $cb-base-spacer-sm / 2 ) $cb-base-spacer-sm;
+		padding: ( $cb-spacer-sm / 2 ) $cb-spacer-sm;
 		
         &:hover, &:focus, &:active {
-            background-color: $cb-component-dropdown-item-color-hover;
+            background-color: $cb-dropdown-item-color-hover;
         }
         i {
-			margin-right: $cb-base-spacer-sm;
+			margin-right: $cb-spacer-sm;
 		}
 	}
 }

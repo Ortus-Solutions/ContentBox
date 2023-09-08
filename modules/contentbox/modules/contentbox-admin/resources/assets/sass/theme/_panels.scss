@@ -1,14 +1,14 @@
 .panel {
     border: none;
-    border-radius: $cb-component-panel-border-radius;
+    border-radius: $cb-panel-border-radius;
     box-shadow: none;
     overflow: visible !important; /* Rewrites Bootstrap */
 }
 .panel>.panel-heading {
-	border-radius: $cb-component-panel-heading-radius;
+	border-radius: $cb-panel-heading-radius $cb-panel-heading-radius 0 0;
     font-size: 13px;
     font-weight: 400;
-    text-transform: $cb-component-panel-heading-text-transform;
+    text-transform: $cb-panel-heading-text-transform;
     padding: 15px;
 }
 .panel .actions {
@@ -31,7 +31,7 @@
 }
 .panel-default>.panel-heading {
     border-color: #eff2f7;
-	background: $cb-component-panel-heading-bg-default;
+	background: $cb-panel-heading-bg-default;
 }
 .panel-default .actions i {
     font-size: 1em;
@@ -48,9 +48,9 @@
     color:#767676;
 }
 .panel-primary>.panel-heading {
-    background: $cb-component-panel-heading-bg-primary;
-    border-color: $cb-component-panel-heading-bg-primary;
-    color: $cb-component-panel-heading-text-onPrimary;
+    background: $cb-panel-heading-bg-primary;
+    border-color: $cb-panel-heading-bg-primary;
+    color: $cb-panel-heading-text-onPrimary;
 }
 .panel-primary {
     border-color: $primaryColor;
@@ -89,5 +89,5 @@
     border:none;
 }
 .panel-group .panel {
-    border-radius: $cb-component-panel-border-radius;
+    border-radius: $cb-panel-border-radius;
 }
