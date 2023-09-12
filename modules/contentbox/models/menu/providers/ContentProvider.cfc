@@ -47,7 +47,13 @@ component
 		var title                     = "";
 		var slug                      = "";
 		if ( !isNull( arguments.menuItem.getContentSlug() ) ) {
-			var content = contentService.findBySlug( slug = arguments.menuItem.getContentSlug(), siteID=arguments.menuItem.getMenu().getSite().getSiteID() );
+			var content = contentService.findBySlug(
+				slug   = arguments.menuItem.getContentSlug(),
+				siteID = arguments.menuItem
+					.getMenu()
+					.getSite()
+					.getSiteID()
+			);
 			if ( !isNull( content ) ) {
 				title = content.getTitle();
 				slug  = arguments.menuItem.getContentSlug();
