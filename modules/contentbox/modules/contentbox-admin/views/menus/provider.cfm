@@ -14,10 +14,10 @@
 		<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
 			#args.menuItem.getLabel()#
 		</div>
-		<button type="button" class="dd3-expand btn btn-default" title="Edit Details" @click="$store.menusStore.toggleEditor( '#menuItemID#' )">
-			<i class="fas fa-pencil fa-lg"></i>
+		<button type="button" class="dd3-expand btn" title="Edit Details" @click="$store.menusStore.toggleEditor( '#menuItemID#' )">
+			<i class="fas fa-pen fa-lg"></i>
 		</button>
-		<button class="dd3-delete btn btn-danger confirmIt"
+		<button class="dd3-delete btn confirmIt"
 			data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."
 			data-title="Delete Menu Item"
 			title="Delete Menu Item + Descendants"
