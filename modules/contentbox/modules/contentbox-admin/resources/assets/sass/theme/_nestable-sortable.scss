@@ -136,6 +136,7 @@
 
     &:hover {
         background-color: transparent;
+        box-shadow: none;
     }
 }
 .dd3-actions {
@@ -145,9 +146,9 @@
     margin-left: 30px;
 
     button {
-        background: transparent;
         border-radius: 0;
         margin:0px;
+        box-shadow: none;
     }
 }
 .btn.dd3-expand, .btn.dd3-delete {
