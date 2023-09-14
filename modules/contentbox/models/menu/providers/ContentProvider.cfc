@@ -51,7 +51,6 @@ component
 				slug   = arguments.menuItem.getContentSlug(),
 				siteID = arguments.menuItem
 					.getMenu()
-					.getSite()
 					.getSiteID()
 			);
 			if ( !isNull( content ) ) {
