@@ -217,7 +217,7 @@ component extends="baseHandler" {
 		if ( !len( rc.slug ) ) {
 			rc.slug = variables.HTMLHelper.slugify( rc.title );
 		}
-		var oMenu        = menuService.new();
+		var oMenu        = menuService.new().setSite( prc.oCurrentSite );
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
 		populate( model = oMenu, exclude = "menuID,menuItems" );
