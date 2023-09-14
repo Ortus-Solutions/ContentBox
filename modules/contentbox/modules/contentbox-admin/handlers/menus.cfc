@@ -187,7 +187,6 @@ component extends="baseHandler" {
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
 		populate( model = oMenu, exclude = "menuID,menuItems" );
-		writeDump( var = deserializeJSON( rc.menuItems ) );
 		oMenu.populateMenuItems( deserializeJSON( rc.menuItems ) );
 		// announce event
 		announce( "cbadmin_preMenuSave", { menu : oMenu, menuID : rc.menuID } );
