@@ -79,7 +79,7 @@ component
 	public boolean function canDisplay( required struct options = {} ){
 		var display = super.canDisplay( argumentCollection = arguments );
 		if ( display ) {
-			var content = contentService.findBySlug( getContentSlug() );
+			var content = contentService.findBySlug( slug = getContentSlug(), siteID = getMenu().getSiteID() );
 			var type    = content.getContentType();
 			return content.isLoaded() && ( type == "Page" || type == "Entry" ) ? true : false;
 		}

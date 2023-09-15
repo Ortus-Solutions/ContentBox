@@ -49,10 +49,7 @@ component
 		if ( !isNull( arguments.menuItem.getContentSlug() ) ) {
 			var content = contentService.findBySlug(
 				slug   = arguments.menuItem.getContentSlug(),
-				siteID = arguments.menuItem
-					.getMenu()
-					.getSite()
-					.getSiteID()
+				siteID = arguments.menuItem.getMenu().getSiteID()
 			);
 			if ( !isNull( content ) ) {
 				title = content.getTitle();
@@ -79,7 +76,10 @@ component
 	 * @options.hint  Additional arguments to be used in the method
 	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
-		var content  = contentService.findBySlug( arguments.menuItem.getContentSlug() );
+		var content = contentService.findBySlug(
+			slug   = arguments.menuItem.getContentSlug(),
+			siteID = arguments.menuItem.getMenu().getSiteID()
+		);
 		var viewArgs = {
 			menuItem    : arguments.menuItem,
 			contentLink : CBHelper.linkContent( content = content ),
