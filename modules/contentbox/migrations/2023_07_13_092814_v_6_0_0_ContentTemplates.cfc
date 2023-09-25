@@ -6,7 +6,7 @@ component {
 
 	// Include Utils
 	include template="./_MigrationUtils.cfm";
-	
+
 	function up( schema, qb ){
 		if ( !hasTable( "cb_contentTemplate" ) ) {
 			// Content Templates
