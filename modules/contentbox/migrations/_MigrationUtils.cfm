@@ -14,6 +14,29 @@ function getUUID(){
 }
 
 /**
+ * Verify if DB has a table or not
+ *
+ * @targetTable The table to check
+ */
+boolean function hasTable( targetTable ){
+	// Check for table created
+	cfdbinfo(
+		name  = "local.qSettingTables",
+		type  = "Tables"
+	);
+
+	if (
+		local.qSettingTables.filter( ( thisRow ) => {
+			systemOutput( thisRow, true );
+			return thisRow.table_name == targetTable
+		} ).recordCount > 0
+	) {
+		return true;
+	}
+	return false;
+}
+
+/**
  * Verify if a table has a column or not
  *
  * @targetTable The table to check
