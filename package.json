@@ -27,7 +27,7 @@
 		"alpinejs": "^3.13.0",
 		"animate.css": "^3.5.2",
 		"bootbox": "^5.5.3",
-		"bootstrap-datepicker": "^1.7.1",
+		"bootstrap-datepicker": "^1.10.0",
 		"bootstrap-sass": "^3.4.3",
 		"bootstrap-slider": "^9.10.0",
 		"bootstrap-toggle": "^2.2.2",
