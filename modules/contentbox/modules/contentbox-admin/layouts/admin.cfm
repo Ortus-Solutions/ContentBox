@@ -15,8 +15,8 @@
 	<!---                               BODY START					                                      --->
 	<!--- ************************************************************************************************--->
 	<body 	class="off-canvas"
-			data-showsidebar="#lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) )#"
-			data-preferenceURL="#event.buildLink( prc.xehSavePreference )#"
+			data-showsidebar="#encodeForHTMLAttribute( lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) ) )#"
+			data-preferenceURL="#encodeForHTMLAttribute( event.buildLink( prc.xehSavePreference ) )#"
 	>
 
 		<!--- cbadmin Event --->

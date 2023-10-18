@@ -194,19 +194,16 @@ document.addEventListener( "DOMContentLoaded", () => {
  * Activate the main sidebar state to open or closed
  */
 window.activateNavbarState = function() {
-	var container = $( "#container" );
-	// Bind listener to left toggle action
-	$( "#toggle-left" ).bind( "click", function( e ) {
-
+	// Bind listener to left toggle action found in contentbox-admin/layouts/default.cfm
+	$( "#toggle-left" ).on( "click", function( e ) {
 		// Verify window size, do not store if in mobile mode
 		if ( $( window ).width() > 768 ) {
 			// Are we opened or closed?
-			sidemenuCollapse = ( container.hasClass( "sidebar-mini" ) ? "no" : "yes" );
-
+			let isCollapsed = ( $( "#container" ).hasClass( "sidebar-mini" ) );
 			// Call change user editor preference
 			$.ajax( {
 				url   : $( "body" ).attr( "data-preferenceURL" ),
-				data  : { value: sidemenuCollapse, preference: "sidemenuCollapse" },
+				data  : { value: isCollapsed, preference: "sidemenuCollapse" },
 				async : true
 			} );
 		}

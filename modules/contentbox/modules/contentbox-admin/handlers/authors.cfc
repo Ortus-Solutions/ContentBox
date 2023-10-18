@@ -445,11 +445,12 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Save user preference async
+	 * Save a user preference usually called asynchronously
 	 */
 	function saveSinglePreference( event, rc, prc ){
+		// params
 		event.paramvalue( "preference", "" ).paramValue( "value", "" );
-		var results = { "ERROR" : false, "MESSAGES" : "" };
+		var response = event.getResponse();
 
 		// Check preference value
 		if ( len( rc.preference ) ) {
@@ -457,14 +458,18 @@ component extends="baseHandler" {
 			prc.oCurrentAuthor.setPreference( name = rc.preference, value = rc.value );
 			// save Author preference
 			variables.authorService.save( prc.oCurrentAuthor );
-			results[ "MESSAGES" ] = "Preference saved";
+			// response
+			response
+				.setData( { "preference" : rc.preference, "value" : rc.value } )
+				.addMessage( "Preference saved!" );
 		} else {
-			results[ "ERROR" ]    = true;
-			results[ "MESSAGES" ] = "No preference sent!";
+			response
+				.setErrorMessage(
+					"No preference sent",
+					event.STATUS.BAD_REQUEST,
+					response.400
+				);
 		}
-
-		// return preference saved
-		event.renderData( type = "json", data = results );
 	}
 
 	/**
