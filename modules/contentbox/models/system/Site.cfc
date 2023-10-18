@@ -386,7 +386,7 @@ component
 		"keywords"         : { required : false, size : "0..255" },
 		"domain"           : { required : true, size : "1..255" },
 		"domainRegex"      : { required : true, size : "1..255" },
-		"domainAliases"    : { required : true, type : "array" },
+		"domainAliases"    : { required : false, type : "array" },
 		"tagline"          : { required : false, size : "0..255" },
 		"homepage"         : { required : false, size : "0..255" },
 		"isBlogEnabled"    : { required : true, type : "boolean" },
