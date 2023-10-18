@@ -106,6 +106,7 @@ component extends="tests.resources.BaseApiTest" {
 									description : "my bdd test site",
 									domain      : "bddtest.com",
 									domainRegex : "bddtest\.com",
+									domainAliases : "[]",
 									activeTheme : "default",
 									homepage    : "cbBlog"
 								}
@@ -126,6 +127,7 @@ component extends="tests.resources.BaseApiTest" {
 								description : "my bdd test site",
 								domain      : "bddtest.com",
 								domainRegex : "bddtest\.com",
+								domainAliases : "[]",
 								activeTheme : "default",
 								homepage    : "cbBlog"
 							}
@@ -178,6 +180,7 @@ component extends="tests.resources.BaseApiTest" {
 								description : "my bdd test site",
 								domain      : "bddtest.com",
 								domainRegex : "bddtest\.com",
+								domainAliases : "[]",
 								activeTheme : "default",
 								homepage    : "cbBlog"
 							} )

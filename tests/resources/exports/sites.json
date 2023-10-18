@@ -3,6 +3,7 @@
 	"notifyOnEntries": true,
 	"keywords": "",
 	"domainregex": "127\\.0\\.0\\.1",
+    "domainAliases" : "[]",
 	"entries": [
 		{
 			"children": [],

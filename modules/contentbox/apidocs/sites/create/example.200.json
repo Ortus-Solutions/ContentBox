@@ -4,6 +4,7 @@
 		"notifyOnEntries": true,
 		"keywords": "",
 		"domainregex": "domain\\.com",
+		"domainAliases": "[]",
 		"isActive": true,
 		"domain": "domain.com",
 		"notifyOnContentStore": true,

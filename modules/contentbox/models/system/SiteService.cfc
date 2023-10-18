@@ -197,14 +197,14 @@ component
 	 *
 	 * @isActive If passed, bind via this boolean flag
 	 *
-	 * @return array of { siteID,name,slug,domainRegex,isActive }
+	 * @return array of { siteID, name, slug, domainRegex, domainAliases, isActive }
 	 */
 	array function getAllFlat( boolean isActive ){
 		return newCriteria()
 			.when( !isNull( arguments.isActive ), function( c ){
 				arguments.c.isEq( "this.isActive", javacast( "boolean", isActive ) );
 			} )
-			.withProjections( property: "siteID,name,slug,domainRegex,isActive" )
+			.withProjections( property: "siteID,name,slug,domainRegex,domainAliases,isActive" )
 			.asStruct()
 			.list( sortOrder = "name" );
 	}
@@ -307,7 +307,21 @@ component
 		// Try to discover using the requested full URL including host + path + query string for added flexibility
 		// Verify the site is valid, else continue search
 		var matchedSite = getAllFlat( isActive: true ).filter( function( thisSite ){
-			return reFindNoCase( arguments.thisSite[ "domainRegex" ], event.getFullUrl() );
+			// direct regex match
+			if ( reFindNoCase( arguments.thisSite[ "domainRegex" ], event.getFullUrl() ) ) {
+				return true;
+			}
+
+			// Look at the site Domain Aliases for a match
+			if ( isJSON( arguments.thisSite[ "domainAliases" ] ) ) {
+				return arraySome( deserializeJSON( arguments.thisSite[ "domainAliases" ] ), function( alias ){
+					return (
+						structKeyExists( alias, "domainRegex" ) && reFindNoCase( alias.domainRegex, event.getFullUrl() )
+					);
+				} );
+			}
+
+			return false;
 		} );
 
 		// Return the first matched site
