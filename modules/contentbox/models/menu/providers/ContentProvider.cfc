@@ -31,21 +31,22 @@ component
 		setType( "Content" );
 		setIconClass( "fa fa-archive" );
 		setEntityName( "cbContentMenuItem" );
-		setDescription( "A menu item based on existing pages or blog entries" );
+		setDescription( "A menu item based on existing content items" );
 		return this;
 	}
 
 	/**
 	 * Retrieves template for use in admin screens for this type of menu item provider
 	 *
-	 * @menuItem.hint The menu item object
-	 * @options.hint  Additional arguments to be used in the method
+	 * @menuItem The menu item object
+	 * @options  Additional arguments to be used in the method
 	 */
-	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
-		var prc                       = requestService.getContext().getCollection( private = true );
+	string function getAdminTemplate( required any menuItem, required struct options = {} ){
+		var prc   = requestService.getContext().getPrivateCollection();
+		var title = "";
+		var slug  = "";
+
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
-		var title                     = "";
-		var slug                      = "";
 		if ( !isNull( arguments.menuItem.getContentSlug() ) ) {
 			var content = contentService.findBySlug(
 				slug   = arguments.menuItem.getContentSlug(),
@@ -56,39 +57,39 @@ component
 				slug  = arguments.menuItem.getContentSlug();
 			}
 		}
-		var viewArgs = {
-			menuItem           : arguments.menuItem,
-			xehContentSelector : "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector",
-			title              : title,
-			slug               : slug
-		};
+
 		return variables.renderer.view(
 			view   = "menus/providers/content/admin",
 			module = "contentbox-admin",
-			args   = viewArgs
+			args   = {
+				menuItem           : arguments.menuItem,
+				xehContentSelector : "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector",
+				title              : title,
+				slug               : slug
+			}
 		);
 	}
 
 	/**
 	 * Retrieves template for use in rendering menu item on the site
 	 *
-	 * @menuItem.hint The menu item object
-	 * @options.hint  Additional arguments to be used in the method
+	 * @menuItem The menu item object
+	 * @options  Additional arguments to be used in the method
 	 */
-	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
-		var content = contentService.findBySlug(
+	string function getDisplayTemplate( required any menuItem, required struct options = {} ){
+		var content = variables.contentService.findBySlug(
 			slug   = arguments.menuItem.getContentSlug(),
 			siteID = arguments.menuItem.getMenu().getSiteID()
 		);
-		var viewArgs = {
-			menuItem    : arguments.menuItem,
-			contentLink : CBHelper.linkContent( content = content ),
-			data        : arguments.menuItem.getMemento()
-		};
+
 		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/content/display",
 			module = "contentbox",
-			args   = viewArgs
+			args   = {
+				menuItem    : arguments.menuItem,
+				contentLink : variables.CBHelper.linkContent( content: content ),
+				data        : arguments.menuItem.getMemento()
+			}
 		);
 	}
 

@@ -122,9 +122,9 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Create a menu Item
+	 * Create a menu item for a provider
 	 *
-	 * @return text
+	 * @return The rendered menu item
 	 */
 	function createMenuItem( event, rc, prc ){
 		prc.provider = menuItemService.getProvider( arguments.rc.type );
@@ -133,15 +133,25 @@ component extends="baseHandler" {
 			menuItem : entityNew( prc.provider.getEntityName() ),
 			provider : prc.provider
 		};
-		// set new or persisted id in args
-		args.menuItemID = !isNull( args.menuItem.getMenuItemID() ) ? args.menuItem.getMenuItemID() : "new-#createUUID()#";
 
-		var str             = "<li class=""dd-item dd3-item"" data-id=""#args.menuItemID#"" :key=""#args.menuItemID#"">";
-		savecontent variable="menuString" {
-			writeOutput( view( view = "menus/provider", args = args ) );
+		// set new or persisted id in args
+		if( args.menuItem.isLoaded() ){
+			args.menuItemID = args.menuItem.getMenuItemID();
+		} else {
+			args.menuItemID = "new-#createUUID()#";
+			args.menuItem.setMenu( variables.menuService.new().setSite( prc.oCurrentSite ) );
+		}
+
+		savecontent variable="local.renderedMenuItem" {
+			writeOutput( "<li
+				class=""dd-item dd3-item""
+				data-id=""#encodeForHTMLAttribute( args.menuItemID )#""
+				:key=""#encodeForHTMLAttribute( args.menuItemID )#"">" )
+			writeOutput( view( view : "menus/provider", args : args ) );
+			writeOutput( "</li>" );
 		};
-		str &= menuString & "</li>";
-		event.renderData( data = str, type = "text" );
+
+		event.renderData( data = renderedMenuItem, type = "text" );
 	}
 
 	/**
