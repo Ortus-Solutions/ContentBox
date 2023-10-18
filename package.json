@@ -10,7 +10,7 @@
 		"expose-loader": "^4.0.0",
 		"fs-extra": "^10.1.0",
 		"mocha": "~10.0.0",
-		"postcss": "^8.1.10",
+		"postcss": "^8.4.31",
 		"postcss-import": "^13.0.0",
 		"postcss-loader": "^7.0.0",
 		"prettier-eslint": "^15.0.1",
