@@ -16,6 +16,7 @@
 	<!--- ************************************************************************************************--->
 	<body 	class="off-canvas"
 			data-showsidebar="#encodeForHTMLAttribute( lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) ) )#"
+			data-adminURL="#encodeForHTMLAttribute( event.buildLink( prc.cbHelper.adminRoot() ) )#"
 			data-preferenceURL="#encodeForHTMLAttribute( event.buildLink( prc.xehSavePreference ) )#"
 	>
 

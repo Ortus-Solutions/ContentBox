@@ -78,7 +78,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 		}
 	} );
 	$.fn.resetValidations = function() {
-		var form = this[0].currentForm;
+		let form = this[0].currentForm;
 		// also remove success and error classes
 		$( form ).find( ".form-group" ).each( function() {
 			$( this ).removeClass( "error" ).removeClass( "success" );
@@ -113,20 +113,20 @@ document.addEventListener( "DOMContentLoaded", () => {
 		return this;
 	};
 	$.fn.collect = function() {
-		var serializedArrayData = this.serializeArray();
-		var data = {};
+		let serializedArrayData = this.serializeArray();
+		let data = {};
 		$.each( serializedArrayData, function( index, obj ) {
-			data[obj.name] = obj.value;
+			data[ obj.name ] = obj.value;
 		} );
 		return data;
 	};
 
 	// flicker messages
-	var t = setTimeout( toggleFlickers(), 5000 );
+	let t = setTimeout( toggleFlickers(), 5000 );
 
 	// Tab link detector for bootstrap
 	$( function() {
-		var activeTab = $( "[href=\"" + location.hash + "\"]" );
+		let activeTab = $( "[href=\"" + location.hash + "\"]" );
 		if ( activeTab ) { activeTab.tab( "show" ); }
 	} );
 
@@ -140,7 +140,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 
 	// find all links with the key-binding data attribute
 	$( "[data-keybinding]" ).each( function() {
-		var boundItem = $( this );
+		let boundItem = $( this );
 		tinyKeys( window, {
 			[ boundItem.data( "keybinding" ) ] : () => {
 				// give precedence to onclick
@@ -164,7 +164,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 
 	// match stateful accordions
 	$( ".accordion[data-stateful]" ).each( function() {
-		var accordion = $( this ),
+		let accordion = $( this ),
 			data = accordion.data( "stateful" ),
 			match;
 		if ( data ) {
@@ -181,7 +181,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 		// bind listener for state changes
 		accordion.bind( "shown.bs.collapse", function() {
 			// grab id from expanded accordion panel
-			var active = accordion.find( ".in" ).attr( "id" );
+			let active = accordion.find( ".in" ).attr( "id" );
 			// set cookie
 			$.cookie( data, active );
 		} );
@@ -216,8 +216,8 @@ window.activateNavbarState = function() {
  * @return {Boolean} open or not
  */
 window.isMainSidebarOpen = function() {
-	var sidebar = $( "#main-content-sidebar" );
-	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block" ? true : false );
+	let sidebar = $( "#main-content-sidebar" );
+	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block" );
 };
 
 /**
@@ -225,9 +225,9 @@ window.isMainSidebarOpen = function() {
  * main-content-slot (col) main-content-sidebar (col)
  */
 window.toggleSidebar = function(){
-	var sidebar 		= $( "#main-content-sidebar" );
-	var type 			= sidebar.css( "display" );
-	var sidebarState 	= false;
+	let sidebar 		= $( "#main-content-sidebar" );
+	let type 			= sidebar.css( "display" );
+	let sidebarState 	= false;
 
 	// nosidebar exit
 	if ( type === undefined ) { return; }
@@ -315,8 +315,8 @@ window.adminNotifier = function( type, message, delay ) {
 
 window.activateContentSearch = function() {
 	// local refs
-	var $nav_search = $( "#nav-search" );
-	var $nav_search_results = $( "#div-search-results" );
+	let $nav_search = $( "#nav-search" );
+	let $nav_search_results = $( "#div-search-results" );
 	// opacity
 	$nav_search.css( "opacity", "0.8" );
 	// focus effects
@@ -336,7 +336,7 @@ window.activateContentSearch = function() {
 	$nav_search.keyup(
 		_.debounce(
 			function() {
-				var $this = $( this );
+				let $this = $( this );
 				// Only send requests if more than 2 characters
 				if ( $this.val().length > 1 ) {
 					$nav_search_results.load(
@@ -354,7 +354,7 @@ window.activateContentSearch = function() {
 	);
 	// add click listener to body to hide quick search panel
 	$( "body" ).click( function( e ) {
-		var target = $( e.target ),
+		let target = $( e.target ),
 			ipTarget = target.closest( "#div-search" );
 		// if click occurs within visible element, add to ignore list
 		if ( !ipTarget.length ) {
@@ -402,7 +402,7 @@ window.closeRemoteModal = function() {
  */
 window.resetContainerForms = function( container ) {
 	// Clears a form in the div element, usually to reset forms in dialogs.
-	var frm = container.find( "form" );
+	let frm = container.find( "form" );
 	if ( frm.length ) {
 		$( frm[0] ).clearForm();
 	}
@@ -446,10 +446,9 @@ window.openRemoteModal = function( url, params, w, h, delay ) {
 		console.log( "URL needed" );
 		return;
 	}
-	var modal = $remoteModal;
-	var args = {};
-	var maxHeight = ( $( window ).height() - 200 );
-	var maxWidth = ( $( window ).width() * 0.85 );
+	let modal = $remoteModal;
+	let maxHeight = ( $( window ).height() - 200 );
+	let maxWidth = ( $( window ).width() * 0.85 );
 
 	// Set default values for modal data elements
 	modal.data( "url", url );
@@ -458,7 +457,7 @@ window.openRemoteModal = function( url, params, w, h, delay ) {
 	modal.data( "height", h !== undefined ? h : maxHeight );
 
 	// convert height percentage to a numeric value
-	var height = modal.data( "height" );
+	let height = modal.data( "height" );
 	if ( height.search && height.search( "%" ) !== -1 ) {
 		height = height.replace( "%", "" ) / 100.00;
 		height = $( window ).height() * height;
@@ -482,7 +481,7 @@ window.openRemoteModal = function( url, params, w, h, delay ) {
 			modal.modal();
 		} );
 	}
-	return;
+	return true;
 };
 
 /**
@@ -491,7 +490,7 @@ window.openRemoteModal = function( url, params, w, h, delay ) {
  * @param {numeric} w The width to use in pixels
  */
 window.setPreviewSize = function( activeBtn, w ) {
-	var modalDialog = $remoteModal.find( ".modal-dialog" ),
+	let modalDialog = $remoteModal.find( ".modal-dialog" ),
 		frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : modalDialog,
 		orig = { "width": $remoteModal.data( "width" ) },
 		modalSize = { "width": w };
@@ -517,7 +516,7 @@ window.setPreviewSize = function( activeBtn, w ) {
 window.attachModalListeners = function() {
 	// Remote show event: Usually we resize the window here.
 	$remoteModal.on( "show.bs.modal", function() {
-		var modal = $remoteModal;
+		let modal = $remoteModal;
 		modal.find( ".modal-dialog" ).css( {
 			width  : modal.data( "width" ),
 			height : modal.data( "height" )
@@ -525,7 +524,7 @@ window.attachModalListeners = function() {
 	} );
 	// Remote shown event: Delayed loading of content
 	$remoteModal.on( "shown.bs.modal", function() {
-		var modal = $remoteModal;
+		let modal = $remoteModal;
 		// only run if modal is in delayed mode
 		if ( modal.data( "delay" ) ) {
 			modal.load( modal.data( "url" ), modal.data( "params" ), function() {
@@ -538,7 +537,7 @@ window.attachModalListeners = function() {
 	} );
 	// Remote hidden event: Reset loader
 	$remoteModal.on( "hidden.bs.modal", function() {
-		var modal = $remoteModal;
+		let modal = $remoteModal;
 		// reset modal html
 		modal.html( "<div class=\"modal-header\"><h3>Loading...</h3></div><div class=\"modal-body\" id=\"removeModelContent\"><i class=\"fa fa-spinner fa-spin fa-lg fa-4x\"></i></div>" );
 		// reset container forms
@@ -552,7 +551,7 @@ window.attachModalListeners = function() {
 window.activateToggleCheckboxes = function() {
 	// toggle checkboxes
 	$( "input[data-toggle=\"toggle\"]" ).change( function() {
-		var inputMatch = $( this ).data( "match" );
+		let inputMatch = $( this ).data( "match" );
 		$( "#" + inputMatch ).val( $( this ).prop( "checked" ) );
 		//console.log( $( this ).prop( 'checked' ) + " input match :" + inputMatch );
 	} );
@@ -570,7 +569,7 @@ window.closeConfirmations = function() {
  */
 window.activateConfirmations = function() {
 	// close button triggers for confirmation dialog
-	$confirmIt.find( "button" ).click( function( e ) {
+	$confirmIt.find( "button" ).on( "click", function( e ) {
 		if ( $( this ).attr( "data-action" ) === "confirm" ) {
 			$confirmIt.find( "#confirmItButtons" ).hide();
 			$confirmIt.find( "#confirmItLoader" ).fadeIn();
@@ -586,8 +585,8 @@ window.activateConfirmations = function() {
 		// setup the href
 		$confirmIt.data( "confirmSrc", $( this ).attr( "href" ) );
 		// defaults
-		var dataMessage = $( this ).attr( "data-message" ) ? $( this ).attr( "data-message" ) : "Are you sure you want to perform this action?";
-		var dataTitle = $( this ).attr( "data-title" ) ? $( this ).attr( "data-title" ) : "Are you sure?";
+		let dataMessage = $( this ).attr( "data-message" ) ? $( this ).attr( "data-message" ) : "Are you sure you want to perform this action?";
+		let dataTitle = $( this ).attr( "data-title" ) ? $( this ).attr( "data-title" ) : "Are you sure?";
 		// set message
 		$confirmIt.find( "#confirmItMessage" ).html( dataMessage );
 		// set title
@@ -600,13 +599,17 @@ window.activateConfirmations = function() {
 };
 
 window.popup = function( url, w, h )  {
-	var winWidth = 1000;
-	var winHeight = 750;
-	if ( w ) { minWidth = w; }
+	let winWidth = 1000;
+	let winHeight = 750;
+	if ( w ) { winWidth = w; }
 	if ( h ) { winHeight = h; }
-	var xPosition = ( screen.width / 2 ) - ( winWidth / 2 );
-	var yPosition = ( screen.height / 2 ) - ( winHeight / 2 );
-	window.open( url, "layoutPreview", "resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width=" + winWidth + ",height=" + winHeight + ",left=" + xPosition + ",top=" + yPosition + ",screenX=" + xPosition + ",screenY=" + yPosition );
+	let xPosition = ( screen.width / 2 ) - ( winWidth / 2 );
+	let yPosition = ( screen.height / 2 ) - ( winHeight / 2 );
+	window.open(
+		url,
+		"layoutPreview",
+		"resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width=" + winWidth + ",height=" + winHeight + ",left=" + xPosition + ",top=" + yPosition + ",screenX=" + xPosition + ",screenY=" + yPosition
+	);
 };
 
 /**
@@ -663,8 +666,8 @@ window.getToday = function( us ) {
  */
 window.importContent = function(){
 	// local id's
-	var $importForm = $( "#importForm" );
-	var $importDialog = $( "#importDialog" );
+	let $importForm = $( "#importForm" );
+	let $importDialog = $( "#importDialog" );
 
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
@@ -705,15 +708,15 @@ window.toggleMoreInfoPanel = function( contentId ){
  * It also expects the passwordRules element to contain the min length data element
  */
 window.passwordMeter = function( event ) {
-	var value = $( this ).val();
+	let value = $( this ).val();
 	//console.log( value );
 
 	// Counter bind
 	$( "#pw_rule_count" ).html( value.length );
-	var minLength = $( "#passwordRules" ).data( "min-length" );
+	let minLength = $( "#passwordRules" ).data( "min-length" );
 
 	// Rule Checks
-	var rules = {
+	let rules = {
 		lower   : REGEX_LOWER.test( value ),
 		upper   : REGEX_UPPER.test( value ),
 		digit   : REGEX_DIGIT.test( value ),
@@ -728,7 +731,7 @@ window.passwordMeter = function( event ) {
 	}
 
 	// Iterate and test rules
-	for ( var key in rules ) {
+	for ( let key in rules ) {
 		if ( rules[key] ) {
 			$( "#pw_rule_" + key ).addClass( "badge-success" );
 		} else {
@@ -743,9 +746,9 @@ window.passwordMeter = function( event ) {
  * @return {boolean} Password validates via our rules
  */
 window.passwordValidator = function( value ) {
-	var minLength = $( "#passwordRules" ).data( "min-length" );
+	let minLength = $( "#passwordRules" ).data( "min-length" );
 
-	var lower = REGEX_LOWER.test( value ),
+	let lower = REGEX_LOWER.test( value ),
 		upper = REGEX_UPPER.test( value ),
 		digit = REGEX_DIGIT.test( value ),
 		digits = REGEX_DIGITS.test( value ),
@@ -808,4 +811,14 @@ window.getDefaultDateTimeOptions = function(){
  */
 window.scrollToHash = function( hashName ) {
 	location.hash = "#" + hashName;
+};
+
+/**
+ * Build an admin URL for ajax calls
+ * @param {string} uri The uri to append to the admin url
+ * @returns {string} The complete admin url
+ */
+window.adminLink = function( uri ) {
+	let link = $( "body" ).attr( "data-adminURL" );
+	return uri == undefined ? link : link + "/" + uri;
 };
