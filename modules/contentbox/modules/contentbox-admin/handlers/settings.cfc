@@ -333,14 +333,8 @@ component extends="baseHandler" {
 	function authLogs( event, rc, prc ){
 		prc.featureEnabled = prc.cbsettings.cb_security_login_blocker;
 		prc.xehTruncate    = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
-
-		// Check if the feature is enabled
-		if ( prc.featureEnabled ) {
-			prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
-		} else {
-			prc.featureEnabled = false;
-		}
-
+		// Get all logs
+		prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
 		// Raw tab
 		prc.tabSystem_authLogs = true;
 		// View
