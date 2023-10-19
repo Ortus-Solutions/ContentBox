@@ -23,14 +23,6 @@ component extends="coldbox.system.Interceptor" {
 	}
 
 	/**
-	 * Listen to end of requests to do log rotation for auth logs for login events only.
-	 */
-	function postProcess( event, data ) async="true" eventPattern="security\.doLogin"{
-		// Do log rotation
-		loginTrackerService.rotate();
-	}
-
-	/**
 	 * Before login check if user has been blocked. It will verify login attempts
 	 * by username and IP address and block accordingly.
 	 */

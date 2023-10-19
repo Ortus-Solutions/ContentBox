@@ -15,7 +15,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="CBHelper" inject="id:CBHelper@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="loginTrackerService" inject="loginTrackerService@contentbox";
 
 	/**
 	 * Constructor

@@ -25,8 +25,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Verify if an attempt is being blocked or not
 	 *
 	 * @attempt The login attempt object
+	 *
+	 * @return If the attempt was blocked or not
 	 */
-	boolean function isblocked( LoginAttempt attempt ){
+	boolean function isBlocked( LoginAttempt attempt ){
 		var max_attempts  = variables.settingService.getSetting( "cb_security_max_attempts" );
 		var max_blockTime = variables.settingService.getSetting( "cb_security_blocktime" );
 
@@ -80,39 +82,49 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return this;
 	}
 
-	/*
+	/**
 	 * Rotate auth logs
+	 * Usually called by the {@code LoginTracker} Interceptor asynchronously
 	 */
 	LoginTrackerService function rotate(){
+		// if disabled, we do not track logins
+		if ( !settingService.getSetting( "cb_security_login_blocker" ) ) {
+			log.debug( "Rotation not enabled since the security login blocker is disabled" );
+			return this;
+		}
+
 		var maxLogs   = variables.settingService.getSetting( "cb_security_max_auth_logs" );
-		var maxLogs   = 4;
+		var maxLogs   = 2;
 		var totalLogs = count();
 
 		// only if we have a max logs and we have gone above max logs, let's truncate
-		if ( len( maxLogs ) && totalLogs > maxLogs ) {
-			var c         = newCriteria();
-			// Get IDs to delete
-			var aToDelete = c
+		if ( len( maxLogs ) && isNumeric( maxLogs ) && totalLogs > maxLogs ) {
+			var aToDelete = newCriteria()
 				.withProjections( property = "loginAttemptsID" )
 				.list( max = ( totalLogs - maxLogs ), sortOrder = "createdDate ASC" );
 
 			var hql = "
-			DELETE
-			FROM cbLoginAttempt
-			WHERE loginAttemptsID in (:toDelete)
+			DELETE FROM cbLoginAttempt
+			WHERE id IN :idsToDelete
 			";
-			var params = { "toDelete" : aToDelete };
 
 			// run it
-			var results = executeQuery( query = hql, params = params, asQuery = false );
+			var results = executeQuery(
+				query  : hql,
+				params : { "idsToDelete" : aToDelete },
+				asQuery: false
+			);
+
 			// log it
 			log.info( "Rotated auth logs", results );
+		} else {
+			log.debug( "No auth logs to rotate" );
 		}
 
 		return this;
 	}
 
-	/*
+	/**
 	 * Reset login attempts if the time limit is reached
 	 */
 	LoginTrackerService function reset(){

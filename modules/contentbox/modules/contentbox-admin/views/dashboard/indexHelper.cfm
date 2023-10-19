@@ -26,7 +26,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 		$( "##latestSnapshot" ).load( '#event.buildLink( prc.xehLatestSnapshot )#' );
 	</cfif>
 
-	<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_AUTH_LOGS" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_AUTH_LOGS" ) && prc.cbsettings.cb_security_login_blocker>
 		// Load latest logsin
 		$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );
 	</cfif>

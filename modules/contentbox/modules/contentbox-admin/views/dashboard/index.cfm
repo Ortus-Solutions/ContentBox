@@ -169,7 +169,10 @@
 		</cfif>
 
 		<!--- Latest Logins --->
-		<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_AUTH_LOGS" )>
+		<cfif
+			prc.oCurrentAuthor.hasPermission( "SYSTEM_AUTH_LOGS" ) &&
+			prc.cbsettings.cb_security_login_blocker
+		>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
 					<h3 class="panel-title">

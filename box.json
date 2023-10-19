@@ -53,7 +53,7 @@
         "dbseed:postgres":"task run contentbox/modules/seeders/SeedPostgreSQL.cfc",
         "format":"cfformat run config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc --overwrite",
         "format:watch":"cfformat watch config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
-		"format:watch:core":"cfformat watch config/**/*.cfc,modules/contentbox/models/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
+		"format:watch:core":"cfformat watch config/**/*.cfc,modules/contentbox/models/**/*.cfc,Application.cfc ./.cfformat.json",
         "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc",
         "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force",
         "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force",
