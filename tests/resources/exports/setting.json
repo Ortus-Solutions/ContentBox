@@ -1,9 +1,3703 @@
-{
-	"isCore": true,
-	"createdDate": "2020-09-09T22:34:49+00:00",
-	"name": "cb_accccccctive",
-	"modifiedDate": "2020-09-09T22:34:49+00:00",
-	"settingID": "782dfc82-a444-11eb-ab6f-0290cc502ae3",
-	"value": true,
-	"site": {}
-}
+[
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:15+00:00",
+		"name": "cb_comments_moderation_blacklist",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266f40007",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_preArchivesDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fb0008",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_enabled",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc0009",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_prePageDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc000a",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_postCommentForm",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc000b",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_afterContent",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc000c",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_postIndexDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc000d",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_moderation_blockedlist",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc000e",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_notify",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fc000f",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_postArchivesDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fd0010",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_beforeContent",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fd0011",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_notifyemails",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fd0012",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_afterBodyStart",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fe0013",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_preIndexDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fe0014",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_afterFooter",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fe0015",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_beforeHeadEnd",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fe0016",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_afterSideBar",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266fe0017",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_moderation",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c266ff0018",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_postPageDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267000019",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_preEntryDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26700001a",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_postEntryDisplay",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26701001b",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_moderation_whitelist",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26701001c",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_maxDisplayChars",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26701001d",
+		"value": "500",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_beforeBodyEnd",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26701001e",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_moderation_expiration",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26702001f",
+		"value": "30",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_comments_moderation_notify",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267020020",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_beforeSideBar",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267020021",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_html_preCommentForm",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267020022",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_cbBootswatchTheme",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267420024",
+		"value": "green",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_overrideHeaderColors",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267430025",
+		"value": false,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_overrideHeaderBGColor",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267440026",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_overrideHeaderTextColor",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267450027",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_cssStyleOverrides",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267450028",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_headerLogo",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267460029",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showSiteSearch",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26747002a",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_footerBox",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26747002b",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderTitle",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26749002c",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderText",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c2674a002d",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderLink",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c2674c002e",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderBtnText",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c2674d002f",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderBtnStyle",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c2674d0030",
+		"value": "primary",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderBg",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c2674f0031",
+		"value": "green",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderImgBg",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267510032",
+		"value": "",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderBgPos",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267560033",
+		"value": "Top Center",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingTop",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267610034",
+		"value": "100px",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingBottom",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267620035",
+		"value": "50px",
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_rssDiscovery",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267630036",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showCategoriesBlogSide",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267630037",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showRecentEntriesBlogSide",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267640038",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showSiteUpdatesBlogSide",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c267650039",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showEntryCommentsBlogSide",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26765003a",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showArchivesBlogSide",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26766003b",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-10-18T17:08:16+00:00",
+		"name": "cb_theme_default_showEntriesSearchBlogSide",
+		"modifiedDate": "2023-10-18T17:08:16+00:00",
+		"settingID": "4028fb098b4276bc018b43c26767003c",
+		"value": true,
+		"site": {
+			"slug": "awesome-test-site",
+			"siteID": "4028fb098b4276bc018b43c267040023",
+			"name": "Awesome Test Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_login_blocker",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d99fe-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_allowDelete",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9b84-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_login_signin_text",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9d50-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_versions_max_history",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9dd2-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter_duration",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9e36-a444-11eb-ab6f-0290cc502ae3",
+		"value": "1",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_description",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9ea4-a444-11eb-ab6f-0290cc502ae3",
+		"value": "ContentBox RSS Feed",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_html5uploads_maxFiles",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9efe-a444-11eb-ab6f-0290cc502ae3",
+		"value": "25",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_mail_password",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9f62-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_cacheName",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782d9fbc-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Template",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_editors_markup",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da020-a444-11eb-ab6f-0290cc502ae3",
+		"value": "HTML",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_cacheName",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da07a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Template",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_editors_ckeditor_toolbar",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da0de-a444-11eb-ab6f-0290cc502ae3",
+		"value": "[\n\t\t{ \"name\": \"document\",    \"items\" : [ \"Source\",\"-\",\"Maximize\",\"ShowBlocks\" ] },\n\t\t{ \"name\": \"clipboard\",   \"items\" : [ \"Cut\",\"Copy\",\"Paste\",\"PasteText\",\"PasteFromWord\",\"-\",\"Undo\",\"Redo\" ] },\n\t\t{ \"name\": \"editing\",     \"items\" : [ \"Find\",\"Replace\",\"SpellChecker\"] },\n\t\t{ \"name\": \"forms\",       \"items\" : [ \"Form\", \"Checkbox\", \"Radio\", \"TextField\", \"Textarea\", \"Select\", \"Button\",\"HiddenField\" ] },\n\t\t\"/\",\n\t\t{ \"name\": \"basicstyles\", \"items\" : [ \"Bold\",\"Italic\",\"Underline\",\"Strike\",\"Subscript\",\"Superscript\",\"-\",\"RemoveFormat\" ] },\n\t\t{ \"name\": \"paragraph\",   \"items\" : [ \"NumberedList\",\"BulletedList\",\"-\",\"Outdent\",\"Indent\",\"-\",\"Blockquote\",\"CreateDiv\",\"-\",\"JustifyLeft\",\"JustifyCenter\",\"JustifyRight\",\"JustifyBlock\",\"-\",\"BidiLtr\",\"BidiRtl\" ] },\n\t\t{ \"name\": \"links\",       \"items\" : [ \"Link\",\"Unlink\",\"Anchor\" ] },\n\t\t\"/\",\n\t\t{ \"name\": \"styles\",      \"items\" : [ \"Styles\",\"Format\" ] },\n\t\t{ \"name\": \"colors\",      \"items\" : [ \"TextColor\",\"BGColor\" ] },\n\t\t{ \"name\": \"insert\",      \"items\" : [ \"Image\",\"Table\",\"HorizontalRule\",\"Smiley\",\"SpecialChar\",\"Iframe\",\"InsertPre\"] },\n\t\t{ \"name\": \"contentbox\",  \"items\" : [ \"MediaEmbed\",\"cbIpsumLorem\",\"cbWidgets\",\"cbContentStore\",\"cbLinks\",\"cbEntryLinks\" ] }\n\t\t]",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter_logging",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da156-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_settings_cache",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da1ba-a444-11eb-ab6f-0290cc502ae3",
+		"value": "template",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_versions_commit_mandatory",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da214-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_notify_page",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da26e-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_mail_username",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da2d2-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_webmaster",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da368-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_title",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da3cc-a444-11eb-ab6f-0290cc502ae3",
+		"value": "RSS Feed by ContentBox",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_acceptMimeTypes",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da55c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_notify_author",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da5b6-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_welcome_title",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da61a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Dashboard",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_page_excerpts",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da66a-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_outgoingEmail",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da6c4-a444-11eb-ab6f-0290cc502ae3",
+		"value": "info@ortussolutions.com",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_newsfeed",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da728-a444-11eb-ab6f-0290cc502ae3",
+		"value": "https://www.ortussolutions.com/blog/rss",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_createFolders",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da782-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_min_password_length",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da7dc-a444-11eb-ab6f-0290cc502ae3",
+		"value": "8",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_newsfeed_count",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da836-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_cachingTimeout",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da890-a444-11eb-ab6f-0290cc502ae3",
+		"value": "60",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_cachingTimeoutIdle",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da8ea-a444-11eb-ab6f-0290cc502ae3",
+		"value": "15",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_html5uploads_maxFileSize",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da944-a444-11eb-ab6f-0290cc502ae3",
+		"value": "100",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_salt",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782da99e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "50C8A804FEFA3CC43AFF8E68F6FF4299E311786C6B0D5A8DC070044A3C59938B70218FFE71F5C8B8C544AD26FE0C21D2F7D582F53B8CF016350BCC98FEA8B102",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_mail_server",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782daa02-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_quickViewWidth",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782daa5c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "400",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_2factorAuth_trusted_days",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782daab6-a444-11eb-ab6f-0290cc502ae3",
+		"value": "30",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_generator",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dab10-a444-11eb-ab6f-0290cc502ae3",
+		"value": "ContentBox by Ortus Solutions",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_bot_regex",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dab6a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_editors_ckeditor_excerpt_toolbar",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dabce-a444-11eb-ab6f-0290cc502ae3",
+		"value": "[\n\t\t{ \"name\": \"document\",    \"items\" : [ \"Source\",\"-\",\"Maximize\",\"ShowBlocks\" ] },\n\t\t{ \"name\": \"basicstyles\", \"items\" : [ \"Bold\",\"Italic\",\"Underline\",\"Strike\",\"Subscript\",\"Superscript\"] },\n\t\t{ \"name\": \"paragraph\",   \"items\" : [ \"NumberedList\",\"BulletedList\",\"-\",\"Outdent\",\"Indent\",\"CreateDiv\"] },\n\t\t{ \"name\": \"links\",       \"items\" : [ \"Link\",\"Unlink\",\"Anchor\" ] },\n\t\t{ \"name\": \"insert\",      \"items\" : [ \"Image\",\"Flash\",\"Table\",\"HorizontalRule\",\"Smiley\",\"SpecialChar\" ] },\n\t\t{ \"name\": \"contentbox\",  \"items\" : [ \"MediaEmbed\",\"cbIpsumLorem\",\"cbWidgets\",\"cbContentStore\",\"cbLinks\",\"cbEntryLinks\" ] }\n\t\t]",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_blocktime",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dad54-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_comments_moderation_expiration",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dadae-a444-11eb-ab6f-0290cc502ae3",
+		"value": "30",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_contentstore_caching",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dae12-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_gravatar_rating",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dae62-a444-11eb-ab6f-0290cc502ae3",
+		"value": "PG",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_maintenance_message",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782daebc-a444-11eb-ab6f-0290cc502ae3",
+		"value": "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_admin_theme",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782daf20-a444-11eb-ab6f-0290cc502ae3",
+		"value": "contentbox-default",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_recentcontentstore",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782daf7a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_comments_moderation_blockedlist",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dafd4-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_cachingTimeout",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db02e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "60",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_login_signout_url",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db088-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_mail_ssl",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db0e2-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_paging_bandgap",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db13c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_maxComments",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db196-a444-11eb-ab6f-0290cc502ae3",
+		"value": "10",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db1fa-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_allowDownloads",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db254-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_caching",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db2ae-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_hit_ignore_bots",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db308-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_copyright",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db470-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Ortus Solutions, Corp (www.ortussolutions.com)",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_maintenance",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db4d4-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_comments_moderation",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db524-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_cachingTimeoutIdle",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db57e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "15",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_admin_ssl",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db5d8-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_paging_maxentries",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db632-a444-11eb-ab6f-0290cc502ae3",
+		"value": "10",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_recentComments",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db68c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_latest_logins",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db6e6-a444-11eb-ab6f-0290cc502ae3",
+		"value": "10",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_cachingHeader",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db740-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_search_adapter",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db79a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "contentbox.models.search.DBSearch",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_notify_entry",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db7f4-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_mail_smtp",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db966-a444-11eb-ab6f-0290cc502ae3",
+		"value": "25",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter_message",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782db9c0-a444-11eb-ab6f-0290cc502ae3",
+		"value": "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_2factorAuth_force",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dba1a-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_paging_maxrows",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dba74-a444-11eb-ab6f-0290cc502ae3",
+		"value": "20",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter_count",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbace-a444-11eb-ab6f-0290cc502ae3",
+		"value": "4",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_max_attempts",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbb28-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_admin_quicksearch_max",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbc9a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_comments_whoisURL",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbcf4-a444-11eb-ab6f-0290cc502ae3",
+		"value": "http://whois.arin.net/ui/query.do?q",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_2factorAuth_provider",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbd4e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "email",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_max_auth_logs",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbde4-a444-11eb-ab6f-0290cc502ae3",
+		"value": "500",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_recentPages",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbe5c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_comments_moderation_blacklist",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dbfe2-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_editors_default",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc05a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "ckeditor",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_mail_tls",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc0d2-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_provider",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc24e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "CFContentMediaProvider",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_gravatar_display",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc2c6-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_editors_ckeditor_extraplugins",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc44c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_email",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc5dc-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_notify_contentstore",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dc762-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_paging_maxRSSComments",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dcb72-a444-11eb-ab6f-0290cc502ae3",
+		"value": "10",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_provider_caching",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd16c-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_site_blog_entrypoint",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd284-a444-11eb-ab6f-0290cc502ae3",
+		"value": "blog",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_allowUploads",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd36a-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_welcome_body",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd432-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_media_directoryRoot",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd504-a444-11eb-ab6f-0290cc502ae3",
+		"value": "/contentbox-custom/_content",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_search_maxResults",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd5cc-a444-11eb-ab6f-0290cc502ae3",
+		"value": "20",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter_bots_only",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd694-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_uiexport",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd766-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_entry_caching",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dd9aa-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_content_hit_count",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dda9a-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_comments_moderation_whitelist",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782ddb8a-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_caching",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782ddc7a-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_security_rate_limiter_redirectURL",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782ddd6a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_dashboard_recentEntries",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dde5a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "5",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_rss_maxEntries",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782ddf40-a444-11eb-ab6f-0290cc502ae3",
+		"value": "10",
+		"site": {}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_cbBootswatchTheme",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de03a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "green",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_overrideHeaderColors",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de18e-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_overrideHeaderBGColor",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de472-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_overrideHeaderTextColor",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de5c6-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_cssStyleOverrides",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de6de-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_headerLogo",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de7ec-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_showSiteSearch",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de8f0-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_footerBox",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782de9f4-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderTitle",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782deaf8-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderText",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782debf2-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderLink",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782decf6-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderBtnText",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782dedfa-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderBtnStyle",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782deefe-a444-11eb-ab6f-0290cc502ae3",
+		"value": "primary",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderBg",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782df00c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "green",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderImgBg",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782df156-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderBgPos",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782df264-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Top Center",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:50+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingTop",
+		"modifiedDate": "2020-09-09T17:34:50+00:00",
+		"settingID": "782df35e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "100px",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingBottom",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782df462-a444-11eb-ab6f-0290cc502ae3",
+		"value": "50px",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_rssDiscovery",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782df570-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_showCategoriesBlogSide",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782df674-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_showRecentEntriesBlogSide",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782df778-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_showSiteUpdatesBlogSide",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782df872-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_showEntryCommentsBlogSide",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782df976-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_showArchivesBlogSide",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782dfa7a-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:34:51+00:00",
+		"name": "cb_theme_default_showEntriesSearchBlogSide",
+		"modifiedDate": "2020-09-09T17:34:51+00:00",
+		"settingID": "782dfb7e-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2020-09-09T17:34:49+00:00",
+		"name": "cb_active",
+		"modifiedDate": "2020-09-09T17:34:49+00:00",
+		"settingID": "782dfc82-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2020-09-09T17:38:19+00:00",
+		"name": "cb_enc_key",
+		"modifiedDate": "2020-09-09T17:38:19+00:00",
+		"settingID": "782dfd86-a444-11eb-ab6f-0290cc502ae3",
+		"value": "guxDy6/lBXEyt3kOkKtl7A==",
+		"site": {}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_cbBootswatchTheme",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782dfe8a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "green",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_overrideHeaderColors",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782dff8e-a444-11eb-ab6f-0290cc502ae3",
+		"value": false,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_overrideHeaderBGColor",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782e0092-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_overrideHeaderTextColor",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782e0196-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_cssStyleOverrides",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782e029a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_headerLogo",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782e0394-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:22+00:00",
+		"name": "cb_theme_default_showSiteSearch",
+		"modifiedDate": "2021-02-18T17:46:22+00:00",
+		"settingID": "782e0498-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_footerBox",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e059c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderTitle",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0696-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderText",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0790-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderLink",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e088a-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderBtnText",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e098e-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderBtnStyle",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0a92-a444-11eb-ab6f-0290cc502ae3",
+		"value": "primary",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderBg",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0b00-a444-11eb-ab6f-0290cc502ae3",
+		"value": "green",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderImgBg",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0b64-a444-11eb-ab6f-0290cc502ae3",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderBgPos",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0bc8-a444-11eb-ab6f-0290cc502ae3",
+		"value": "Top Center",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingTop",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0c2c-a444-11eb-ab6f-0290cc502ae3",
+		"value": "100px",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingBottom",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0c90-a444-11eb-ab6f-0290cc502ae3",
+		"value": "50px",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_rssDiscovery",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0cf4-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_showCategoriesBlogSide",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0d58-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_showRecentEntriesBlogSide",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0dbc-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_showSiteUpdatesBlogSide",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0e20-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_showEntryCommentsBlogSide",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0e84-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_showArchivesBlogSide",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0ef2-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2021-02-18T17:46:23+00:00",
+		"name": "cb_theme_default_showEntriesSearchBlogSide",
+		"modifiedDate": "2021-02-18T17:46:23+00:00",
+		"settingID": "782e0f56-a444-11eb-ab6f-0290cc502ae3",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:35+00:00",
+		"name": "cb_version",
+		"modifiedDate": "2023-04-24T16:48:35+00:00",
+		"settingID": "ff80808187b42aa20187b42ac7b50001",
+		"value": "@version.number@+@build.number@",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:35+00:00",
+		"name": "cb_security_password_reset_expiration",
+		"modifiedDate": "2023-04-24T16:48:35+00:00",
+		"settingID": "ff80808187b42aa20187b42ac7cc0002",
+		"value": "60",
+		"site": {}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_blacklist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acabf0003",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preArchivesDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acad50004",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_enabled",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acadb0005",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_prePageDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acae50006",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postCommentForm",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acae90007",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterContent",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acaf00008",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postIndexDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acaf70009",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_notify",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acafa000a",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_blockedlist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acafc000b",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeContent",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb06000c",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postArchivesDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb08000d",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterBodyStart",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb0a000e",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_notifyemails",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb0c000f",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preIndexDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb150010",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterFooter",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb180011",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeHeadEnd",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb190012",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterSideBar",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb1b0013",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb1c0014",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preEntryDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb1f0015",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postPageDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb230016",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postEntryDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb260017",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_whitelist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb290018",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_maxDisplayChars",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb2a0019",
+		"value": "500",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeBodyEnd",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb2c001a",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_expiration",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb32001b",
+		"value": "30",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_notify",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb35001c",
+		"value": true,
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeSideBar",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb3a001d",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preCommentForm",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb3d001e",
+		"value": "",
+		"site": {
+			"slug": "default",
+			"siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Default Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_blacklist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb42001f",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preArchivesDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb470020",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_enabled",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb560021",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_prePageDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb5a0022",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postCommentForm",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb5b0023",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterContent",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb5d0024",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postIndexDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb600025",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_notify",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb650026",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_blockedlist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb670027",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeContent",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb680028",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postArchivesDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb6a0029",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterBodyStart",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb6c002a",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_notifyemails",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb6e002b",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preIndexDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb6f002c",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterFooter",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb71002d",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeHeadEnd",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb74002e",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterSideBar",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb77002f",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb790030",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preEntryDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb7e0031",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postPageDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb810032",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postEntryDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb8a0033",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_whitelist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb8d0034",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_maxDisplayChars",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb8f0035",
+		"value": "500",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeBodyEnd",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb900036",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_expiration",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb950037",
+		"value": "30",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_notify",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb9a0038",
+		"value": true,
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeSideBar",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acb9e0039",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preCommentForm",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acba6003a",
+		"value": "",
+		"site": {
+			"slug": "development",
+			"siteID": "1c81d574-a481-11eb-ab6f-0290cc502ae3",
+			"name": "Development Site"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_blacklist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbb0003b",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preArchivesDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbb2003c",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_enabled",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbb4003d",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_prePageDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbbc003e",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postCommentForm",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbbf003f",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterContent",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbc00040",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postIndexDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbc20041",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_notify",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbc30042",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_blockedlist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbc70043",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeContent",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbca0044",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postArchivesDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbcf0045",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterBodyStart",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbd00046",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_notifyemails",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbd20047",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preIndexDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbd30048",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterFooter",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbd40049",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_beforeHeadEnd",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbd6004a",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_afterSideBar",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbd9004b",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbdc004c",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_preEntryDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbdd004d",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postPageDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbdf004e",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_html_postEntryDisplay",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbe0004f",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_moderation_whitelist",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbe20050",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:36+00:00",
+		"name": "cb_comments_maxDisplayChars",
+		"modifiedDate": "2023-04-24T16:48:36+00:00",
+		"settingID": "ff80808187b42aa20187b42acbe30051",
+		"value": "500",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:37+00:00",
+		"name": "cb_html_beforeBodyEnd",
+		"modifiedDate": "2023-04-24T16:48:37+00:00",
+		"settingID": "ff80808187b42aa20187b42acbe40052",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:37+00:00",
+		"name": "cb_comments_moderation_expiration",
+		"modifiedDate": "2023-04-24T16:48:37+00:00",
+		"settingID": "ff80808187b42aa20187b42acbe60053",
+		"value": "30",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:37+00:00",
+		"name": "cb_comments_moderation_notify",
+		"modifiedDate": "2023-04-24T16:48:37+00:00",
+		"settingID": "ff80808187b42aa20187b42acbfc0054",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:37+00:00",
+		"name": "cb_html_beforeSideBar",
+		"modifiedDate": "2023-04-24T16:48:37+00:00",
+		"settingID": "ff80808187b42aa20187b42acc2f0055",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": true,
+		"createdDate": "2023-04-24T16:48:37+00:00",
+		"name": "cb_html_preCommentForm",
+		"modifiedDate": "2023-04-24T16:48:37+00:00",
+		"settingID": "ff80808187b42aa20187b42acc450056",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_cbBootswatchTheme",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0d90057",
+		"value": "green",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_overrideHeaderColors",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0e40058",
+		"value": false,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_overrideHeaderBGColor",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0e60059",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_overrideHeaderTextColor",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0e7005a",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_cssStyleOverrides",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0e8005b",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_headerLogo",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0e8005c",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showSiteSearch",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0e9005d",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_footerBox",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0ea005e",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderTitle",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0ea005f",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderText",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0eb0060",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderLink",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0eb0061",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderBtnText",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0ed0062",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderBtnStyle",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0ed0063",
+		"value": "primary",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderBg",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0ee0064",
+		"value": "green",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderImgBg",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f20065",
+		"value": "",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderBgPos",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f30066",
+		"value": "Top Center",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingTop",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f40067",
+		"value": "100px",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_hpHeaderBgPaddingBottom",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f70068",
+		"value": "50px",
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_rssDiscovery",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f80069",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showCategoriesBlogSide",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f8006a",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showRecentEntriesBlogSide",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0f9006b",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showSiteUpdatesBlogSide",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0fa006c",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showEntryCommentsBlogSide",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0fa006d",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showArchivesBlogSide",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0fb006e",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	},
+	{
+		"isCore": false,
+		"createdDate": "2023-04-24T16:48:38+00:00",
+		"name": "cb_theme_default_showEntriesSearchBlogSide",
+		"modifiedDate": "2023-04-24T16:48:38+00:00",
+		"settingID": "ff80808187b42aa20187b42ad0fb006f",
+		"value": true,
+		"site": {
+			"slug": "test-disabled",
+			"siteID": "ff80808179100916017914e9c96a0039",
+			"name": "Test Disabled"
+		}
+	}
+]

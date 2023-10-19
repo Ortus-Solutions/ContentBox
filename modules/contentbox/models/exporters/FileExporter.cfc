@@ -20,12 +20,16 @@ component
 	 * Constructor
 	 */
 	public FileExporter function init(){
+		super.init();
+
 		setFormat( "zip" );
 		setIncludeFiles( "*" );
 		setType( "component" );
 		setExtension( "" );
+
 		variables.name           = "FileExporter";
 		variables.allowedFormats = "zip";
+
 		return this;
 	}
 

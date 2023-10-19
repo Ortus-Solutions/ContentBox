@@ -158,6 +158,12 @@ component accessors=true {
 		);
 		// get all content
 		var descriptorContents = getDescriptorContents( true );
+		// Fix for null priorites, this should go away in later versions
+		for( var fixKey in descriptorContents.content ){
+			if( isNull( descriptorContents.content[ fixKey ].priority ) ){
+				descriptorContents.content[ fixKey ].priority = 1;
+			}
+		}
 
 		// prioritize keys
 		var priorityOrder = structSort(

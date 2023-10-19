@@ -775,7 +775,11 @@ component
 		transaction {
 			// iterate and import
 			for ( var thisSetting in arguments.importData ) {
-				var oSetting = findWhere( { name : thisSetting.name } );
+				// Site Setting or Global Setting
+				var oSetting =  findWhere( {
+					name : thisSetting.name,
+					site : isNull( thisSetting.site.siteID ) ? javaCast( "null", "" ) : siteService.get( thisSetting.site.siteID )
+				} );
 				oSetting     = ( isNull( oSetting ) ? new () : oSetting );
 
 				// Check for boolean values
