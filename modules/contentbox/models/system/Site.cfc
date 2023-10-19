@@ -633,7 +633,7 @@ component
 	 * @return The domain aliases as a json string
 	 */
 	string function getDomainAliasesAsJSON(){
-		return variables.domainAliases;
+		return isNull( variables.domainAliases ) ? "[]" : variables.domainAliases;
 	}
 
 	/**
