@@ -3,11 +3,16 @@
 'use strict';
 function customFieldsModel(){
 	return {
+		customFields : #toJSON( prc.oContent.getCustomFields().map( ( field ) => arguments.field.getMemento() ) )#,
+		isTemplatedField : field => window.assignedTemplate
+									&& window.assignedTemplate.definition.customFields
+									&& window.assignedTemplate.definition.customFields.value.some( item => item.name == field.key.trim() ),
+		customFieldTemplate : { "key" : "", "value" : "", "relatedContent" : "#prc.oContent.getContentID()#" },
+
 		init(){
 			window.addCustomField = this.addCustomField;
 		},
-		customFields : #toJSON( prc.oContent.getCustomFields().map( ( field ) => arguments.field.getMemento() ) )#,
-		customFieldTemplate : { "key" : "", "value" : "", "relatedContent" : "#prc.oContent.getContentID()#" },
+
 		addCustomField( key, value ){
 			// Alpine events
 			if( key instanceof CustomEvent ){
@@ -21,6 +26,7 @@ function customFieldsModel(){
 			if( value ) newField.value = value;
 			this.customFields.push( newField );
 		},
+
 		cleanCustomFields(){
 			this.customFields.forEach( ( item, index ) => {
 				if( !item.key.trim() ){
@@ -28,15 +34,13 @@ function customFieldsModel(){
 				}
 			} );
 		},
+
 		removeCustomField( field ){
 			let fieldIndex = this.customFields.findIndex( item => item.key.trim() == field.key.trim() );
 			if( fieldIndex > -1 ){
 				this.customFields.splice( fieldIndex, 1 );
 			}
-		},
-		isTemplatedField : field => window.assignedTemplate
-									&& window.assignedTemplate.definition.customFields
-									&& window.assignedTemplate.definition.customFields.value.some( item => item.name == field.key.trim() )
+		}
 	}
 }
 </script>

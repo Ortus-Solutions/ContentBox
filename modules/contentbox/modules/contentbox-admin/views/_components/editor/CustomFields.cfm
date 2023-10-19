@@ -5,16 +5,31 @@
 	the CB Helper:
 	<code>cb.quickCustomFields() or cb.getCustomField( key, [defaultValue] )</code>
 </p>
+
 <!--- CustomFields Holder --->
 <div id="customFields" x-data="customFieldsModel()">
+
 	<input type="hidden" name="customFieldsCount" :value="customFields.length"/>
-	<div @add-custom-field.window="addCustomField">
+
+	<div @add-custom-field.window="addCustomField" class="mb10">
 		<!--- Add CustomField --->
-		<button type="button" class="btn btn-sm btn-primary" title="Add Custom Field" id="addCustomFieldButton" @click="addCustomField">
+		<button
+			type="button"
+			class="btn btn-sm btn-primary"
+			title="Add Custom Field"
+			id="addCustomFieldButton"
+			@click="addCustomField"
+		>
 			<i class="fa fa-plus fa-lg"></i> Add
 		</button>
+
 		<!--- Remove All Custom Fields --->
-		<button type="button" id="removeCustomFieldsButton" class="btn btn-sm btn-danger" @click="cleanCustomFields">
+		<button
+			type="button"
+			id="removeCustomFieldsButton"
+			class="btn btn-sm btn-danger"
+			@click="cleanCustomFields"
+		>
 			<i class="fa fa-trash fa-lg"></i> Remove All
 		</button>
 	</div>
@@ -34,7 +49,7 @@
 				/>
 
 
-				<label class="inline control-label">Value: </label>
+				<label class="ml5 inline control-label">Value: </label>
 				<input
 					type="text"
 					:name="`CustomFieldValues_${index}`"
@@ -43,7 +58,14 @@
 					x-model="field.value"
 				/>
 
-				<button type="button" class="btn btn-danger dynamicRemove" onclick="removeCustomField( field )" :disabled="isTemplatedField( field ) ? true : null"><i class="fa fa-trash"></i></button>
+				<button
+					type="button"
+					class="btn btn-danger dynamicRemove"
+					@click="removeCustomField( field )"
+					:disabled="isTemplatedField( field ) ? true : null"
+				>
+					<i class="fa fa-trash"></i>
+				</button>
 
 			</div>
 		</div>
