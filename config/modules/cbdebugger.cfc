@@ -7,15 +7,15 @@ component {
 			enabled          : getSystemSetting( "CBDEBUGGER_ENABLED", false ),
 			// This setting controls if you will activate the debugger for visualizations ONLY
 			// The debugger will still track requests even in non debug mode.
-			debugMode        : false,
+			debugMode        : true,
 			// The URL password to use to activate it on demand
 			debugPassword    : "cb",
 			// This flag enables/disables the end of request debugger panel docked to the bottem of the page.
 			// If you disable i, then the only way to visualize the debugger is via the `/cbdebugger` endpoint
-			requestPanelDock : false,
+			requestPanelDock : true,
 			// Request Tracker Options
 			requestTracker   : {
-				storage                      : "cachebox",
+				storage                      : "memory",
 				cacheName                    : "template",
 				trackDebuggerEvents          : false,
 				// Expand by default the tracker panel or not
@@ -46,7 +46,7 @@ component {
 				httpRequest : {
 					expanded        : false,
 					// If enabled, we will profile HTTP Body content, disabled by default as it contains lots of data
-					profileHTTPBody : false
+					profileHTTPBody : true
 				}
 			},
 			// ColdBox Tracer Appender Messages
@@ -80,7 +80,19 @@ component {
 				// Log the binding parameters
 				logParams : false
 			},
-			async : { enabled : false, expanded : false }
+			// Adobe ColdFusion SQL Collector
+			acfSql   : { enabled : false, expanded : false, logParams : true },
+			// Lucee SQL Collector
+			luceeSQL : { enabled : false, expanded : false, logParams : true },
+			// Async Manager Collector
+			async    : { enabled : true, expanded : false },
+			// Hyper Collector
+			hyper    : {
+				enabled         : false,
+				expanded        : false,
+				logResponseData : false,
+				logRequestBody  : false
+			}
 		};
 	}
 

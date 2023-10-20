@@ -612,6 +612,7 @@ window.applyContentTemplateToField = function( fieldName, definition ){
 							}
 						}
 					);
+					break;
 				}
 				default:{
 					if ( $templateField[ 0 ].localName == "select" ){

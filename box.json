@@ -33,14 +33,14 @@
         "testbox":"^5.0.0+1",
         "commandbox-cfformat":"*",
         "commandbox-docbox":"*",
-        "route-visualizer":"^1.4.0+24",
-        "cbdebugger":"be"
+        "cbdebugger":"be",
+        "route-visualizer":"^2.0.0+6"
     },
     "installPaths":{
         "testbox":"testbox/",
         "coldbox":"coldbox/",
-        "route-visualizer":"modules/route-visualizer/",
-        "cbdebugger":"modules/cbdebugger/"
+        "cbdebugger":"modules/cbdebugger/",
+        "route-visualizer":"modules/route-visualizer/"
     },
     "ignores":[],
     "scripts":{

@@ -113,12 +113,16 @@
 										</button>
 										<ul class="dropdown-menu list-unstyled">
 											<cfif prc.availableTemplates.len()>
-												<li class="dropdown-header"><i class="fa fa-map-o"></i> From Template:</li>
+												<li class="dropdown-header">
+													<i class="fa fa-object-group"></i> From Template:
+												</li>
 												<cfloop array="#prc.availableTemplates#" item="template">
 													<li class="mb-5">
 														<a
 															href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) & "?contentTemplate=" & encodeForHTMLAttribute( template[ "templateID" ] ) )#"
-														><small><i class="fa fa-plus"></i> #template[ "name" ]#</small></a>
+														>
+															<small><i class="fa fa-clone"></i> #template[ "name" ]#</small>
+														</a>
 													</li>
 												</cfloop>
 												<li role="separator" class="divider"></li>
@@ -131,7 +135,7 @@
 													</a>
 												</li>
 											<li class="mb-5">
-												<a href="#event.buildLink( prc.xehTemplates & "##create" )#"><i class="fa fa-map-o"></i> New Template</a>
+												<a href="#event.buildLink( prc.xehTemplates & "##create" )#"><i class="fa fa-object-group"></i> New Template</a>
 											</li>
 										</ul>
 									</div>

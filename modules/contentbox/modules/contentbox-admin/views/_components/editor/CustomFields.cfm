@@ -28,7 +28,8 @@
 			type="button"
 			id="removeCustomFieldsButton"
 			class="btn btn-sm btn-danger"
-			@click="cleanCustomFields"
+			x-show="customFields.length > 0"
+			@click="removeAllCustomFields"
 		>
 			<i class="fa fa-trash fa-lg"></i> Remove All
 		</button>

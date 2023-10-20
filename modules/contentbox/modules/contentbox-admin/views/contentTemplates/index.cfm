@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h1 class="h1">
-					<i class="fa fa-tags"></i> Content Templates (<span x-text="templates.length"></span>)
+					<i class="fa fa-object-group"></i> Content Templates (<span x-text="templates.length"></span>)
 				</h1>
 			</div>
 		</div>

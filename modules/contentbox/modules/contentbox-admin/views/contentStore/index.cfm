@@ -112,7 +112,7 @@
 									</button>
 									<ul class="dropdown-menu list-unstyled">
 										<cfif prc.availableTemplates.len()>
-											<li class="dropdown-header"><i class="fa fa-map-o"></i> From Template:</li>
+											<li class="dropdown-header"><i class="fa fa-object-group"></i> From Template:</li>
 											<cfloop array="#prc.availableTemplates#" item="template">
 												<li class="mb-5">
 													<a
@@ -130,7 +130,7 @@
 												</a>
 											</li>
 										<li class="mb-5">
-											<a href="#event.buildLink( prc.xehTemplates & "##create-ContentStore" )#"><i class="fa fa-map-o"></i> New Template</a>
+											<a href="#event.buildLink( prc.xehTemplates & "##create-ContentStore" )#"><i class="fa fa-object-group"></i> New Template</a>
 										</li>
 									</ul>
 								</div>

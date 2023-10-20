@@ -27,12 +27,10 @@ function customFieldsModel(){
 			this.customFields.push( newField );
 		},
 
-		cleanCustomFields(){
-			this.customFields.forEach( ( item, index ) => {
-				if( !item.key.trim() ){
-					this.customFields.splice( index, 1 );
-				}
-			} );
+		removeAllCustomFields(){
+			if( confirm( "Really delete all custom fields?" ) ){
+				this.customFields = [];
+			}
 		},
 
 		removeCustomField( field ){
