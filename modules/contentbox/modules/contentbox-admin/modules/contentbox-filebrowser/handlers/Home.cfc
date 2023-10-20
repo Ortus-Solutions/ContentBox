@@ -56,9 +56,9 @@ component extends="cbadmin.handlers.baseHandler" {
 		// exit handlers
 		prc.xehFBBrowser   = "#prc.fbModEntryPoint#/filelisting";
 		prc.xehFBDownload  = "#prc.fbModEntryPoint#/download";
+		prc.xehFBUpload    = "#prc.fbModEntryPoint#/upload";
 		prc.xehFBNewFolder = "#prc.fbModEntryPoint#/createfolder";
 		prc.xehFBRemove    = "#prc.fbModEntryPoint#/remove";
-		prc.xehFBUpload    = "#prc.fbModEntryPoint#/upload";
 		prc.xehFBRename    = "#prc.fbModEntryPoint#/rename";
 
 		// Detect Widget Mode.
@@ -115,6 +115,7 @@ component extends="cbadmin.handlers.baseHandler" {
 
 		// Exit handlers
 		prc.xehFBDownload = "#prc.fbModEntryPoint#/download";
+		prc.xehFBUpload    = "#prc.fbModEntryPoint#/upload";
 
 		// Store directory roots and web root
 		prc.fbDirRoot     = prc.fbSettings.directoryRoot;
@@ -378,6 +379,8 @@ component extends="cbadmin.handlers.baseHandler" {
 		var data = { "errors" : false, "messages" : "" };
 		// param values
 		event.paramValue( "path", "" ).paramValue( "manual", false );
+
+		systemoutput( "path: [#rc.path#]", true );
 
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( urlDecode( trim( rc.path ) ) );

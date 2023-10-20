@@ -214,7 +214,13 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				</div>
 
 			    <div class="col-md-12">
-					<span id="file_uploader_button" class="btn btn-block btn-primary hidden">Upload</span>
+					<button
+						type="button"
+						id="file_uploader_button"
+						class="btn btn-block btn-primary hidden"
+					>
+						Upload
+					</button>
 				</div>
 
 			</div>
@@ -311,19 +317,4 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	</div>
 </div>
 #announce( "fb_postQuickViewBar" )#
-
-<!--- Hidden upload iframe --->
-<iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
-<form 	id="upload-form"
-		name="upload-form"
-		enctype="multipart/form-data"
-		method="POST"
-		target="upload-iframe"
-		action="#event.buildLink( prc.xehFBUpload )#"
->
-	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
-	<input type="hidden" name="manual" value="true" />
-</form>
-<!---Cancel: #rc.cancelCallBack#, Choose: #rc.callBack#
-<cfdump var="#flash.getScope()#">--->
 </cfoutput>

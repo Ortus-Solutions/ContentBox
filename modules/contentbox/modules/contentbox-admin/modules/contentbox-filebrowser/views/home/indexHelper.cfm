@@ -77,21 +77,22 @@ function fbRename(){
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
 	// prompt for new name
-	bootbox.prompt( { 	title: '#$r( "jsmessages.newname@fb" )#',
-						inputType: "text",
-						value: target.attr( "data-name" ),
-						callback: function(result){
-							// do renaming if prompt not empty
-							if( result != null){
-								$fileLoaderBar.slideDown();
-								$.post( '#event.buildLink( prc.xehFBRename )#',
-									    { name : result, path : target.attr( "data-fullURL" ) },
-									    function( data ){
-											if( data.errors ){ alert( data.messages ); }
-											fbRefresh();
-								}, "json" );
-							}
-						}
+	bootbox.prompt( {
+		title: '#$r( "jsmessages.newname@fb" )#',
+		inputType: "text",
+		value: target.attr( "data-name" ),
+		callback: function( result ){
+			// do renaming if prompt not empty
+			if( result != null){
+				$fileLoaderBar.slideDown();
+				$.post( '#event.buildLink( prc.xehFBRename )#',
+						{ name : result, path : target.attr( "data-fullURL" ) },
+						function( data ){
+							if( data.errors ){ alert( data.messages ); }
+							fbRefresh();
+				}, "json" );
+			}
+		}
 	});
 
 }
@@ -308,31 +309,39 @@ fbInit = () => {
 		}
 	} );
 
-	$( '##file_uploader_button' ).on('click', function(){
+	$( '##file_uploader_button' ).on( "click", function(){
+
 		var iframe  = $( '##upload-iframe' );
 		var form    = $( '##upload-form' );
 		var field   = $( '##filewrapper' );
 		var wrapper = $( '##manual_upload_wrapper' );
+		var thisButton = $( this );
+
+		// UI prep
+		thisButton.prop( "disabled", true );
 		wrapper.append( '<p id="upload_message"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> Uploading your file...</p>' );
+
 		// move to target form
-		field.appendTo( form );
-		field.hide();
+		field.clone().appendTo( form ).hide();
 		// submit the form; it's target is the iframe, so AJAX-ish upload style
 		form.submit();
-
-		fbRefresh();
 		// handle load method of iframe
-		iframe.load(function(){
+		iframe.on( "load", function(){
 			// try to get JSON response from server in textfield
 			var results = $.parseJSON( iframe.contents().text() );
 			if( !results.errors ) {
+				adminNotifier( "info", results.messages );
+				thisButton.prop( "disabled", false );
+				$( "##upload_message" ).remove();
+				$( "##uploadBar" ).slideToggle();
 				fbRefresh();
 			} else {
+				adminNotifier( "error", results.messages );
 				wrapper.append( "<div class='alert alert-danger'>" + results.messages + "</div>" );
 				$( '##upload_message' ).remove();
-				field.prependTo( wrapper );
-				field.show();
+				field.prependTo( wrapper ).show();
 			}
+			$( "##filewrapper" ).fileinput( "reset" );
 		} );
 	} );
 
@@ -371,6 +380,8 @@ fbInit = () => {
 			$.data( file ).addClass( 'done' );
 			if( response.ERRORS ){
 				alert( response.MESSAGES );
+			} else {
+				adminNotifier( "info", "File Uploaded!" );
 			}
 			fbRefresh();
 		},

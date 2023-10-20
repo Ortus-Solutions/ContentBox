@@ -1,54 +1,54 @@
 <cfscript>
-	/**
-	 * --------------------------------------------------------------------------
-	 * CODLFUSION HELPER METHODS
-	 * --------------------------------------------------------------------------
-	 */
-	function $getBackPath( inPath ){
-		arguments.inPath = replace( arguments.inPath, "\", "/", "all" );
-		var backPath = listToArray( arguments.inPath, "/" );
-		backPath.deleteAt( backPath.len() );
-		return URLEncodedFormat( backPath.toList( "/" ) );
-	}
-	function $getUrlRelativeToPath( required basePath, required filePath, encodeURL=false ){
-		var URLOut = "";
-		var strURLOut = "/";
-		var arrPath = [];
-		var p = "";
-		URLOut = replace( replacenocase( arguments.filePath, arguments.basePath, "/", "one" ), "\", "/", "all" );
-		if ( arguments.encodeURL ){
-			arrPath=listtoarray( URLOut, "/" );
-			for( p in arrPath ){
-				strURLOut = listAppend( strURLOut, replacenocase( urlencodedformat( p ), "%2e", ".", "all" ), "/" );
-			}
-			URLOut = strURLOut;
+/**
+ * --------------------------------------------------------------------------
+ * CODLFUSION HELPER METHODS
+ * --------------------------------------------------------------------------
+ */
+function $getBackPath( inPath ){
+	arguments.inPath = replace( arguments.inPath, "\", "/", "all" );
+	var backPath = listToArray( arguments.inPath, "/" );
+	backPath.deleteAt( backPath.len() );
+	return URLEncodedFormat( backPath.toList( "/" ) );
+}
+function $getUrlRelativeToPath( required basePath, required filePath, encodeURL=false ){
+	var URLOut = "";
+	var strURLOut = "/";
+	var arrPath = [];
+	var p = "";
+	URLOut = replace( replacenocase( arguments.filePath, arguments.basePath, "/", "one" ), "\", "/", "all" );
+	if ( arguments.encodeURL ){
+		arrPath=listtoarray( URLOut, "/" );
+		for( p in arrPath ){
+			strURLOut = listAppend( strURLOut, replacenocase( urlencodedformat( p ), "%2e", ".", "all" ), "/" );
 		}
-		URLOut = replacenocase( URLOut, "//", "", "all" );
-		return URLOut;
+		URLOut = strURLOut;
 	}
-	function $getURLMediaPath( required fbDirRoot, required filePath ){
-		var URLOut = replaceNoCase( arguments.filePath, arguments.fbDirRoot, "", "all" );
-		if( len( URLOut ) ){
-			// set our drive prefix and trim leading slashes on the path
-			URLOut = prc.fbSettings.mediaPath & "/" & prc.activeDisk.getName() & ":" & listToArray( URLOut, "/" ).toList( "/" );
-		}
-		return URLOut;
+	URLOut = replacenocase( URLOut, "//", "", "all" );
+	return URLOut;
+}
+function $getURLMediaPath( required fbDirRoot, required filePath ){
+	var URLOut = replaceNoCase( arguments.filePath, arguments.fbDirRoot, "", "all" );
+	if( len( URLOut ) ){
+		// set our drive prefix and trim leading slashes on the path
+		URLOut = prc.fbSettings.mediaPath & "/" & prc.activeDisk.getName() & ":" & listToArray( URLOut, "/" ).toList( "/" );
 	}
-	function validQuickView( ext ){
-		return ( listFindNoCase( "png,jpg,jpeg,bmp,gif", arguments.ext ) ? true : false );
+	return URLOut;
+}
+function validQuickView( ext ){
+	return ( listFindNoCase( "png,jpg,jpeg,bmp,gif", arguments.ext ) ? true : false );
+}
+function getImageFile( ext ){
+	switch( arguments.ext ){
+		case "doc" : case "docx" : case "pages" : { return "word.png"; }
+		case "ppt" : case "pptx" : case "keynote" : { return "ppt.png"; }
+		case "xls" : case "xlsx" : case "numbers" : { return "xls.png"; }
+		case "pdf" : { return "pdf.png"; }
+		case "png": case "jpg" : case "jpeg" : case "gif" : case "bmp" : { return "Picture.png"; }
+		case "cfc": case "cfm" : case "cfml" : { return "coldfusion.png"; }
+		case "html" : case "htm" : case "aspx" : case "asp" : case "php" : case "rb" : case "py" : case "xml" :{ return "code.png"; }
+		default : return "file.png";
 	}
-	function getImageFile( ext ){
-		switch( arguments.ext ){
-			case "doc" : case "docx" : case "pages" : { return "word.png"; }
-			case "ppt" : case "pptx" : case "keynote" : { return "ppt.png"; }
-			case "xls" : case "xlsx" : case "numbers" : { return "xls.png"; }
-			case "pdf" : { return "pdf.png"; }
-			case "png": case "jpg" : case "jpeg" : case "gif" : case "bmp" : { return "Picture.png"; }
-			case "cfc": case "cfm" : case "cfml" : { return "coldfusion.png"; }
-			case "html" : case "htm" : case "aspx" : case "asp" : case "php" : case "rb" : case "py" : case "xml" :{ return "code.png"; }
-			default : return "file.png";
-		}
-	}
+}
 </cfscript>
 <cfoutput>
 <div class="clear-both">
@@ -255,6 +255,18 @@
 
 	#announce( "fb_postFileListing" )#
 </div>
+<!--- Hidden upload iframe --->
+<iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
+<form 	id="upload-form"
+		name="upload-form"
+		enctype="multipart/form-data"
+		method="POST"
+		target="upload-iframe"
+		action="#event.buildLink( prc.xehFBUpload )#"
+>
+	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
+	<input type="hidden" name="manual" value="true" />
+</form>
 <script>
 ( () => {
 	// activate tooltips
