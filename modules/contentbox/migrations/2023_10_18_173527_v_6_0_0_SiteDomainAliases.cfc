@@ -3,7 +3,7 @@
  */
 component {
 
-    // Include Utils
+	// Include Utils
 	include template="./_MigrationUtils.cfm";
 
 	function up( schema, qb ){
@@ -15,8 +15,7 @@ component {
 		}
 	}
 
-    function down( schema, qb ) {
-
-    }
+	function down( schema, qb ){
+	}
 
 }

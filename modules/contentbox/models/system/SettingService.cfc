@@ -776,11 +776,13 @@ component
 			// iterate and import
 			for ( var thisSetting in arguments.importData ) {
 				// Site Setting or Global Setting
-				var oSetting =  findWhere( {
+				var oSetting = findWhere( {
 					name : thisSetting.name,
-					site : isNull( thisSetting.site.siteID ) ? javaCast( "null", "" ) : siteService.get( thisSetting.site.siteID )
+					site : isNull( thisSetting.site.siteID ) ? javacast( "null", "" ) : siteService.get(
+						thisSetting.site.siteID
+					)
 				} );
-				oSetting     = ( isNull( oSetting ) ? new () : oSetting );
+				oSetting = ( isNull( oSetting ) ? new () : oSetting );
 
 				// Check for boolean values
 				if ( isSimpleValue( thisSetting.value ) && isBoolean( thisSetting.value ) ) {

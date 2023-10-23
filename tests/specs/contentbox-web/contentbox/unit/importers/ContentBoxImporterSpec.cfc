@@ -21,22 +21,21 @@ component extends="tests.resources.BaseTest" {
 
 			it( "can import settings", function(){
 				withRollback( () => {
-					var importData = deserializeJSON( fileRead( expandPath( "/tests/resources/exports/setting.json" ) ) );
-					var importLog =	createObject( "java", "java.lang.StringBuilder" ).init(
-						""
+					var importData = deserializeJSON(
+						fileRead( expandPath( "/tests/resources/exports/setting.json" ) )
 					);
+					var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "" );
 
 					var output = getInstance( "settingService@contentbox" ).importFromData(
-						importData : importData,
-						override : false,
+						importData: importData,
+						override  : false,
 						importLog : importLog
 					);
 
 					expect( output ).notToBeEmpty();
 					expect( output ).toInclude( "No settings imported as none where found or able to be overriden from the import file." );
-				})
-			});
-
+				} )
+			} );
 		} );
 	}
 
