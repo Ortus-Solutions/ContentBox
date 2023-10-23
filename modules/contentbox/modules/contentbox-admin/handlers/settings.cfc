@@ -331,10 +331,10 @@ component extends="baseHandler" {
 	 * @return html
 	 */
 	function authLogs( event, rc, prc ){
-		prc.featureEnabled = prc.cbsettings.cb_security_login_blocker;
-		prc.xehTruncate    = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
+		prc.featureEnabled     = prc.cbsettings.cb_security_login_blocker;
+		prc.xehTruncate        = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
 		// Get all logs
-		prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
+		prc.logs               = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
 		// Raw tab
 		prc.tabSystem_authLogs = true;
 		// View

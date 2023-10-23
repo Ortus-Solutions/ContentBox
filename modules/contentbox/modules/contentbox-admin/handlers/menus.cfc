@@ -135,7 +135,7 @@ component extends="baseHandler" {
 		};
 
 		// set new or persisted id in args
-		if( args.menuItem.isLoaded() ){
+		if ( args.menuItem.isLoaded() ) {
 			args.menuItemID = args.menuItem.getMenuItemID();
 		} else {
 			args.menuItemID = "new-#createUUID()#";
@@ -147,7 +147,7 @@ component extends="baseHandler" {
 				class=""dd-item dd3-item""
 				data-id=""#encodeForHTMLAttribute( args.menuItemID )#""
 				:key=""#encodeForHTMLAttribute( args.menuItemID )#"">" )
-			writeOutput( view( view : "menus/provider", args : args ) );
+			writeOutput( view( view: "menus/provider", args: args ) );
 			writeOutput( "</li>" );
 		};
 
