@@ -865,10 +865,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentTitle(){
 		var oCurrentContent = "";
+		var metaTitle       = getMetaTitle();
 
 		// If Meta Title is set Manually, return it
-		if ( len( getMetaTitle() ) ) {
-			return encodeForHTML( getMetaTitle() );
+		if ( len( metaTitle ) ) {
+			return encodeForHTML( metaTitle );
 		}
 
 		// Check if in page view or entry view
@@ -914,9 +915,11 @@ component accessors="true" singleton threadSafe {
 		// Home Page Rules:
 		// - Page SEO
 		// - Site Description
-		if( isHomePage() ){
+		if ( isHomePage() ) {
 			metaDescription = oCurrentContent.getHTMLDescription();
-			return len( metaDescription ) ? encodeForHTMLAttribute( metaDescription ) : encodeForHTMLAttribute( siteDescription() );
+			return len( metaDescription ) ? encodeForHTMLAttribute( metaDescription ) : encodeForHTMLAttribute(
+				siteDescription()
+			);
 		}
 
 		// Page/Blog Rules
@@ -946,7 +949,7 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentKeywords(){
 		var oCurrentContent = "";
-		var metaKeywords = getMetaKeywords();
+		var metaKeywords    = getMetaKeywords();
 
 		// If Meta Keywords is set Manually, return it
 		if ( len( metaKeywords ) ) {
@@ -963,9 +966,11 @@ component accessors="true" singleton threadSafe {
 		// Home Page Rules:
 		// - Page SEO
 		// - Site
-		if( isHomePage() ){
+		if ( isHomePage() ) {
 			metaKeywords = stripWhitespace( oCurrentContent.getHTMLKeywords() );
-			return len( metaKeywords ) ? encodeForHTMLAttribute( metaKeywords ) : encodeForHTMLAttribute( siteKeywords() );
+			return len( metaKeywords ) ? encodeForHTMLAttribute( metaKeywords ) : encodeForHTMLAttribute(
+				siteKeywords()
+			);
 		}
 
 		// in context view or global
@@ -1009,9 +1014,10 @@ component accessors="true" singleton threadSafe {
 	function getContentURL(){
 		var oCurrentContent    = "";
 		var oCurrentEntryPoint = "";
+		var metaURL            = getMetaURL();
 
-		if ( len( getMetaURL() ) ) {
-			return getMetaURL();
+		if ( len( metaURL ) ) {
+			return metaURL;
 		}
 
 		// Check if in page view or entry view
@@ -1027,17 +1033,19 @@ component accessors="true" singleton threadSafe {
 		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getslug() ) ) {
 			return siteBaseURL() & oCurrentEntryPoint & oCurrentContent.getslug();
 		}
+
+		return "";
 	}
 
 	/**
 	 * Set the Meta ImageURL for the request
 	 *
-	 * @ImageURL - The new ImageURL
+	 * @imageURL - The new imageURL
 	 */
-	function setMetaImageURL( required string ImageURL ){
+	function setMetaImageURL( required string imageURL ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
-		prc.meta.ImageURL = arguments.ImageURL;
+		prc.meta.imageURL = arguments.imageURL;
 	}
 
 	/**
@@ -1046,8 +1054,8 @@ component accessors="true" singleton threadSafe {
 	function getMetaImageURL(){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
-		if ( structKeyExists( prc.meta, "ImageURL" ) ) {
-			return prc.meta.ImageURL;
+		if ( structKeyExists( prc.meta, "imageURL" ) ) {
+			return prc.meta.imageURL;
 		} else {
 			return "";
 		}
@@ -1058,9 +1066,10 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentImageURL(){
 		var oCurrentContent = "";
+		var metaImageUrl    = getMetaImageURL();
 
-		if ( len( getMetaImageURL() ) ) {
-			return getMetaImageURL();
+		if ( len( metaImageURL ) ) {
+			return metaImageURL;
 		}
 
 		// Check if in page view or entry view
@@ -1074,6 +1083,8 @@ component accessors="true" singleton threadSafe {
 		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getFeaturedImageURL() ) ) {
 			return siteBaseURL() & oCurrentContent.getFeaturedImageURL();
 		}
+
+		return "";
 	}
 
 	/**
@@ -1104,8 +1115,10 @@ component accessors="true" singleton threadSafe {
 	 * Get the Content Open Graph Type based on content type
 	 */
 	function getContentOGType(){
-		if ( len( getMetaOGType() ) ) {
-			return getMetaOGType();
+		var metaOGType = getMetaOGType();
+
+		if ( len( metaOGType ) ) {
+			return metaOGType;
 		}
 
 		// Check if in page view or entry view
@@ -1118,8 +1131,6 @@ component accessors="true" singleton threadSafe {
 		return "website";
 	}
 
-
-
 	/**
 	 * getOpenGraphMeta - return Open Graph Facebook friendly meta data
 	 * More information: https://developers.facebook.com/docs/reference/opengraph
@@ -1127,23 +1138,21 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getOpenGraphMeta(){
 		var content         = "";
+		// cfformat-ignore-start
 		savecontent variable="content" {
-			writeOutput( "<meta property=""og:title""              content=""#getContentTitle()#"" />#chr( 10 )#" );
-			writeOutput( "<meta property=""og:type""               content=""#getContentOGType()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:title"" content=""#getContentTitle()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:type"" content=""#getContentOGType()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:description"" content=""#getContentDescription()#"" />#chr( 10 )#" );
+
 			if ( len( getContentURL() ) ) {
-				writeOutput( "<meta property=""og:url""                content=""#getContentURL()#"" />#chr( 10 )#" );
+				writeOutput( "<meta property=""og:url"" content=""#getContentURL()#"" />#chr( 10 )#" );
 			}
-			if ( len( getContentURL() ) ) {
-				writeOutput(
-					"<meta property=""og:description""        content=""#getContentDescription()#"" />#chr( 10 )#"
-				);
-			}
+
 			if ( len( getContentImageURL() ) ) {
-				writeOutput(
-					"<meta property=""og:image""              content=""#getContentImageURL()#"" />#chr( 10 )#"
-				);
+				writeOutput( "<meta property=""og:image"" content=""#getContentImageURL()#"" />#chr( 10 )#" );
 			}
 		}
+		// cfformat-ignore-end
 
 		return content;
 	}
