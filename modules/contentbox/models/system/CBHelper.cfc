@@ -897,10 +897,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentDescription(){
 		var oCurrentContent = "";
+		var metaDescription = getMetaDescription();
 
 		// If Meta Description is set Manually, return it
-		if ( len( getMetaDescription() ) ) {
-			return encodeForHTMLAttribute( getMetaDescription() );
+		if ( len( metaDescription ) ) {
+			return encodeForHTMLAttribute( metaDescription );
 		}
 
 		// Check if in page view or entry view
@@ -910,7 +911,15 @@ component accessors="true" singleton threadSafe {
 			oCurrentContent = getCurrentEntry();
 		}
 
-		// in context view or global
+		// Home Page Rules:
+		// - Page SEO
+		// - Site Description
+		if( isHomePage() ){
+			metaDescription = oCurrentContent.getHTMLDescription();
+			return len( metaDescription ) ? encodeForHTMLAttribute( metaDescription ) : encodeForHTMLAttribute( siteDescription() );
+		}
+
+		// Page/Blog Rules
 		if ( isObject( oCurrentContent ) ) {
 			// Do we have current page SEO description set?
 			if ( len( oCurrentContent.getHTMLDescription() ) ) {
@@ -929,7 +938,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// Return global site description as metadata
-		return encodeForHTMLAttribute( trim( siteDescription() ) );
+		return encodeForHTMLAttribute( siteDescription() );
 	}
 
 	/**
@@ -937,10 +946,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentKeywords(){
 		var oCurrentContent = "";
+		var metaKeywords = getMetaKeywords();
 
 		// If Meta Keywords is set Manually, return it
-		if ( len( getMetaKeywords() ) ) {
-			return encodeForHTMLAttribute( stripWhitespace( getMetaKeywords() ) );
+		if ( len( metaKeywords ) ) {
+			return encodeForHTMLAttribute( stripWhitespace( metaKeywords ) );
 		}
 
 		// Check if in page view or entry view
@@ -948,6 +958,14 @@ component accessors="true" singleton threadSafe {
 			oCurrentContent = getCurrentPage();
 		} else if ( isEntryView() ) {
 			oCurrentContent = getCurrentEntry();
+		}
+
+		// Home Page Rules:
+		// - Page SEO
+		// - Site
+		if( isHomePage() ){
+			metaKeywords = stripWhitespace( oCurrentContent.getHTMLKeywords() );
+			return len( metaKeywords ) ? encodeForHTMLAttribute( metaKeywords ) : encodeForHTMLAttribute( siteKeywords() );
 		}
 
 		// in context view or global
