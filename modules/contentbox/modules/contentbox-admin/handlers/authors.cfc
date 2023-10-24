@@ -459,16 +459,13 @@ component extends="baseHandler" {
 			// save Author preference
 			variables.authorService.save( prc.oCurrentAuthor );
 			// response
-			response
-				.setData( { "preference" : rc.preference, "value" : rc.value } )
-				.addMessage( "Preference saved!" );
+			response.setData( { "preference" : rc.preference, "value" : rc.value } ).addMessage( "Preference saved!" );
 		} else {
-			response
-				.setErrorMessage(
-					"No preference sent",
-					event.STATUS.BAD_REQUEST,
-					response.400
-				);
+			response.setErrorMessage(
+				"No preference sent",
+				event.STATUS.BAD_REQUEST,
+				response.400
+			);
 		}
 	}
 

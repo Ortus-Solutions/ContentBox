@@ -9,7 +9,7 @@ component {
 
 	function up( schema, qb ){
 		// Content Templates
-		if( !schema.hasTable( "cb_contentTemplate" ) ){
+		if ( !schema.hasTable( "cb_contentTemplate" ) ) {
 			arguments.schema.create( "cb_contentTemplate", ( table ) => {
 				// Columns
 				table.string( "templateID", 36 ).primaryKey();
@@ -65,7 +65,6 @@ component {
 		} else {
 			systemOutput( "- skipping 'cb_content.FK_childContentTemplateID' creation, column already there", true );
 		}
-
 	}
 
 	function down( schema, qb ){
