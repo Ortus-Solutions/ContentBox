@@ -1,4 +1,5 @@
 const { template } = require( "lodash" );
+const { DateTime } = require( "luxon" );
 
 /**
  * Get widget selector URL
@@ -57,7 +58,7 @@ window.getAuthorSavePreferenceURL = function(){ return $cbEditorConfig.adminEntr
  * @param  {string} queryString The query string to build
  */
 window.getModuleURL = function( module, event, queryString ){
-	var returnURL = "";
+	let returnURL = "";
 
 	$.ajax( {
 		url    	: $cbEditorConfig.adminEntryURL + "/modules/buildModuleLink",
@@ -68,7 +69,7 @@ window.getModuleURL = function( module, event, queryString ){
 		}
 	} );
 
-	return $.trim( returnURL );
+	return returnURL.trim();
 };
 
 /**
@@ -176,7 +177,7 @@ window.setupEditors = function( theForm, withExcerpt, saveURL, collapseNav ){
 	}
 
 	// Activate blur slugify on titles
-	var $title = $targetEditorForm.find( "#title" );
+	let $title = $targetEditorForm.find( "#title" );
 	// set up live event for title, do nothing if slug is locked..
 	$title.on( "blur", function(){
 		if ( !$slug.prop( "disabled" ) ){
@@ -208,7 +209,7 @@ window.setupEditors = function( theForm, withExcerpt, saveURL, collapseNav ){
 	autoSave( $content, $contentID, "contentAutoSave" );
 
 	// Collapse navigation for better editing experience
-	var bodyEl = $( "#container" );
+	let bodyEl = $( "#container" );
 	collapseNav = collapseNav || true;
 	if ( collapseNav && !$( bodyEl ).hasClass( "sidebar-mini" ) ){
 		$( "body" ).removeClass( "off-canvas-open" );
@@ -267,7 +268,7 @@ window.quickSave = function(){
 		$content.val( getEditorContent() );
 	}
 	// enable for quick save, if disabled
-	var disableSlug = false;
+	let disableSlug = false;
 	if ( $slug.prop( "disabled" ) ){
 		$slug.prop( "disabled", false );
 		disableSlug = true;
@@ -324,10 +325,9 @@ window.previewContent = function(){
  * Set the correct publish date to now
  */
 window.publishNow = function(){
-	var fullDate = new Date();
+	const today = DateTime.now();
+	$( "#publishedTime" ).val( today.toFormat( "HH:mm" ) );
 	$( "#publishedDate" ).val( getToday() );
-	$( "#publishedHour" ).val( fullDate.getHours() );
-	$( "#publishedMinute" ).val( fullDate.getMinutes() );
 };
 
 /**
@@ -391,8 +391,8 @@ window.permalinkUniqueCheck = function( linkToUse ){
  * @param  {string} linkToUse [description]
  */
 window.createPermalink = function( linkToUse ){
-	var $title 		= $targetEditorForm.find( "#title" );
-	var linkToUse 	= linkToUse || $title.val();
+	let $title 		= $targetEditorForm.find( "#title" );
+	linkToUse 	= linkToUse || $title.val();
 	if ( !linkToUse.length ){ return; }
 
 	togglePermalink();
@@ -412,7 +412,7 @@ window.createPermalink = function( linkToUse ){
  * Toggle permalink
  */
 window.togglePermalink = function(){
-	var toggle = $( "#togglePermalink" );
+	let toggle = $( "#togglePermalink" );
 	// Toggle lock icon on click..
 	toggle.hasClass( "fa fa-lock" ) ? toggle.attr( "class", "fa fa-unlock" ) : toggle.attr( "class", "fa fa-lock" );
 	//disable input field
@@ -569,7 +569,6 @@ window.applyContentTemplateToField = function( fieldName, definition ){
 				fieldDefinition => {
 					let customFields = document.getElementById( "customFields" );
 					let isApplied = !!( customFields.getElementsByClassName( "customFieldKey" ).length && Array.from( customFields.getElementsByClassName( "customFieldKey" ) ).some( el => el.value == fieldDefinition.name ) );
-					var $templateNode;
 					if ( !isApplied ){
 						$dispatch( "add-custom-field", { "key": fieldDefinition.name, "value": fieldDefinition.defaultValue } );
 						console.log( "custom field created: " + fieldName );
@@ -592,7 +591,7 @@ window.applyContentTemplateToField = function( fieldName, definition ){
 			break;
 		}
 		default : {
-			var $templateField = $( `[name=${fieldName}]` );
+			let $templateField = $( `[name=${fieldName}]` );
 			if ( $templateField.length ){
 				let nodeType = $templateField[ 0 ].nodeType;
 				switch ( nodeType ){
@@ -619,11 +618,11 @@ window.applyContentTemplateToField = function( fieldName, definition ){
 						if ( typeof( definition[ fieldName ].value ) == "boolean" ){
 							definition[ fieldName ].value = definition[ fieldName ].value ? "Yes" : "No";
 						}
-						$options = $( "option", $templateField );
+						let $options = $( "option", $templateField );
 						$options.each(
 							index => {
 								let $option = $( $options[ index ] );
-								$values = Array.isArray( definition[ fieldName ].value )
+								let $values = Array.isArray( definition[ fieldName ].value )
 									? definition[ fieldName ].value
 									: definition[ fieldName ].value.split( "," );
 								if (

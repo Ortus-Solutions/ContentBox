@@ -73,8 +73,8 @@ module.exports = function( mix ) {
 			nodePath + "alpinejs/dist/cdn.js",
 			// Jquery
 			nodePath + "jquery/dist/jquery.js",
-			// Moment: Used by the Editors JS: Refactor in the future to JavaScript API
-			nodePath + "moment/dist/moment.js",
+			// Luxon
+			nodePath + "luxon/build/global/luxon.min.js",
 			// For autosaving and js cookies on editors
 			nodePath + "jquery.cookie/jquery.cookie.js",
 			// Form validation

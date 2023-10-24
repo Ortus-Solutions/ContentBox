@@ -1,5 +1,6 @@
 import tinyKeys from "tinykeys";
 import toastr from "toastr";
+import { DateTime } from "luxon";
 
 require( "./filebrowser.js" );
 require( "./editors/editors.js" );
@@ -647,15 +648,16 @@ window.checkByValue = function( id, recordID ) {
 
 /**
  * Get today's date in us or rest of the world format
+ *
  * @param {boolean} us defaults to true
  */
 window.getToday = function( us ) {
 	// default us to true
 	us = ( us == null ? true : us );
 	if ( us ) {
-		return moment().format( "YYYY-MM-DD" );
+		return DateTime.now().toFormat( "yyyy-LL-dd" );
 	} else {
-		return moment().format( "DD-MM-YYYY" );
+		return DateTime.now().toFormat( "dd-MM-yyyy" );
 	}
 };
 

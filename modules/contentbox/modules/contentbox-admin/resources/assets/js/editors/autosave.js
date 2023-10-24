@@ -7,14 +7,14 @@
  * @return {object}          Returns the auto save closure
  */
 import { decompressFromUTF16, compressToUTF16 } from "lz-string";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 const autoSavePrefix = "autosave_";
 
 window.resetAutoSave = function(){
 	if ( !Modernizr.localstorage ) return;
-	var saveStoreKey 	= autoSavePrefix + window.location;
-	var saved = localStorage.getItem( saveStoreKey );
+	let saveStoreKey 	= autoSavePrefix + window.location;
+	let saved = localStorage.getItem( saveStoreKey );
 	if ( saved ){
 		JSON.parse( saved )
 			.forEach( ( entry, index ) => {
@@ -35,26 +35,26 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	}
 
 	// Setup defaults and global options
-	var defaults 		= { storeMax: 10, timeout: 4000 };
-	var opts 			= $.extend( {}, defaults, options || {} );
-	var editorID 		= editor.attr( "id" );
+	let defaults 		= { storeMax: 10, timeout: 4000 };
+	let opts 			= $.extend( {}, defaults, options || {} );
+	let editorID 		= editor.attr( "id" );
 	// Retrieve the actual editor driver implementation using ContentBox JS Interface Method
-	var saveStoreKey 	= autoSavePrefix + window.location;
-	var timer 			= 0, savingActive = false;
+	let saveStoreKey 	= autoSavePrefix + window.location;
+	let timer 			= 0, savingActive = false;
 
 	// Setup SavesStore
 	if ( !localStorage.getItem( saveStoreKey ) ){
 		localStorage.setItem( saveStoreKey, "[]" );
 	}
-	var saveStore = JSON.parse( localStorage.getItem( saveStoreKey ) );
+	let saveStore = JSON.parse( localStorage.getItem( saveStoreKey ) );
 
 	/**
 	 * Remove old saves
 	 * @param  {Function} callback The callback function
 	 */
-	var removeOldSaves = function( callback ){
-		var overMax = saveStore.length - opts.storeMax;
-		for ( var i = 0; i < overMax; i++ ){
+	let removeOldSaves = function( callback ){
+		let overMax = saveStore.length - opts.storeMax;
+		for ( let i = 0; i < overMax; i++ ){
 		  localStorage.removeItem( saveStore[ i ] );
 		  saveStore.splice( i, 1 );
 		}
@@ -67,7 +67,7 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	 * Add to saved storage
 	 * @param {string} saveKey The save storage key
 	 */
-	var addToStore = function( saveKey ){
+	let addToStore = function( saveKey ){
 		saveStore.push( saveKey );
 		if ( saveStore.length > opts.storeMax ){
 		  removeOldSaves( updateAutoSaveMenu );
@@ -79,18 +79,20 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	/**
 	 * Update auto save dropdown menu
 	 */
-	var updateAutoSaveMenu = function(){
+	let updateAutoSaveMenu = function(){
 		localStorage.setItem( saveStoreKey, JSON.stringify( saveStore ) );
-		var ulList = "";
-		for ( var i = saveStore.length; i--; ){
-		  var newItemDate 	= moment( saveStore[ i ].replace( editorID + "_", "" ), "x" );
-		  var dateTitle 	= moment().diff( newItemDate, "hours" ) < 1 ? newItemDate.fromNow() : newItemDate.format( "MM/DD/YYYY h:mm a" );
-		  ulList += "<li><a href=\"javascript:void(0)\" data-id=\"" + saveStore[ i ] + "\">" + dateTitle +"</a></li>";
+		let ulList = "";
+		for ( let i = saveStore.length; i--; ){
+			let newItemDate = DateTime.fromFormat( saveStore[ i ].replace( editorID + "_", "" ), "t" );
+			let dateTitle = newItemDate.diffNow( "hours" ).hours < 1 ? newItemDate.toRelative() : newItemDate.toFormat( "MM/dd/yyyy h:mm a" );
+			ulList += "<li><a href=\"javascript:void(0)\" data-id=\"" + saveStore[ i ] + "\">" + dateTitle +"</a></li>";
 		}
+
 		// No records
 		if ( !saveStore.length ){
 			ulList = "<li><a href=\"javascript:void(0)\">No Autosaves, type something :)</a></li>";
 		}
+
 		// Add records
 		$( "#" + ddMenuID ).find( ".autoSaveMenu" ).html( ulList );
 	};
@@ -99,7 +101,7 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	 * Start the autosave timer
 	 * @param  {object} event The JS event object
 	 */
-	var startTimer = function( event ){
+	let startTimer = function( event ){
 	  	if ( timer ){ clearTimeout( timer ); }
 	  	timer = setTimeout( onTimer, opts.timeout, event );
 	};
@@ -108,12 +110,12 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	 * Autosave Command
 	 * @param  {object} event The JS event object
 	 */
-	var onTimer = function( event ){
+	let onTimer = function( event ){
 		if ( savingActive ) {
 		  startTimer( event );
 		} else {
 			savingActive = true;
-			var autoSaveKey = editorID + "_" + Date.now();
+			let autoSaveKey = editorID + "_" + Date.now();
 			// Store it
 			localStorage.setItem( autoSaveKey, compressToUTF16( getEditorContent() ) );
 			// Add to items
@@ -127,8 +129,8 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	 * Load content back into editor
 	 * @param  {string} contentID The content ID to load from local storage
 	 */
-	var loadContent = function( contentID ){
-		var content = localStorage.getItem( contentID );
+	let loadContent = function( contentID ){
+		let content = localStorage.getItem( contentID );
 		setEditorContent( "content", decompressFromUTF16( content ) );
 		if ( timer ){ clearTimeout( timer ); }
 	};

@@ -66,6 +66,7 @@
 							type="text"
 							class="form-control inline"
 							value="#prc.oContent.getPublishedDateTime()#"
+							id="publishedTime"
 							name="publishedTime"
 						>
 						<span class="input-group-addon">
