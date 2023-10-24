@@ -122,9 +122,9 @@ component extends="coldbox.system.Interceptor" {
 		);
 
 		// Append adminbar styles to the html head
-		try{
+		try {
 			cfhtmlhead( text = view( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
-		} catch( any e ){
+		} catch ( any e ) {
 			log.error( "Error sending adminbar styles via cfhtmlhead", e );
 		}
 	}
