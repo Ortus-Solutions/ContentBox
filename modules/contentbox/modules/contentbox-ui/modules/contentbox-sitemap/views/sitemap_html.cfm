@@ -6,25 +6,25 @@
 		<li>
 			<a href="#prc.linkHome#">Home</a>
 		</li>
-		
+
 		<cfloop array="#prc.aPages#" index="content">
 			<li>
-				<a href="#prc.siteBaseURL##content[ 'slug' ]#">#content[ 'title' ]#</a>
+				<a href="#prc.siteBaseURL#/#content[ 'slug' ]#">#content[ 'title' ]#</a>
 			</li>
 		</cfloop>
 
-		<cfif !prc.disableBlog>				
-		<li><a href="#prc.siteBaseURL##prc.blogEntryPoint#">#left( prc.blogEntryPoint, -1 )#</a>
+		<cfif !prc.disableBlog>
+		<li><a href="#prc.siteBaseURL#/#prc.blogEntryPoint#">#left( prc.blogEntryPoint, -1 )#</a>
 			<ul>
 				<cfloop array="#prc.aEntries#" index="content">
 					<li>
-						<a href="#prc.siteBaseURL##prc.blogEntryPoint##content[ 'slug' ]#">#content[ 'title' ]#</a>
+						<a href="#prc.siteBaseURL#/#prc.blogEntryPoint##content[ 'slug' ]#">#content[ 'title' ]#</a>
 					</li>
 				</cfloop>
 			</ul>
 		</li>
 	</cfif>
-	</ul> 	
+	</ul>
 </cfoutput>
 </div>
 </section>
