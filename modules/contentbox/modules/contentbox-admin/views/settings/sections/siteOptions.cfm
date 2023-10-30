@@ -46,7 +46,7 @@
 
 	<!--- Site Maintenance --->
 	<fieldset>
-	<legend><i class="fa fa-hand-holding-medical fa-lg"></i> <strong>Maintenance</strong></legend>
+	<legend><i class="fas fa-tools fa-lg"></i> <strong>Maintenance</strong></legend>
 		<p>You can put your sites in maintenance mode if you are doing upgrades or anything funky!</p>
 		<!--- Site maintenance --->
 		<div class="form-group">
