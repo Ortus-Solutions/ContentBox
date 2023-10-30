@@ -5,7 +5,7 @@
             <div class="controls">
                 <div class="input-group no-margin">
                     <span class="input-group-addon btn-info select-media">
-                       <i class="fa fa-photo"></i>
+                       <i class="fas fa-photo-video"></i>
                     </span>
                     <input type="hidden" name="mediaPath" class="textfield" required="true" value="#args.menuItem.getMediaPath()#" />
                     <input type="text" name="media" class="form-control" required="true" title="Select a media item" readonly=true value="#args.menuItem.getMediaPath()#" />
