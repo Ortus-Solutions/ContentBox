@@ -23,7 +23,7 @@
                 fileName = fileParts[ fileParts.length-1 ];
             input.value = fileName;
             hidden.value = sURL;
-            label.value = fileName;
+            label.value = label.value === "" ? fileName : label.value;
             updateLabel( label );
             typeIcon.classList.remove( 'btn-danger' )
             typeIcon.classList.add( 'btn-info' );
