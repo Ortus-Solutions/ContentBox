@@ -308,7 +308,7 @@
 						<div class="row">
 
 							<div class="col-md-3">
-								<h4><i class="fa fa-photo fa-lg"></i> Themes</h4>
+								<h4><i class="fas fa-photo-video fa-lg"></i> Themes</h4>
 								<div class="checkbox">
 									<label class="checkbox" for="toggle_layouts">
 										#html.checkbox(
