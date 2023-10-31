@@ -41,7 +41,7 @@
 			<div class="row">
 				<span class="col-md-6">
 					#html.textfield(
-						label="Item Content:",
+						label="Item Content:<span class='text-danger' aria-label='required'>*</span>",
 						name="label",
 						id="",
 						bind=args.menuItem,

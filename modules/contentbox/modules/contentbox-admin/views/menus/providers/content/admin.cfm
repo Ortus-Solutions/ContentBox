@@ -1,7 +1,7 @@
 <cfoutput>
     <div class="row">
         <div class="form-group col-md-12">
-            <label for="contentTitle" class="control-label">Select Content Item:</label>
+            <label for="contentTitle" class="control-label">Select Content Item:<span class="text-danger" aria-label="required">*</span></label>
             <div class="controls">
                 <div class="input-group no-margin">
                     <span class="input-group-addon btn-info select-content">

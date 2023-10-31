@@ -2,7 +2,7 @@
     <div class="row">
         <span class="col-md-6">
             #html.textfield(
-                label="URL:",
+                label="URL:<span class='text-danger' aria-label='required'>*</span>",
                 name="url",
                 id="",
                 bind=args.menuItem, 
