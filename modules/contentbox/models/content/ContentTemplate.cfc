@@ -77,7 +77,6 @@ component
 		default=""
 		index  ="idx_templateContentType";
 
-
 	property
 		name   ="name"
 		column ="name"

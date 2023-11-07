@@ -4,7 +4,7 @@
 component {
 
 	// Include Utils
-	include template="./_MigrationUtils.cfm";
+	include template="./util/MigrationUtils.cfm";
 
 	function up( schema, qb ){
 		if ( !hasColumn( "cb_site", "domainAliases" ) ) {
