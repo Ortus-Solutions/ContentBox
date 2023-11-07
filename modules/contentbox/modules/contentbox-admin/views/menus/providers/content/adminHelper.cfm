@@ -51,7 +51,7 @@
             closeRemoteModal();
             input.value = title;
             hidden.value =  slug;
-            label.value = title;
+            label.value = label.value === "" ? title : label.value;
             updateLabel( label );
             typeIcon.classList.remove( 'btn-danger' );
             typeIcon.classList.add( 'btn-primary' );

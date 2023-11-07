@@ -1,11 +1,11 @@
 <cfoutput>
     <div class="row">
         <div class="form-group col-md-12">
-            <label for="media" class="control-label">Select Media Item:</label>
+            <label for="media" class="control-label">Select Media Item:<span class="text-danger" aria-label="required">*</span></label>
             <div class="controls">
                 <div class="input-group no-margin">
                     <span class="input-group-addon btn-info select-media">
-                       <i class="fa fa-photo"></i>
+                       <i class="fas fa-photo-video"></i>
                     </span>
                     <input type="hidden" name="mediaPath" class="textfield" required="true" value="#args.menuItem.getMediaPath()#" />
                     <input type="text" name="media" class="form-control" required="true" title="Select a media item" readonly=true value="#args.menuItem.getMediaPath()#" />
