@@ -20,7 +20,7 @@
                 <!--- Tabs --->
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
 					<li class="nav-item active">
-						<a href="##introduction" class="current" data-toggle="tab">
+						<a href="##introduction" class="nav-link" data-toggle="tab">
 							#cb.r( "tab.intro@installer" )#
 						</a>
 					</li>

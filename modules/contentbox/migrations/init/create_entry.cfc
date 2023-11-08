@@ -4,7 +4,7 @@ component {
 		schema.create( "cb_entry", function(table) {
 
 			table.string( "contentID", 36 ).primaryKey();
-			table.longtext( "description" ).nullable();
+			table.longtext( "excerpt" ).nullable();
 
 			// Relationships
 			table.foreignKey( "contentID" ).references( "contentID" ).onTable( "cb_content" );

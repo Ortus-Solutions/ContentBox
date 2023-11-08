@@ -41,10 +41,8 @@ component accessors="true" {
 			if ( arguments.setup.getFullRewrite() ) {
 				processRewrite( arguments.setup );
 			}
-			// create global roles
-			var adminRole = createRoles( arguments.setup );
 			// create the admin author
-			var author    = createAuthor( arguments.setup, adminRole );
+			var author    = createAuthor( arguments.setup );
 			// Create the default site
 			var site      = createSite( arguments.setup );
 			// Create global settings according to setup
@@ -64,9 +62,6 @@ component accessors="true" {
 				}
 			}
 
-			// Remove ORM update from Application.cfc
-			// Commented out for better update procedures.
-			processORMUpdate( arguments.setup );
 			// Process reinit and debug password security
 			processColdBoxPasswords( arguments.setup );
 			// ContentBox is now online, mark it:
@@ -177,20 +172,6 @@ component accessors="true" {
 	}
 
 	/**
-	 * Process ORM Update
-	 *
-	 * @setup The setup object
-	 */
-	function processORMUpdate( required setup ){
-		var appCFCPath = appPath & "Application.cfc";
-		var c          = fileRead( appCFCPath );
-
-		fileWrite( appCFCPath, replaceNoCase( c, """dropcreate""", """update""" ) );
-
-		return this;
-	}
-
-	/**
 	 * Process ColdBox Passwords
 	 *
 	 * @setup The setup object
@@ -246,133 +227,15 @@ component accessors="true" {
 	}
 
 	/**
-	 * Create permissions
-	 *
-	 * @setup The setup object
-	 */
-	function createPermissions( required setup ){
-		var perms = {
-			"AUTHOR_ADMIN"                  : "Ability to manage authors, default is view only",
-			"CATEGORIES_ADMIN"              : "Ability to manage categories, default is view only",
-			"COMMENTS_ADMIN"                : "Ability to manage comments, default is view only",
-			"CONTENTBOX_ADMIN"              : "Access to the enter the ContentBox administrator console",
-			"CONTENTSTORE_ADMIN"            : "Ability to manage the content store, default is view only",
-			"CONTENTSTORE_EDITOR"           : "Ability to create, edit and publish content store elements",
-			"EDITORS_CACHING"               : "Ability to view the content caching panel",
-			"EDITORS_CATEGORIES"            : "Ability to view the content categories panel",
-			"EDITORS_CUSTOM_FIELDS"         : "Ability to manage custom fields in any content editors",
-			"EDITORS_DISPLAY_OPTIONS"       : "Ability to view the content display options panel",
-			"EDITORS_EDITOR_SELECTOR"       : "Ability to change the editor to another registered online editor",
-			"EDITORS_FEATURED_IMAGE"        : "Ability to view the featured image panel",
-			"EDITORS_HTML_ATTRIBUTES"       : "Ability to view the content HTML attributes panel",
-			"EDITORS_LINKED_CONTENT"        : "Ability to view the linked content panel",
-			"EDITORS_MODIFIERS"             : "Ability to view the content modifiers panel",
-			"EDITORS_RELATED_CONTENT"       : "Ability to view the related content panel",
-			"EMAIL_TEMPLATE_ADMIN"          : "Ability to admin and preview email templates",
-			"ENTRIES_ADMIN"                 : "Ability to manage blog entries, default is view only",
-			"ENTRIES_EDITOR"                : "Ability to create, edit and publish blog entries",
-			"FORGEBOX_ADMIN"                : "Ability to manage ForgeBox installations and connectivity.",
-			"GLOBAL_SEARCH"                 : "Ability to do global searches in the ContentBox Admin",
-			"GLOBALHTML_ADMIN"              : "Ability to manage the system's global HTML content used on layouts",
-			"MEDIAMANAGER_ADMIN"            : "Ability to manage the system's media manager",
-			"MEDIAMANAGER_LIBRARY_SWITCHER" : "Ability to switch media manager libraries for management",
-			"MENUS_ADMIN"                   : "Ability to manage the menu builder",
-			"MODULES_ADMIN"                 : "Ability to manage ContentBox Modules",
-			"PAGES_ADMIN"                   : "Ability to manage content pages, default is view only",
-			"PAGES_EDITOR"                  : "Ability to create, edit and publish pages",
-			"PERMISSIONS_ADMIN"             : "Ability to manage permissions, default is view only",
-			"RELOAD_MODULES"                : "Ability to reload modules",
-			"ROLES_ADMIN"                   : "Ability to manage roles, default is view only",
-			"SECURITYRULES_ADMIN"           : "Ability to manage the system's security rules, default is view only",
-			"SITES_ADMIN"                   : "Ability to manage sites",
-			"SYSTEM_AUTH_LOGS"              : "Access to the system auth logs",
-			"SYSTEM_RAW_SETTINGS"           : "Access to the ContentBox raw geek settings panel",
-			"SYSTEM_SAVE_CONFIGURATION"     : "Ability to update global configuration data",
-			"SYSTEM_TAB"                    : "Access to the ContentBox System tools",
-			"SYSTEM_UPDATES"                : "Ability to view and apply ContentBox updates",
-			"THEME_ADMIN"                   : "Ability to manage layouts, default is view only",
-			"TOOLS_EXPORT"                  : "Ability to export data from ContentBox",
-			"TOOLS_IMPORT"                  : "Ability to import data into ContentBox",
-			"VERSIONS_DELETE"               : "Ability to delete past content versions",
-			"VERSIONS_ROLLBACK"             : "Ability to rollback content versions",
-			"WIDGET_ADMIN"                  : "Ability to manage widgets, default is view only"
-		};
-
-		var allperms = [];
-		for ( var key in perms ) {
-			var props          = { permission : key, description : perms[ key ] };
-			permissions[ key ] = permissionService.new( properties = props );
-			arrayAppend( allPerms, permissions[ key ] );
-		}
-		permissionService.saveAll( entities = allPerms, transactional = false );
-
-		return this;
-	}
-
-	/**
-	 * Create roles and return the admin
-	 *
-	 * @setup The setup object
-	 */
-	function createRoles( required setup ){
-		// Create Permissions
-		createPermissions( arguments.setup );
-
-		// Create Editor
-		var oRole = roleService.new( properties = { role : "Editor", description : "A ContentBox editor" } );
-		// Add Editor Permissions
-		oRole.addPermissions( permissions[ "COMMENTS_ADMIN" ] );
-		oRole.addPermissions( permissions[ "CONTENTSTORE_EDITOR" ] );
-		oRole.addPermissions( permissions[ "PAGES_EDITOR" ] );
-		oRole.addPermissions( permissions[ "CATEGORIES_ADMIN" ] );
-		oRole.addPermissions( permissions[ "ENTRIES_EDITOR" ] );
-		oRole.addPermissions( permissions[ "THEME_ADMIN" ] );
-		oRole.addPermissions( permissions[ "GLOBALHTML_ADMIN" ] );
-		oRole.addPermissions( permissions[ "MEDIAMANAGER_ADMIN" ] );
-		oRole.addPermissions( permissions[ "VERSIONS_ROLLBACK" ] );
-		oRole.addPermissions( permissions[ "CONTENTBOX_ADMIN" ] );
-		oRole.addPermissions( permissions[ "EDITORS_LINKED_CONTENT" ] );
-		oRole.addPermissions( permissions[ "EDITORS_DISPLAY_OPTIONS" ] );
-		oRole.addPermissions( permissions[ "EDITORS_RELATED_CONTENT" ] );
-		oRole.addPermissions( permissions[ "EDITORS_MODIFIERS" ] );
-		oRole.addPermissions( permissions[ "EDITORS_CACHING" ] );
-		oRole.addPermissions( permissions[ "EDITORS_CATEGORIES" ] );
-		oRole.addPermissions( permissions[ "EDITORS_HTML_ATTRIBUTES" ] );
-		oRole.addPermissions( permissions[ "EDITORS_EDITOR_SELECTOR" ] );
-		oRole.addPermissions( permissions[ "EDITORS_CUSTOM_FIELDS" ] );
-		oRole.addPermissions( permissions[ "GLOBAL_SEARCH" ] );
-		oRole.addPermissions( permissions[ "MENUS_ADMIN" ] );
-		oRole.addPermissions( permissions[ "EDITORS_FEATURED_IMAGE" ] );
-		oRole.addPermissions( permissions[ "EMAIL_TEMPLATE_ADMIN" ] );
-		roleService.save( entity = oRole, transactional = false );
-
-		// Create Admin
-		var oRole = roleService.new(
-			properties = {
-				role        : "Administrator",
-				description : "A ContentBox Administrator"
-			}
-		);
-		// Add All Permissions To Admin
-		for ( var key in permissions ) {
-			oRole.addPermissions( permissions[ key ] );
-		}
-		roleService.save( entity = oRole, transactional = false );
-
-		return oRole;
-	}
-
-	/**
 	 * Create author
 	 *
 	 * @setup     The setup object
-	 * @adminRole The role of the admin string
 	 */
-	function createAuthor( required setup, required adminRole ){
+	function createAuthor( required setup ){
 		var oAuthor = variables.authorService
 			.new( properties = arguments.setup.getUserData() )
 			.setIsActive( true )
-			.setRole( arguments.adminRole );
+			.setRole( roleService.findByRole( "Administrator" ) );
 
 		return variables.authorService.save( oAuthor );
 	}

@@ -9,8 +9,8 @@ component {
 			table.datetime( "modifiedDate" ).withCurrent();
 			table.boolean( "isDeleted" ).default( false );
 
-			table.string( "slug" ).unique();
-			table.string( "category" ).unique();
+			table.string( "slug" );
+			table.string( "category" );
 			table.boolean( "isPublic" ).default( true );
 
 			// Relationships
