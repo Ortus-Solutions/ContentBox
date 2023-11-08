@@ -66,16 +66,11 @@ component {
 
 		// Seed the database only if we created the tables
 		// This protects agains seeding an already ran migration
-		if( newDB || true ){
+		if( newDB ){
 			systemOutput( "- Database seeding required, starting...", true );
-
-			// query.newQuery( "truncate cb_permission" );
-			// query.newQuery( "truncate cb_rolePermissions" );
-			// query.newQuery( "truncate cb_role" );
 
 			new init.seed_permissions().seed( schema, query );
 			new init.seed_roles().seed( schema, query );
-			new init.seed_settings().seed( schema, query );
 
 			systemOutput( "√ Database seeding completed", true );
 		}

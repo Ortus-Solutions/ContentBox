@@ -71,7 +71,7 @@ component {
 			rootPath & "modules_app"
 		],
 		dialect               : "org.hibernate.dialect.MySQL5InnoDBDialect", // MySQL Dialect
-		dbcreate              : "update",
+		dbcreate              : "none",
 		secondarycacheenabled : false,
 		cacheprovider         : "ehCache",
 		logSQL                : false,

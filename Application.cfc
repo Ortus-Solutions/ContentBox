@@ -107,8 +107,7 @@ component {
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
 		dialect              : request.cbSystemHelper.getSystemSetting( "ORM_DIALECT", "" ),
-		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate             : "update",
+		dbcreate             : "none",
 		secondarycacheenabled: request.cbSystemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
 		cacheprovider        : request.cbSystemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
 		logSQL               : request.cbSystemHelper.getSystemSetting( "ORM_LOGSQL", false ),
