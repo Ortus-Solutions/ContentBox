@@ -16,7 +16,7 @@
 
             	<!--logo start-->
                 <div class="brand text-center">
-                    <a class="logo">@
+                    <a class="logo">
                         <img src="#prc.assetroot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
