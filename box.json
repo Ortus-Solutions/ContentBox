@@ -24,10 +24,11 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^7.0.0+7",
+        "coldbox":"be",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
-        "commandbox-migrations":"^4.0.0"
+        "commandbox-migrations":"^4.0.0",
+        "cors":"^3.0.9"
     },
     "devDependencies":{
         "testbox":"^5.0.0+1",
@@ -40,7 +41,8 @@
         "testbox":"testbox/",
         "coldbox":"coldbox/",
         "cbdebugger":"modules/cbdebugger/",
-        "route-visualizer":"modules/route-visualizer/"
+        "route-visualizer":"modules/route-visualizer/",
+        "cors":"modules/cors/"
     },
     "ignores":[],
     "scripts":{
@@ -68,7 +70,7 @@
         "contentbox:migrate":"migrate up manager=contentbox",
         "contentbox:migrate:up":"run-script contentbox:migrate",
         "contentbox:migrate:down":"migrate down manager=contentbox",
-		"contentbox:migrate:fresh":"migrate fresh manager=contentbox"
+        "contentbox:migrate:fresh":"migrate fresh manager=contentbox"
     },
     "testbox":{
         "runner":[

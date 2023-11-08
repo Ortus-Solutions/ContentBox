@@ -28,6 +28,7 @@
     ],
     "dependencies":{
         "coldbox":"^7.0.0+7",
+		"cors":"^3.0.9",
 		"contentbox":"~@version.number@+@build.number@",
 		"commandbox-dotenv":"*",
 		"commandbox-cfconfig":"*",
