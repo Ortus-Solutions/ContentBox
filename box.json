@@ -67,7 +67,8 @@
         "contentbox:migrate:create":"migrate create name=${1} manager=contentbox",
         "contentbox:migrate":"migrate up manager=contentbox",
         "contentbox:migrate:up":"run-script contentbox:migrate",
-        "contentbox:migrate:down":"migrate down manager=contentbox"
+        "contentbox:migrate:down":"migrate down manager=contentbox",
+		"contentbox:migrate:fresh":"migrate fresh manager=contentbox"
     },
     "testbox":{
         "runner":[

@@ -15,7 +15,7 @@ component{
 			table.boolean( "isCore" ).default( false );
 
 			// Relationships
-			table.string( "FK_siteID", 36 );
+			table.string( "FK_siteID", 36 ).nullable();
 			table.foreignKey( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" );
 
 			// Indexes

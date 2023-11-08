@@ -13,8 +13,14 @@ component {
 			.from( "cb_setting" )
 			.where( "name", "cb_media_directoryRoot" )
 			.where( "isCore", 1 )
-			.first()
-			.value;
+			.first();
+
+		if( !structKeyExists( mediaRoot, "value" ) ){
+			systemoutput( "Media root doesn't exist, skipping migration", true );
+			return;
+		}
+
+		mediaRoot = mediaRoot.value;
 
 		qb.newQuery()
 			.from( "cb_content" )

@@ -48,11 +48,13 @@ component {
 		];
 
 		systemOutput( "Starting to initialize the ContentBox Database, this will take a while...", true );
+		var newDB = false;
 
 		migrations.each( ( migration, record ) => {
 			systemOutput( "Migrating [#migration#]...", true );
 
 			if( !schema.hasTable( record.table ) ){
+				newDB = true;
 				systemOutput( "- Table doesn't exist (#record.table#) creating it...", true );
 				new "init.create_#migration#"().up( schema, query );
 			} else {
@@ -60,96 +62,26 @@ component {
 			}
 		} );
 
-		// Create default Site
-		//createDefaultSite();
+		systemOutput( "√ Database structure complete", true );
+
+		// Seed the database only if we created the tables
+		// This protects agains seeding an already ran migration
+		if( newDB || true ){
+			systemOutput( "- Database seeding required, starting...", true );
+
+			// query.newQuery( "truncate cb_permission" );
+			// query.newQuery( "truncate cb_rolePermissions" );
+			// query.newQuery( "truncate cb_role" );
+
+			new init.seed_permissions().seed( schema, query );
+			new init.seed_roles().seed( schema, query );
+			new init.seed_settings().seed( schema, query );
+
+			systemOutput( "√ Database seeding completed", true );
+		}
 	}
 
 	function down( schema, query ){
-	}
-
-	/**
-	 * Create multi-site support
-	 */
-	private function createDefaultSite( schema, query ){
-		var allSettings = arguments.query
-			.newQuery()
-			.from( "cb_setting" )
-			.whereNull( "FK_siteID" )
-			.get()
-			.reduce( ( results, thisSetting ) => {
-				results[ thisSetting.name ] = thisSetting.value;
-				return results;
-			}, {} );
-
-		var initialSiteIdentifier = uuidLib.randomUUID().toString();
-		arguments.query
-			.newQuery()
-			.from( "cb_site" )
-			.insert( {
-				"siteID"            : initialSiteIdentifier,
-				"createdDate"       : today,
-				"modifiedDate"      : today,
-				"isDeleted"         : 0,
-				"isActive"          : 1,
-				"name"              : allSettings.cb_site_name,
-				"slug"              : "default",
-				"homepage"          : allSettings.cb_site_homepage,
-				"description"       : allSettings.cb_site_description,
-				"keywords"          : allSettings.cb_site_keywords,
-				"tagline"           : allSettings.cb_site_tagline,
-				"domainRegex"       : "127\.0\.0\.1",
-				"isBlogEnabled"     : allSettings.cb_site_disable_blog ? 0: 1,
-				"isSitemapEnabled"  : allSettings.cb_site_sitemap ? 1     : 0,
-				"poweredByHeader"   : allSettings.cb_site_poweredby ? 1   : 0,
-				"adminBar"          : allSettings.cb_site_adminbar ? 1    : 0,
-				"isSSL"             : allSettings.cb_admin_ssl ? 1        : 0,
-				"activeTheme"       : allSettings.cb_site_theme,
-				"domain"            : "127.0.0.1",
-				"notificationEmails": allSettings.cb_site_email
-			} );
-		systemOutput( "√ - Default site created", true );
-
-		var siteSettings = [
-			// Global HTML: Panel Section
-			"cb_html_beforeHeadEnd",
-			"cb_html_afterBodyStart",
-			"cb_html_beforeBodyEnd",
-			"cb_html_beforeContent",
-			"cb_html_afterContent",
-			"cb_html_beforeSideBar",
-			"cb_html_afterSideBar",
-			"cb_html_afterFooter",
-			"cb_html_preEntryDisplay",
-			"cb_html_postEntryDisplay",
-			"cb_html_preIndexDisplay",
-			"cb_html_postIndexDisplay",
-			"cb_html_preArchivesDisplay",
-			"cb_html_postArchivesDisplay",
-			"cb_html_preCommentForm",
-			"cb_html_postCommentForm",
-			"cb_html_prePageDisplay",
-			"cb_html_postPageDisplay",
-			// Site Comment Settings
-			"cb_comments_enabled",
-			"cb_comments_maxDisplayChars",
-			"cb_comments_notify",
-			"cb_comments_moderation_notify",
-			"cb_comments_notifyemails",
-			"cb_comments_moderation",
-			"cb_comments_moderation_whitelist",
-			"cb_comments_moderation_blacklist",
-			"cb_comments_moderation_blockedlist",
-			"cb_comments_moderation_expiration"
-		];
-
-		// Assign all null site settings to the default
-		query
-			.newQuery()
-			.from( "cb_setting" )
-			.whereIn( "name", siteSettings )
-			.update( { "FK_siteID" : initialSiteIdentifier } );
-
-		return initialSiteIdentifier;
 	}
 
 }
