@@ -36,7 +36,8 @@
         "cbmarkdown":"^3.4.0",
         "cbSwagger":"^2.3.0+131",
         "jsonprettyprint":"^1.4.0",
-		"cbfs" : "^1.0.2"
+        "cbfs":"^1.0.2",
+        "cors":"^3.0.9"
     },
     "installPaths":{
         "cborm":"modules/contentbox-deps/modules/cborm/",
@@ -49,7 +50,8 @@
         "cbmarkdown":"modules/contentbox-deps/modules/cbmarkdown/",
         "cbSwagger":"modules/contentbox-deps/modules/cbSwagger/",
         "jsonprettyprint":"modules/contentbox-deps/modules/jsonprettyprint/",
-        "cbfs":"modules/contentbox-deps/modules/cbfs/"
+        "cbfs":"modules/contentbox-deps/modules/cbfs/",
+        "cors":"modules/contentbox-deps/modules/cors/"
     },
     "devDependencies":{},
     "scripts":{}

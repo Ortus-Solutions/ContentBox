@@ -27,8 +27,7 @@
         "coldbox":"be",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
-        "commandbox-migrations":"^4.0.0",
-        "cors":"^3.0.9"
+        "commandbox-migrations":"^4.0.0"
     },
     "devDependencies":{
         "testbox":"^5.0.0+1",
@@ -41,8 +40,7 @@
         "testbox":"testbox/",
         "coldbox":"coldbox/",
         "cbdebugger":"modules/cbdebugger/",
-        "route-visualizer":"modules/route-visualizer/",
-        "cors":"modules/cors/"
+        "route-visualizer":"modules/route-visualizer/"
     },
     "ignores":[],
     "scripts":{
