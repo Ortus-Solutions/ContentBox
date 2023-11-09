@@ -1537,11 +1537,11 @@ CREATE TABLE `cb_site` (
 LOCK TABLES `cb_site` WRITE;
 /*!40000 ALTER TABLE `cb_site` DISABLE KEYS */;
 
-INSERT INTO `cb_site` (`siteID`, `createdDate`, `modifiedDate`, `isDeleted`, `name`, `slug`, `description`, `domainRegex`, `domainAliases`, `keywords`, `tagline`, `homepage`, `isBlogEnabled`, `isSitemapEnabled`, `poweredByHeader`, `adminBar`, `isSSL`, `activeTheme`, `notificationEmails`, `notifyOnEntries`, `notifyOnPages`, `notifyOnContentStore`, `domain`, `isActive`, `mediaDisk`, `domainAliases`)
+INSERT INTO `cb_site` (`siteID`, `createdDate`, `modifiedDate`, `isDeleted`, `name`, `slug`, `description`, `domainRegex`, `domainAliases`, `keywords`, `tagline`, `homepage`, `isBlogEnabled`, `isSitemapEnabled`, `poweredByHeader`, `adminBar`, `isSSL`, `activeTheme`, `notificationEmails`, `notifyOnEntries`, `notifyOnPages`, `notifyOnContentStore`, `domain`, `isActive`, `mediaDisk`)
 VALUES
-	('1c81d376-a481-11eb-ab6f-0290cc502ae3','2020-09-09 17:16:59','2021-02-18 18:15:53',b'0','Default Site','default','My Awesome Site','127\\.0\\.0\\.1','[]', '','My Awesome Site','support',b'1',b'1',b'1',b'1',b'0','default','lmajano@gmail.com',b'1',b'1',b'1','127.0.0.1',b'1', 'contentbox', '[]'),
-	('1c81d574-a481-11eb-ab6f-0290cc502ae3','2021-02-18 17:44:50','2021-02-18 17:44:50',b'0','Development Site','development','A development site','localhost','[]','','','cbBlog',b'1',b'1',b'1',b'1',b'0','default','',b'1',b'1',b'1','localhost',b'1', 'contentbox', '[]'),
-	('ff80808179100916017914e9c96a0039','2021-04-27 14:58:56','2021-04-27 15:58:24',b'0','Test Disabled','test-disabled','test-disabled','google.com','','[]','test-disabled','cbBlog',b'1',b'1',b'1',b'1',b'0','default','',b'1',b'1',b'1','google.com',b'0', 'contentbox', '[]');
+	('1c81d376-a481-11eb-ab6f-0290cc502ae3','2020-09-09 17:16:59','2021-02-18 18:15:53',b'0','Default Site','default','My Awesome Site','127\\.0\\.0\\.1','[]', '','My Awesome Site','support',b'1',b'1',b'1',b'1',b'0','default','lmajano@gmail.com',b'1',b'1',b'1','127.0.0.1',b'1', 'contentbox'),
+	('1c81d574-a481-11eb-ab6f-0290cc502ae3','2021-02-18 17:44:50','2021-02-18 17:44:50',b'0','Development Site','development','A development site','localhost','[]','','','cbBlog',b'1',b'1',b'1',b'1',b'0','default','',b'1',b'1',b'1','localhost',b'1', 'contentbox'),
+	('ff80808179100916017914e9c96a0039','2021-04-27 14:58:56','2021-04-27 15:58:24',b'0','Test Disabled','test-disabled','test-disabled','google.com','','[]','test-disabled','cbBlog',b'1',b'1',b'1',b'1',b'0','default','',b'1',b'1',b'1','google.com',b'0', 'contentbox');
 
 /*!40000 ALTER TABLE `cb_site` ENABLE KEYS */;
 UNLOCK TABLES;
