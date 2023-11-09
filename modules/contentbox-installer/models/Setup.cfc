@@ -16,9 +16,12 @@ component accessors="true" {
 
 	// Site Settings
 	property name="siteName";
+	property name="siteSlug";
 	property name="siteTagLine";
 	property name="siteDescription";
 	property name="siteKeywords";
+	property name="siteDomainExpression";
+	property name="siteDomain";
 	property name="populateData";
 	property name="createDevSite";
 
