@@ -210,7 +210,6 @@ component accessors="true" {
 				// do nothing, .htaccess already on root
 				break;
 			}
-			case "contentbox_express":
 			case "commandbox": {
 				// do nothing, tuckey already setup at the servlet level on both commandbox and express.
 				break;
