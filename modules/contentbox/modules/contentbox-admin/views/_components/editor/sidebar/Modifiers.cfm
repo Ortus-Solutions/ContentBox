@@ -9,7 +9,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##modifiers">
-					<i class="fa fa-toolbox"></i> Modifiers
+					<i class="fas fa-toolbox"></i> Modifiers
 				</a>
 			</h4>
 		</div>
