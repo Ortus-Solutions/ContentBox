@@ -52,9 +52,13 @@
         "defaultGrammar":"AutoDiscover@qb"
     },
 	"scripts" : {
+		"contentbox:install":"install --force && cd modules/contentbox && install --force",
 		"contentbox:migrate" : "migrate up manager=contentbox",
 		"contentbox:migrate:up" : "run-script contentbox:migrate",
 		"contentbox:migrate:down" : "migrate down manager=contentbox",
-        "install:2021":"!cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed"
+        "install:2021":"!cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed",
+		"format":"cfformat run config/,handlers/,models/,modules_app/**/*.cfc,Application.cfc --overwrite",
+        "format:watch":"cfformat watch config/,handlers/,models/,modules_app/**/*.cfc,Application.cfc ./.cfformat.json",
+        "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc"
 	}
 }
