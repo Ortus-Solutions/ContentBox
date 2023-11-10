@@ -24,7 +24,7 @@
 		"@alpinejs/ui": "^3.10.4-beta.5",
 		"@fortawesome/fontawesome-free": "^5.15.4",
 		"@popperjs/core": "^2.11.8",
-		"alpinejs": "^3.13.1",
+		"alpinejs": "^3.13.2",
 		"animate.css": "^3.5.2",
 		"bootbox": "^5.5.3",
 		"bootstrap-datepicker": "^1.10.0",
