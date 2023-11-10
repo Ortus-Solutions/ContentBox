@@ -11,7 +11,7 @@ component{
 			table.boolean( "isDeleted" ).default( false );
 
 			table.string( "type" );
-			table.string( "subscriberToken" );
+			table.string( "subscriptionToken" );
 
 			// Relationships
 			table.string( "FK_subscriberID", 36 );
