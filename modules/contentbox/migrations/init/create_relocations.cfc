@@ -6,7 +6,6 @@ component {
 
 	function up( schema, qb ){
 		schema.create( "cb_relocations", ( table ) => {
-
 			table.string( "relocationID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
 			table.datetime( "modifiedDate" ).withCurrent();
@@ -17,9 +16,15 @@ component {
 
 			// Relationships
 			table.string( "FK_siteID", 36 );
-			table.foreignKey( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" );
+			table
+				.foreignKey( "FK_siteID" )
+				.references( "siteID" )
+				.onTable( "cb_site" );
 			table.string( "FK_contentID", 36 ).nullable();
-			table.foreignKey( "FK_contentID" ).references( "contentID" ).onTable( "cb_content" );
+			table
+				.foreignKey( "FK_contentID" )
+				.references( "contentID" )
+				.onTable( "cb_content" );
 
 			// Indexes
 			table.unique( [ "slug", "FK_siteID" ] );

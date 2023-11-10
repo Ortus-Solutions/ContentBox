@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_securityRule", ( table ) => {
-
 			// Base Columns
 			table.string( "ruleID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -18,19 +16,29 @@ component{
 			table.string( "redirect", 500 ).nullable();
 			table.string( "overrideEvent", 500 ).nullable();
 			table.boolean( "useSSL" ).default( false );
-			table.string( "action", 50 ).nullable().default( "redirect" );
+			table
+				.string( "action", 50 )
+				.nullable()
+				.default( "redirect" );
 			table.string( "module", 500 ).nullable();
-			table.string( "httpMethods" ).nullable().default( "*" );
-			table.string( "allowedIPs" ).nullable().default( "*" );
+			table
+				.string( "httpMethods" )
+				.nullable()
+				.default( "*" );
+			table
+				.string( "allowedIPs" )
+				.nullable()
+				.default( "*" );
 			table.integer( "order" ).default( 0 );
 			table.string( "message" ).nullable();
-			table.string( "messageType", 50 ).nullable().default( "info" );
+			table
+				.string( "messageType", 50 )
+				.nullable()
+				.default( "info" );
 
 			// Indexes
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
-
 
 }

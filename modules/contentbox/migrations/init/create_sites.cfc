@@ -1,7 +1,6 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_site", ( table ) => {
 			// Base Columns
 			table.string( "siteID", 36 ).primaryKey();
@@ -35,8 +34,6 @@ component{
 			table.index( [ "slug" ], "idx_siteSlug" );
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
-
 
 }

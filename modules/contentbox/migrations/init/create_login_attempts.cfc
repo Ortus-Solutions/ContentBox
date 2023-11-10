@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_loginAttempts", ( table ) => {
-
 			// Base Columns
 			table.string( "loginAttemptsID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -16,10 +14,7 @@ component{
 
 			// Index
 			table.index( [ "value" ], "idx_values" );
-
 		} );
-
 	}
-
 
 }

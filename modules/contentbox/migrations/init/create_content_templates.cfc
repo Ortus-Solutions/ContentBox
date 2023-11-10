@@ -6,7 +6,6 @@ component {
 
 	function up( schema, qb ){
 		schema.create( "cb_contentTemplate", ( table ) => {
-
 			// Base Columns
 			table.string( "templateID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -21,9 +20,15 @@ component {
 
 			// Relationships
 			table.string( "FK_authorID", 36 );
-			table.foreignKey( "FK_authorID" ).references( "authorID" ).onTable( "cb_author" );
+			table
+				.foreignKey( "FK_authorID" )
+				.references( "authorID" )
+				.onTable( "cb_author" );
 			table.string( "FK_siteID", 36 );
-			table.foreignKey( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" );
+			table
+				.foreignKey( "FK_siteID" )
+				.references( "siteID" )
+				.onTable( "cb_site" );
 
 			// Indexes
 			table.index( [ "contentType" ], "idx_contentType" );
