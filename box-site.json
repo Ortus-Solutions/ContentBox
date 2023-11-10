@@ -39,18 +39,6 @@
     },
     "ignores":[
 	],
-	"cfmigrations":{
-        "schema":"${DB_DATABASE}",
-        "connectionInfo":{
-            "class":"${DB_CLASS}",
-			"connectionString":"${DB_CONNECTIONSTRING}",
-            "bundleName":"${DB_BUNDLENAME}",
-            "bundleVersion":"${DB_BUNDLEVERSION}",
-            "username":"${DB_USER}",
-            "password":"${DB_PASSWORD}"
-        },
-        "defaultGrammar":"AutoDiscover@qb"
-    },
 	"scripts" : {
 		"contentbox:install":"install --force && cd modules/contentbox && install --force",
 		"contentbox:migrate" : "migrate up manager=contentbox",
