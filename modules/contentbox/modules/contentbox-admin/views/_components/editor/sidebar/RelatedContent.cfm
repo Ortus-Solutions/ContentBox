@@ -33,7 +33,7 @@
 								<cfif content.getContentType() eq "Page">
 									<i class="fa fa-file icon-small" title="Page"></i>
 								<cfelseif content.getContentType() eq "Entry">
-									<i class="fa fa-blog icon-small" title="Entry"></i>
+									<i class="fas fa-blog icon-small" title="Entry"></i>
 								<cfelseif content.getContentType() eq "ContentStore">
 									<i class="fa fa-hdd icon-small" title="ContentStore"></i>
 								</cfif>
@@ -135,7 +135,7 @@
 					icon = '<i class="fa fa-file icon-small" title="Page"></i>';
 					break;
 				case 'Entry':
-					icon = '<i class="fa fa-blog icon-small" title="Entry"></i>';
+					icon = '<i class="fas fa-blog icon-small" title="Entry"></i>';
 					break;
 				case 'ContentStore':
 					icon = '<i class="fa fa-hdd icon-small" title="ContentStore"></i>';

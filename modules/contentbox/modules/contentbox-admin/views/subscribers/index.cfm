@@ -21,7 +21,7 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs" id="contentTypes">
                         <li class="nav-item active">
-                            <a href="##CommentSubscriptions" data-toggle="tab" class="nav-link"><i class="fa fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
+                            <a href="##CommentSubscriptions" data-toggle="tab" class="nav-link"><i class="fas fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
                         </li>
                     </ul>
                     <!-- End Tabs -->

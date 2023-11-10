@@ -6,7 +6,7 @@ function getContentTypeIconCls( contentType ) {
 			iconCls = "fa fa-file";
 			break;
 		case 'Entry':
-			iconCls = "fa fa-blog";
+			iconCls = "fas fa-blog";
 			break;
 		case 'ContentStore':
 			iconCls = "fa fa-hdd";

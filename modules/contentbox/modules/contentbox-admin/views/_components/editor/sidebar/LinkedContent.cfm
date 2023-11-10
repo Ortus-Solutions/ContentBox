@@ -27,7 +27,7 @@
 									<cfif content.getContentType() eq "Page">
 										<i class="fa fa-file-alt icon-small" title="Page"></i>
 									<cfelseif content.getContentType() eq "Entry">
-										<i class="fa fa-blog icon-small" title="Entry"></i>
+										<i class="fas fa-blog icon-small" title="Entry"></i>
 									<cfelseif content.getContentType() eq "ContentStore">
 										<i class="fa fa-hdd icon-small" title="ContentStore"></i>
 									</cfif>

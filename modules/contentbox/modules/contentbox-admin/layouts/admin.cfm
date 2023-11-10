@@ -173,7 +173,7 @@
 									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 										<li>
 											<a data-keybinding="Control+Shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="Control+Shift+b">
-												<i class="fa fa-blog fa-lg width25"></i> New Entry
+												<i class="fas fa-blog fa-lg width25"></i> New Entry
 											</a>
 										</li>
 									</cfif>

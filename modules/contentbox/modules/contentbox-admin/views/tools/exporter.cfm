@@ -93,7 +93,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-blog fa-lg"></i> Entries</h4>
+								<h4><i class="fas fa-blog fa-lg"></i> Entries</h4>
 								<small class="muted">Export blog entries with comments</small>
 							</div>
 							<div class="col-md-9">

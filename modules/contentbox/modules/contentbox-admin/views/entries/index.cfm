@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-blog"></i> Blog Entries
+			<i class="fas fa-blog"></i> Blog Entries
 			<span id="entriesCountContainer"></span>
 		</h1>
 	</div>

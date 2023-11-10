@@ -136,7 +136,7 @@
 								<td>
 									<!--- Blog Enabled --->
 									<i
-										class="fa fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
+										class="fas fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
 										title="Blog"></i>
 
 									<!--- SiteMap Enabled --->

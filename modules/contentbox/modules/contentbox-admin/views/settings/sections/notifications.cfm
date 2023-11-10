@@ -63,7 +63,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_entry",
-            content="<i class='fa fa-blog'></i> Send a notification when a blog entry has been created or removed:"
+            content="<i class='fas fa-blog'></i> Send a notification when a blog entry has been created or removed:"
         )#
         <div class="controls">
         	#html.checkbox(

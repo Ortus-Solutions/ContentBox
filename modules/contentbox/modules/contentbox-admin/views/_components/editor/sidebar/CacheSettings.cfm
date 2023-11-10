@@ -27,7 +27,7 @@
 
 				<div class="form-group">
 					<label for="cache">
-						<i class="fa fa-stopwatch"></i> Cache Timeout (0=Use Global Setting)
+						<i class="fas fa-stopwatch"></i> Cache Timeout (0=Use Global Setting)
 					</label>
 					#html.inputField(
 						type      : "numeric",
@@ -42,7 +42,7 @@
 
 				<div class="form-group">
 					<label for="cache">
-						<i class="fa fa-flushed"></i> Idle Timeout (0=Use Global Setting)
+						<i class="fas fa-flushed"></i> Idle Timeout (0=Use Global Setting)
 					</label>
 					#html.inputField(
 						type      : "numeric",

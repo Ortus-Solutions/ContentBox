@@ -334,7 +334,7 @@ component
 			{
 				name : 'cbEntryLink',
 				action : function(){ $insertCBEntryLink( '#arguments.editor#' ); },
-				className : 'fa fa-blog',
+				className : 'fas fa-blog',
 				title : 'Insert ContentBox Entry Link'
 			},
 			{

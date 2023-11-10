@@ -27,7 +27,7 @@
                             <a href="##global" data-toggle="tab" class="nav-link"><i class="fa fa-globe fa-lg"></i> <span class="hidden-xs">Global Layout</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="##entry" data-toggle="tab" class="nav-link"><i class="fa fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
+                            <a href="##entry" data-toggle="tab" class="nav-link"><i class="fas fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="##comments" data-toggle="tab" class="nav-link"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
