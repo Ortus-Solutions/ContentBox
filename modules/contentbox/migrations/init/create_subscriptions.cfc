@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_subscriptions", ( table ) => {
-
 			// Base Columns
 			table.string( "subscriptionID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -15,13 +13,14 @@ component{
 
 			// Relationships
 			table.string( "FK_subscriberID", 36 );
-			table.foreignKey( "FK_subscriberID" ).references( "subscriberID" ).onTable( "cb_subscribers" );
+			table
+				.foreignKey( "FK_subscriberID" )
+				.references( "subscriberID" )
+				.onTable( "cb_subscribers" );
 
 			// Indexes
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
-
 
 }

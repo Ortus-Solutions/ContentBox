@@ -1,39 +1,42 @@
-component{
+component {
 
 	function seed( schema, query ){
 		var admin = {
-			roleID : createUUID(),
-			isDeleted : 0,
-			createdDate : now(),
+			roleID       : createUUID(),
+			isDeleted    : 0,
+			createdDate  : now(),
 			modifiedDate : now(),
-			role: "Administrator",
-			description: "A ContentBox Administrator"
+			role         : "Administrator",
+			description  : "A ContentBox Administrator"
 		};
 		var editor = {
-			roleID : createUUID(),
-			isDeleted : 0,
-			createdDate : now(),
+			roleID       : createUUID(),
+			isDeleted    : 0,
+			createdDate  : now(),
 			modifiedDate : now(),
-			role: "Editor",
-			description: "A ContentBox Editor"
+			role         : "Editor",
+			description  : "A ContentBox Editor"
 		};
 
 		// ADMIN ROLE
 
-		query.newQuery()
-			.from( "cb_role")
+		query
+			.newQuery()
+			.from( "cb_role" )
 			.insert( admin );
 
-		var allPerms = query.newQuery()
+		var allPerms = query
+			.newQuery()
 			.from( "cb_permission" )
 			.get();
 
 		allPerms.each( ( record ) => {
-			query.newQuery()
+			query
+				.newQuery()
 				.from( "cb_rolePermissions" )
 				.insert( {
 					FK_permissionID : record.permissionID,
-					FK_roleID : admin.roleID
+					FK_roleID       : admin.roleID
 				} );
 		} );
 
@@ -41,8 +44,9 @@ component{
 
 		// EDITOR ROLE
 
-		query.newQuery()
-			.from( "cb_role")
+		query
+			.newQuery()
+			.from( "cb_role" )
 			.insert( editor );
 
 		var editorPerms = [
@@ -71,16 +75,19 @@ component{
 			"EMAIL_TEMPLATE_ADMIN"
 		];
 
-		allPerms.filter( ( record ) => {
-			return editorPerms.contains( record.permission );
-		} ).each( ( record ) => {
-			query.newQuery()
-				.from( "cb_rolePermissions" )
-				.insert( {
-					FK_permissionID : record.permissionID,
-					FK_roleID : editor.roleID
-				} );
-		} );
+		allPerms
+			.filter( ( record ) => {
+				return editorPerms.contains( record.permission );
+			} )
+			.each( ( record ) => {
+				query
+					.newQuery()
+					.from( "cb_rolePermissions" )
+					.insert( {
+						FK_permissionID : record.permissionID,
+						FK_roleID       : editor.roleID
+					} );
+			} );
 
 		systemOutput( "√ Editor role created", true );
 		systemOutput( "√ Roles seeded", true );

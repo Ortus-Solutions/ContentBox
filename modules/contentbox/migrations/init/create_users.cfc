@@ -1,6 +1,7 @@
 component {
+
 	function up( schema, query ){
-		schema.create( "user", function(table) {
+		schema.create( "user", function( table ){
 			table.string( "userId" ).primaryKey();
 			table.string( "userType", 50 );
 			table.datetime( "createdDate" ).withCurrent();
@@ -16,7 +17,10 @@ component {
 			table.string( "homePhone", 100 ).nullable();
 			table.date( "dob", 100 ).nullable();
 			table.string( "tshirtSize", 100 ).nullable();
-			table.longText( "preferences" ).default( "" ).nullable();
+			table
+				.longText( "preferences" )
+				.default( "" )
+				.nullable();
 			table.string( "facebookURL" ).nullable();
 			table.string( "twitterURL" ).nullable();
 			table.string( "blogURL" ).nullable();
@@ -25,7 +29,7 @@ component {
 			table.tinyInteger( "isPasswordReset", 1 ).default( 1 );
 			table.longText( "biography" ).nullable();
 			table.string( "address" ).nullable();
-			table.string( "city", 75  ).nullable();
+			table.string( "city", 75 ).nullable();
 			table.string( "stateOrProvince" ).nullable();
 			table.string( "postalCode" ).nullable();
 			table.string( "country", 75 );

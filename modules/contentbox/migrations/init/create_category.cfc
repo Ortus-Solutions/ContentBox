@@ -1,8 +1,7 @@
 component {
+
 	function up( schema, query ){
-
-		schema.create( "cb_category", function(table) {
-
+		schema.create( "cb_category", function( table ){
 			// Base Columns
 			table.string( "categoryID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -15,7 +14,10 @@ component {
 
 			// Relationships
 			table.string( "FK_siteID", 36 );
-			table.foreignKey( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" );
+			table
+				.foreignKey( "FK_siteID" )
+				.references( "siteID" )
+				.onTable( "cb_site" );
 
 			// Index
 			table.index( [ "isPublic" ], "idx_isPublic" );
@@ -23,7 +25,6 @@ component {
 			table.index( [ "category" ], "idx_categoryName" );
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
 
 	function down( schema, query ){
