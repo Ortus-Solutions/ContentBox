@@ -2,6 +2,7 @@
     "contentbox": {
         "manager": "cfmigrations.models.QBMigrationManager",
         "migrationsDirectory": "modules/contentbox/migrations/",
+		"seedsDirectory": "modules/contentbox/seeds/",
         "properties": {
             "defaultGrammar": "AutoDiscover@qb",
 			"schema" : "${DB_DATABASE}",
