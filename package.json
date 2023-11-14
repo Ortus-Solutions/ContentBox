@@ -61,6 +61,7 @@
 		"dev": "webpack --node-env development",
 		"watch": "npm run dev -- --watch",
 		"prod": "webpack --node-env production",
+		"install": "npm install && cd modules/contentbox/themes/default && npm install",
 		"build-dev": "webpack --node-env development && cd modules/contentbox/themes/default && webpack --node-env development",
 		"build-prod": "webpack --node-env production && cd modules/contentbox/themes/default && webpack --node-env production"
 	}
