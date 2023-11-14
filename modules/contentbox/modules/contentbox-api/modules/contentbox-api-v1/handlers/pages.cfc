@@ -39,6 +39,14 @@ component extends="baseContentHandler" {
 		param rc.showInMenu = "";
 		// If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 		param rc.slugPrefix = "";
+		// If passed, it's a slug operation
+		param rc.slug = "";
+
+		// If we have a `slug` then we treat it as a /:slug route, due to hierarchical paths
+		if( rc.slug.trim().length() > 0 ){
+			rc.id = rc.slug;
+			return show( argumentCollection = arguments );
+		}
 
 		// Reset to empty if passed and not boolean
 		if ( len( rc.showInMenu ) && !isBoolean( rc.showInMenu ) ) {

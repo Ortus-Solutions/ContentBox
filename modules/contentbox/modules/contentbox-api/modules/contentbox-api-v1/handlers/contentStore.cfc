@@ -40,6 +40,14 @@ component extends="baseContentHandler" {
 		param rc.slugPrefix = "";
 		// If passed, we can do a slug wildcard search
 		param rc.slugSearch = "";
+		// If passed, it's a slug operation
+		param rc.slug = "";
+
+		// If we have a `slug` then we treat it as a /:slug route, due to hierarchical paths
+		if( rc.slug.trim().length() > 0 ){
+			rc.id = rc.slug;
+			return show( argumentCollection = arguments );
+		}
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.findPublishedContent(
