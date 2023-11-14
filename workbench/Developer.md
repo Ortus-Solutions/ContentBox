@@ -1,8 +1,9 @@
-# Development Notes:
+# Development Notes
 
 ## Setup Environment
 
 To setup your development environment, install [NodeJS](https://nodejs.org/en/) and run in the root of the project: `box recipe workbench/setup.boxr` to install all Coldbox, CommandBox and NPM dependencies.  If not you will have to run these manually to install and compile assets:
+
 ## Asset Compilation
 
 All assets for this project are compiled using [Coldbox Elixir](https://www.npmjs.com/package/coldbox-elixir) ( NPM/Webpack ).  Developers modifying Javascript or SCSS/CSS assets should use the files located in `modules/contentbox/modules/contentbox-admin/resources`.
@@ -12,6 +13,7 @@ Files in `modules/contentbox-admin/includes/` will be overwritten on compilation
 
 There are three NPM scripts you may use:
 
+`npm run install` - Installs all dependencies on the root and default theme
 `npm run dev`  - a one-time compilation of development assets ( source maps and not minified )
 `npm run watch`  - compiles the development assets and then watches for changes to any of the files.  Automatically recompiles when changes are made
 `npm run prod` - compiles the production ( packed, minified ) assets for release.
@@ -19,11 +21,12 @@ There are three NPM scripts you may use:
 `npm run build-prod` - compiles the production assets for both the ContentBox modules and the default theme.
 
 # Default Theme Compilation
+
 If you are conducting work on the default theme, located in `modules/contentbox/themes/default`, that has it's own, separate, `webpack-config.js`.  to run in watch mode during theme development, you will need to change  your working directory to the theme root and run `npm run watch` from there.
 
 ## CSS/SCSS
 
-The directory `modules/contentbox/modules/contentbox-admin/resources/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
+The directory `modules/contentbox/modules/contentbox-admin/resources/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.
 
 - `theme` - The ContentBox admin theme sass includes directory
 - `_globals.scss` - Used for global variables
@@ -46,12 +49,12 @@ Note the use of `manifestRoot` - which tells Elixir to look in the contentbox ad
 
 Webpack compiles the following files directly in to their equivalents in the `modules/contentbox/modules/contentbox-admin/includes/js` directory
 
-* `admin.js`
-* `app.js`
+- `admin.js`
+- `app.js`
 
 In addition vendor libraries are compiled in to a separate `bootstrap.js` file which is loaded before the custom JS.  A list of these dependencies may be found in `modules/contentbox/modules/contentbox-admin/elixir-module.js`
 
-## Vendor Libaries ##
+## Vendor Libaries
 
 JavaScript libraries not managed by NPM will be placed under the `modules/contentbox/modules/contentbox-admin/resources/vendor/js` folder and optimized by our build process into their appropriate global libraries.  These should be added to the `elixir-module.js` bootstrap mix of javascript resources, if added.  Ideally all libraries should be sourced from NPM
 
@@ -66,7 +69,7 @@ The `Full` lists are absolute or http locations, while the normal append lists a
 
 ```
 // relative
-prc.cssAppendList = "../plugins/morris/css/morris";       
+prc.cssAppendList = "../plugins/morris/css/morris";
 prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morris.min";
 
 // full
