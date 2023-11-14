@@ -1,0 +1,68 @@
+{
+    "data": [
+        {
+            "relatedContent": {
+                "excerpt": "",
+                "numberOfVersions": "10",
+                "cache": true,
+                "createdDate": "2013-07-20T15:38:47+00:00",
+                "numberOfHits": "137",
+                "layout": "pages",
+                "cacheTimeout": 0,
+                "isPublished": true,
+                "HTMLTitle": "",
+                "contentType": "Page",
+                "modifiedDate": "2016-08-05T14:42:30+00:00",
+                "parent": {},
+                "lastEditor": {
+                    "avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=61accb18322422e84424414b5652719f&s=40&r=PG",
+                    "name": "Luis Majano",
+                    "authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+                    "email": "lmajano@gmail.com"
+                },
+                "showInSearch": true,
+                "HTMLKeywords": "",
+                "featuredImage": "",
+                "numberOfComments": "0",
+                "isDeleted": false,
+                "creator": {
+                    "avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=61accb18322422e84424414b5652719f&s=40&r=PG",
+                    "name": "Luis Majano",
+                    "authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+                    "email": "lmajano@gmail.com"
+                },
+                "HTMLDescription": "",
+                "slug": "support",
+                "order": 6,
+                "contentID": "779cd2de-a444-11eb-ab6f-0290cc502ae3",
+                "siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+                "publishedDate": "2013-07-20T15:38:00+00:00",
+                "showInMenu": true,
+                "categories": [
+                    "coldbox"
+                ],
+                "markup": "html",
+                "expireDate": "",
+                "title": "support",
+                "numberOfChildren": "0",
+                "featuredImageURL": "",
+                "allowComments": false,
+                "cacheLastAccessTimeout": 0
+            },
+            "slug": "old-support",
+            "createdDate": "2023-11-14T18:03:05+00:00",
+            "relocationID": "4028fbed8bcef561018bcf004a100000",
+            "target": "",
+            "modifiedDate": "2023-11-14T18:03:05+00:00"
+        }
+    ],
+    "error": false,
+    "pagination": {
+        "totalPages": 1,
+        "maxRows": 25,
+        "offset": 0,
+        "page": 1,
+        "totalRecords": 1
+    },
+    "messages": []
+}
