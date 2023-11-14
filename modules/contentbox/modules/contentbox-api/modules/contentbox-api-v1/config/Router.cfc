@@ -77,7 +77,9 @@ component {
 		);
 
 		/**
-		 * Relocations Handler Routing
+		 * --------------------------------------------------------------------------
+		 * Content Relocations
+		 * --------------------------------------------------------------------------
 		 */
 		resources(
 			resource: "relocations",
