@@ -89,7 +89,7 @@ component extends="baseContentHandler" {
 	 * @tags        ContentStore
 	 * @requestBody contentbox/apidocs/contentStore/create/requestBody.json
 	 * @responses   contentbox/apidocs/contentStore/create/responses.json
-	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// Supersize it

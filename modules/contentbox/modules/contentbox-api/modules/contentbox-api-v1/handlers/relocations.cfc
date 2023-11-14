@@ -69,7 +69,7 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @tags        relocations
 	 * @requestBody contentbox/apidocs/relocations/create/requestBody.json
 	 * @responses   contentbox/apidocs/relocations/create/responses.json
-	 * @x           -contentbox-permissions relocations_ADMIN
+	 * @x-contentbox-permissions relocations_ADMIN
 	 */
 	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );

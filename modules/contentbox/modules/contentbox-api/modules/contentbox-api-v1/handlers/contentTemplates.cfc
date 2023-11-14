@@ -60,7 +60,7 @@ component extends="baseHandler" {
 	 * Create a template
 	 *
 	 * @tags Templates
-	 * @x    -contentbox-permissions PAGES_ADMIN
+	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN"{
 		param rc.creator = prc.oCurrentAuthor;
@@ -72,7 +72,7 @@ component extends="baseHandler" {
 	 * Update an existing template
 	 *
 	 * @tags Templates
-	 * @x    -contentbox-permissions PAGES_ADMIN
+	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN"{
 		structDelete( rc, "creator" );
@@ -84,7 +84,7 @@ component extends="baseHandler" {
 	 * Delete a template using an id or name
 	 *
 	 * @tags Templates
-	 * @x    -contentbox-permissions PAGES_ADMIN
+	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
 		super.delete( argumentCollection = arguments );

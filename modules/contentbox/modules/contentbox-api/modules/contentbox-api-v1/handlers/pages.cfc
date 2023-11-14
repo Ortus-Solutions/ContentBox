@@ -93,7 +93,7 @@ component extends="baseContentHandler" {
 	 * @tags        Pages
 	 * @requestBody contentbox/apidocs/pages/create/requestBody.json
 	 * @responses   contentbox/apidocs/pages/create/responses.json
-	 * @x           -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// Supersize it

@@ -59,7 +59,7 @@ component extends="baseHandler" {
 	 * @tags        Categories
 	 * @requestBody contentbox/apidocs/categories/create/requestBody.json
 	 * @responses   contentbox/apidocs/categories/create/responses.json
-	 * @x           -contentbox-permissions CATEGORIES_ADMIN
+	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
 	function create( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.create( argumentCollection = arguments );

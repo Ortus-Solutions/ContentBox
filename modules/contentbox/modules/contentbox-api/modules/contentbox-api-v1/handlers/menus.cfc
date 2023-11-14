@@ -62,7 +62,7 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * @tags        Menus
 	 * @requestBody contentbox/apidocs/menus/create/requestBody.json
 	 * @responses   contentbox/apidocs/menus/create/responses.json
-	 * @x           -contentbox-permissions MENUS_ADMIN
+	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
 	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );
