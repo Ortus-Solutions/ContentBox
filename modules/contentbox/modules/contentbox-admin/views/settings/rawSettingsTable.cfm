@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll( this.checked, 'settingID' )"/>
+				<input name="checkAll" type="checkbox" onclick="checkAll( this.checked, 'settingID' )"/>
 			</th>
 			<th width="280">Name</th>
 			<th width="80">Site</th>

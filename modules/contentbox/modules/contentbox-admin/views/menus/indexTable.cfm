@@ -6,7 +6,9 @@
     <table name="menu" id="menu" class="table table-striped-removed table-hover " width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'menuID')"/></th>
+                <th id="checkboxHolder" class="{sorter:false}" width="20">
+					<input name="checkAll" type="checkbox" onclick="checkAll(this.checked,'menuID')"/>
+				</th>
                 <th>Name</th>
                 <th>Slug</th>
                 <th width="100" class="text-center">No. Children</th>

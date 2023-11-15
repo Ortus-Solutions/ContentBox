@@ -10,7 +10,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll( this.checked, 'securityRuleID' )"/>
+				<input name="checkAll" type="checkbox" onclick="checkAll( this.checked, 'securityRuleID' )"/>
 			</th>
 			<th>Security Rule</th>
 			<th width="50" class="text-center">Order Index</th>
