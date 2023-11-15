@@ -17,6 +17,7 @@ component{
 			table.string( "data", 200 ).nullable();
 			table.string( "menuType" );
 			table.string( "menuSlug" ).nullable();
+			table.string( "mediaPath" ).nullable();
 			table.string( "contentSlug" ).nullable();
 			table.string( "url" ).nullable();
 			table.string( "js" ).nullable();
