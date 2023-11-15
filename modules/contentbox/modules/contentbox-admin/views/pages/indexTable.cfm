@@ -24,7 +24,7 @@
     <thead>
         <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-            	<input name="checkAll" type="checkbox" onclick="checkAll( this.checked, 'contentID' )"/>
+            	<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'contentID' )"/>
             </th>
 			<th>
 				Name
@@ -71,7 +71,7 @@
 			>
 				<!--- check box --->
 				<td class="text-center">
-					<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
+					<input type="checkbox" name="contentID" value="#page.getContentID()#" />
 				</td>
 
 				<td>

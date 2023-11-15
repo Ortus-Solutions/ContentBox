@@ -107,7 +107,7 @@
 									width="15">
 									<input
 										type="checkbox"
-										onClick="checkAll( this.checked, 'commentID' )"
+										onclick="window.checkAll( this.checked, 'commentID' )"
 									/>
 								</th>
 								<th width="200">Author</th>

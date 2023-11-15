@@ -100,7 +100,7 @@
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-									<input name="checkAll" type="checkbox" onclick="checkAll( this.checked, 'roleID' )"/>
+									<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'roleID' )"/>
 								</th>
 								<th>Role</th>
 								<th width="95" class="text-center">Permissions</th>

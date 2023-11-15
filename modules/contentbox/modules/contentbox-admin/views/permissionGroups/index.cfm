@@ -101,7 +101,7 @@
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-									<input name="checkAll" type="checkbox" onclick="checkAll( this.checked, 'permissionGroupID' )"/>
+									<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'permissionGroupID' )"/>
 								</th>
 								<th>Group</th>
 								<th width="95" class="text-center">Permissions</th>

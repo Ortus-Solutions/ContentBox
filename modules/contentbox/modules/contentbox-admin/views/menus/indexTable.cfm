@@ -7,7 +7,7 @@
         <thead>
             <tr>
                 <th id="checkboxHolder" class="{sorter:false}" width="20">
-					<input name="checkAll" type="checkbox" onclick="checkAll(this.checked,'menuID')"/>
+					<input name="checkAll" type="checkbox" onclick="window.checkAll(this.checked,'menuID')"/>
 				</th>
                 <th>Name</th>
                 <th>Slug</th>

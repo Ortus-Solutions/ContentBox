@@ -6,7 +6,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input name="checkAll" type="checkbox" onclick="checkAll(this.checked,'authorID')"/>
+				<input name="checkAll" type="checkbox" onclick="window.checkAll(this.checked,'authorID')"/>
 			</th>
 			<th>Name</th>
 			<th>Role</th>
