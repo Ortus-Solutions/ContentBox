@@ -70,7 +70,7 @@ component extends="coldbox.system.Interceptor" {
 			var targetData = variables.limitData[ realIP ];
 		}
 
-		log.info( "Limit data", targetData );
+		log.debug( "Limit data", targetData );
 		// log.info( "DateDiff " & dateDiff( "s", targetData.lastAttempt, Now() ) );
 		// log.info( "Within Duration " & dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration );
 
