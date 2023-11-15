@@ -67,7 +67,7 @@
 														@click="deleteSelected()"
 														class="cursor-pointer"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+														<i class="fa fa-trash-alt fa-lg"></i> Delete Selected
 													</a>
 												</li>
 												</cfif>
