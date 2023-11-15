@@ -12,7 +12,7 @@ component{
 
 			table.string( "value" );
 			table.bigInteger( "attempts" );
-			table.string( "lastLoginSuccessIP", 100 );
+			table.string( "lastLoginSuccessIP", 100 ).nullable();
 
 			// Index
 			table.index( [ "value" ], "idx_values" );
