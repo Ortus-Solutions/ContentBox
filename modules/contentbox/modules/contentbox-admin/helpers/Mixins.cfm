@@ -31,7 +31,7 @@
 		var moduleRoot 	= event.getModuleRoot( "contentbox-admin" );
 		var manifest 	= getCache( "template" ).getOrSet(
 			"cbAdminElixirManifest",
-			() => deserializeJSON( fileRead( expandPath( moduleRoot & "/includes/rev-manifest.json"  ) )
+			() => deserializeJSON( fileRead( expandPath( moduleRoot & "/includes/rev-manifest.json"  ) ) )
 		);
 
 		var qualifiedPath = right( moduleRoot, len( moduleRoot ) - 1 ) & "/includes/" & fileName;
