@@ -1,4 +1,19 @@
 ﻿<cfoutput>
+<div
+	id="content-editor"
+	x-data="{
+		focusMode : false,
+
+		get isFocusMode(){
+			return this.focusMode == true;
+		},
+
+		toggleFocusMode(){
+			this.focusMode = !this.focusMode;
+		}
+
+	}"
+>
 	<!--- Quick Actions Left Button Bar --->
 	#cbAdminComponent( "editor/QuickActionsBar" )#
 
@@ -14,10 +29,15 @@
 		<div class="row" x-data="window">
 
 			<!--- Content Editor --->
-			<div class="col-md-8" id="main-content-slot">
+			<div
+				id="main-content-slot"
+				x-data="{
+				}"
+				:class="{ 'col-md-12' : isFocusMode, 'col-md-8' : !isFocusMode }"
+			>
 
+				<!--- MessageBox Alerts --->
 				<div class="messages" x-data="alertsModel()" @add-alert.window="addAlert">
-					<!--- MessageBox --->
 					#cbMessageBox().renderit()#
 					<template x-for="alert in alerts">
 						<div :class="`alert alert-${alert.class} text=center`" x-text="alert.message"></div>
@@ -32,10 +52,19 @@
 				#html.hiddenField( name="saveAsTemplate", value="false" )#
 				#html.hiddenField( name="sluggerURL", 	value=event.buildLink( prc.xehSlugify ) )#
 
-				<div class="panel p10">
+				<div
+					class="panel p10"
+					:class="{ 'border-solid border-2' : isFocusMode }"
+					>
+
 					<div class="tabs">
 						<!-- Nav Tabs -->
-						<ul class="nav nav-tabs" role="tablist">
+						<ul
+							class="nav nav-tabs"
+							role="tablist"
+							id="tablist"
+							x-show="!isFocusMode"
+						>
 
 							<!--- Main Editor --->
 							<li role="presentation" class="nav-item active">
@@ -81,83 +110,95 @@
 							<!--- Event --->
 							#announce( "cbadmin_ContentEditorNav" )#
 						</ul>
-						
+
 						<!--- Nav Content --->
-						<div class="tab-content">
+						<div
+							class="tab-content"
+							id="tab-content"
+						>
 
 							<!--- Editor Tab --->
-							<div role="tabpanel" class="tab-pane active" id="editor">
-								<!--- title --->
-								<div class="form-group">
-									<label class="control-label" for="title">Title:</label>
-									<div class="controls">
-										#html.textfield(
-											name     	= "title",
-											bind     	= prc.oContent,
-											maxlength	= "500",
-											required 	= "required",
-											title    	= "The title for this content",
-											class    	= "form-control"
-										)#
-									</div>
-								</div>
-
-								<!--- slug --->
-								<div class="form-group">
-
-									<label for="slug" class="control-label">
-										Slug:
-										<i class="fa fa-cloud" title="Convert title to slug" onclick="createPermalink()"></i>
-										<cfif !prc.oContent.isContentStore()>
-											<small> #prc.CBHelper.siteRoot()#/</small>
-										</cfif>
-										<cfif prc.oContent.hasParent()>
-											<small>#prc.oContent.getParent().getSlug()#/</small>
-										</cfif>
-									</label>
-
-									<div class="controls">
-										<div id='slugCheckErrors'></div>
-										<div class="input-group">
-											#html.textfield(
-												name      = "slug",
-												bind      = prc.oContent,
-												maxlength = "1000",
-												class     = "form-control",
-												title     = "The unique slug for this content",
-												disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
-											)#
-											<a title=""
-												class="input-group-addon"
-												href="javascript:void(0)"
-												onclick="togglePermalink(); return false;"
-												data-original-title="Lock/Unlock Slug"
-												data-container="body"
-											>
-												<i
-													id="togglePermalink"
-													class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"
-												></i>
-											</a>
-										</div>
-									</div>
-								</div>
-
-								<!--- Description --->
-								<cfif structKeyExists( prc.oContent, "getDescription" )>
+							<div
+								role="tabpanel"
+								class="tab-pane active"
+								id="editor"
+							>
+								<div
+									id="editorMeta"
+									x-show="!isFocusMode"
+								>
+									<!--- title --->
 									<div class="form-group">
-										<label class="control-label" for="description">Short Description:</label>
+										<label class="control-label" for="title">Title:</label>
 										<div class="controls">
-											#html.textarea(
-												name   		= "description",
-												bind   		= prc.oContent,
-												rows   		= 1,
-												class  		= "form-control",
-												title  		= "A short description for metadata purposes"
+											#html.textfield(
+												name     	= "title",
+												bind     	= prc.oContent,
+												maxlength	= "500",
+												required 	= "required",
+												title    	= "The title for this content",
+												class    	= "form-control"
 											)#
 										</div>
 									</div>
-								</cfif>
+
+									<!--- slug --->
+									<div class="form-group">
+
+										<label for="slug" class="control-label">
+											Slug:
+											<i class="fa fa-cloud" title="Convert title to slug" onclick="createPermalink()"></i>
+											<cfif !prc.oContent.isContentStore()>
+												<small> #prc.CBHelper.siteRoot()#/</small>
+											</cfif>
+											<cfif prc.oContent.hasParent()>
+												<small>#prc.oContent.getParent().getSlug()#/</small>
+											</cfif>
+										</label>
+
+										<div class="controls">
+											<div id='slugCheckErrors'></div>
+											<div class="input-group">
+												#html.textfield(
+													name      = "slug",
+													bind      = prc.oContent,
+													maxlength = "1000",
+													class     = "form-control",
+													title     = "The unique slug for this content",
+													disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
+												)#
+												<a title=""
+													class="input-group-addon"
+													href="javascript:void(0)"
+													onclick="togglePermalink(); return false;"
+													data-original-title="Lock/Unlock Slug"
+													data-container="body"
+												>
+													<i
+														id="togglePermalink"
+														class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"
+													></i>
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<!--- Description --->
+									<cfif structKeyExists( prc.oContent, "getDescription" )>
+										<div class="form-group">
+											<label class="control-label" for="description">Short Description:</label>
+											<div class="controls">
+												#html.textarea(
+													name   		= "description",
+													bind   		= prc.oContent,
+													rows   		= 1,
+													class  		= "form-control",
+													title  		= "A short description for metadata purposes"
+												)#
+											</div>
+										</div>
+									</cfif>
+								</div>
 
 								<!---ContentToolBar --->
 								#cbAdminComponent( "editor/ContentToolBar" )#
@@ -191,7 +232,11 @@
 							</div>
 
 							<!--- Custom Fields Tab --->
-							<div role="tabpanel" class="tab-pane" id="custom_fields">
+							<div
+								role="tabpanel"
+								class="tab-pane"
+								id="custom_fields"
+							>
 								<!--- Custom Fields Component --->
 								#cbAdminComponent(
 									"editor/CustomFields",
@@ -200,19 +245,31 @@
 							</div>
 
 							<!--- SEO --->
-							<div role="tabpanel" class="tab-pane" id="seo">
+							<div
+								role="tabpanel"
+								class="tab-pane"
+								id="seo"
+							>
 								#cbAdminComponent( "editor/SEOPanel" )#
 							</div>
 
 							<!--- Persisted ONLY panels --->
 							<cfif prc.oContent.isLoaded()>
 								<!--- Version History Tab --->
-								<div role="tabpanel" class="tab-pane" id="history">
+								<div
+									role="tabpanel"
+									class="tab-pane"
+									id="history"
+								>
 									#prc.versionsViewlet#
 								</div>
 								<!--- Comments --->
 								<cfif prc.oContent.commentsAllowed()>
-									<div role="tabpanel" class="tab-pane" id="comments">
+									<div
+										role="tabpanel"
+										class="tab-pane"
+										id="comments"
+									>
 										#prc.commentsViewlet#
 									</div>
 								</cfif>
@@ -223,6 +280,7 @@
 
 						</div>
 					</div>
+
 					<!--- Event --->
 					#announce( "cbadmin_contentEditorInBody" )#
 				</div>
@@ -232,8 +290,14 @@
 			</div>
 
 			<!--- Content SideBar --->
-			<div class="col-md-4" id="main-content-sidebar">
+			<div
+				id="main-content-sidebar"
+				x-show="!isFocusMode"
+				x-data="{
 
+				}"
+				class="col-md-4"
+			>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title"><i class="fa fa-info-circle"></i> #prc.oContent.getContentType()# Details</h3>
@@ -293,4 +357,5 @@
 
 	<!--- End Form --->
 	#html.endForm()#
+</div>
 </cfoutput>

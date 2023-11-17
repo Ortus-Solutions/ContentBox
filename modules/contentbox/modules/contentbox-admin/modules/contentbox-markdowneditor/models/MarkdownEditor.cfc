@@ -96,7 +96,7 @@ component
 		html.addStyleContent(
 			"
 			.CodeMirror{
-			    height: 400px;
+			    height: 100% !important;
 			}
 			.CodeMirror-fullscreen{
 				z-index: 1000 !important;

@@ -1,11 +1,17 @@
 <cfoutput>
-<div id="contentToolBar" class="mb10">
+<div
+	id="contentToolBar"
+	class="mb10"
+	x-data="{
+
+	}"
+>
 
 	<!--- editor selector --->
 	<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_EDITOR_SELECTOR" )>
 		<div class="btn-group btn-group-sm">
 			<a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-				<i class="fa fa-keyboard-o"></i>
+				<i class="fa fa-keyboard"></i>
 				Editor
 				<span class="caret"></span>
 			</a>
@@ -53,6 +59,16 @@
 
 		</ul>
 	</div>
+
+	<button
+		class="btn btn-secondary btn-sm"
+		@click="toggleFocusMode()"
+		type="button"
+	>
+		<i class="fas fa-toggle-on"  x-show="isFocusMode"></i>
+		<i class="fas fa-toggle-off" x-show="!isFocusMode"></i>
+		Focus Mode
+	</button>
 
 	<!--- Preview Panel --->
 	<div class="pull-right">

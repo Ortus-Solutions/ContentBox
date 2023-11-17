@@ -14,10 +14,15 @@
 	<!--- ************************************************************************************************--->
 	<!---                               BODY START					                                      --->
 	<!--- ************************************************************************************************--->
-	<body 	class="off-canvas"
-			data-showsidebar="#encodeForHTMLAttribute( lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) ) )#"
-			data-adminURL="#encodeForHTMLAttribute( event.buildLink( prc.cbHelper.adminRoot() ) )#"
-			data-preferenceURL="#encodeForHTMLAttribute( event.buildLink( prc.xehSavePreference ) )#"
+	<body
+		class="off-canvas"
+		id="contentbox-body"
+		data-showsidebar="#encodeForHTMLAttribute( lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) ) )#"
+		data-adminURL="#encodeForHTMLAttribute( event.buildLink( prc.cbHelper.adminRoot() ) )#"
+		data-preferenceURL="#encodeForHTMLAttribute( event.buildLink( prc.xehSavePreference ) )#"
+		x-data="{
+
+		}"
 	>
 
 		<!--- cbadmin Event --->
@@ -26,7 +31,11 @@
 		<!--- ************************************************************************************************--->
 		<!---                               MAIN CONTAINER					                                      --->
 		<!--- ************************************************************************************************--->
-		<div id="container" class="#prc.sideMenuClass# layout-wrapper">
+		<div
+			id="container"
+			class="#prc.sideMenuClass#
+			layout-wrapper"
+		>
 
 			<!--- ************************************************************************************************--->
 			<!---                               TOP HEADER					                                      --->
@@ -265,6 +274,7 @@
 
 					<!--- Main Content --->
 					#view()#
+
 					<!--- cbadmin event --->
 					#announce( "cbadmin_afterContent" )#
 				</section>
