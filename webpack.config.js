@@ -1,5 +1,7 @@
 const elixir = require( "coldbox-elixir" );
 
+elixir.base64SourceSize = 1000000;
+
 module.exports = elixir( function( mix ) {
 	mix.module( "modules/contentbox/modules/contentbox-admin", { folderName: "", fileName: "elixir-module.js" } );
 	mix.module( "modules/contentbox/modules/contentbox-admin/modules/contentbox-filebrowser", { folderName: "", fileName: "elixir-module.js" } );
