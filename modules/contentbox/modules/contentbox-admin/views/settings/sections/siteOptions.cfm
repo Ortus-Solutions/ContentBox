@@ -1,7 +1,7 @@
 <cfoutput>
-#html.startForm( name="siteSettingsForm", action=prc.xehSaveSettings )#
-<fieldset>
-	<legend><i class="fa fa-globe fa-lg"></i> All Site Options</legend>
+	#html.startForm( name="siteSettingsForm", action=prc.xehSaveSettings )#
+	<fieldset>
+		<legend><i class="fa fa-globe fa-lg"></i> All Site Options</legend>
 
 		<!--- Caching of Settings --->
 		<div class="form-group">
@@ -26,7 +26,7 @@
 			)#
 			<div class="controls">
 				<p>
-					Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is
+					Choose the entry point in the URL to trigger the blog engine. The usual default entry point pattern is
 					<code>blog</code>. Do not use symbols or slashes (/ \). This will apply to all registered sites.
 				</p>
 
@@ -45,7 +45,8 @@
 	</fieldset>
 
 	<!--- Site Maintenance --->
-	<legend><i class="fas fa-hand-holding-medical fa-lg"></i> <strong>Maintenance</strong></legend>
+	<fieldset>
+		<legend><i class="fas fa-hand-holding-medical fa-lg"></i> <strong>Maintenance</strong></legend>
 		<p>You can put your sites in maintenance mode if you are doing upgrades or anything funky!</p>
 		<!--- Site maintenance --->
 		<div class="form-group">
