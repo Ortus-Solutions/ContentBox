@@ -563,6 +563,7 @@ component
 					"comments",
 					"commentSubscriptions",
 					"contentVersions",
+					"contentTemplate",
 					"customFields",
 					"linkedContentSnapshot:linkedContent",
 					"relatedContentSnapshot:relatedContent",

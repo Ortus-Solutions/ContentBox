@@ -860,6 +860,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			"comments",
 			"commentSubscriptions",
 			"contentversions",
+			"contentTemplate",
+			"childContentTemplate",
 			"creator",
 			"customfields",
 			"linkedContent",
