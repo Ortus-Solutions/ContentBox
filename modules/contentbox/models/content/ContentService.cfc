@@ -828,6 +828,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		};
 		// setup
 		var thisContent = arguments.contentData;
+
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
 		var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
 		if ( isNull( oContent ) ) {
@@ -848,13 +849,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			);
 			return;
 		}
+
 		// Link to site
 		oContent.setSite( arguments.site );
+
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		arguments.newContent[ thisContent.slug ] = oContent;
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		var excludedFields = [
+			"contentID",
 			"categories",
 			"children",
 			"comments",
@@ -916,6 +920,27 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			}
 		}
 
+		// CATEGORIES
+		if ( arrayLen( thisContent.categories ) ) {
+			oContent.setCategories(
+				thisContent.categories.map( function( thisCategory ){
+					var oSiteCategory = site.getCategory( arguments.thisCategory );
+					return (
+						!isNull( oSiteCategory ) ? oSiteCategory : variables.categoryService.getOrCreateBySlug(
+							arguments.thisCategory,
+							site
+						)
+					);
+				} )
+			);
+			logThis(
+				"+ Categories (#thisContent.categories.toString()#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
+			);
+		}
+
+		// We now persist it to do child relationships
+		entitySave( oContent );
+
 		// CUSTOM FIELDS
 		if ( arrayLen( thisContent.customfields ) ) {
 			// wipe out custom fileds if they exist
@@ -937,27 +962,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				logThis( "+ Custom field (#thisCF.key#) imported for : (#thisContent.contentType#:#thisContent.slug#)" );
 			}
 		}
-
-		// CATEGORIES
-		if ( arrayLen( thisContent.categories ) ) {
-			oContent.setCategories(
-				thisContent.categories.map( function( thisCategory ){
-					var oSiteCategory = site.getCategory( arguments.thisCategory );
-					return (
-						!isNull( oSiteCategory ) ? oSiteCategory : variables.categoryService.getOrCreateBySlug(
-							arguments.thisCategory,
-							site
-						)
-					);
-				} )
-			);
-			logThis(
-				"+ Categories (#thisContent.categories.toString()#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
-			);
-		}
-
-		// We now persist it to do child relationships
-		entitySave( oContent );
 
 		// STATS
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
