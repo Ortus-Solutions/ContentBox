@@ -32,7 +32,6 @@
 		name	= "markup",
 		value	= prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup
 	)#
-
 	<div class="btn-group btn-group-sm">
 		<a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
 			<i class="fa fa-code"></i>
@@ -60,6 +59,7 @@
 		</ul>
 	</div>
 
+	<!--- Focus Mode --->
 	<button
 		class="btn btn-secondary btn-sm"
 		@click="toggleFocusMode()"
@@ -71,11 +71,15 @@
 	</button>
 
 	<!--- Preview Panel --->
-	<div class="pull-right">
-		<button onclick="previewContent()" class="btn btn-link btn-sm" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p" type="button">
+		<button
+			onclick="previewContent()"
+			class="btn btn-secondary btn-sm"
+			title="Quick Preview (ctrl+p)"
+			data-keybinding="ctrl+p"
+			type="button"
+		>
 			#cbAdminComponent( "ui/Icon", { name : "Eye", size : "sm" } )#
 			Preview
 		</button>
-	</div>
 </div>
 </cfoutput>
