@@ -36,17 +36,34 @@
 		)#
 	</div>
 
+	<!--- Relocations --->
 	<cfif prc.oContent.isLoaded()>
-		<div class="form-group" x-data="relocationsCrud()">
-			<label style="width:100%">
-				Redirects to this #prc.oContent.getContentType()#
-				<a @click="createRelocation()" class="btn btn-xs btn-success pull-right" data-toggle="tooltip" title="Create new redirect to this page"><i class="fa fa-plus"></i></a>
-			</label>
+		<div
+			class="form-group"
+			x-data="relocationsCrud()"
+			id="relocationsCrud"
+		>
+			<legend style="width:100%">
+				#prc.oContent.getContentType()# Redirects
+				<a
+					@click="createRelocation()"
+					class="btn btn-xs btn-success pull-right"
+					data-toggle="tooltip"
+					title="Create new redirect to this page"
+				>
+					<i class="fa fa-plus"></i>
+				</a>
+			</legend>
+
+			<!--- Global Alert --->
+			#cbAdminComponent( "ui/Alert", { messageModel : "globalAlert" } )#
+
 			<template x-if="!isLoading">
 				<table class="table table-hover table-striped" border="0">
 					<thead>
 						<tr>
 							<th>Slug</th>
+							<th>Date Added</th>
 							<th>Date Added</th>
 							<th></th>
 						</tr>
@@ -54,9 +71,34 @@
 					<tbody>
 						<tr x-show="showForm">
 							<td colspan="3" class="form-group">
-								<label>Create New Redirect</label>
-								<input type="text" placeholder="enter a relative URL ( e.g. path/to/my/page )" class="form-control" x-model="formData.slug" />
-								<button type="button" @click="saveRelocation()" class="btn btn-success btn-sm pull-right" style="margin-top:10px"><i :class="!isSaving ? 'fa fa-save' : 'fa fa-spin fa-spinner'"></i> Save</button>
+
+								<label for="slug">Create New Redirect</label>
+
+								<input
+									name="Slug"
+									type="text"
+									placeholder="enter a relative URL ( e.g. path/to/my/page )"
+									class="form-control"
+									x-model="formData.slug" />
+
+								<div class="flex justify-end items-center mt10">
+									<button
+										type="button"
+										class="btn btn-default btn-sm mr5"
+										@click="cancelRelocation()"
+									>
+										Cancel
+									</button>
+
+									<button
+										type="button"
+										@click="saveRelocation()"
+										class="btn btn-success btn-sm"
+									>
+											<i :class="!isSaving ? 'fa fa-save' : 'fa fa-spin fa-spinner'"></i>
+											Save
+									</button>
+								</div>
 							</td>
 						</tr>
 						<template x-for="(item,index) in relocations">

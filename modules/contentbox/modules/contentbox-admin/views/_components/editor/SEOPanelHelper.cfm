@@ -1,10 +1,5 @@
-<cfscript>
-	if( !prc.oContent.isLoaded() ){
-		prc.oContent.setSite( cb.site() );
-	}
-</cfscript>
 <cfoutput>
-<script type="application/javascript">
+<script>
 	"use strict";
 	function relocationsCrud(){
 		return {
@@ -17,14 +12,16 @@
 			showForm : false,
 			globalAlert : {},
 			formData : {
-				"slug" : "",
-				"relatedContent" : "#prc.oContent.getContentID()#",
-				"site" : "#prc.oContent.getSite().getSiteID()#"
+				"slug" 				: "",
+				"relatedContent" 	: "#prc.oContent.getContentID()#",
+				"site" 				: "#prc.oContent.getSite().getSiteID()#"
 			},
 			authentication  : #toJson( prc.jwtTokens )#,
+
 			init(){
 				this.fetchContentRelocations();
 			},
+
 			fetchContentRelocations(){
 				if( !this.contentId ) return;
 				fetch(
@@ -52,10 +49,17 @@
 					console.log( error );
 				} );
 			},
+
 			createRelocation( slug ){
 				this.formData.slug = "";
 				this.showForm = true;
 			},
+
+			cancelRelocation( slug ){
+				this.formData.slug = "";
+				this.showForm = false;
+			},
+
 			saveRelocation(){
 				this.isSaving = true;
 				var self = this;
@@ -87,6 +91,7 @@
 						self.globalAlert.message = error.toString();
 					} );
 			},
+
 			deleteRelocation( id ){
 				var self = this;
 				var index = this.relocations.findIndex( item => item.relocationID == id );
@@ -117,6 +122,7 @@
 					} );
 				}
 			},
+
 			throwAjaxResponseError( r ){
 				var errors = r.messages;
 				console.log( r.messages );
