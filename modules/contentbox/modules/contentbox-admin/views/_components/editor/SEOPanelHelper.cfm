@@ -10,7 +10,10 @@
 			baseUrl   : "/cbapi/v1/sites/#prc.oContent.getSite().getSlug()#/relocations",
 			relocations : [],
 			showForm : false,
-			globalAlert : {},
+			globalAlert : {
+				type : "",
+				message : ""
+			},
 			formData : {
 				"slug" 				: "",
 				"relatedContent" 	: "#prc.oContent.getContentID()#",
@@ -95,6 +98,7 @@
 			deleteRelocation( id ){
 				var self = this;
 				var index = this.relocations.findIndex( item => item.relocationID == id );
+
 				if( confirm( "Are you sure you wish to delete this redirect?" ) ){
 					this.relocations[ index ].isProcessing = true;
 					fetch(

@@ -64,11 +64,11 @@
 						<tr>
 							<th>Slug</th>
 							<th>Date Added</th>
-							<th>Date Added</th>
-							<th></th>
+							<th width="50">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
+						<!--- new form --->
 						<tr x-show="showForm">
 							<td colspan="3" class="form-group">
 
@@ -86,6 +86,7 @@
 										type="button"
 										class="btn btn-default btn-sm mr5"
 										@click="cancelRelocation()"
+										:disabled="isSaving"
 									>
 										Cancel
 									</button>
@@ -94,6 +95,7 @@
 										type="button"
 										@click="saveRelocation()"
 										class="btn btn-success btn-sm"
+										:disabled="isSaving"
 									>
 											<i :class="!isSaving ? 'fa fa-save' : 'fa fa-spin fa-spinner'"></i>
 											Save
@@ -101,13 +103,29 @@
 								</div>
 							</td>
 						</tr>
-						<template x-for="(item,index) in relocations">
+
+						<!--- Show Relocations --->
+						<template x-for="( item, index  ) in relocations">
 							<tr :key="item.relocationID">
-								<td><code x-text="'/' + item.slug"></code></td>
-								<td x-text="new Date( item.createdDate ).toLocaleDateString()"></td>
-								<td><a @click="deleteRelocation( item.relocationID )" data-toggle="tooltip" title="Delete this redirect"><i :class="!item.isProcessing ? 'fa fa-trash text-muted' : 'fa fa-spin fa-spinner text-muted'"></i></a></td>
+								<td>
+									<code x-text="'/' + item.slug"></code>
+								</td>
+								<td x-text="toLocaleDateTime( item.createdDate )"></td>
+								<td>
+									<button
+										type="button"
+										@click="deleteRelocation( item.relocationID )"
+										data-toggle="tooltip"
+										title="Delete this redirect"
+										class="btn btn-xs btn-icon"
+									>
+										<i :class="!item.isProcessing ? 'fa fa-trash text-muted' : 'fa fa-spin fa-spinner text-muted'"></i>
+									</button>
+								</td>
 							</tr>
 						</template>
+
+						<!--- No Relocations --->
 						<template x-if="!relocations.length">
 							<tr>
 								<td colspan="3" class="text-center text-muted">No Redirects are Currently Configured for this #prc.oContent.getContentType()#</td>

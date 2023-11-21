@@ -20,8 +20,30 @@
 		data-showsidebar="#encodeForHTMLAttribute( lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) ) )#"
 		data-adminURL="#encodeForHTMLAttribute( event.buildLink( prc.cbHelper.adminRoot() ) )#"
 		data-preferenceURL="#encodeForHTMLAttribute( event.buildLink( prc.xehSavePreference ) )#"
+		<!--- Global Alpine Root --->
 		x-data="{
+			adminURL : '#encodeForHTMLAttribute( event.buildLink( prc.cbHelper.adminRoot() ) )#',
 
+			/**
+			 * Get the current date/time in a locale format
+			 */
+			toLocaleDateTime( date ) {
+				return new Date( date ).toLocaleString();
+			},
+
+			/**
+			 * Get the current date in a locale format
+			 */
+			toLocaleDate( date ) {
+				return new Date( date ).toLocaleDateString();
+			},
+
+			/**
+			 * Get the current time in a locale format
+			 */
+			now(){
+				return this.toLocaleDateTime( Date.now() );
+			}
 		}"
 	>
 
