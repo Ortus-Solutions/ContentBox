@@ -47,8 +47,11 @@ component
 	 * constructor
 	 */
 	function init(){
-		appendToMemento( [ "excerpt" ], "defaultIncludes" );
+		var props = [ "excerpt" ];
+		appendToMemento( props, "defaultIncludes" );
 		appendToMemento( [], "defaultExcludes" );
+		appendToMementoProfile( props, "response" );
+		appendToMementoProfile( props, "export" );
 
 		super.init();
 

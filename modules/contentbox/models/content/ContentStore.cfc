@@ -56,6 +56,8 @@ component
 	function init(){
 		appendToMemento( [ "description", "order" ], "defaultIncludes" );
 		appendToMemento( [], "defaultExcludes" );
+		appendToMementoProfile( [ "description", "order" ], "export" );
+		appendToMementoProfile( [ "description", "order" ], "response" );
 
 		super.init();
 
