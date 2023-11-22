@@ -115,9 +115,9 @@ component {
 	 */
 	function appendToMementoProfile( required collection, required profile, target = "defaultIncludes" ){
 		var filtered = arguments.collection.filter( function( item ){
-			return !arrayContainsNoCase( this.memento[ profile ][ target ], arguments.item );
+			return !arrayContainsNoCase( this.memento.profiles[ profile ][ target ], arguments.item );
 		} );
-		this.memento[ arguments.profile ][ arguments.target ].append( filtered, true );
+		this.memento.profiles[ arguments.profile ][ arguments.target ].append( filtered, true );
 		return this;
 	}
 
