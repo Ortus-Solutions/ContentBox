@@ -134,7 +134,7 @@ component accessors="true" singleton threadSafe {
 			( arguments.type == "Core" ? variables.coreWidgetsPath : variables.customWidgetsPath )
 		);
 
-		// Iterate and incorporate exta metadata to record
+		// Iterate and incorporate extra metadata to record
 		for ( var x = 1; x lte qWidgets.recordCount; x++ ) {
 			var widgetName = ripExtension( qWidgets.name[ x ] );
 			// Add new row with data
@@ -232,7 +232,7 @@ component accessors="true" singleton threadSafe {
 			);
 
 			try {
-				var oWidget = getWidget( widgetName, arguments.type );
+				var oWidget = getWidget( widgetName & "@" & moduleName, "Module" );
 				querySetCell(
 					arguments.qRecords,
 					"category",
