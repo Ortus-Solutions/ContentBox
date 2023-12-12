@@ -113,7 +113,11 @@ component {
 	 * @profile    The profile to append to: export, import, etc.
 	 * @target     The target to append to: defaultIncludes, defaultExcludes, neverInclude, defaults, etc.
 	 */
-	function appendToMementoProfile( required collection, required profile, target = "defaultIncludes" ){
+	function appendToMementoProfile(
+		required collection,
+		required profile,
+		target = "defaultIncludes"
+	){
 		var filtered = arguments.collection.filter( function( item ){
 			return !arrayContainsNoCase( this.memento.profiles[ profile ][ target ], arguments.item );
 		} );

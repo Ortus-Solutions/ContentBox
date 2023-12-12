@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_comment", ( table ) => {
-
 			// Base Columns
 			table.string( "commentID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -19,15 +17,16 @@ component{
 
 			// Relationships
 			table.string( "FK_contentID", 36 );
-			table.foreignKey( "FK_contentID" ).references( "contentID" ).onTable( "cb_content" );
+			table
+				.foreignKey( "FK_contentID" )
+				.references( "contentID" )
+				.onTable( "cb_content" );
 
 			// Indexes
 			table.index( [ "isApproved", "FK_contentID" ], "idx_contentComment" );
 			table.index( [ "isApproved" ], "idx_approved" );
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
-
 
 }

@@ -1,8 +1,7 @@
 component {
+
 	function up( schema, query ){
-
-		schema.create( "cb_content", function(table) {
-
+		schema.create( "cb_content", function( table ){
 			// Base Columns
 			table.string( "contentID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -29,11 +28,20 @@ component {
 
 			// Relationships
 			table.string( "FK_siteID", 36 );
-			table.foreignKey( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" );
+			table
+				.foreignKey( "FK_siteID" )
+				.references( "siteID" )
+				.onTable( "cb_site" );
 			table.string( "FK_authorID", 36 );
-			table.foreignKey( "FK_authorID" ).references( "authorID" ).onTable( "cb_author" );
+			table
+				.foreignKey( "FK_authorID" )
+				.references( "authorID" )
+				.onTable( "cb_author" );
 			table.string( "FK_parentID", 36 ).nullable();
-			table.foreignKey( "FK_parentID" ).references( "contentID" ).onTable( "cb_content" );
+			table
+				.foreignKey( "FK_parentID" )
+				.references( "contentID" )
+				.onTable( "cb_content" );
 
 			// Index
 			table.index( [ "contentType" ], "idx_discriminator" );
@@ -48,7 +56,6 @@ component {
 			table.index( [ "cacheLastAccessTimeout" ], "idx_cachelastaccesstimeout" );
 			table.index( [ "showInSearch" ], "idx_showInSearch" );
 		} );
-
 	}
 
 	function down( schema, query ){

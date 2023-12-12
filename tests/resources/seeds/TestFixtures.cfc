@@ -4,10 +4,9 @@
  *
  * This is run usually after the initial migrations have ran!
  */
-component{
+component {
 
 	function run( qb, mockData ){
-
 	}
 
 }

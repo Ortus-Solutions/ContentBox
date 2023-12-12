@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cbsecurity_logs", ( table ) => {
-
 			// Base Columns
 			table.string( "id", 36 ).primaryKey();
 			table.datetime( "logDate" ).withCurrent();
@@ -29,8 +27,6 @@ component{
 			table.index( [ "path" ], "idx_cbsecurity_path" );
 			table.index( [ "referer" ], "idx_cbsecurity_referer" );
 		} );
-
 	}
-
 
 }

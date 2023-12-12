@@ -41,10 +41,10 @@ component extends="baseContentHandler" {
 		// If passed, we can do a slug wildcard search
 		param rc.slugSearch = "";
 		// If passed, it's a slug operation
-		param rc.slug = "";
+		param rc.slug       = "";
 
 		// If we have a `slug` then we treat it as a /:slug route, due to hierarchical paths
-		if( rc.slug.trim().length() > 0 ){
+		if ( rc.slug.trim().length() > 0 ) {
 			rc.id = rc.slug;
 			return show( argumentCollection = arguments );
 		}
@@ -94,9 +94,9 @@ component extends="baseContentHandler" {
 	/**
 	 * Create a content store item
 	 *
-	 * @tags        ContentStore
-	 * @requestBody contentbox/apidocs/contentStore/create/requestBody.json
-	 * @responses   contentbox/apidocs/contentStore/create/responses.json
+	 * @tags                     ContentStore
+	 * @requestBody              contentbox/apidocs/contentStore/create/requestBody.json
+	 * @responses                contentbox/apidocs/contentStore/create/responses.json
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{

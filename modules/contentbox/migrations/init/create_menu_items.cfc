@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_menuItem", ( table ) => {
-
 			// Base Columns
 			table.string( "menuItemID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -26,17 +24,20 @@ component{
 
 			// Relationships
 			table.string( "FK_menuID", 36 );
-			table.foreignKey( "FK_menuID" ).references( "menuID" ).onTable( "cb_menu" );
+			table
+				.foreignKey( "FK_menuID" )
+				.references( "menuID" )
+				.onTable( "cb_menu" );
 			table.string( "FK_parentID", 36 );
-			table.foreignKey( "FK_parentID" ).references( "menuItemID" ).onTable( "cb_menuItem" );
+			table
+				.foreignKey( "FK_parentID" )
+				.references( "menuItemID" )
+				.onTable( "cb_menuItem" );
 
 			// Index
 			table.index( [ "title" ], "idx_menuItemTitle" );
 			table.index( [ "isDeleted" ], "idx_deleted" );
-
 		} );
-
 	}
-
 
 }

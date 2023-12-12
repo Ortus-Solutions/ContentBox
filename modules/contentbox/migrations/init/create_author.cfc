@@ -1,7 +1,6 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_author", ( table ) => {
 			// Base Columns
 			table.string( "authorID", 36 ).primaryKey();
@@ -23,7 +22,10 @@ component{
 
 			// Relationships
 			table.string( "FK_roleID", 36 );
-			table.foreignKey( "FK_roleID" ).references( "roleID" ).onTable( "cb_role" );
+			table
+				.foreignKey( "FK_roleID" )
+				.references( "roleID" )
+				.onTable( "cb_role" );
 
 			// Indexes
 			table.index( [ "email" ], "idx_email" );
@@ -33,8 +35,6 @@ component{
 			table.index( [ "is2FactorAuth" ], "idx_2factorauth" );
 			table.index( [ "username", "password", "isActive" ], "idx_login" );
 		} );
-
 	}
-
 
 }

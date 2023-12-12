@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_module", ( table ) => {
-
 			// Base Columns
 			table.string( "moduleID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -28,8 +26,6 @@ component{
 			table.index( [ "moduleType" ], "idx_moduleType" );
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
-
 
 }

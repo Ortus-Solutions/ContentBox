@@ -76,9 +76,9 @@ component extends="baseContentHandler" {
 	/**
 	 * Create an entry
 	 *
-	 * @tags        Entries
-	 * @requestBody contentbox/apidocs/entries/create/requestBody.json
-	 * @responses   contentbox/apidocs/entries/create/responses.json
+	 * @tags                     Entries
+	 * @requestBody              contentbox/apidocs/entries/create/requestBody.json
+	 * @responses                contentbox/apidocs/entries/create/responses.json
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
