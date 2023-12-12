@@ -59,7 +59,7 @@ component extends="baseHandler" {
 	/**
 	 * Create a template
 	 *
-	 * @tags Templates
+	 * @tags                     Templates
 	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN"{
@@ -71,7 +71,7 @@ component extends="baseHandler" {
 	/**
 	 * Update an existing template
 	 *
-	 * @tags Templates
+	 * @tags                     Templates
 	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN"{
@@ -83,7 +83,7 @@ component extends="baseHandler" {
 	/**
 	 * Delete a template using an id or name
 	 *
-	 * @tags Templates
+	 * @tags                     Templates
 	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="PAGES_ADMIN"{

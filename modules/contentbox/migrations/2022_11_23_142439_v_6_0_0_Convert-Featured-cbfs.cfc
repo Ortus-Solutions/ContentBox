@@ -15,8 +15,8 @@ component {
 			.where( "isCore", 1 )
 			.first();
 
-		if( !structKeyExists( mediaRoot, "value" ) ){
-			systemoutput( "Media root doesn't exist, skipping migration", true );
+		if ( !structKeyExists( mediaRoot, "value" ) ) {
+			systemOutput( "Media root doesn't exist, skipping migration", true );
 			return;
 		}
 

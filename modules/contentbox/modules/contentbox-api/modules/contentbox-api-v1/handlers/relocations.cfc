@@ -66,9 +66,9 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	/**
 	 * Create a relocation
 	 *
-	 * @tags        relocations
-	 * @requestBody contentbox/apidocs/relocations/create/requestBody.json
-	 * @responses   contentbox/apidocs/relocations/create/responses.json
+	 * @tags                     relocations
+	 * @requestBody              contentbox/apidocs/relocations/create/requestBody.json
+	 * @responses                contentbox/apidocs/relocations/create/responses.json
 	 * @x-contentbox-permissions relocations_ADMIN
 	 */
 	function create( event, rc, prc ){

@@ -61,9 +61,9 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	/**
 	 * Create a site
 	 *
-	 * @tags        Sites
-	 * @requestBody contentbox/apidocs/sites/create/requestBody.json
-	 * @responses   contentbox/apidocs/sites/create/responses.json
+	 * @tags                     Sites
+	 * @requestBody              contentbox/apidocs/sites/create/requestBody.json
+	 * @responses                contentbox/apidocs/sites/create/responses.json
 	 * @x-contentbox-permissions SITES_ADMIN
 	 */
 	function create( event, rc, prc ){
