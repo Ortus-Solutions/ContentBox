@@ -123,6 +123,10 @@ component{
 				description : "Ability to reload modules"
 			},
 			{
+				permission : "RELOAD_CACHES",
+				description : "Ability to reload caches"
+			},
+			{
 				permission : "ROLES_ADMIN",
 				description : "Ability to manage roles, default is view only"
 			},

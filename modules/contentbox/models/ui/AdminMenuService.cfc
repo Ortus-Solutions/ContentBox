@@ -232,41 +232,46 @@ component accessors="true" threadSafe singleton {
 			class       = "dropdown settings",
 			itemType    = "button",
 			itemClass   = "btn btn-more options toggle",
-			permissions = "RELOAD_MODULES",
+			permissions = "RELOAD_MODULES,RELOAD_CACHES",
 			data        = { placement : "right" },
 			title       = "Admin Actions"
 		).addHeaderSubMenu(
-				name  = "rsscache",
-				label = "Clear RSS Caches",
-				href  = function( required menu, required event ){
+				name        = "rsscache",
+				label       = "Clear RSS Caches",
+				permissions = "RELOAD_CACHES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'rss-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "contentpurge",
-				label = "Clear Content Caches",
-				href  = function( required menu, required event ){
+				name        = "contentpurge",
+				label       = "Clear Content Caches",
+				permissions = "RELOAD_CACHES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'content-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "cachepurge",
-				label = "Clear Template Cache",
-				href  = function( required menu, required event ){
+				name        = "cachepurge",
+				label       = "Clear Template Cache",
+				permissions = "RELOAD_CACHES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'cache-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "app",
-				label = "Reload Application",
-				href  = function( required menu, required event ){
+				name        = "app",
+				label       = "Reload Application",
+				permissions = "RELOAD_MODULES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'app', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "orm",
-				label = "Reload ORM",
-				href  = function( required menu, required event ){
+				name        = "orm",
+				label       = "Reload ORM",
+				permissions = "RELOAD_MODULES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'orm', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
@@ -445,14 +450,13 @@ component accessors="true" threadSafe singleton {
 				href_to     = prc.xehCommentsettings,
 				permissions = "COMMENTS_ADMIN"
 			)
-			.
-addSubMenu(
-			name    = "Subscribers",
-			label   = "Subscribers",
-			href    = variables.buildLink,
-			href_to = prc.xehSubscribers,
-			title   = "View Subscribers"
-		);
+			.addSubMenu(
+				name    = "Subscribers",
+				label   = "Subscribers",
+				href    = variables.buildLink,
+				href_to = prc.xehSubscribers,
+				title   = "View Subscribers"
+			);
 
 		// Look and Feel
 		addTopMenu( name = this.LOOK_FEEL, label = "<i class='fa fa-tint'></i> Look & Feel" )
