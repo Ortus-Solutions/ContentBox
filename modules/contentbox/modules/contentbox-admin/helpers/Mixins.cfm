@@ -9,9 +9,10 @@
 	 */
 	function cbAdminComponent( required component, struct args = {} ){
 		return view(
-			view 			: "_components/#arguments.component#",
-			args 			: arguments.args,
-			prePostExempt 	: true
+			view 			 : "_components/#arguments.component#",
+			args 			 : arguments.args,
+			prePostExempt   : true,
+			module 		    : "contentbox-admin"
 		);
 	}
 
