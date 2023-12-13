@@ -76,7 +76,7 @@
                 content = "Allow UI content export formats:"
             )#
             <div class="controls">
-                <small>Enable/Disabled the ability to export pages/blog/etc from the UI module via format extensions like pdf,doc,print,json, and xml.</small><br /><br />
+                <small>Enable/Disabled the ability to export pages/blog/etc from the UI via format extensions like doc,print,json, and xml.</small><br /><br />
                 #html.checkbox(
 					name    = "cb_content_uiexport_toggle",
 					data	= { toggle: 'toggle', match: 'cb_content_uiexport' },

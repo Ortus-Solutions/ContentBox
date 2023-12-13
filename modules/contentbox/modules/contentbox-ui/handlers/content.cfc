@@ -266,12 +266,6 @@ component {
 
 		// Multi format generation
 		switch ( rc.format ) {
-			case "pdf": {
-				data.content     = dataMarshaller.marshallData( data = data.content, type = "pdf" );
-				data.contentType = "application/pdf";
-				data.isBinary    = true;
-				break;
-			}
 			case "doc": {
 				data.contentType = "application/msword";
 				data.isBinary    = false;
