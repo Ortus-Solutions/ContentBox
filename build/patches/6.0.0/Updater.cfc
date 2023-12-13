@@ -1,5 +1,5 @@
 /**
- * Update a v4 Installation to v5
+ * Update a v5 Installation to v6
  */
 component {
 
@@ -8,7 +8,7 @@ component {
 		variables.cwd = getCWD();
 		variables.tempFolder = variables.cwd & "__temp";
 
-		variables.targetVersion = "5";
+		variables.targetVersion = "6";
 
 		if( directoryExists( variables.tempFolder ) ){
 			directoryDelete( variables.tempFolder, true );
@@ -34,13 +34,12 @@ component {
 			variables.targetVersion = arguments.version;
 		}
 
-		print.blueLine( "This task will update your ContentBox 4 installation to a ContentBox 5 installation." )
+		print.blueLine( "This task will update your ContentBox 5 installation to a ContentBox 6 installation." )
 			.blueLine( "Please make a backup of your source and your database now. " )
 			.line()
 			.redLine( "Here are some files that will be overwritten by the updater. We will create .bak files for you.")
 			.redLine( "Make sure you copy back your customizations to your new files:")
 			.redLine( "- Application.cfc" )
-			.redLine( "- config/CacheBox.cfc")
 			.redLine( "- config/Coldbox.cfc")
 			.line()
 			.toConsole();
@@ -64,8 +63,8 @@ component {
 		// Update ColdBox
 		print.blueLine( "Uninstalling current version of ColdBox..." ).toConsole();
 		command( "uninstall coldbox" ).run();
-		print.blueLine( "Installing latest version of ColdBox 6..." ).toConsole();
-		command( "install coldbox@^6.0.0 --save" ).run();
+		print.blueLine( "Installing latest version of ColdBox 7..." ).toConsole();
+		command( "install coldbox@^7.0.0 --save" ).run();
 		print.greenLine( "√ ColdBox Updated!" ).toConsole();
 
 		// Update ContentBox
@@ -73,7 +72,7 @@ component {
 		command( "uninstall contentbox" ).run();
 		print.blueLine( "Installing ContentBox v#variables.targetVersion#" ).toConsole();
 		command( "install contentbox@#variables.targetVersion# --save" ).run();
-		print.greenLine( "√ ContentBox v5 Installed!" ).toConsole();
+		print.greenLine( "√ ContentBox v#variables.targetVersion# Installed!" ).toConsole();
 
 		// ContentBox Bin directory installation
 		print.blueLine( "Moving new ContentBox bin folder to root..." ).toConsole();
@@ -81,7 +80,15 @@ component {
 			directoryCreate( variables.cwd & "bin" );
 		};
 		copy( variables.tempFolder & "/bin", variables.cwd & "bin" );
-		print.greenLine( "√ New ContentBox bin folder installed!" ).toConsole();
+		print.greenLine( "√ ContentBox bin folder installed!" ).toConsole();
+
+		// New ColdBox 7 Modules Folder
+		print.blueLine( "Moving new ColdBox config modules folder to config..." ).toConsole();
+		if( !directoryExists( variables.cwd & "config/modules" ) ){
+			directoryCreate( variables.cwd & "config/modules" );
+		};
+		copy( variables.tempFolder & "/config/modules", variables.cwd & "config/modules" );
+		print.greenLine( "√ ColdBox config modules folder installed!" ).toConsole();
 
 		// Copy over new files
 		replaceNewSiteFiles();
@@ -92,7 +99,7 @@ component {
 		// Run Migrations
 		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
 		command( "run-script contentbox:migrate:up" ).run();
-		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
+		print.greenLine( "√ Database migrated!" ).toConsole();
 
 		// Final Comment
 		print.boldRedLine(
@@ -108,9 +115,7 @@ component {
 			".cfconfig.json",
 			"server.json",
 			"Application.cfc",
-			"robots.txt",
 			"readme.md",
-			"config/CacheBox.cfc",
 			"config/Coldbox.cfc"
 		].each( ( thisFile ) => {
 			if( fileExists( variables.cwd & thisFile ) ){
