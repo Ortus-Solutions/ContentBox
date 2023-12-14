@@ -36,9 +36,11 @@ jobs:
           # This makes sure we don't have any issues with the BE of ColdBox
           - cfengine: "lucee@5"
             coldboxVersion: "be"
+            jdkVersion: "11"
             experimental: true
           - cfengine: "adobe@2021"
             coldboxVersion: "be"
+            jdkVersion: "11"
             experimental: true
           - cfengine: "adobe@2023"
             coldboxVersion: "be"
