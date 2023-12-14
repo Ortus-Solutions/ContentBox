@@ -33,7 +33,9 @@ component extends="tests.resources.BaseTest" {
 					);
 
 					expect( output ).notToBeEmpty();
-					expect( output ).toInclude( "No settings imported as none where found or able to be overriden from the import file." );
+					expect( output ).toInclude(
+						"No settings imported as none where found or able to be overriden from the import file."
+					);
 				} )
 			} );
 		} );

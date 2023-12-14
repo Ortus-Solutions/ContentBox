@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_subscribers", ( table ) => {
-
 			// Base Columns
 			table.string( "subscriberID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -17,8 +15,6 @@ component{
 			table.index( [ "subscriberEmail" ], "idx_subscriberEmail" );
 			table.index( [ "isDeleted" ], "idx_deleted" );
 		} );
-
 	}
-
 
 }

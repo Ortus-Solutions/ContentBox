@@ -98,11 +98,13 @@ component extends="baseHandler" {
 
 				templateService.saveAll( templates );
 				cbMessagebox.info( "Content Templates imported sucessfully!" );
-				cbMessagebox.info( "Templates #templates
-					.map( function( t ){
-						return t.getName();
-					} )
-					.toList()# are now associated to site #prc.oCurrentSite.getName()#" );
+				cbMessagebox.info(
+					"Templates #templates
+						.map( function( t ){
+							return t.getName();
+						} )
+						.toList()# are now associated to site #prc.oCurrentSite.getName()#"
+				);
 			} else {
 				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}

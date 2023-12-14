@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_jwt", ( table ) => {
-
 			// Base Columns
 			table.string( "id", 36 ).primaryKey();
 			table.datetime( "expiration" );
@@ -15,8 +13,6 @@ component{
 			// Indexes
 			table.index( [ "cacheKey" ], "idx_cacheKey" );
 		} );
-
 	}
-
 
 }

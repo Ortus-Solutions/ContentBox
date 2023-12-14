@@ -69,7 +69,7 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @tags        relocations
 	 * @requestBody contentbox/apidocs/relocations/create/requestBody.json
 	 * @responses   contentbox/apidocs/relocations/create/responses.json
-	 * @x-contentbox-permissions relocations_ADMIN
+	 * @x           -contentbox-permissions relocations_ADMIN
 	 */
 	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );
@@ -78,9 +78,9 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	/**
 	 * Update an existing relocation
 	 *
-	 * @tags                     relocations
-	 * @responses                contentbox/apidocs/relocations/update/responses.json
-	 * @x-contentbox-permissions relocations_ADMIN
+	 * @tags      relocations
+	 * @responses contentbox/apidocs/relocations/update/responses.json
+	 * @x         -contentbox-permissions relocations_ADMIN
 	 */
 	function update( event, rc, prc ){
 		super.update( argumentCollection = arguments );
@@ -89,9 +89,9 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	/**
 	 * Delete a relocation using an id or slug
 	 *
-	 * @tags                     relocations
-	 * @responses                contentbox/apidocs/relocations/delete/responses.json
-	 * @x-contentbox-permissions relocations_ADMIN
+	 * @tags      relocations
+	 * @responses contentbox/apidocs/relocations/delete/responses.json
+	 * @x         -contentbox-permissions relocations_ADMIN
 	 */
 	function delete( event, rc, prc ){
 		super.delete( argumentCollection = arguments );
