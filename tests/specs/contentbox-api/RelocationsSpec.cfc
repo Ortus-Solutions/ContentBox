@@ -125,7 +125,9 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to delete a Relocation", function(){
 				given( "a valid id/slug", function(){
 					then( "then I should see the confirmation", function(){
-						var event = this.delete( "/cbapi/v1/sites/default/relocations/#variables.testRelocation.getRelocationID()#" );
+						var event = this.delete(
+							"/cbapi/v1/sites/default/relocations/#variables.testRelocation.getRelocationID()#"
+						);
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getMessagesString() ).toInclude( "deleted" );
 					} );

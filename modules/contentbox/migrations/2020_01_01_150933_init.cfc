@@ -4,7 +4,7 @@
 component {
 
 	// DI
-	property name = "migrationService" inject = "MigrationService@cfmigrations";
+	property name="migrationService" inject="MigrationService@cfmigrations";
 
 	// Include Utils
 	include template = "./util/MigrationUtils.cfm";
@@ -53,10 +53,10 @@ component {
 		migrations.each( ( migration, record ) => {
 			systemOutput( "Migrating [#migration#]...", true );
 
-			if( !schema.hasTable( record.table ) ){
+			if ( !schema.hasTable( record.table ) ) {
 				newDB = true;
 				systemOutput( "- Table doesn't exist (#record.table#) creating it...", true );
-				new "init.create_#migration#"().up( schema, query );
+				new "init.create_#migration#"( ).up( schema, query );
 			} else {
 				systemOutput( "√ Table (#record.table#) already exists, skipping...", true );
 			}
@@ -66,7 +66,7 @@ component {
 
 		// Seed the database only if we created the tables
 		// This protects agains seeding an already ran migration
-		if( newDB ){
+		if ( newDB ) {
 			systemOutput( "- Database seeding required, starting...", true );
 
 			new init.seed_permissions().seed( schema, query );

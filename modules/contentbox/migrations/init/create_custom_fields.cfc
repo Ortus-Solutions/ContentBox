@@ -1,9 +1,7 @@
-component{
+component {
 
 	function up( schema, query ){
-
 		schema.create( "cb_customfield", ( table ) => {
-
 			// Base Columns
 			table.string( "customFieldID", 36 ).primaryKey();
 			table.datetime( "createdDate" ).withCurrent();
@@ -15,10 +13,11 @@ component{
 
 			// Relationships
 			table.string( "FK_contentID", 36 );
-			table.foreignKey( "FK_contentID" ).references( "contentID" ).onTable( "cb_content" );
+			table
+				.foreignKey( "FK_contentID" )
+				.references( "contentID" )
+				.onTable( "cb_content" );
 		} );
-
 	}
-
 
 }

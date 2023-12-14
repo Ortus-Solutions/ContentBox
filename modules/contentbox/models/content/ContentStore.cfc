@@ -54,7 +54,7 @@ component
 	 ********************************************************************* */
 
 	function init(){
-		var props =  [ "description", "order" ];
+		var props = [ "description", "order" ];
 		appendToMemento( props, "defaultIncludes" );
 		appendToMemento( [], "defaultExcludes" );
 		appendToMementoProfile( props, "export" );

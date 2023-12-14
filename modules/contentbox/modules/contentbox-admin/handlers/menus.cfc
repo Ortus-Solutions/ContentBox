@@ -143,10 +143,12 @@ component extends="baseHandler" {
 		}
 
 		savecontent variable="local.renderedMenuItem" {
-			writeOutput( "<li
+			writeOutput(
+				"<li
 				class=""dd-item dd3-item""
 				data-id=""#encodeForHTMLAttribute( args.menuItemID )#""
-				:key=""#encodeForHTMLAttribute( args.menuItemID )#"">" )
+				:key=""#encodeForHTMLAttribute( args.menuItemID )#"">"
+			)
 			writeOutput( view( view: "menus/provider", args: args ) );
 			writeOutput( "</li>" );
 		};

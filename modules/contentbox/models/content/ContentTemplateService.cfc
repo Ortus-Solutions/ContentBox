@@ -291,13 +291,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// if new or persisted with override then save.
 				if ( !oTemplate.isLoaded() ) {
-					arguments.importLog.append( "New template imported for site #assignedSite.getName()#: #thisTemplate.name#<br>" );
+					arguments.importLog.append(
+						"New template imported for site #assignedSite.getName()#: #thisTemplate.name#<br>"
+					);
 					arrayAppend( allTemplates, oTemplate );
 				} else if ( oTemplate.isLoaded() and arguments.override ) {
-					arguments.importLog.append( "Persisted template overriden for site #assignedSite.getName()#: #thisTemplate.name#<br>" );
+					arguments.importLog.append(
+						"Persisted template overriden for site #assignedSite.getName()#: #thisTemplate.name#<br>"
+					);
 					arrayAppend( allTemplates, oTemplate );
 				} else {
-					arguments.importLog.append( "Skipping persisted template for site #assignedSite.getName()#: #thisTemplate.name#<br>" );
+					arguments.importLog.append(
+						"Skipping persisted template for site #assignedSite.getName()#: #thisTemplate.name#<br>"
+					);
 				}
 			}
 			// end import loop
