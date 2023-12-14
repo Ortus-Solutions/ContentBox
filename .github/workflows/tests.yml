@@ -1,4 +1,4 @@
-name: Test Suites
+name: ContentBox Test Suites
 
 # We are a reusable Workflow only
 on:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   tests:
-    name: Tests
+    name: Test Suites
     runs-on: ubuntu-20.04
     env:
       DB_USER: root
@@ -18,31 +18,36 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine:  [ "lucee@5", "adobe@2018", "adobe@2021" ]
+        cfengine: [ "lucee@5", "adobe@2018", "adobe@2021", "adobe@2023" ]
         coldboxVersion: [ "^7" ]
+        jdkVersion: [ "11" ]
         experimental: [ false ]
         include:
           # Engines BE
-          - cfengine: "adobe@2023"
-            coldboxVersion: "be"
-            experimental: true
           - cfengine: "lucee@be"
-            coldboxVersion: "be"
+            coldboxVersion: "^7"
+            jdkVersion: "17"
+            experimental: true
+          - cfengine: "lucee@6"
+            coldboxVersion: "^7"
+            jdkVersion: "17"
             experimental: true
           # ColdBox BE on all allowed distros
+          # This makes sure we don't have any issues with the BE of ColdBox
           - cfengine: "lucee@5"
-            coldboxVersion: "be"
-            experimental: true
-          - cfengine: "adobe@2018"
             coldboxVersion: "be"
             experimental: true
           - cfengine: "adobe@2021"
             coldboxVersion: "be"
             experimental: true
+          - cfengine: "adobe@2023"
+            coldboxVersion: "be"
+            jdkVersion: "17"
+            experimental: true
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Database and Fixtures
         run: |
@@ -51,15 +56,13 @@ jobs:
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
       - name: Setup Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
-          distribution: "adopt"
-          java-version: "11"
+          distribution: "temurin"
+          java-version: ${{ matrix.jdkVersion }}
 
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
-        with:
-          version: 5.6.1
 
       - name: Setup .env For Runner
         run: |
@@ -81,8 +84,10 @@ jobs:
           # Log4j Hibernate Debug
           mkdir -p .engines/acf2018/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
+          mkdir -p .engines/acf2023/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
+          cp build/resources/log4j.properties .engines/acf2023/WEB-INF/cfusion/lib/
 
       - name: Install Test Harness with ColdBox ${{ matrix.coldboxVersion }}
         run: |
@@ -113,7 +118,7 @@ jobs:
           curl "http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb" -o "tests/results/contentbox-swagger.json"
 
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: tests/results/**/*.xml
@@ -121,7 +126,7 @@ jobs:
 
       - name: Upload Test Results Artifacts
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: contentbox-test-results-${{ matrix.cfengine }}
           path: |
@@ -148,11 +153,15 @@ jobs:
           if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             cat .engines/acf2021/WEB-INF/cfusion/logs/hibernatesql.log
           fi
+          if [[ "{{ matrix.cfengine }}" == "adobe@2023" ]] ; then
+            cat .engines/acf2023/WEB-INF/cfusion/logs/hibernatesql.log
+          fi
+          box server info serverConfigFile="server-${{ matrix.cfengine }}.json" --json
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
       - name: Upload Debugging Info To Artifacts
         if: ${{ failure() && !startsWith( 'pull_request', github.event_name ) }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Failure Debugging Info - ${{ matrix.cfengine }}
           path: |

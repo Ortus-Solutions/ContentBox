@@ -1,34 +1,29 @@
 name: Pull Requests
 
 on:
+  push:
+    branches-ignore:
+      - "main"
+      - "master"
+      - "development"
+      - "releases/**"
   pull_request:
     branches:
       - development
+      - "releases/**"
 
 jobs:
   tests:
     uses: ./.github/workflows/tests.yml
-    secrets:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    secrets: inherit
 
-  format:
-    name: Format
+  format_check:
+    name: Checks Source Code Formatting
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.2.0
 
-      - name: Setup CommandBox CLI
-        uses: Ortus-Solutions/setup-commandbox@v2.0.1
+      - uses: Ortus-Solutions/commandbox-action@v1.0.2
         with:
-          version: 5.4.2
-          install: commandbox-cfformat
-          warmup: true
-
-      - name: Run formatting rules
-        run: box run-script format
-
-      - name: Commit Format Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply cfformat changes
+          cmd: run-script format:check
