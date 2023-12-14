@@ -22,10 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Auto-format
-        uses: Ortus-Solutions/commandbox-action@v1.0.2
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
-          cmd: run-script format
+          install: commandbox-cfformat
+          warmup: true
+
+      - name: Run formatting rules
+        run: box run-script format
 
       - name: Commit Format Changes
         uses: stefanzweifel/git-auto-commit-action@v4
