@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_FEATURED_IMAGE" )>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -18,33 +18,28 @@
 			<div class="panel-body">
 				<div class="form-group text-center">
 					<!--- Select and Cancel Buttons --->
-					<a
+					<button
 						class="btn btn-primary"
-						href="javascript:loadAssetChooser( 'featuredImageCallback' )"
+						onclick="loadAssetChooser( 'featuredImageCallback' )"
+						type="button"
 					>
 						Select Image
-					</a>
+					</button>
 					<!--- Featured Image Selection --->
 					<div
-						class="<cfif !len( prc.oContent.getFeaturedImageURL() )>hide</cfif> form-group"
+						class="<cfif !len( prc.oContent.getFeaturedImage() )>hide</cfif> form-group"
 						id="featuredImageControls"
 					>
-						#html.textField(
-							name 		= "featuredImage",
-							bind 		= prc.oContent,
-							class 		= "form-control",
-							readonly 	= true,
-							title 		= "The actual image path to deliver"
-						)#
 						#html.hiddenField(
-							name = "featuredImageURL",
-							bind = prc.oContent
+							name 		= "featuredImage",
+							bind 		= prc.oContent
 						)#
 
 						<!--- Image Preview --->
 						<div class="m10">
-							<cfif len( prc.oContent.getFeaturedImageURL() )>
+							<cfif len( prc.oContent.getFeaturedImage() )>
 								<img id="featuredImagePreview" src="#prc.oContent.getFeaturedImageURL()#" class="img-thumbnail" height="75">
+								<p class="text-muted" id="featuredImageURL"><small>#prc.oContent.getFeaturedImageURL()#</small></p>
 							<cfelse>
 								<img id="featuredImagePreview" class="img-thumbnail" height="75">
 							</cfif>

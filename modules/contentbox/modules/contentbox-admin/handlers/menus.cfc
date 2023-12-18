@@ -122,9 +122,9 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Create a menu Item
+	 * Create a menu item for a provider
 	 *
-	 * @return text
+	 * @return The rendered menu item
 	 */
 	function createMenuItem( event, rc, prc ){
 		prc.provider = menuItemService.getProvider( arguments.rc.type );
@@ -133,12 +133,27 @@ component extends="baseHandler" {
 			menuItem : entityNew( prc.provider.getEntityName() ),
 			provider : prc.provider
 		};
-		var str             = "<li class=""dd-item dd3-item"" data-id=""new-#createUUID()#"">";
-		savecontent variable="menuString" {
-			writeOutput( renderView( view = "menus/provider", args = args ) );
+
+		// set new or persisted id in args
+		if ( args.menuItem.isLoaded() ) {
+			args.menuItemID = args.menuItem.getMenuItemID();
+		} else {
+			args.menuItemID = "new-#createUUID()#";
+			args.menuItem.setMenu( variables.menuService.new().setSite( prc.oCurrentSite ) );
+		}
+
+		savecontent variable="local.renderedMenuItem" {
+			writeOutput(
+				"<li
+				class=""dd-item dd3-item""
+				data-id=""#encodeForHTMLAttribute( args.menuItemID )#""
+				:key=""#encodeForHTMLAttribute( args.menuItemID )#"">"
+			)
+			writeOutput( view( view: "menus/provider", args: args ) );
+			writeOutput( "</li>" );
 		};
-		str &= menuString & "</li>";
-		event.renderData( data = str, type = "text" );
+
+		event.renderData( data = renderedMenuItem, type = "text" );
 	}
 
 	/**
@@ -183,8 +198,7 @@ component extends="baseHandler" {
 		var oMenu        = variables.menuService.get( rc.menuID );
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
-		populateModel( model = oMenu, exclude = "menuID,menuItems" );
-		writeDump( var = deserializeJSON( rc.menuItems ) );
+		populate( model = oMenu, exclude = "menuID,menuItems" );
 		oMenu.populateMenuItems( deserializeJSON( rc.menuItems ) );
 		// announce event
 		announce( "cbadmin_preMenuSave", { menu : oMenu, menuID : rc.menuID } );
@@ -193,7 +207,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postMenuSave", { menu : oMenu, originalSlug : originalSlug } );
 		// messagebox
-		cbMessagebox.setMessage( "info", "Menu saved!" );
+		cbMessageBox().setMessage( "info", "Menu saved!" );
 		// relocate
 		var targetEvent = ( len( rc.saveEvent ) ? rc.saveEvent & "/menuID/#rc.menuID#" : prc.xehMenus );
 		relocate( targetEvent );
@@ -214,10 +228,10 @@ component extends="baseHandler" {
 		if ( !len( rc.slug ) ) {
 			rc.slug = variables.HTMLHelper.slugify( rc.title );
 		}
-		var oMenu        = menuService.new();
+		var oMenu        = menuService.new().setSite( prc.oCurrentSite );
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
-		populateModel( model = oMenu, exclude = "menuID,menuItems" );
+		populate( model = oMenu, exclude = "menuID,menuItems" );
 		// populate items from form
 		oMenu.populateMenuItems( rawData = deserializeJSON( rc.menuItems ) );
 		// render data
@@ -233,7 +247,7 @@ component extends="baseHandler" {
 
 		// verify if contentID sent
 		if ( !len( rc.menuID ) ) {
-			cbMessagebox.warn( "No menus sent to delete!" );
+			cbMessageBox().warn( "No menus sent to delete!" );
 			relocate( event = prc.xehMenus );
 		}
 
@@ -261,7 +275,7 @@ component extends="baseHandler" {
 		}
 
 		// messagebox
-		cbMessagebox.info( messages );
+		cbMessageBox().info( messages );
 		relocate( prc.xehMenus );
 	}
 
@@ -304,15 +318,15 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Menus imported sucessfully!" );
+				cbMessageBox().info( "Menus imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 
 		relocate( prc.xehMenus );

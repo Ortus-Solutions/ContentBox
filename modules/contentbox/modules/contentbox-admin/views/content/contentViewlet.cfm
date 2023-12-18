@@ -96,7 +96,7 @@
 			<!--- ***************************************************************************** --->
 			<cfif args.showPublishedStatus>
 				<td class="text-center">
-					#renderView(
+					#view(
 						view : "_components/content/TableStatus",
 						args : { content : thisContent },
 						prepostExempt : true
@@ -119,14 +119,14 @@
 			<td class="text-center">
 				<!--- Page Actions --->
 				<div class="btn-group btn-group-sm">
-					<a
-						class="btn btn-default btn-more dropdown-toggle"
+					<button
+						class="btn btn-icon btn-more dropdown-toggle"
 						data-toggle="dropdown"
-						href="##"
 						title="Page Actions"
 					>
-						<i class="fas fa-ellipsis-v fa-lg"></i>
-					</a>
+						<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+						<span class="visually-hidden">Page Actions</span>
+					</button>
 
 					<ul class="dropdown-menu text-left pull-right">
 
@@ -137,7 +137,7 @@
 									href="#prc.CBHelper.linkContent( thisContent )#"
 									target="_blank"
 								>
-									<i class="far fa-eye fa-lg"></i> View
+									<i class="fa fa-eye fa-lg"></i> View
 								</a>
 							</li>
 						</cfif>

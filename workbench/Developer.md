@@ -1,59 +1,62 @@
-# Development Notes:
+# Development Notes
+
+## Setup Environment
+
+To setup your development environment, install [NodeJS](https://nodejs.org/en/) and run in the root of the project: `box recipe workbench/setup.boxr` to install all Coldbox, CommandBox and NPM dependencies.  If not you will have to run these manually to install and compile assets:
 
 ## Asset Compilation
 
-All assets for this project are compiled using Grunt and managed via Yarn.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/resources`.
+All assets for this project are compiled using [Coldbox Elixir](https://www.npmjs.com/package/coldbox-elixir) ( NPM/Webpack ).  Developers modifying Javascript or SCSS/CSS assets should use the files located in `modules/contentbox/modules/contentbox-admin/resources`.
 
-Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use `Gruntfile.js` to configure your asset distributions.
+Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use the `elixir-module.js` files in the ContentBox Modules to configure additional asset compilation.  To compile the initial development JS and CSS assets, once you have run the setup task, simply run `npm run build-dev` - which will compile the ContentBox and Theme assets for the first time.
 
-## Setup
 
-To setup your development environment, install [NodeJS](https://nodejs.org/en/) and run in the root of the project: `box recipe workbench/setup.boxr` to install all dependencies.  If not you will have to run these manually.
+There are three NPM scripts you may use:
 
-```bash
-cd workbench
-## Install Grunt-cli globally
-npm install -g yarn grunt-cli
-## Install assets
-yarn install
-```
+`npm run install` - Installs all dependencies on the root and default theme
+`npm run dev`  - a one-time compilation of development assets ( source maps and not minified )
+`npm run watch`  - compiles the development assets and then watches for changes to any of the files.  Automatically recompiles when changes are made
+`npm run prod` - compiles the production ( packed, minified ) assets for release.
+`npm run build-dev` - compiles the development assets for both the ContentBox modules and the default theme.
+`npm run build-prod` - compiles the production assets for both the ContentBox modules and the default theme.
 
-To start Grunt compilation, run `grunt` from the workbench directory.  Directories and relevant files, along with the `Gruntfile.js`, itself, will be watched for changes, which will recompile relevant assets.
+# Default Theme Compilation
+
+If you are conducting work on the default theme, located in `modules/contentbox/themes/default`, that has it's own, separate, `webpack-config.js`.  to run in watch mode during theme development, you will need to change  your working directory to the theme root and run `npm run watch` from there.
 
 ## CSS/SCSS
 
-The directory `workbench/resources/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
+The directory `modules/contentbox/modules/contentbox-admin/resources/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.
 
-- `theme` - The ContentBox admin theme sass files
+- `theme` - The ContentBox admin theme sass includes directory
 - `_globals.scss` - Used for global variables
 - `contentbox.scss` - ContentBox Admin additions ontop of the contributed theme
 - `theme.scsss` - The root theme css
 
-### CSS
-
-All needed CSS from libraries are added via the `cssmin` task.
-
 ### Vendor CSS
 
-Vendor CSS files are added into `workbench/resources/vendor/css`. These are css files not included in npm files.
+Vendor CSS files are added into `modules/contentbox/modules/contentbox-admin/resources/vendor/css`. These are css files not included in npm files.
 
 ### Output
 
-The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS.
+Once build a `rev-manifest.json` file will be placed in the `modules/contentbox/modules/contentbox-admin/includes` directory which includes the compiled assets and paths.  These are brought in to the layout via the `HTMLHelper` `elixirPath` method like so:
+
+`#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/css/my-compiled-file.css', manifestRoot="#prc.cbroot#/includes" )#`
+
+Note the use of `manifestRoot` - which tells Elixir to look in the contentbox admin includes directory, rather than the root of the site.
 
 ## Javascript Assets
 
-**ContentBox Libraries**
+Webpack compiles the following files directly in to their equivalents in the `modules/contentbox/modules/contentbox-admin/includes/js` directory
 
-All JS files in the `workbench/resources/js` are the core ContentBox JavaScript libraries.  They will all be minified and sent to a `contentbox-pre.js` library.
+- `admin.js`
+- `app.js`
 
-**Global Libraries**
+In addition vendor libraries are compiled in to a separate `bootstrap.js` file which is loaded before the custom JS.  A list of these dependencies may be found in `modules/contentbox/modules/contentbox-admin/elixir-module.js`
 
-* `contentbox-pre.js` : Loaded in the `<head>` section
+## Vendor Libaries
 
-## Vendor Libaries ##
-
-JavaScript libraries not managed by Yarn will be placed under the `workbench/resources/vendor/js` folder and optimized by our build process into their appropriate global libraries.
+JavaScript libraries not managed by NPM will be placed under the `modules/contentbox/modules/contentbox-admin/resources/vendor/js` folder and optimized by our build process into their appropriate global libraries.  These should be added to the `elixir-module.js` bootstrap mix of javascript resources, if added.  Ideally all libraries should be sourced from NPM
 
 
 ## Runtime Assets
@@ -66,7 +69,7 @@ The `Full` lists are absolute or http locations, while the normal append lists a
 
 ```
 // relative
-prc.cssAppendList = "../plugins/morris/css/morris";       
+prc.cssAppendList = "../plugins/morris/css/morris";
 prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morris.min";
 
 // full
@@ -75,19 +78,16 @@ prc.cssFullList = "https://cdnjs.cloudflare.com/ajax/libs/mocha/2.4.5/mocha"
 
 ```
 
-
-**Plugins**
-
-Plugins which are used only for specific handler/actions, should be deployed as plugins.  See the Grunt `copy:plugins` task array for examples.
-
-
 ## Cleanup and Re-compilation
 
-> **Warning:** The following module directories are cleared on initial Grunt Startup and should not be used for development:
+> **Warning:** The following module directories are cleared on npm compilation and should not be used for development:
 
 - `modules/contentbox-admin/includes/css`
 - `modules/contentbox-admin/includes/js`
 - `modules/contentbox-admin/includes/plugins`
 - `modules/contentbox-admin/includes/fonts`
-
-
+- `modules/contentbox-admin/modules/contentbox-ckeditor/includes`
+- `modules/contentbox-admin/modules/contentbox-markdowneditor/includes`
+- `modules/contentbox/themes/default/includes/js`
+- `modules/contentbox/themes/default/includes/css`
+- `modules/contentbox/themes/default/includes/bootswatch`

@@ -8,7 +8,7 @@
 				&times;
 			</button>
 			<h3>
-				<i class="fas fa-sitemap"></i> Select Related Content
+				<i class="fa fa-sitemap"></i> Select Related Content
 			</h3>
 		</div>
 
@@ -20,7 +20,7 @@
 				<div class="input-group input-group-sm">
 					<input
 						type="text"
-						class="form-control rounded"
+						class="form-control"
 						placeholder="Quick Filter"
 						aria-describedby="sizing-addon3"
 						name="contentSearch"
@@ -33,26 +33,26 @@
 						title="Clear Search"
 						onclick="clearSearch()"
 					>
-						<i class="far fa-times-circle fa-lg"></i>
+						<i class="fa fa-times-circle fa-lg"></i>
 					</span>
 				</div>
 			</div>
 
 			<!--- Loader --->
             <div class="loaders float-right" id="relatedContentLoader">
-                <i class="fa fa-circle-notch fa-spin fa-lg"></i>
+                <i class="fa fa-circle-o-notch fa-spin fa-lg"></i>
             </div>
 
             <!--- Render tables out --->
-            <div id="contentContainer" class="tab-wrapper tab-top tab-primary">
+            <div id="contentContainer" class="tabs">
 
 				<ul class="nav nav-tabs" id="contentTypes">
                     <!---loop over content types--->
                     <cfset types = listToArray( rc.contentType )>
                     <cfloop from="1" to="#arrayLen( types )#" index="i">
                         <cfset ct = types[ i ]>
-                        <li <cfif i eq 1> class="active"</cfif>>
-							<a href="###ct#" data-toggle="tab">
+                        <li <cfif i eq 1> class="nav-item active"<cfelse>class="nav-item"</cfif>>
+							<a href="###ct#" data-toggle="tab" class="nav-link">
 								<i class="#getContentTypeIconCls( ct )#" title="#ct#"></i> #ct#
 							</a>
                         </li>

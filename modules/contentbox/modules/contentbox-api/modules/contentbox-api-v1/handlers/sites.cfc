@@ -16,9 +16,9 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	/**
 	 * Display all sites
 	 *
-	 * @tags                     Sites
-	 * @responses                contentbox/apidocs/sites/index/responses.json
-	 * @x-contentbox-permissions SITES_ADMIN
+	 * @tags      Sites
+	 * @responses contentbox/apidocs/sites/index/responses.json
+	 * @x         -contentbox-permissions SITES_ADMIN
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -50,9 +50,9 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	/**
 	 * Show a site using the id
 	 *
-	 * @tags                     Sites
-	 * @responses                contentbox/apidocs/sites/show/responses.json
-	 * @x-contentbox-permissions SITES_ADMIN
+	 * @tags      Sites
+	 * @responses contentbox/apidocs/sites/show/responses.json
+	 * @x         -contentbox-permissions SITES_ADMIN
 	 */
 	function show( event, rc, prc ){
 		super.show( argumentCollection = arguments );
@@ -74,9 +74,9 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	/**
 	 * Update an existing site
 	 *
-	 * @tags                     Sites
-	 * @responses                contentbox/apidocs/sites/update/responses.json
-	 * @x-contentbox-permissions SITES_ADMIN
+	 * @tags      Sites
+	 * @responses contentbox/apidocs/sites/update/responses.json
+	 * @x         -contentbox-permissions SITES_ADMIN
 	 */
 	function update( event, rc, prc ){
 		// You cannot update site slugs
@@ -87,9 +87,9 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	/**
 	 * Delete a site using an id or slug
 	 *
-	 * @tags                     Sites
-	 * @responses                contentbox/apidocs/sites/delete/responses.json
-	 * @x-contentbox-permissions SITES_ADMIN
+	 * @tags      Sites
+	 * @responses contentbox/apidocs/sites/delete/responses.json
+	 * @x         -contentbox-permissions SITES_ADMIN
 	 */
 	function delete( event, rc, prc ){
 		super.delete( argumentCollection = arguments );

@@ -111,11 +111,11 @@ component extends="baseHandler" {
 			announce( "cbadmin_onCommentStatusUpdate", { commentID : rc.commentID, status : rc.commentStatus } );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
-			cbMessagebox.info( data.messages );
+			cbMessageBox().info( data.messages );
 		} else {
 			data.messages = "No comments selected!";
 			data.error    = true;
-			cbMessagebox.warn( data.messages );
+			cbMessageBox().warn( data.messages );
 		}
 
 		// If ajax call, return as ajax
@@ -154,7 +154,7 @@ component extends="baseHandler" {
 		// get new or persisted
 		rc.comment = commentService.get( event.getValue( "commentID", 0 ) );
 		if ( isNull( rc.Comment ) ) {
-			cbMessagebox.error( "The commentID #rc.commentID# is invalid." );
+			cbMessageBox().error( "The commentID #rc.commentID# is invalid." );
 			relocate( prc.xehComments );
 			return;
 		}
@@ -190,7 +190,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get comment
-		var oComment = populateModel( model: commentService.get( id = rc.commentID ), exclude: "commentID" );
+		var oComment = populate( model: commentService.get( id = rc.commentID ), exclude: "commentID" );
 		// announce event
 		announce( "cbadmin_preCommentSave", { comment : oComment, commentID : rc.commentID } );
 		// save comment
@@ -198,7 +198,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postCommentSave", { comment : oComment } );
 		// notice
-		cbMessagebox.info( "Comment Saved!" );
+		cbMessageBox().info( "Comment Saved!" );
 		// relocate
 		relocate( prc.xehComments );
 	}
@@ -222,7 +222,7 @@ component extends="baseHandler" {
 		announce( "cbadmin_postCommentRemoveAllModerated" );
 		// message
 		data.messages = "Moderated Comment(s) Removed!";
-		cbMessagebox.info( data.messages );
+		cbMessageBox().info( data.messages );
 		// If ajax call, return as ajax
 		if ( event.isAjax() ) {
 			event.renderData( data = data, type = "json" );
@@ -271,7 +271,7 @@ component extends="baseHandler" {
 		if ( !len( rc.commentID ) ) {
 			arrayAppend( data.messages, "No comments selected!" );
 			data.error = true;
-			cbMessagebox.warn( data.messages );
+			cbMessageBox().warn( data.messages );
 		}
 
 		// If ajax call, return as ajax json
@@ -349,7 +349,7 @@ component extends="baseHandler" {
 		prc.commentPager_contentID = arguments.contentID;
 
 		// view pager
-		return renderView( view = "comments/pager", module = "contentbox-admin" );
+		return view( view = "comments/pager", module = "contentbox-admin" );
 	}
 
 	/**
@@ -381,7 +381,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor
-		cbMessagebox.info( "All comment settings updated!" );
+		cbMessageBox().info( "All comment settings updated!" );
 		relocate( prc.xehCommentsettings );
 	}
 

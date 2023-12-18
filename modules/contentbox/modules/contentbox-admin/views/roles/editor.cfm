@@ -14,7 +14,7 @@
 							href="#event.buildLink( prc.xehRoles )#"
 							title="Back to listing"
 						>
-							<i class="fas fa-chevron-left"></i> Cancel
+							<i class="fa fa-chevron-left"></i> Cancel
 						</a>
 					</div>
 
@@ -94,7 +94,7 @@
 									title="Clear Search"
 									onclick="clearFilter()"
 								>
-									<i class="far fa-times-circle fa-lg"></i>
+									<i class="fa fa-times-circle fa-lg"></i>
 								</span>
 							</div>
 						</div>
@@ -113,7 +113,7 @@
 									#html.checkbox(
 										name    = "permissions_#thisPerm.getPermissionId()#_toggle",
 										data	= { toggle: 'toggle', match: 'permissions_#thisPerm.getPermissionId()#' },
-										checked	= prc.oRole.hasPermission( thisPerm )
+										checked	= prc.oRole.hasPermissions( thisPerm )
 									)#
 									#html.hiddenField(
 										id 		= "permissions_" & thisPerm.getPermissionId()

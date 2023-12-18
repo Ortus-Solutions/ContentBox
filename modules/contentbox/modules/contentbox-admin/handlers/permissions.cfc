@@ -58,7 +58,7 @@ component extends="baseHandler" {
 		// UCASE permission
 		rc.permission   = uCase( rc.permission );
 		// populate and get
-		var oPermission = populateModel( model: permissionService.get( rc.permissionID ), exclude: "permissionID" );
+		var oPermission = populate( model: permissionService.get( rc.permissionID ), exclude: "permissionID" );
 		var vResults    = validate( oPermission );
 
 		// Validation Results
@@ -70,10 +70,10 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postPermissionSave", { permission : oPermission } );
 			// messagebox
-			cbMessagebox.setMessage( "info", "Permission saved!" );
+			cbMessageBox().setMessage( "info", "Permission saved!" );
 		} else {
 			// messagebox
-			cbMessagebox.warning( vResults.getAllErrors() );
+			cbMessageBox().warning( vResults.getAllErrors() );
 		}
 		// relocate
 		relocate( prc.xehPermissions );
@@ -91,12 +91,12 @@ component extends="baseHandler" {
 		announce( "cbadmin_prePermissionRemove", { permissionID : rc.permissionID } );
 		// delete by id
 		if ( !permissionService.deletePermission( rc.permissionID ) ) {
-			cbMessagebox.setMessage( "warning", "Invalid Permission detected!" );
+			cbMessageBox().setMessage( "warning", "Invalid Permission detected!" );
 		} else {
 			// announce event
 			announce( "cbadmin_postPermissionRemove", { permissionID : rc.permissionID } );
 			// Message
-			cbMessagebox.setMessage( "info", "Permission and all relationships Removed!" );
+			cbMessageBox().setMessage( "info", "Permission and all relationships Removed!" );
 		}
 		relocate( prc.xehPermissions );
 	}
@@ -137,15 +137,15 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Permissions imported sucessfully!" );
+				cbMessageBox().info( "Permissions imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehPermissions );
 	}

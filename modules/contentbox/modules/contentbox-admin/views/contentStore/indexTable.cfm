@@ -3,7 +3,7 @@
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
 		<a href="javascript:contentListHelper.contentDrilldown()" title="Go Home!">
-			<i class="fas fa-home fa-lg"></i>
+			<i class="fa fa-home fa-lg"></i>
 		</a>
 		#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
 	</div>
@@ -23,7 +23,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
+				<input name="checkAll" type="checkbox" onclick="window.checkAll(this.checked,'contentID')"/>
 			</th>
 			<th>
 				Name
@@ -62,7 +62,7 @@
 		>
 			<!--- check box --->
 			<td class="text-center">
-				<input type="checkbox" name="contentID" id="contentID" value="#content.getContentID()#" />
+				<input type="checkbox" name="contentID" value="#content.getContentID()#" />
 			</td>
 			<td>
 				<!--- Children Dig Deeper --->
@@ -75,11 +75,11 @@
 						<i class="fa fa-plus-square"></i>
 					</a>
 				<cfelse>
-					<i class="far fa-dot-circle-thin"></i>
+					<i class="fa fa-dot-circle-thin"></i>
 				</cfif>
 
 				<!--- Title --->
-				<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 					<a
 						href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#content.getContentID()#"
 						title="Edit content"
@@ -91,7 +91,7 @@
 				</cfif>
 
 				<!--- Content Info --->
-				#renderView(
+				#view(
 					view : "_components/content/TableCreationInfo",
 					args : { content : content, showDescription : true },
 					prepostExempt : true
@@ -100,31 +100,31 @@
 			</td>
 
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableStatus",
 					args : { content : content },
 					prepostExempt : true
 				)#
 			</td>
 
-			<td class="text-center">
+			<td class="text-center flex">
 				<!--- Drag Handle --->
 				<a 	href="##"
 					onclick="return false;"
-					class="dragHandle btn btn-default btn-sm"
+					class="dragHandle btn btn-icon btn-sm float-left"
 					title="Click and drag to change retrieval order"
-					style="padding:5px 15px"
 				>
-					<i class="fas fa-sort fa-lg"></i>
+					<i class="fa fa-sort" aria-hidden="true"></i>
 				</a>
 
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
-					</a>
+			    	<button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Content Actions">
+						<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+						<span class="visually-hidden">Content Actions</span>
+					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+			    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 							<!--- Clone Command --->
 							<li>
 								<a
@@ -133,20 +133,20 @@
 										'#encodeForJavaScript( content.getTitle() )#'
 									)"
 								>
-									<i class="far fa-clone fa-lg"></i> Clone
+									<i class="fa fa-clone fa-lg"></i> Clone
 								</a>
 							</li>
 							<!--- Create Child --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentEditor )#/parentID/#content.getContentID()#">
-									<i class="fas fa-sitemap fa-lg"></i> Create Child
+									<i class="fa fa-sitemap fa-lg"></i> Create Child
 								</a>
 							</li>
-							<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
-									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Content?">
-										<i id="delete_#content.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='fa fa-trash fa-lg'></i> Delete Content?">
+										<i id="delete_#content.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
 									</a>
 								</li>
 							</cfif>
@@ -157,7 +157,7 @@
 								</a>
 							</li>
 						</cfif>
-						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">
@@ -168,7 +168,7 @@
 						<!--- History Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#content.getContentID()#">
-								<i class="fas fa-history fa-lg"></i> History
+								<i class="fa fa-history fa-lg"></i> History
 							</a>
 						</li>
 			    	</ul>

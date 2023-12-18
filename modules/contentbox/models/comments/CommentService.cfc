@@ -15,7 +15,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="CBHelper" inject="id:CBHelper@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="loginTrackerService" inject="loginTrackerService@contentbox";
 
 	/**
 	 * Constructor
@@ -252,7 +251,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// generate content for email from template
 				mail.setBody(
-					variables.renderer.renderLayout(
+					variables.renderer.layout(
 						view   = "/contentbox/email_templates/comment_notification",
 						layout = "/contentbox/email_templates/layouts/email",
 						args   = { gravatarEmail : commentAuthorEmail }
@@ -285,14 +284,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// Check if user has already an approved comment. If they do, then approve them
-		if (
-			inSettings.cb_comments_moderation_whitelist AND userHasPreviousAcceptedComment(
-				inComment.getAuthorEmail()
-			)
-		) {
+		// cfformat-ignore-start
+		if ( inSettings.cb_comments_moderation_whitelist AND userHasPreviousAcceptedComment( inComment.getAuthorEmail() ) ) {
 			inComment.setIsApproved( true );
 			return true;
 		}
+		// cfformat-ignore-end
 
 		// Execute moderation queries
 		if (
@@ -425,7 +422,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/#template#",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : inComment.getAuthorEmail() }

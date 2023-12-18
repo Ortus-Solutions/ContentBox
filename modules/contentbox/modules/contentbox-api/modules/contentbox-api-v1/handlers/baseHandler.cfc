@@ -74,7 +74,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		param rc.id             = 0;
 
 		// announce it
-		announceInterception( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
+		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
 
 		// Get by id or slug
 		prc.oEntity = (
@@ -82,10 +82,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#post#variables.entity#Show",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Show", { entity : prc.oEntity } );
 
 		// Marshall it
 		prc.response.setData(
@@ -135,16 +132,13 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// Validation Arguments
-		arguments.validate.target = populateModel( argumentCollection = arguments.populate );
+		arguments.validate.target = this.populate( argumentCollection = arguments.populate );
 
 		// Validate
 		prc.oEntity = validateOrFail( argumentCollection = arguments.validate );
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#pre#variables.entity#Update",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Update", { entity : prc.oEntity } );
 
 		// Save it
 		invoke(
@@ -154,10 +148,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#post#variables.entity#Update",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Update", { entity : prc.oEntity } );
 
 		// Marshall it out
 		prc.response.setData(
@@ -185,10 +176,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#pre#variables.entity#Delete",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Delete", { entity : prc.oEntity } );
 
 		// Delete it
 		invoke(
@@ -198,7 +186,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
+		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
 
 		// Marshall it out
 		prc.response.addMessage( "#variables.entity# deleted!" );

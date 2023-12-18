@@ -72,7 +72,7 @@ component extends="coldbox.system.Interceptor" {
 			!prc.oCurrentAuthor.isLoggedIn()
 			||
 			// Permissions
-			!prc.oCurrentAuthor.checkPermission(
+			!prc.oCurrentAuthor.hasPermission(
 				"CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR"
 			)
 		) {
@@ -109,7 +109,7 @@ component extends="coldbox.system.Interceptor" {
 
 		// Render the admin bar out
 		buffer.append(
-			renderView(
+			view(
 				view   = "adminbar/index",
 				module = "contentbox-ui",
 				args   = {
@@ -122,7 +122,11 @@ component extends="coldbox.system.Interceptor" {
 		);
 
 		// Append adminbar styles to the html head
-		cfhtmlhead( text = renderView( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
+		try {
+			cfhtmlhead( text = view( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
+		} catch ( any e ) {
+			log.error( "Error sending adminbar styles via cfhtmlhead", e );
+		}
 	}
 
 	/**

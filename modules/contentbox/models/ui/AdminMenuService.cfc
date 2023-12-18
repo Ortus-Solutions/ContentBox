@@ -184,13 +184,8 @@ component accessors="true" threadSafe singleton {
 	 */
 	function createAttributeList( required struct attributes ){
 		var attributeList = "";
-		try {
-			for ( var key in arguments.attributes ) {
-				attributeList &= "#key#=""#attributes[ key ]#""";
-			}
-		} catch ( any e ) {
-			writeDump( var = arguments );
-			abort;
+		for ( var key in arguments.attributes ) {
+			attributeList &= "#key#=""#attributes[ key ]#""";
 		}
 		return attributeList;
 	}
@@ -216,7 +211,7 @@ component accessors="true" threadSafe singleton {
 		).addHeaderSubMenu(
 				name    = "myprofile",
 				title   = "ctrl+shift+A",
-				label   = "<i class='far fa-id-badge fa-lg width20'></i> My Profile",
+				label   = "<i class='fa fa-id-badge fa-lg width20'></i> My Profile",
 				href    = variables.buildLink,
 				href_to = xehMyProfile,
 				data    = { keybinding : "ctrl+shift+a" }
@@ -236,42 +231,47 @@ component accessors="true" threadSafe singleton {
 			label       = "<i class=""fa fa-cog""></i>",
 			class       = "dropdown settings",
 			itemType    = "button",
-			itemClass   = "btn btn-default btn-more options toggle",
-			permissions = "RELOAD_MODULES",
+			itemClass   = "btn btn-more options toggle",
+			permissions = "RELOAD_MODULES,RELOAD_CACHES",
 			data        = { placement : "right" },
 			title       = "Admin Actions"
 		).addHeaderSubMenu(
-				name  = "rsscache",
-				label = "Clear RSS Caches",
-				href  = function( required menu, required event ){
+				name        = "rsscache",
+				label       = "Clear RSS Caches",
+				permissions = "RELOAD_CACHES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'rss-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "contentpurge",
-				label = "Clear Content Caches",
-				href  = function( required menu, required event ){
+				name        = "contentpurge",
+				label       = "Clear Content Caches",
+				permissions = "RELOAD_CACHES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'content-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "cachepurge",
-				label = "Clear Template Cache",
-				href  = function( required menu, required event ){
+				name        = "cachepurge",
+				label       = "Clear Template Cache",
+				permissions = "RELOAD_CACHES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'cache-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "app",
-				label = "Reload Application",
-				href  = function( required menu, required event ){
+				name        = "app",
+				label       = "Reload Application",
+				permissions = "RELOAD_MODULES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'app', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
 			.addHeaderSubMenu(
-				name  = "orm",
-				label = "Reload ORM",
-				href  = function( required menu, required event ){
+				name        = "orm",
+				label       = "Reload ORM",
+				permissions = "RELOAD_MODULES",
+				href        = function( required menu, required event ){
 					return "javascript:adminAction( 'orm', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
@@ -331,6 +331,7 @@ component accessors="true" threadSafe singleton {
 		prc.xehEntries       = "#this.ADMIN_ENTRYPOINT#.entries";
 		prc.xehEntriesEditor = "#this.ADMIN_ENTRYPOINT#.entries.editor";
 		prc.xehCategories    = "#this.ADMIN_ENTRYPOINT#.categories";
+		prc.xehTemplates     = "#this.ADMIN_ENTRYPOINT#.contentTemplates";
 
 		// Content Tab
 		prc.xehPages        = "#this.ADMIN_ENTRYPOINT#.pages";
@@ -375,13 +376,20 @@ component accessors="true" threadSafe singleton {
 		// Dashboard
 		addTopMenu(
 			name    = this.DASHBOARD,
-			label   = "<i class='fas fa-tv'></i> Dashboard",
+			label   = "<i class='fa fa-tv'></i> Dashboard",
 			href    = variables.buildLink,
 			href_to = prc.xehDashboard
 		);
 
 		// Content
-		addTopMenu( name = this.CONTENT, label = "<i class='fas fa-box'></i> Content" )
+		addTopMenu( name = this.CONTENT, label = "<i class='fa fa-archive'></i> Content" )
+			.addSubMenu(
+				name        = "Pages",
+				label       = "Sitemap",
+				href        = variables.buildLink,
+				href_to     = prc.xehPages,
+				permissions = "PAGES_ADMIN,PAGES_EDITOR"
+			)
 			.addSubMenu(
 				topMenu     = this.CONTENT,
 				name        = "Blog",
@@ -391,18 +399,25 @@ component accessors="true" threadSafe singleton {
 				permissions = "ENTRIES_ADMIN,ENTRIES_EDITOR"
 			)
 			.addSubMenu(
-				name        = "Categories",
-				label       = "Categories",
-				href        = variables.buildLink,
-				href_to     = prc.xehCategories,
-				permissions = "CATEGORIES_ADMIN"
-			)
-			.addSubMenu(
 				name        = "contentStore",
 				label       = "Content Store",
 				href        = variables.buildLink,
 				href_to     = prc.xehContentStore,
 				permissions = "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"
+			)
+			.addSubMenu(
+				name        = "Content Templates",
+				label       = "Content Templates",
+				href        = variables.buildLink,
+				href_to     = prc.xehTemplates,
+				permissions = "PAGES_ADMIN"
+			)
+			.addSubMenu(
+				name        = "Categories",
+				label       = "Categories",
+				href        = variables.buildLink,
+				href_to     = prc.xehCategories,
+				permissions = "CATEGORIES_ADMIN"
 			)
 			.addSubMenu(
 				name        = "mediaManager",
@@ -417,13 +432,6 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehMenuManager,
 				permissions = "MENUS_ADMIN"
-			)
-			.addSubMenu(
-				name        = "Pages",
-				label       = "Sitemap",
-				href        = variables.buildLink,
-				href_to     = prc.xehPages,
-				permissions = "PAGES_ADMIN,PAGES_EDITOR"
 			);
 
 		// Comments
@@ -442,14 +450,13 @@ component accessors="true" threadSafe singleton {
 				href_to     = prc.xehCommentsettings,
 				permissions = "COMMENTS_ADMIN"
 			)
-			.
-addSubMenu(
-			name    = "Subscribers",
-			label   = "Subscribers",
-			href    = variables.buildLink,
-			href_to = prc.xehSubscribers,
-			title   = "View Subscribers"
-		);
+			.addSubMenu(
+				name    = "Subscribers",
+				label   = "Subscribers",
+				href    = variables.buildLink,
+				href_to = prc.xehSubscribers,
+				title   = "View Subscribers"
+			);
 
 		// Look and Feel
 		addTopMenu( name = this.LOOK_FEEL, label = "<i class='fa fa-tint'></i> Look & Feel" )

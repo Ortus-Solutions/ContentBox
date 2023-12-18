@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fas fa-laptop-code fa-lg"></i>
+            <i class="fa fa-laptop-code fa-lg"></i>
             Authentication Logs (#arrayLen( prc.logs )#)
         </h1>
     </div>
@@ -25,12 +25,14 @@
 					>
 						Configure Tracker
 					</a>
-					<a
-						href="#event.buildLink( prc.xehTruncate )#"
-						class="btn btn-danger confirmIt"
-					>
-						Truncate Logs
-					</a>
+					<cfif prc.featureEnabled>
+						<a
+							href="#event.buildLink( prc.xehTruncate )#"
+							class="btn btn-danger confirmIt"
+						>
+							Truncate Logs
+						</a>
+					</cfif>
 				</div>
 
 				<p>Here you see all recent Logins and as well the login attempts to your system</p>
@@ -73,9 +75,9 @@
 								</td>
 								<td class="text-center">
 									<cfif thisLog.getIsBlocked()>
-										<i class="far fa-dot-circle fa-lg text-red" title="Blocked"></i>
+										<i class="fa fa-dot-circle fa-lg text-red" title="Blocked"></i>
 									<cfelse>
-										<i class="far fa-dot-circle fa-lg text-green" title="Allowed"></i>
+										<i class="fa fa-dot-circle fa-lg text-green" title="Allowed"></i>
 									</cfif>
 								</td>
 							</tr>

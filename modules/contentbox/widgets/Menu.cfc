@@ -27,7 +27,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 * @defaultValue.hint The string to show if the menu does not exist
 	 */
 	any function renderIt( string slug = "EmptyMenuList", string defaultValue ){
-		var menu = menuService.findWhere( { slug : arguments.slug } );
+		var menu = menuService.findBySlug( slug = arguments.slug, siteId = getSite().getSiteId() );
 
 		if ( !isNull( menu ) ) {
 			try {

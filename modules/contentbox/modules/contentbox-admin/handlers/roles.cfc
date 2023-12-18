@@ -69,7 +69,7 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		prc.oRole = populateModel(
+		prc.oRole = populate(
 			model               : roleService.get( rc.roleID ),
 			composeRelationships: true,
 			exclude             : "roleID"
@@ -85,12 +85,12 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postRoleSave", { role : prc.oRole } );
 			// messagebox
-			cbMessagebox.setMessage( "info", "Role saved!" );
+			cbMessageBox().setMessage( "info", "Role saved!" );
 			// relocate
 			relocate( prc.xehroles );
 		} else {
 			// messagebox
-			cbMessagebox.warning( vResults.getAllErrors() );
+			cbMessageBox().warning( vResults.getAllErrors() );
 			return editor( argumentCollection = arguments );
 		}
 	}
@@ -119,7 +119,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postRoleRemove", { roleID : rc.roleID } );
 		// Message
-		cbMessagebox.setMessage( "info", "Role Removed!" );
+		cbMessageBox().setMessage( "info", "Role Removed!" );
 		// relocate
 		relocate( prc.xehroles );
 	}
@@ -186,17 +186,17 @@ component extends="baseHandler" {
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
 				var importLog = roleService.importFromFile( importFile = rc.importFile, override = rc.overrideContent );
-				cbMessagebox.info( "Roles imported sucessfully!" );
+				cbMessageBox().info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
+				cbMessageBox().error(
 					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehRoles );
 	}

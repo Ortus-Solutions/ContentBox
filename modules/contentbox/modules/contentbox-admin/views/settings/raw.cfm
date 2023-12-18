@@ -24,18 +24,18 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
-				<div class="tab-wrapper tab-primary">
+				<div class="tabs">
 
                     <!-- Tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
+                    <ul class="nav nav-tabs mb10">
+                        <li class="nav-item active">
+                            <a href="##raw" data-toggle="tab" class="nav-link"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
                         </li>
-                        <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="far fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
+                        <li class="nav-item">
+                            <a href="##cachebox" data-toggle="tab" class="nav-link"><i class="fa fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
-                        <li>
-                            <a href="##_events" data-toggle="tab"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
+                        <li class="nav-item">
+                            <a href="##_events" data-toggle="tab" class="nav-link"><i class="fas fa-broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
 					<!-- End Tabs -->
@@ -62,7 +62,7 @@
                                         <div class="form-group m0 mr5">
                                             #html.textField(
                                                 name        = "settingSearch",
-                                                class       = "form-control rounded quicksearch",
+                                                class       = "form-control quicksearch",
                                                 placeholder = "Quick Search",
                                                 value       = event.getValue( "search", "" )
                                             )#
@@ -92,14 +92,14 @@
 
 											<div class="btn-group">
 
-												<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+												<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##">
                                                     <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
 												</a>
 
                                                 <ul class="dropdown-menu">
-													<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+													<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
 															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 																<i class="fas fa-file-export fa-lg"></i> Export All
@@ -113,19 +113,19 @@
 													</cfif>
 													<li>
 														<a href="javascript:flushSettingsCache()">
-															<i class="fas fa-recycle fa-lg"></i> Flush Settings Cache
+															<i class="fa fa-recycle fa-lg"></i> Flush Settings Cache
 														</a>
 													</li>
-                                                    <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
+                                                    <cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
 														<li>
 															<a href="javascript:importContent()">
-																<i class="fas fa-file-import fa-lg"></i> Import
+																<i class="fa fa-file-import fa-lg"></i> Import
 															</a>
 														</li>
                                                     </cfif>
 													<li>
 														<a href="javascript:openRemoteModal('#event.buildLink( prc.xehViewCached )#');">
-															<i class="far fa-hdd fa-lg"></i> View Cached Settings
+															<i class="fa fa-hdd fa-lg"></i> View Cached Settings
 														</a>
 													</li>
                                                 </ul>
@@ -146,7 +146,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
 													<li>
-														<a href="javascript:viewAllSettings()"><i class="fas fa-microchip"></i> View All</a>
+														<a href="javascript:viewAllSettings()"><i class="fa fa-microchip"></i> View All</a>
 													</li>
                                                 </ul>
                                             </div>
@@ -264,7 +264,7 @@
                                         #html.textField(
                                             name        = "eventFilter",
                                             size        = "30",
-                                            class       = "form-control rounded",
+                                            class       = "form-control",
 											placeholder = "Quick Filter"
                                         )#
                                     </div>
@@ -322,7 +322,7 @@
     </div>
 </div>
 
-#renderView(
+#view(
 	view = "_tags/dialog/import",
 	args = {
         title       : "Import Settings",

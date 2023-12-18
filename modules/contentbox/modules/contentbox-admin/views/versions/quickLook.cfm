@@ -5,7 +5,7 @@
 		<div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		    <h3>
-		    	<i class="far fa-eye fa-lg"></i>
+		    	<i class="fa fa-eye fa-lg"></i>
 		    	Version: <span class="label label-info">#prc.contentVersion.getVersion()#</span>
 		    	Active:
 		    	<span class="label # prc.contentVersion.getIsActive() ? 'label-success' : 'label-danger'#">
@@ -16,15 +16,15 @@
 
 		<div class="modal-body">
 
-			<div>
+			<div class="tabs">
 
 				<!--- Nav Tabs --->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active">
-						<a href="##preview" aria-controls="preview" role="tab" data-toggle="tab">Preview</a>
+					<li role="presentation" class="nav-item active">
+						<a href="##preview" aria-controls="preview" role="tab" data-toggle="tab" class="nav-link">Preview</a>
 					</li>
-					<li role="presentation">
-						<a href="##code" aria-controls="code" role="tab" data-toggle="tab">Code</a>
+					<li role="presentation" class="nav-item">
+						<a href="##code" aria-controls="code" role="tab" data-toggle="tab" class="nav-link">Code</a>
 					</li>
 				</ul>
 

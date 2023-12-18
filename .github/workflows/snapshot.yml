@@ -1,0 +1,48 @@
+name: ContentBox Snapshots
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  #############################################
+  # Tests First baby! We fail, no build :(
+  #############################################
+  tests:
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+
+  ##########################################################################################
+  # Format Source Code
+  ##########################################################################################
+  format:
+    name: Code Auto-Formatting
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.1
+        with:
+          install: commandbox-cfformat
+          warmup: true
+
+      - name: Run formatting rules
+        run: box run-script format
+
+      - name: Commit Format Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply cfformat changes
+          push_options: --force
+
+  #############################################
+  # Build Snapshot Release
+  #############################################
+  build:
+    uses: ./.github/workflows/release.yml
+    needs: [ tests, format ]
+    secrets: inherit
+    with:
+      snapshot: true

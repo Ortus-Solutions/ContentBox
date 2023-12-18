@@ -53,7 +53,7 @@ component cache=false {
 			relocate( prc.adminEntryPoint );
 		}
 		// start installation
-		variables.installerService.execute( populateModel( "Setup@cbi" ) );
+		variables.installerService.execute( populate( "Setup@cbi" ) );
 
 		// Construct finishing URI
 		var xehFinished = event.buildLink( "cbInstaller/finished" );

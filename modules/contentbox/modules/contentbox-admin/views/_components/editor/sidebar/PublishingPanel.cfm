@@ -9,7 +9,7 @@
 <div
 	id="publishingPanel"
 	x-data="{
-		isPublished : #prc.oContent.getIsPublished() ? true : false#,
+		isPublished : #( prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false' )#,
 		publishingPanelOpen : false,
 		togglePublishingPanel(){
 			this.publishingPanelOpen = !this.publishingPanelOpen
@@ -66,10 +66,11 @@
 							type="text"
 							class="form-control inline"
 							value="#prc.oContent.getPublishedDateTime()#"
+							id="publishedTime"
 							name="publishedTime"
 						>
 						<span class="input-group-addon">
-							<span class="fas fa-history"></span>
+							<span class="fa fa-history"></span>
 						</span>
 					</div>
 				</div>
@@ -114,7 +115,7 @@
 							value="#prc.oContent.getExpireDateTime()#"
 							name="expireTime">
 						<span class="input-group-addon">
-							<span class="fas fa-history"></span>
+							<span class="fa fa-history"></span>
 						</span>
 					</div>
 				</div>
@@ -145,7 +146,7 @@
 			<button
 				type="button"
 				id="publishButton"
-				class="btn btn-success"
+				class="btn btn-primary"
 				onclick="quickPublish()"
 			>
 				Go!
@@ -163,38 +164,41 @@
 		x-transition
 	>
 		<div class="btn-group">
-			<!--- QUICK SAVE --->
-			<button
-				type="button"
-				class="btn"
-				:class="isPublished ? 'btn-default' : 'btn-info'"
-				onclick="quickSave()"
-				title="Save as draft and continue editing"
-			>
-				Save As Draft
-			</button>
 			<!--- QUICK SAVE OPTIONS --->
 			<button
 				type="button"
 				class="btn dropdown-toggle"
-				:class="isPublished ? 'btn-default' : 'btn-info'"
+				:class="isPublished ? 'btn-default' : 'btn-secondary'"
 				data-toggle="dropdown"
 				aria-haspopup="true"
 				aria-expanded="false"
 				title="Save Options"
 			>
-				<span class="caret"></span>
+				Save
+				&nbsp;&nbsp;<span class="caret"></span>
 				<span class="sr-only">Toggle Dropdown</span>
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="javascript:quickPublish( true )">Save and Close</a>
+					<a
+						onclick="quickSave()"
+						title="Save as draft and continue editing"
+					>Save as Draft</a>
+				</li>
+				<li>
+					<a href="javascript:quickPublish( true )">Save Draft and Close</a>
+				</li>
+				<li>
+					<a
+						onclick="saveAsContentTemplate()"
+						title="Save content in its current state as a new template"
+					>Save as New Template</a>
 				</li>
 			</ul>
 		</div>
 
 		<button
-			class="btn btn-success"
+			class="btn btn-primary"
 			type="button"
 			title="Open Publishing Details"
 			@click="togglePublishingPanel"

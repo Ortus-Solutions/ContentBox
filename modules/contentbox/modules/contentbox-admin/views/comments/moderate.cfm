@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="far fa-comments"></i> Comment Moderator
+        	<i class="fa fa-comments"></i> Comment Moderator
 		</h1>
     </div>
 </div>
@@ -23,7 +23,7 @@
 				<!--- Comment Details --->
 				<fieldset>
 
-					<legend><i class="far fa-eye fa-lg"></i> Details</legend>
+					<legend><i class="fa fa-eye fa-lg"></i> Details</legend>
 
 						<div class="form-group pull-right">
 							#getInstance( "Avatar@contentbox" ).renderAvatar(
@@ -40,14 +40,14 @@
 
 						<!--- Content Object --->
 						<div class="form-group">
-							<i class="fas fa-box"></i>
+							<i class="fa fa-archive"></i>
 							Created on <strong>#rc.comment.getRelatedContent().getTitle()#</strong>
 							<a
 								href="#prc.CBHelper.linkComment( comment )#"
 								title="View Comment In Site"
 								target="_blank"
 							>
-								<i class="fas fa-external-link-alt"></i>
+								<i class="fa fa-external-link-alt"></i>
 							</a>
 						</div>
 
@@ -101,7 +101,7 @@
 						<button
 							type="submit"
 							class="btn btn-primary btn-lg" />
-							<i class="far fa-check-circle"></i> Approve
+							<i class="fa fa-check-circle"></i> Approve
 						</button>
 					</div>
 				#html.endForm()#

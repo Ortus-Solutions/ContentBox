@@ -11,7 +11,7 @@
 		#html.hiddenField( name="authorID", bind=prc.author )#
 
 		<!--- Active --->
-		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+		<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 			<div class="m5 mb20 row well well-info rounded">
 
 				<legend>Admin Fields</legend>
@@ -122,7 +122,7 @@
 		#html.endFieldSet()#
 
 		<!--- Action Bar --->
-		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+		<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 			<div class="form-actions">
 				<input type="submit" value="Save Details" class="btn btn-primary btn-lg">
 			</div>

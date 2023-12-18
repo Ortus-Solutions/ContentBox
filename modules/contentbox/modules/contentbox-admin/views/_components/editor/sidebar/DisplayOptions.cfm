@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_DISPLAY_OPTIONS" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_DISPLAY_OPTIONS" )>
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
@@ -20,7 +20,7 @@
 				<!--- PAGE LAYOUT --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
-						<i class="fas fa-columns"></i>
+						<i class="fa fa-columns"></i>
 						Layout:
 					</label>
 					<select name="layout" id="layout" class="form-control input-sm">
@@ -38,7 +38,7 @@
 				<!--- SHOW IN MENU BUILDERS --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
-						<i class="fas fa-bars"></i>
+						<i class="fa fa-bars"></i>
 						Show in Menus:
 					</label>
 					#html.select(
@@ -52,7 +52,7 @@
 				<!--- SHOW IN SEARCH --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
-						<i class="fas fa-search"></i>
+						<i class="fa fa-search"></i>
 						Show in Search:
 					</label>
 					#html.select(

@@ -109,6 +109,24 @@ component
 		length ="500";
 
 	property
+		name     ="httpMethods"
+		column   ="httpMethods"
+		ormtype  ="string"
+		notnull  ="true"
+		default  ="*"
+		dbdefault="'*'"
+		length   ="255";
+
+	property
+		name     ="allowedIPs"
+		column   ="allowedIPs"
+		ormtype  ="string"
+		notnull  ="true"
+		default  ="*"
+		dbdefault="'*'"
+		length   ="255";
+
+	property
 		name   ="order"
 		column ="order"
 		ormtype="integer"
@@ -141,6 +159,8 @@ component
 	this.memento = {
 		defaultIncludes : [
 			"action",
+			"allowedIps",
+			"httpMethods",
 			"match",
 			"message",
 			"messageType",
@@ -194,6 +214,8 @@ component
 		variables.messageType   = "info";
 		variables.overrideEvent = "";
 		variables.module        = "";
+		variables.httpMethods   = "*";
+		variables.allowedIPs    = "*";
 
 		super.init();
 

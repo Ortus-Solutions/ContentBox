@@ -35,7 +35,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "searchContent",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
@@ -43,45 +43,45 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-											Bulk Actions <span class="caret"></span>
+								    	<button class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown">
+											<i class="fa fa-gears"></i> Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
 								    			<li class="mb5">
 								    				<a href="javascript:contentListHelper.bulkRemove()"
 								    					class="confirmIt"
 														data-title="Delete Selected Categories?"
 														data-message="This will delete the categories and associations, are you sure?"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+														<i class="fa fa-trash fa-lg"></i> Delete Selected
 													</a>
 												</li>
 
 												<li class="mb5">
 													<a href="javascript:contentListHelper.bulkChangeStatus( 'draft' )">
-														<i class="fas fa-ban fa-lg"></i> Draft Selected
+														<i class="fa fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 
 												<li class="mb5">
 													<a href="javascript:contentListHelper.bulkChangeStatus( 'publish' )">
-														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
+														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 								    			<li class="mb5">
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 								    			</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="mb5">
 													<a href="#event.buildLink( prc.xehPageExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -96,23 +96,49 @@
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.resetBulkHits()">
-													<i class="fas fa-recycle fa-lg"></i> Reset Hits Selected
+													<i class="fa fa-recycle fa-lg"></i> Reset Hits Selected
 												</a>
 											</li>
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.contentShowAll()">
-													<i class="fas fa-list"></i> Show All
+													<i class="fa fa-list"></i> Show All
 												</a>
 											</li>
 								    	</ul>
 								    </div>
-									<a
-										class="btn btn-primary text-white"
-										href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
-									>
-										Create Page
-									</a>
+									<div class="btn-group">
+										<button class="btn dropdown-toggle btn-primary btn-sm" data-toggle="dropdown">
+											<i class="fa fa-plus"></i> New <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu list-unstyled">
+											<cfif prc.availableTemplates.len()>
+												<li class="dropdown-header">
+													<i class="fa fa-object-group"></i> From Template:
+												</li>
+												<cfloop array="#prc.availableTemplates#" item="template">
+													<li class="mb-5">
+														<a
+															href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) & "?contentTemplate=" & encodeForHTMLAttribute( template[ "templateID" ] ) )#"
+														>
+															<small><i class="fa fa-clone"></i> #template[ "name" ]#</small>
+														</a>
+													</li>
+												</cfloop>
+												<li role="separator" class="divider"></li>
+											</cfif>
+												<li class="mb-5">
+													<a
+														href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
+													>
+													<i class="fa fa-plus"></i> Empty Page
+													</a>
+												</li>
+											<li class="mb-5">
+												<a href="#event.buildLink( prc.xehTemplates & "##create" )#"><i class="fa fa-object-group"></i> New Template</a>
+											</li>
+										</ul>
+									</div>
 								</cfif>
 							</div>
 						</div>
@@ -132,7 +158,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
@@ -194,12 +220,12 @@
 		</div>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fab fa-medrt"></i> Help Tips</h3>
+		        <h3 class="panel-title"><i class="fa fas fa-life-ring"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="far fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="far fa-lightbulb fa-lg"></i> Cloning does not copy comments or version history</li>
+					<li><i class="fa fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb fa-lg"></i> Cloning does not copy comments or version history</li>
 				</ul>
 		    </div>
 		</div>
@@ -207,8 +233,8 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+	#view(
 		view 			= "_tags/dialog/clone",
 		args 			= {
 			title        : "Page Cloning",
@@ -223,8 +249,8 @@
 </cfif>
 
 <!--- Import Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
+	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {
 			title       : "Import Pages",

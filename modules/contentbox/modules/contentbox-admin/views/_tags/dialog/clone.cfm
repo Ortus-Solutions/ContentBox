@@ -25,7 +25,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="cloneTitle">
-					<i class="far fa-clone"></i> #args.title#
+					<i class="fa fa-clone"></i> #args.title#
 				</h4>
 			</div>
 
@@ -62,7 +62,7 @@
 
 						<!--- Site To Clone To --->
 						<div class="form-group">
-							<label class="control-label">
+							<label class="control-label" for="site">
 								#args.siteLabel#
 							</label>
 
@@ -86,7 +86,7 @@
 							</select>
 						</div>
 
-						<label for="contentStatus control-label">
+						<label for="#args.statusName#_id" class="control-label">
 							#args.publishLabel#
 						</label>
 
@@ -97,6 +97,7 @@
 						#html.select(
                             options           = "true,false",
                             name              = "#args.statusName#",
+							id 			  	  = "#args.statusName#_id",
                             selectedValue     = "false",
                             class             = "form-control input-sm valid",
                             wrapper           = "div class=controls",

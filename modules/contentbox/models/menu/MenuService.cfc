@@ -268,13 +268,13 @@ component
 
 			// build out the item
 			if ( !skipItem ) {
-				arguments.menuString &= "<li id=""key_#item.getMenuItemID()#"" class=""dd-item dd3-item"" data-id=""#item.getMenuItemID()#"">";
+				arguments.menuString &= "<li id=""key_#item.getMenuItemID()#"" class=""dd-item dd3-item"" data-id=""#item.getMenuItemID()#"" :key=""#item.getMenuItemID()#"">";
 
 				// render default menu item
 				var args            = { menuItem : item, provider : item.getProvider() };
 				savecontent variable="providerContent" {
 					writeOutput(
-						variables.renderer.renderView(
+						variables.renderer.view(
 							view   = "menus/provider",
 							module = "contentbox-admin",
 							args   = args

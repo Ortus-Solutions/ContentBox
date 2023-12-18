@@ -107,6 +107,25 @@ component {
 	}
 
 	/**
+	 * Append an incoming array of properties to a memento list target for a specific profile
+	 *
+	 * @collection The array to append
+	 * @profile    The profile to append to: export, import, etc.
+	 * @target     The target to append to: defaultIncludes, defaultExcludes, neverInclude, defaults, etc.
+	 */
+	function appendToMementoProfile(
+		required collection,
+		required profile,
+		target = "defaultIncludes"
+	){
+		var filtered = arguments.collection.filter( function( item ){
+			return !arrayContainsNoCase( this.memento.profiles[ profile ][ target ], arguments.item );
+		} );
+		this.memento.profiles[ arguments.profile ][ arguments.target ].append( filtered, true );
+		return this;
+	}
+
+	/**
 	 * Shortcut to get the id of the object using the this.pk
 	 *
 	 * @return The id of the object or empty value if not loaded
@@ -228,6 +247,17 @@ component {
 		include targetLocation;
 
 		return this;
+	}
+
+	/**
+	 * convert one or a list of permissions to an array, if it's an array we don't touch it
+	 *
+	 * @items One, a list or an array
+	 *
+	 * @return An array
+	 */
+	private array function arrayWrap( required items ){
+		return isArray( arguments.items ) ? arguments.items : listToArray( arguments.items );
 	}
 
 }

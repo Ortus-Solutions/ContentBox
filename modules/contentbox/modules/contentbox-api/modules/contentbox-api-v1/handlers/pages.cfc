@@ -18,9 +18,9 @@ component extends="baseContentHandler" {
 	/**
 	 * Display all pages using different filters
 	 *
-	 * @tags                     Pages
-	 * @responses                contentbox/apidocs/pages/index/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags      Pages
+	 * @responses contentbox/apidocs/pages/index/responses.json
+	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.page       = 1;
@@ -39,6 +39,14 @@ component extends="baseContentHandler" {
 		param rc.showInMenu = "";
 		// If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 		param rc.slugPrefix = "";
+		// If passed, it's a slug operation
+		param rc.slug       = "";
+
+		// If we have a `slug` then we treat it as a /:slug route, due to hierarchical paths
+		if ( rc.slug.trim().length() > 0 ) {
+			rc.id = rc.slug;
+			return show( argumentCollection = arguments );
+		}
 
 		// Reset to empty if passed and not boolean
 		if ( len( rc.showInMenu ) && !isBoolean( rc.showInMenu ) ) {
@@ -69,9 +77,9 @@ component extends="baseContentHandler" {
 	/**
 	 * Show an page using the id
 	 *
-	 * @tags                     Pages
-	 * @responses                contentbox/apidocs/pages/show/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags      Pages
+	 * @responses contentbox/apidocs/pages/show/responses.json
+	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -104,9 +112,9 @@ component extends="baseContentHandler" {
 	/**
 	 * Update an existing page
 	 *
-	 * @tags                     Pages
-	 * @responses                contentbox/apidocs/pages/update/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags      Pages
+	 * @responses contentbox/apidocs/pages/update/responses.json
+	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// Supersize it
@@ -117,9 +125,9 @@ component extends="baseContentHandler" {
 	/**
 	 * Delete a page using an id or slug
 	 *
-	 * @tags                     Pages
-	 * @responses                contentbox/apidocs/pages/delete/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN
+	 * @tags      Pages
+	 * @responses contentbox/apidocs/pages/delete/responses.json
+	 * @x         -contentbox-permissions PAGES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
 		super.delete( argumentCollection = arguments );

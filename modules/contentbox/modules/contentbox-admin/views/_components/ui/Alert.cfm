@@ -7,7 +7,7 @@
 <cfparam name="args.type" 		default="info">
 <!--- Messages to show --->
 <cfparam name="args.messages" 		default="">
-<!--- Bind the messages + type to a Alpine model --->
+<!--- Bind the messages + type to an Alpine model --->
 <cfparam name="args.messageModel" 	default="">
 
 <alert
@@ -17,6 +17,7 @@
 		alertMessage 	: '#args.messages#',
 		alertModel 		: '#args.messageModel#',
 		alertCloseButton : #args.withClose#,
+
 		alertClose() {
 			this.alertOpen = false;
 			<cfif len( args.messageModel )>
@@ -44,7 +45,7 @@
 		<i
 			@click="alertClose()"
 			title="Close Alert"
-			class="far fa-times-circle cursor-pointer float-right text-2xl"
+			class="fa fa-times-circle cursor-pointer float-right text-2xl"
 			x-show="alertCloseButton"
 		></i>
 		<cfif len( args.messageModel )>

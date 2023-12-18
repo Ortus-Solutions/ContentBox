@@ -35,7 +35,7 @@
 			)#
 		</label>
 		#html.select(
-			options = "commandbox,contentbox_express,mod_rewrite,iis7",
+			options = "commandbox,mod_rewrite,iis7",
 			name    = "rewrite_engine",
 			class   = "input-sm"
 		)#

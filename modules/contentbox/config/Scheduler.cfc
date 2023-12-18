@@ -23,9 +23,19 @@ component {
 		 * that you can use to register your tasks configurations.
 		 */
 
+		// Rotates the login audit logs
+		task( "login-tracker-rotation" )
+			.call( () => {
+				getInstance( "LoginTrackerService@contentbox" ).rotate();
+			} )
+			.everyHour()
+			.delay( 1, "hours" )
+			.onOneServer();
+		;
+
 		// Deletes all moderated comments that have expired in the inbox
 		task( "comment-expirations" )
-			.call( function(){
+			.call( () => {
 				getInstance( "siteService@contentbox" )
 					.getAll()
 					.each( function( thisSite ){
@@ -53,7 +63,6 @@ component {
 					} );
 			} )
 			.everyHour()
-			// Don't start it immediately, wait an hour. Especially so tests can pass if enabled in tests.
 			.delay( 1, "hours" )
 			.onOneServer();
 	}

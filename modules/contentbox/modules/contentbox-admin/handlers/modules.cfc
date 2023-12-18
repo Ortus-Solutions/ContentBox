@@ -48,7 +48,7 @@ component extends="baseHandler" {
 
 		// Check if route is discovered, basically if we get handler => contentbox-ui:page then it was not found
 		if ( routeResults.route.handler == "contentbox-ui:page" ) {
-			variables.cbMessagebox.warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
+			cbMessageBox().warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
 			return relocate( prc.xehModules );
 		}
 
@@ -76,7 +76,7 @@ component extends="baseHandler" {
 		// Check for renderData
 		if ( structIsEmpty( event.getRenderData() ) ) {
 			// else normal ColdBox Rendering
-			return controller.getRenderer().renderLayout();
+			return controller.getRenderer().layout();
 		}
 	}
 
@@ -114,7 +114,7 @@ component extends="baseHandler" {
 	 */
 	function activate( event, rc, prc ){
 		variables.moduleService.activateModule( rc.moduleName );
-		variables.cbMessagebox.info( "Modules Activated, woohoo!" );
+		cbMessageBox().info( "Modules Activated, woohoo!" );
 		relocate( prc.xehModules );
 	}
 
@@ -123,7 +123,7 @@ component extends="baseHandler" {
 	 */
 	function deactivate( event, rc, prc ){
 		variables.moduleService.deactivateModule( rc.moduleName );
-		variables.cbMessagebox.info( "Modules Deactivated!" );
+		cbMessageBox().info( "Modules Deactivated!" );
 		relocate( prc.xehModules );
 	}
 
@@ -132,7 +132,7 @@ component extends="baseHandler" {
 	 */
 	function reset( event, rc, prc ){
 		variables.moduleService.resetModules();
-		variables.cbMessagebox.info( "Modules Reset!" );
+		cbMessageBox().info( "Modules Reset!" );
 		relocate( prc.xehModules );
 	}
 
@@ -141,7 +141,7 @@ component extends="baseHandler" {
 	 */
 	function rescan( event, rc, prc ){
 		variables.moduleService.startup();
-		variables.cbMessagebox.info( "Modules Rescaned and Revamped!" );
+		cbMessageBox().info( "Modules Rescaned and Revamped!" );
 		relocate( prc.xehModules );
 	}
 
@@ -150,7 +150,7 @@ component extends="baseHandler" {
 	 */
 	function remove( event, rc, prc ){
 		variables.moduleService.deleteModule( rc.moduleName );
-		variables.cbMessagebox.info( "Module Removed Forever!" );
+		cbMessageBox().info( "Module Removed Forever!" );
 		relocate( prc.xehModules );
 	}
 

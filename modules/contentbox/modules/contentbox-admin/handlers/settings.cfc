@@ -66,7 +66,7 @@ component extends="baseHandler" {
 			body     = "Test Email From ContentBox"
 		);
 		// send it out
-		var results = mailService.send( mail );
+		var results = mailService.send( mail ).getResults();
 
 		event.renderData( data = results, type = "json" );
 	}
@@ -107,7 +107,7 @@ component extends="baseHandler" {
 		announce( "cbadmin_postSettingsSave" );
 
 		// relocate back to editor
-		variables.cbMessagebox.info( "Settings saved!" );
+		cbMessageBox().info( "Settings saved!" );
 
 		relocate( prc.xehSettings );
 	}
@@ -217,17 +217,15 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideSettings
 				);
-				variables.cbMessagebox.info( "Settings imported sucessfully!" );
+				cbMessageBox().info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				variables.cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
 			log.error( errorMessage, e );
-			variables.cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehRawSettings );
 	}
@@ -252,7 +250,7 @@ component extends="baseHandler" {
 		event.paramValue( "page", 1 ).paramValue( "isCore", false );
 
 		// populate and get setting
-		var setting = populateModel(
+		var setting = populate(
 			model               : settingsService.get( rc.settingID ),
 			composeRelationships: true,
 			nullEmptyInclude    : "site",
@@ -263,7 +261,7 @@ component extends="baseHandler" {
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();
 		// messagebox
-		variables.cbMessagebox.setMessage( "info", "Setting saved!" );
+		cbMessageBox().setMessage( "info", "Setting saved!" );
 		// relocate
 		relocate( event = prc.xehRawSettings, queryString = "page=#rc.page#" );
 	}
@@ -276,13 +274,13 @@ component extends="baseHandler" {
 		announce( "cbadmin_preSettingRemove", { settingID : rc.settingID } );
 		// delete by id
 		if ( !settingsService.deleteByID( rc.settingID ) ) {
-			variables.cbMessagebox.setMessage( "warning", "Invalid Setting detected!" );
+			cbMessageBox().setMessage( "warning", "Invalid Setting detected!" );
 		} else {
 			// announce event
 			announce( "cbadmin_postSettingRemove", { settingID : rc.settingID } );
 			// flush cache
 			settingsService.flushSettingsCache();
-			variables.cbMessagebox.setMessage( "info", "Setting Removed!" );
+			cbMessageBox().setMessage( "info", "Setting Removed!" );
 		}
 		relocate( prc.xehRawSettings );
 	}
@@ -308,7 +306,7 @@ component extends="baseHandler" {
 	 */
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		variables.cbMessagebox.setMessage( "info", "All singletons flushed and awaiting re-creation." );
+		cbMessageBox().setMessage( "info", "All singletons flushed and awaiting re-creation." );
 		relocate( event = prc.xehRawSettings, queryString = "##wirebox" );
 	}
 
@@ -333,16 +331,10 @@ component extends="baseHandler" {
 	 * @return html
 	 */
 	function authLogs( event, rc, prc ){
-		prc.featureEnabled = prc.cbsettings.cb_security_login_blocker;
-		prc.xehTruncate    = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
-
-		// Check if the feature is enabled
-		if ( prc.featureEnabled ) {
-			prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
-		} else {
-			prc.featureEnabled = false;
-		}
-
+		prc.featureEnabled     = prc.cbsettings.cb_security_login_blocker;
+		prc.xehTruncate        = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
+		// Get all logs
+		prc.logs               = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
 		// Raw tab
 		prc.tabSystem_authLogs = true;
 		// View

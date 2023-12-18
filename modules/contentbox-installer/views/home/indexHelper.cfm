@@ -40,12 +40,12 @@ document.addEventListener( "DOMContentLoaded", () => {
 } );
 
 function nextStep(){
-    var $tabs = $( '.tab-wrapper li' );
+    var $tabs = $( '.tabs li' );
 	$tabs.filter( '.active' ).next( 'li' ).find( 'a[data-toggle="tab"]' ).tab( 'show' );
 }
 
 function prevStep(){
-    var $tabs = $('.tab-wrapper li');
+    var $tabs = $('.tabs li');
 	$tabs.filter( '.active' ).prev( 'li' ).find( 'a[data-toggle="tab"]' ).tab( 'show' );
 }
 </script>

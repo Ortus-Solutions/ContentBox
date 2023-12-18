@@ -16,7 +16,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
+				<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'contentID' )"/>
 			</th>
 			<th>
 				Name
@@ -54,13 +54,13 @@
 		>
 			<!--- check box --->
 			<td class="text-center">
-				<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
+				<input type="checkbox" name="contentID" value="#entry.getContentID()#" />
 			</td>
 
 			<td>
 
 				<!--- Title --->
-				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 					<a
 						href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#entry.getContentID()#"
 						title="Edit"
@@ -74,11 +74,11 @@
 
 				<!--- password protect --->
 				<cfif entry.isPasswordProtected()>
-					<i class="fas fa-key text-orange" title="Password Protected Content"></i>
+					<i class="fa fa-key text-orange" title="Password Protected Content"></i>
 				</cfif>
 
 				<!--- Content Info --->
-				#renderView(
+				#view(
 					view : "_components/content/TableCreationInfo",
 					args : { content : entry },
 					prepostExempt : true
@@ -87,7 +87,7 @@
 
 			<!--- Status --->
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableStatus",
 					args : { content : entry },
 					prepostExempt : true
@@ -96,7 +96,7 @@
 
 			<!--- Show in Search --->
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableSearchStatus",
 					args : { content : entry },
 					prepostExempt : true
@@ -117,11 +117,12 @@
 			<td class="text-center">
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
-					</a>
+			    	<button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Entry Actions">
+						<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+						<span class="visually-hidden">Entry Actions</span>
+					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
+			    		<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li>
 							<a
@@ -130,17 +131,17 @@
 									'#encodeForJavascript( entry.getTitle() )#'
 								)"
 							>
-								<i class="far fa-clone fa-lg"></i> Clone
+								<i class="fa fa-clone fa-lg"></i> Clone
 							</a>
 						</li>
-						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
 							<a
 								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
-								data-title="<i class='far fa-trash-alt'></i> Delete Entry?">
-								<i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+								data-title="<i class='fa fa-trash'></i> Delete Entry?">
+								<i id="delete_#entry.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
 							</a>
 						</li>
 						</cfif>
@@ -151,7 +152,7 @@
 							</a>
 						</li>
 						</cfif>
-						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 						<li>
 							<a
@@ -164,13 +165,13 @@
 						<!--- History Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#entry.getContentID()#">
-								<i class="fas fa-history fa-lg"></i> History
+								<i class="fa fa-history fa-lg"></i> History
 							</a>
 						</li>
 						<!-- Reset hits -->
 						<li>
 							<a href="javascript:contentListHelper.resetHits( '#entry.getContentID()#' )">
-								<i class="fas fa-recycle fa-lg"></i> Reset Hits
+								<i class="fa fa-recycle fa-lg"></i> Reset Hits
 							</a>
 						</li>
 						<!--- View in Site --->
@@ -178,7 +179,7 @@
 							<a
 								href="#prc.CBHelper.linkEntry( entry )#"
 								target="_blank">
-								<i class="far fa-eye fa-lg"></i> Open In Site
+								<i class="fa fa-eye fa-lg"></i> Open In Site
 							</a>
 						</li>
 			    	</ul>

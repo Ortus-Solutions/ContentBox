@@ -141,15 +141,4 @@
 <!--- ContentBoxEvent --->
 #cb.event("cbui_postPageDisplay")#
 
-<!--- Custom JS --->
-<!---<script type="text/javascript">
-	document.addEventListener( "DOMContentLoaded", () => {
-		<cfif cb.isCommentFormError()>
-			toggleCommentForm();
-		</cfif>
-	});
-	function toggleCommentForm(){
-		$("##commentForm").slideToggle();
-	}
-</script>--->
 </cfoutput>

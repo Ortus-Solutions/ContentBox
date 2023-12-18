@@ -193,7 +193,7 @@ component
 			if ( mailResults.error ) {
 				variables.logger.error(
 					"Error sending author created email for #arguments.author.getFullName()#",
-					mailResults.errorArray
+					mailResults.messages
 				);
 			}
 		}
@@ -521,7 +521,7 @@ component
 	 *
 	 * @author The author to send the reminder to
 	 *
-	 * @return struct of { error:boolean, errorArray:array }
+	 * @return struct of { error:boolean, messages:array }
 	 */
 	struct function sendNewUserEmail( required Author author ){
 		var token       = variables.securityService.generateResetToken( arguments.author );
@@ -558,14 +558,14 @@ component
 		);
 
 		mail.setBody(
-			variables.renderer.renderLayout(
+			variables.renderer.layout(
 				layout = "/contentbox/email_templates/layouts/email",
 				view   = "/contentbox/email_templates/author_welcome"
 			)
 		);
 
 		// send it out
-		return variables.mailService.send( mail );
+		return variables.mailService.send( mail ).getResults();
 	}
 
 }

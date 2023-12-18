@@ -83,12 +83,16 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to be able to know who I am by passing my token", function(){
 				given( "an valid token", function(){
 					then( "I should get my information", function(){
-						// Log in
 						var tokens  = jwt.attempt( variables.testAdminUsername, variables.testAdminPassword );
 						var payload = jwt.decode( tokens.access_token );
-						// Now Logout
 						var event   = GET( "/cbapi/v1/whoami", { "x-auth-token" : tokens.access_token } );
-						expect( event.getResponse() ).toHaveStatus( 200 );
+						expect( event.getResponse() ).toHaveStatus(
+							200,
+							event
+								.getResponse()
+								.getMemento()
+								.toString()
+						);
 						expect( event.getResponse().getData().authorID ).toBe( payload.sub );
 					} );
 				} );
@@ -96,7 +100,13 @@ component extends="tests.resources.BaseApiTest" {
 					then( "I should get an error", function(){
 						// Now Logout
 						var event = GET( "/cbapi/v1/whoami", { "x-auth-token" : "123" } );
-						expect( event.getResponse() ).toHaveStatus( 401 );
+						expect( event.getResponse() ).toHaveStatus(
+							401,
+							event
+								.getResponse()
+								.getMemento()
+								.toString()
+						);
 					} );
 				} );
 			} );

@@ -15,14 +15,14 @@
 							href="#event.buildLink( prc.xehSitesManager )#"
 							title="Back to listing"
 						>
-							<i class="fas fa-chevron-left"></i> Cancel
+							<i class="fa fa-chevron-left"></i> Cancel
 						</a>
 					</div>
 
 					<!--- Title --->
 					<div class="size16 p10 flex gap-x-2">
 
-						<i class="fas fa-globe"></i>
+						<i class="fa fa-globe"></i>
 
 						<span>
 							#prc.site.isLoaded() ? prc.site.getSlug() : 'Create Site'#
@@ -48,6 +48,7 @@
 					<!--- Form --->
 					#html.startForm(
 						name 		: "siteForm",
+						id 			: "siteForm",
 						action 		: prc.xehSiteSave,
 						novalidate 	: "novalidate",
 						class 		: "form-vertical"
@@ -142,15 +143,14 @@
 
 							<p>
 								Site detection is done against the incoming domain name found in the <code>cgi</code> scope.
-								Below you can register the full name or a
-								<a href="https://www.regextester.com/" placeholder="_blank">regular expression</a>
-								to match.
+								Below you can register the primary domain <a href="https://www.regextester.com/" placeholder="_blank">regular expression</a>
+								with the domain base url it represents alongside any domain aliases you might have.
 							</p>
 
 							#html.textField(
 								name    		= "domainRegex",
 								bind    		= prc.site,
-								label   		= "*Domain Expressions:",
+								label   		= "*Domain Expression(s):",
 								required		= "required",
 								size    		= "255",
 								title 			= "A domain name or regular expression that will be used to match the incoming domain with.",
@@ -161,7 +161,6 @@
 								placeholder 	= "mycoolsite\.com"
 							)#
 
-							<!--- Domain Name --->
 							<div class="form-group">
 								#html.label(
 									class   = "control-label",
@@ -185,6 +184,85 @@
 									>
 								</div>
 							</div>
+
+							<!--- Domain Aliases Component --->
+							<div x-data="domainAliases()">
+								<!--- The property holder --->
+								<input type="hidden" name="domainAliases" x-model="domainAliases">
+								<button type="button" class="btn btn-info" @click="addDomainAlias()">+ Add Domain Alias</button>
+
+								<template x-for="(field, index) in fields" :key="index">
+								   <div class="row p10 mt5 bg-primary">
+										<div class="col-md-12">
+											<h4>Domains Alias (<span x-text="index + 1"></span>)</h4>
+										</div>
+
+										<div class="col-md-5" >
+											<div class="form-group">
+												<label class="control-label" for="domainRegex">*Domain Expression(s):</label>
+												<div class="controls">
+													<input
+														type="text"
+														x-model="field.domainRegex"
+														required="required"
+														size="255"
+														class="form-control valid"
+														placeholder="mycoolsite\.com"
+														aria-required="true"
+														title="A domain name or regular expression that will be used to match the incoming domain with."
+														aria-invalid="false">
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-5">
+											<div class="form-group">
+												<label class="control-label" for="domain">*Domain Base URL:</label>
+												<div class="input-group">
+												<span class="input-group-addon">https://</span>
+												<input
+														type="text"
+														class="form-control"
+														x-model="field.domain"
+														title="The domain base URL so we can construct URLs to this site or to refer to it by name"
+														placeholder="mydomain.com"
+													>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-2 text-center">
+											<button
+												type="button"
+												class="btn btn-danger btn-md btn-info"
+												@click="removeDomainAlias( index )"
+												title="Remove this domain alias"
+											>
+												&times;
+											</button>
+											<button
+												type="button"
+												class="btn btn-md btn-info"
+												:disabled="index === 0"
+												@click="moveUp( index )"
+												title="Move this domain alias up"
+											>
+												&##8679;
+											</button>
+											<button
+												type="button"
+												class="btn btn-md btn-info"
+												:disabled="index === fields.length - 1"
+												@click="moveDown( index )"
+												title="Move this domain alias down"
+											>
+												&##8681;
+											</button>
+										</div>
+									</div>
+								</template>
+
+							 </div>
 
 						#html.endFieldSet()#
 
@@ -253,6 +331,36 @@
 											</cfif>
 										>
 											#prc.themes[ themeKey ].themeName#
+										</option>
+									</cfloop>
+									</select>
+								</div>
+							</div>
+
+							<!-- CBFS Disks -->
+							<div class="form-group">
+								<label class="control-label" for="activeTheme">
+									Media Storage Disk:
+								</label>
+
+								<p>
+									Choose the Media Storage Disk to use for this site
+								</p>
+
+								<div class="controls">
+									<select
+										name="mediaDisk"
+										id="mediaDisk"
+										class="form-control"
+									>
+									<cfloop array="#prc.registeredDisks#" item="disk">
+										<option
+											value="#disk#"
+											<cfif prc.site.getMediaDisk() eq disk>
+												selected="selected"
+											</cfif>
+										>
+											#disk#
 										</option>
 									</cfloop>
 									</select>

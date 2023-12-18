@@ -1,0 +1,38 @@
+{
+	"description": "Needed fields for a site relocation",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"slug",
+					"site"
+				],
+				"properties": {
+					"slug": {
+						"description": "The slug of the relocation",
+						"type": "string"
+					},
+					"site": {
+						"description": "The id of the site this relocation belongs to",
+						"type": "string"
+					},
+					"relatedContent": {
+						"description": "The id of the content this relocation belongs to",
+						"type": "string"
+					},
+					"target": {
+						"description": "An optional manual target - may be used if no content is assigned",
+						"type": "string"
+					}
+				},
+				"example": {
+					"slug": "/about",
+					"site": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+					"relatedContent" : "779cd2de-a444-11eb-ab6f-0290cc502ae3"
+				}
+			}
+		}
+	}
+}

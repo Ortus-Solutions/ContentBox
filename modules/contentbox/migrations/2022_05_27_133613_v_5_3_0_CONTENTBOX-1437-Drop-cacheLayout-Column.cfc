@@ -11,7 +11,7 @@ component {
 	property name="migrationService" inject="MigrationService@cfmigrations";
 
 	// Include Utils
-	include template="./_MigrationUtils.cfm";
+	include template="./util/MigrationUtils.cfm";
 
 	function up( schema, qb ){
 		if ( hasColumn( "cb_content", "cacheLayout" ) ) {

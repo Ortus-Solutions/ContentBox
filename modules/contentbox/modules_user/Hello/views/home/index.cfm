@@ -31,10 +31,10 @@
 		<!--- Info Box --->
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fab fa-medrt"></i> Need Help?</h3>
+		        <h3 class="panel-title"><i class="fa fas fa-life-ring"></i> Need Help?</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
+		    	#view(view="_tags/needhelp", module="contentbox-admin" )#
 		    </div>
 		</div>
 	</div>

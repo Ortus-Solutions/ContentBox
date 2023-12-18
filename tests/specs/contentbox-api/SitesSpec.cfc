@@ -101,13 +101,14 @@ component extends="tests.resources.BaseApiTest" {
 							var event = this.post(
 								"cbapi/v1/sites",
 								{
-									name        : "bddtest",
-									slug        : "bddtest",
-									description : "my bdd test site",
-									domain      : "bddtest.com",
-									domainRegex : "bddtest\.com",
-									activeTheme : "default",
-									homepage    : "cbBlog"
+									name          : "bddtest",
+									slug          : "bddtest",
+									description   : "my bdd test site",
+									domain        : "bddtest.com",
+									domainRegex   : "bddtest\.com",
+									domainAliases : "[]",
+									activeTheme   : "default",
+									homepage      : "cbBlog"
 								}
 							);
 							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
@@ -121,13 +122,14 @@ component extends="tests.resources.BaseApiTest" {
 						var event = this.post(
 							"cbapi/v1/sites",
 							{
-								name        : "default",
-								slug        : "default",
-								description : "my bdd test site",
-								domain      : "bddtest.com",
-								domainRegex : "bddtest\.com",
-								activeTheme : "default",
-								homepage    : "cbBlog"
+								name          : "default",
+								slug          : "default",
+								description   : "my bdd test site",
+								domain        : "bddtest.com",
+								domainRegex   : "bddtest\.com",
+								domainAliases : "[]",
+								activeTheme   : "default",
+								homepage      : "cbBlog"
 							}
 						);
 						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
@@ -173,13 +175,14 @@ component extends="tests.resources.BaseApiTest" {
 						var siteId   = createUUID();
 						var testSite = variables.siteService.save(
 							variables.siteService.new( {
-								name        : "bddtest-#siteId#",
-								slug        : "bddtest-#siteId#",
-								description : "my bdd test site",
-								domain      : "bddtest.com",
-								domainRegex : "bddtest\.com",
-								activeTheme : "default",
-								homepage    : "cbBlog"
+								name          : "bddtest-#siteId#",
+								slug          : "bddtest-#siteId#",
+								description   : "my bdd test site",
+								domain        : "bddtest.com",
+								domainRegex   : "bddtest\.com",
+								domainAliases : "[]",
+								activeTheme   : "default",
+								homepage      : "cbBlog"
 							} )
 						);
 						var event = this.delete( "/cbapi/v1/sites/#testSite.getSiteId()#" );

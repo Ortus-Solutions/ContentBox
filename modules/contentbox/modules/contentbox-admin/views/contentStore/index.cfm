@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="far fa-hdd"></i> Content Store
+			<i class="fa fa-hdd"></i> Content Store
 			<span id="contentCountContainer"></span>
 		</h1>
 	</div>
@@ -46,7 +46,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "contentSearch",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
@@ -54,38 +54,38 @@
 
 						<div class="col-md-6">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:contentListHelper.bulkRemove()" class="confirmIt"
-													data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+													data-title="<i class='fa fa-trash fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
+														<i class="fa fa-trash fa-lg"></i> Delete Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('draft')">
-														<i class="fas fa-ban fa-lg"></i> Draft Selected
+														<i class="fa fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('publish')">
-														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
+														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehContentExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -99,18 +99,41 @@
 											</cfif>
 											<li>
 												<a href="javascript:contentListHelper.contentShowAll()">
-													<i class="fas fa-list fa-lg"></i> Show All
+													<i class="fa fa-list fa-lg"></i> Show All
 												</a>
 											</li>
 								    	</ul>
 								    </div>
 								</cfif>
-								<a
-									class="btn btn-primary text-white"
-									href="#event.buildLink( prc.xehContentEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
-								>
-									Create Content
-								</a>
+
+								<div class="btn-group">
+									<button class="btn dropdown-toggle btn-primary btn-sm" data-toggle="dropdown">
+										<i class="fa fa-plus"></i> New <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu list-unstyled">
+										<cfif prc.availableTemplates.len()>
+											<li class="dropdown-header"><i class="fa fa-object-group"></i> From Template:</li>
+											<cfloop array="#prc.availableTemplates#" item="template">
+												<li class="mb-5">
+													<a
+														href="#event.buildLink(  prc.xehContentEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) & "?contentTemplate=" & #encodeForHTMLAttribute( template[ "templateID" ] )# )#"
+													><small><i class="fa fa-plus"></i> #template[ "name" ]#</small></a>
+												</li>
+											</cfloop>
+											<li role="separator" class="divider"></li>
+										</cfif>
+											<li class="mb-5">
+												<a
+													href="#event.buildLink(  prc.xehContentEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
+												>
+												<i class="fa fa-plus"></i> Blank Content
+												</a>
+											</li>
+										<li class="mb-5">
+											<a href="#event.buildLink( prc.xehTemplates & "##create-ContentStore" )#"><i class="fa fa-object-group"></i> New Template</a>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -127,7 +150,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
@@ -190,8 +213,8 @@
 	</div>
 </div>
 <!--- Clone Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+	#view(
 		view 			= "_tags/dialog/clone",
 		args 			= {
 			title        : "Content Store Cloning",
@@ -206,8 +229,8 @@
 </cfif>
 
 <!--- Import Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
+	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {
 			title       : "Import Content",

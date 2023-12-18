@@ -96,7 +96,7 @@ component
 		html.addStyleContent(
 			"
 			.CodeMirror{
-			    height: 400px;
+			    height: 100% !important;
 			}
 			.CodeMirror-fullscreen{
 				z-index: 1000 !important;
@@ -292,7 +292,7 @@ component
 			{
 				name : 'cbSave',
 				action : function(){ quickSave(); },
-				className : 'far fa-save',
+				className : 'fa fa-save',
 				title : 'ContentBox Quick Save'
 			},
 			{
@@ -328,7 +328,7 @@ component
 			{
 				name : 'cbContentStore',
 				action : function(){ $insertCBContentStore( '#arguments.editor#' ); },
-				className : 'far fa-hdd',
+				className : 'fa fa-hdd',
 				title : 'Insert ContentBox Content Store Item'
 			},
 			{

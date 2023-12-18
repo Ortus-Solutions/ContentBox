@@ -1,7 +1,7 @@
 <cfoutput>
 #html.startForm( name="searchSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
-    <legend><i class="fab fa-searchengin fa-lg"></i>  Search Options</legend>
+    <legend><i class="fa fa-search fa-lg"></i>  Search Options</legend>
 
     <!--- Max Search Results --->
     <div class="form-group">

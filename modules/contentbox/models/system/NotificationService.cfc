@@ -75,7 +75,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/author_new",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -131,7 +131,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/author_remove",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -201,7 +201,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/entry_new",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -263,7 +263,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/entry_remove",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -331,7 +331,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/page_new",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -393,7 +393,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/page_remove",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -461,7 +461,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/contentstore_new",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }
@@ -525,7 +525,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/contentstore_remove",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : currentAuthor.getEmail() }

@@ -4,24 +4,58 @@
         var hidden = null;
         var label = null;
         var typeIcon = null;
+
+        if( !!document.getElementsByClassName( "select-content") ) {
+            handleOnClick();
+        };
         document.addEventListener( "DOMContentLoaded", () => {
-            $( '.select-content' ).on( 'click', function() {
-                input = $( this ).siblings( 'input[name^=contentTitle]' );
-                hidden= $( this ).siblings( 'input[name^=contentSlug]' );
-                label = $( this ).closest( '.dd3-extracontent' ).find( 'input[name^=label]' );
-                typeIcon = $( this ).closest( '.dd3-item' ).find( '.dd3-type' );
-                var baseURL = '#event.buildLink( args.xehContentSelector )#';
-                openRemoteModal( baseURL, {contentType:'Page,Entry'}, 900, 600 );
-            } );
+           handleOnClick();
         } );
+        /**
+         * Gets next element sibling with selector
+         * @param {HTMLElement} The DOM element
+         * @param {String} The selector to search 
+         */
+        var getNextSibling = function( elem, selector ) {
+            // Get the next sibling element
+            var sibling = elem.nextElementSibling;
+
+            // If there's no selector, return the first sibling
+            if ( !selector ) return sibling;
+
+            // If the sibling matches our selector, use it
+            // If not, jump to the next sibling and continue the loop
+            while ( sibling ) {
+                if ( sibling.matches( selector ) ) return sibling;
+                sibling = sibling.nextElementSibling
+            }
+        };
+        /**
+         * Handles the click on the element, with the class "select-content"
+         */
+        function handleOnClick(){
+            var collection = document.getElementsByClassName( "select-content" );
+            for ( var i = 0; i < collection.length; i++) {
+                collection[i].onclick = function() {
+                    input = getNextSibling( this, 'input[name^=contentTitle]' );
+                    hidden = getNextSibling( this, 'input[name^=contentSlug]' )
+                    label = this.closest( '.dd3-extracontent' ).querySelector( 'input[name^=label]' );
+                    typeIcon = this.closest( '.dd3-item' ).querySelector( '.dd3-type' );
+                    var baseURL = '#event.buildLink( args.xehContentSelector )#';
+                    openRemoteModal( baseURL, {contentType:'Page,Entry'}, 900, 600 );
+                };
+            }
+        }
+        
         function chooseRelatedContent( id, title, type, slug ) {
             closeRemoteModal();
-            input.val( title );
-            hidden.val( slug );
-            label.val( title );
+            input.value = title;
+            hidden.value =  slug;
+            label.value = label.value === "" ? title : label.value;
             updateLabel( label );
-            typeIcon.removeClass( 'btn-danger' ).addClass( 'btn-primary' );
-            $('##menuForm').valid();
+            typeIcon.classList.remove( 'btn-danger' );
+            typeIcon.classList.add( 'btn-primary' );
+            $( '##menuForm' ).valid();
             toggleErrors('off');
             return false;
         }

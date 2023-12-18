@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-user"></i> Users
+			<i class="fa fa-user"></i> Users
 			<span id="authorCountContainer"></span>
 		</h1>
 	</div>
@@ -31,7 +31,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "userSearch",
-									class 		= "form-control rounded quicksearch",
+									class 		= "form-control quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>
@@ -41,24 +41,24 @@
 
 							<!--- Actions Bar --->
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
 
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 
 								    	<ul class="dropdown-menu">
 
-								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -75,21 +75,21 @@
 														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
 														title="Users will be prompted to change their passwords upon login"
 													>
-														<i class="fas fa-key fa-lg"></i> Reset All Passwords
+														<i class="fa fa-key fa-lg"></i> Reset All Passwords
 													</a>
 												</li>
 											</cfif>
 
 											<li>
 												<a href="javascript:contentShowAll()">
-													<i class="fas fa-list fa-lg"></i> Show All
+													<i class="fa fa-list fa-lg"></i> Show All
 												</a>
 											</li>
 								    	</ul>
 								    </div>
 								</cfif>
 
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 									<button
 										class="btn btn-primary"
 										onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')"
@@ -121,7 +121,7 @@
 		<div class="panel panel-primary">
 
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
 
 			<div class="panel-body">
@@ -194,8 +194,8 @@
 	</div>
 </div>
 
-<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+	#view(
 		view = "_tags/dialog/import",
 		args = {
 			title 		: "Import Users",

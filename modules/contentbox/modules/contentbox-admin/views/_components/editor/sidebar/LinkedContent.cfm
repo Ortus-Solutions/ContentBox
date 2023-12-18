@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_LINKED_CONTENT" )>
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
@@ -29,7 +29,7 @@
 									<cfelseif content.getContentType() eq "Entry">
 										<i class="fas fa-blog icon-small" title="Entry"></i>
 									<cfelseif content.getContentType() eq "ContentStore">
-										<i class="far fa-hdd icon-small" title="ContentStore"></i>
+										<i class="fa fa-hdd icon-small" title="ContentStore"></i>
 									</cfif>
 								</td>
 								<td class="#publishedClass#">#content.getTitle()#</td>

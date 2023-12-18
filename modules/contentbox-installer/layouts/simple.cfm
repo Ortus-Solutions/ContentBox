@@ -16,7 +16,7 @@
 
             	<!--logo start-->
                 <div class="brand text-center">
-                    <a class="logo">@
+                    <a class="logo">
                         <img src="#prc.assetroot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
@@ -43,7 +43,7 @@
 
 		<!--- Simple Container --->
 		<section id="simple-container" class="container">
-			#renderView()#
+			#view()#
 		</section>
 
         <cfinclude template="#prc.cbroot#/layouts/inc/HTMLBodyEnd.cfm"/>

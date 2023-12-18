@@ -100,7 +100,7 @@ component extends="baseHandler" {
 	 * @tags      Authentication
 	 * @responses contentbox/apidocs/echo/whoami/responses.json
 	 */
-	function whoami( event, rc, prc ) secure{
+	function whoami( event, rc, prc ) secured{
 		param rc.includes       = "permissions,permissionGroups,role.permissions";
 		param rc.excludes       = "";
 		param rc.ignoreDefaults = false;

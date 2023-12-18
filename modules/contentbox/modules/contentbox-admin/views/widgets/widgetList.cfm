@@ -11,7 +11,7 @@
 					name="widgetFilter"
 					id="widgetFilter"
 					type="text"
-					class="form-control rounded"
+					class="form-control"
 					placeholder="Quick Filter"
 					aria-describedby="sizing-addon3"
 				>
@@ -21,20 +21,20 @@
 					title="Clear Search"
 					onclick="clearFilter()"
 				>
-					<i class="far fa-times-circle fa-lg"></i>
+					<i class="fa fa-times-circle fa-lg"></i>
 				</span>
 			</div>
 		</div>
 
 	</div>
 
-	<div class="tab-wrapper tab-left tab-primary">
+	<div class="tabs tabs-left">
 
 		<!--- Navigation Bar --->
 		<ul class="nav nav-tabs" id="widget-sidebar">
 			<!--- All Tab --->
-			<li class="active">
-				<a href="##widget-store" class="current" data-toggle="tab">
+			<li class="nav-item active">
+				<a href="##widget-store" class="nav-link current flex justify-between" data-toggle="tab">
 					<span class="categoryName">
 						All
 					</span>
@@ -44,8 +44,8 @@
 			<!--- Category Tabs with Counts --->
 			<cfloop query="prc.categories">
 				<cfif len( prc.categories.category )>
-					<li>
-						<a href="##widget-store" data-toggle="tab">
+					<li class="nav-item">
+						<a href="##widget-store" data-toggle="tab" class="nav-link flex justify-between">
 							<span class="categoryName">
 								#prc.categories.category#
 							</span>
@@ -137,7 +137,7 @@
 												<a data-toggle="tooltip" data-container="body" data-placement="left" title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
 													<i class="fa fa-book fa-lg"></i>
 												</a>
-												<cfif prc.oCurrentAuthor.checkPermission( "WIDGET_ADMIN" )>
+												<cfif prc.oCurrentAuthor.hasPermission( "WIDGET_ADMIN" )>
 													<!--- Test --->
 													<a title="Test Widget" data-container="body" class="btn btn-sm btn-info"
 														href="javascript:testWidgetCode( '#widgetName#', '#prc.widgets.widgetType#' )">
@@ -147,7 +147,7 @@
 													<cfif prc.widgets.widgettype eq "custom">
 														<!--- Delete Command --->
 														<a title="Delete Widget" data-container="body"  href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
-															<i class="far fa-trash-alt fa-lg"></i>
+															<i class="fa fa-trash fa-lg"></i>
 														</a>
 													</cfif>
 												</cfif>

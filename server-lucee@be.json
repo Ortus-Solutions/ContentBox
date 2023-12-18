@@ -1,10 +1,11 @@
 {
     "app":{
-        "cfengine":"lucee@5.3.10.6-SNAPSHOT",
+        "cfengine":"lucee@6-SNAPSHOT",
         "serverHomeDirectory":".engines/lucee-be"
     },
     "name":"contentbox-lucee-be",
     "JVM":{
+        "args" : "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -Dlucee-extensions=D062D72F-F8A2-46F0-8CBC91325B2F067B",
         "heapSize":"1024"
     },
     "web":{
@@ -25,5 +26,8 @@
             "disabled":false,
             "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
-    ]
+    ],
+	"cfconfig":{
+        "file":".cfconfig.json"
+    }
 }

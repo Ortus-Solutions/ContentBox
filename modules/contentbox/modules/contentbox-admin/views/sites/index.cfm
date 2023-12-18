@@ -34,29 +34,29 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "siteFilter",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
 						</div>
 
 						<div class="col-md-6 col-xs-8">
-							<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "SITES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 							<div class="text-right">
 								<!---Global --->
 								<div class="btn-group">
-									<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+									<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 										Bulk Actions <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
-										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a href="javascript:importContent()">
-													<i class="fas fa-file-import fa-lg"></i> Import
+													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 										</cfif>
-										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
 											<li>
 												<a
 													href="#event.buildLink( prc.xehExportAll )#.json"
@@ -141,31 +141,32 @@
 
 									<!--- SiteMap Enabled --->
 									<i
-										class="fas fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
+										class="fa fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
 										title="Sitemap"></i>
 
 									<!--- PoweredBy --->
 									<i
-										class="fas fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
+										class="fa fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
 										title="Powered By Header"></i>
 
 									<!--- AdminBar --->
 									<i
-										class="fas fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
+										class="fa fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
 										title="Admin Bar"></i>
 
 									<!--- SSL --->
 									<i
-										class="fas fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
+										class="fa fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
 										title="SSL"></i>
 
 								</td>
 								<td class="text-center">
 									<!--- Actions --->
 									<div class="btn-group">
-										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fas fa-ellipsis-v fa-lg"></i>
-										</a>
+										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Site Actions">
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+											<span class="visually-hidden">Site Actions</span>
+										</button>
 										<ul class="dropdown-menu text-left pull-right">
 
 											<!--- Delete Command --->
@@ -174,9 +175,9 @@
 													<a
 														href="javascript:remove( '#site.getsiteID()#' )"
 														class="confirmIt"
-														data-title="<i class='far fa-trash-alt'></i> Delete Site?"
+														data-title="<i class='fa fa-trash'></i> Delete Site?"
 													>
-														<i class="far fa-trash-alt fa-lg" id="delete_#site.getsiteID()#"></i> Delete
+														<i class="fa fa-trash fa-lg" id="delete_#site.getsiteID()#"></i> Delete
 													</a>
 												</li>
 											</cfif>
@@ -189,7 +190,7 @@
 											</li>
 
 											<!--- Export --->
-											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 												<li>
 													<a
 														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.json"
@@ -203,7 +204,7 @@
 											<!--- Open site --->
 											<li>
 												<a href="#site.getSiteRoot()#" target="_blank">
-													<i class="fas fa-external-link-alt fa-lg"></i>Open site
+													<i class="fa fa-external-link-alt fa-lg"></i>Open site
 												</a>
 											</li>
 
@@ -221,8 +222,8 @@
 </div>
 
 <!--- Sites Import --->
-<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_IMPORT" )>
+	#view(
 		view = "_tags/dialog/import",
 		args = {
 			title       : "Import Sites",

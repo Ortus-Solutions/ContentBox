@@ -22,66 +22,66 @@
                 <div class="panel-body">
 
                     <!--- Vertical Nav --->
-                    <div class="tab-wrapper tab-left tab-primary">
+                    <div class="tabs tabs-left">
                         <!--- Tabs --->
                         <ul class="nav nav-tabs">
-                            <li class="active">
-								<a href="##site_options" data-toggle="tab">
-									<i class="fas fa-globe fa-lg"></i> All Sites
+                            <li class="nav-item active">
+								<a href="##site_options" data-toggle="tab" class="nav-link">
+									<i class="fa fa-globe fa-lg"></i> All Sites
 								</a>
 							</li>
-                            <li>
-								<a href="##dashboard_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##dashboard_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-desktop fa-lg"></i> Administrator
 								</a>
                             </li>
-                            <li>
-								<a href="##security_options" data-toggle="tab">
-									<i class="fas fa-key fa-lg"></i> Security
+                            <li class="nav-item">
+								<a href="##security_options" data-toggle="tab" class="nav-link">
+									<i class="fa fa-key fa-lg"></i> Security
 								</a>
                             </li>
-                            <li>
-								<a href="##login_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##login_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-sign-in fa-lg"></i> Login
 								</a>
                             </li>
-                            <li>
-								<a href="##content_options" data-toggle="tab">
-									<i class="fas fa-boxes fa-lg"></i> Content
+                            <li class="nav-item">
+								<a href="##content_options" data-toggle="tab" class="nav-link">
+									<i class="fa fa-archive fa-lg"></i> Content
 								</a>
                             </li>
-                            <li>
-								<a href="##editor_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##editor_options" data-toggle="tab" class="nav-link">
 									<i class="fas fa-pen fa-lg"></i> Editor Options
 								</a>
                             </li>
-                            <li>
-								<a href="##mediamanager" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##mediamanager" data-toggle="tab" class="nav-link">
 									<i class="fas fa-photo-video fa-lg"></i> Media Manager
 								</a>
                             </li>
-                            <li>
-								<a href="##gravatars" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##gravatars" data-toggle="tab" class="nav-link">
 									<i class="fas fa-portrait fa-lg"></i> Gravatars
 								</a>
                             </li>
-                            <li>
-								<a href="##notifications" data-toggle="tab">
-									<i class="far fa-bell fa-lg"></i> Notifications
+                            <li class="nav-item">
+								<a href="##notifications" data-toggle="tab" class="nav-link">
+									<i class="fa fa-bell fa-lg"></i> Notifications
 								</a>
                             </li>
-                            <li>
-								<a href="##email_server" data-toggle="tab">
-									<i class="far fa-envelope-open fa-lg"></i> Mail Server
+                            <li class="nav-item">
+								<a href="##email_server" data-toggle="tab" class="nav-link">
+									<i class="fa fa-envelope-open fa-lg"></i> Mail Server
 								</a>
                             </li>
-                            <li>
-								<a href="##search_options" data-toggle="tab">
-									<i class="fab fa-searchengin fa-lg"></i> Search Options
+                            <li class="nav-item">
+								<a href="##search_options" data-toggle="tab" class="nav-link">
+									<i class="fa fa-search fa-lg"></i> Search Options
 								</a>
                             </li>
-                            <li>
-								<a href="##rss_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##rss_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-rss fa-lg"></i> RSS
 								</a>
                             </li>
@@ -96,7 +96,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane active" id="site_options">
-                                #renderView( view = "settings/sections/siteOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/siteOptions", prePostExempt = true )#
 							</div>
 
                             <!--- ********************************************************************* --->
@@ -104,7 +104,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="dashboard_options">
-                                #renderView( view = "settings/sections/adminOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/adminOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -112,7 +112,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="security_options">
-                                #renderView( view = "settings/sections/securityOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/securityOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -120,7 +120,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="login_options">
-                                #renderView( view = "settings/sections/loginOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/loginOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -128,7 +128,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="content_options">
-                                #renderView( view = "settings/sections/contentOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/contentOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -136,7 +136,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="editor_options">
-                                #renderView( view = "settings/sections/editorOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/editorOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -144,7 +144,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="mediamanager">
-                                #renderView( view = "settings/sections/mediaManager", prePostExempt = true )#
+                                #view( view = "settings/sections/mediaManager", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -152,7 +152,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="gravatars">
-                                #renderView( view = "settings/sections/gravatars", prePostExempt = true )#
+                                #view( view = "settings/sections/gravatars", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -160,7 +160,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="notifications">
-                                #renderView( view = "settings/sections/notifications", prePostExempt = true )#
+                                #view( view = "settings/sections/notifications", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -168,7 +168,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="email_server">
-                                #renderView( view = "settings/sections/mailServer", prePostExempt = true )#
+                                #view( view = "settings/sections/mailServer", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -176,7 +176,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="search_options">
-                                #renderView( view = "settings/sections/searchOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/searchOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -184,7 +184,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="rss_options">
-								#renderView( view = "settings/sections/rss", prePostExempt = true )#
+								#view( view = "settings/sections/rss", prePostExempt = true )#
                             </div>
 
                             <!--- cbadmin Event --->

@@ -48,7 +48,7 @@ component singleton {
 	}
 
 	/**
-	 * Alias to getAuthorSession() created to satisfy JWT Service
+	 * Alias to getAuthorSession() created to satisfy JWT Services
 	 */
 	function getUser(){
 		return this.getAuthorSession();
@@ -96,7 +96,8 @@ component singleton {
 	 * Verifies if a user is logged in or not. Required for JWT Services
 	 */
 	boolean function isLoggedIn(){
-		return this.getAuthorSession().isLoggedIn();
+		var oAuthor = this.getAuthorSession();
+		return oAuthor.isLoaded() && oAuthor.isLoggedIn();
 	}
 
 	/**
@@ -275,14 +276,14 @@ component singleton {
 		}
 
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/#emailTemplate#",
 				layout = "/contentbox/email_templates/layouts/email"
 			)
 		);
 
 		// send it out
-		return mailService.send( mail );
+		return mailService.send( mail ).getResults();
 	}
 
 	/**
@@ -379,9 +380,9 @@ component singleton {
 			useTLS     = settings.cb_site_mail_tls,
 			useSSL     = settings.cb_site_mail_ssl
 		);
-		// ,body=renderer.$get().renderExternalView(view="/contentbox/email_templates/password_reminder" )
+		// ,body=renderer.$get().externalView(view="/contentbox/email_templates/password_reminder" )
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/password_reset",
 				layout = "/contentbox/email_templates/layouts/email"
 			)

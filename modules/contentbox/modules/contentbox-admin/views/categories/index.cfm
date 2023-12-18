@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h1 class="h1">
-				<i class="fas fa-tags"></i> Content Categories (<span x-text="pagination.totalRecords"></span>)
+				<i class="fa fa-tags"></i> Content Categories (<span x-text="pagination.totalRecords"></span>)
 			</h1>
 		</div>
 	</div>
@@ -39,7 +39,7 @@
 							<div class="form-group m0 mr5">
 								<input
 									name="categorySearch"
-									class="form-control rounded quicksearch"
+									class="form-control quicksearch"
 									placeholder="Quick Search"
 									x-model="searchQuery"
 									@input.debounce="searchCategories()"
@@ -65,36 +65,36 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-										<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+										<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 											<li>
 												<a
 													@click="deleteSelected()"
 													class="cursor-pointer"
 												>
-													<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+													<i class="fa fa-trash fa-lg"></i> Delete Selected
 												</a>
 											</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a
 													@click="importContent()"
 													class="cursor-pointer"
 												>
-													<i class="fas fa-file-import fa-lg"></i> Import
+													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 											</cfif>
 
 											<!--- Export All + Selected --->
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -114,7 +114,7 @@
 								</cfif>
 
 								<!--- Create Category --->
-								<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 									<button
 										type="button"
 										@click.prevent="editCategory()"
@@ -132,7 +132,7 @@
 				<div class="panel-body">
 					<!--- Loader --->
 					<div class="text-center m20" x-show="isLoading">
-						<i class="fas fa-spinner fa-spin fa-lg"></i><br/>
+						<i class="fa fa-spinner fa-spin fa-lg"></i><br/>
 					</div>
 
 					<!--- Table --->
@@ -191,11 +191,11 @@
 									<!--- Public or Private --->
 									<td class="text-center">
 										<i
-											class="text-green far fa-check-circle"
+											class="text-green fa fa-check-circle"
 											title="Public"
 											x-show="category.isPublic"></i>
 										<i
-											class="fas fa-lock"
+											class="fa fa-lock"
 											title="Private"
 											x-show="!category.isPublic"></i>
 									</td>
@@ -218,15 +218,17 @@
 									<!--- Actions --->
 									<td class="text-center">
 										<div class="btn-group">
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 
 											<div class="btn-group btn-group-sm">
-												<a
-													class="btn btn-default btn-more dropdown-toggle"
+												<button
+													class="btn btn-more btn-icon dropdown-toggle"
 													data-toggle="dropdown"
-													href="##">
-													<i class="fas fa-ellipsis-v fa-lg"></i>
-												</a>
+													title="Category Actions"
+												>
+													<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+													<span class="visually-hidden">Category Actions</span>
+												</button>
 												<ul class="dropdown-menu text-left pull-right">
 													<!--- Edit --->
 													<li>
@@ -240,7 +242,7 @@
 													</li>
 
 													<!--- Export --->
-													<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+													<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 														<li>
 															<a
 																:href="`#event.buildLink( prc.xehExport )#/categoryID/${category.categoryID}.json`"
@@ -258,7 +260,7 @@
 															data-title="Delete Category?"
 															data-message="Delete the category and all of its associations"
 														>
-															<i class="far fa-trash-alt fa-lg"></i> Delete
+															<i class="fa fa-trash fa-lg"></i> Delete
 														</a>
 													</li>
 												</ul>
@@ -279,7 +281,7 @@
 	<!--- **************************************************************************** --->
 	<!--- CATEGORY EDITOR MODAL UI --->
 	<!--- **************************************************************************** --->
-	<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 		<div class="alpine-overlay" x-show="isEditorOpen" x-cloak></div>
 		<div
 			class="alpine-modal"
@@ -396,8 +398,8 @@
 </div>
 
 <!---only show if user has rights to categories admin and tool import--->
-<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+	#view(
 		view 	= "_tags/dialog/import",
 		args 	= {
 			title 		= "Import Categories",

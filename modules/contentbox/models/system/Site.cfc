@@ -87,6 +87,14 @@ component
 		length ="255";
 
 	property
+		name   ="domainAliases"
+		column ="domainAliases"
+		ormtype="text"
+		notnull="false"
+		length ="8000"
+		default="";
+
+	property
 		name   ="tagline"
 		column ="tagline"
 		ormtype="string"
@@ -180,6 +188,14 @@ component
 		ormtype="boolean"
 		notnull="true"
 		default="true";
+
+	property
+		name   ="mediaDisk"
+		column ="mediaDisk"
+		ormtype="string"
+		notnull="false"
+		default="contentbox"
+		length ="50";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -312,6 +328,7 @@ component
 			"description",
 			"domain",
 			"domainregex",
+			"domainAliases",
 			"homepage",
 			"isActive",
 			"isBlogEnabled",
@@ -369,6 +386,7 @@ component
 		"keywords"         : { required : false, size : "0..255" },
 		"domain"           : { required : true, size : "1..255" },
 		"domainRegex"      : { required : true, size : "1..255" },
+		"domainAliases"    : { required : false, type : "array" },
 		"tagline"          : { required : false, size : "0..255" },
 		"homepage"         : { required : false, size : "0..255" },
 		"isBlogEnabled"    : { required : true, type : "boolean" },
@@ -388,11 +406,12 @@ component
 	 * Constructor
 	 */
 	function init(){
-		variables.settings     = [];
-		variables.categories   = [];
-		variables.entries      = [];
-		variables.pages        = [];
-		variables.contentStore = [];
+		variables.settings      = [];
+		variables.categories    = [];
+		variables.entries       = [];
+		variables.pages         = [];
+		variables.contentStore  = [];
+		variables.domainAliases = "[]";
 
 		super.init();
 
@@ -486,12 +505,27 @@ component
 	 */
 	String function getSiteRoot(){
 		var serverPort = getServerPort();
+		var domainName = this.getDomain();
+
+		// Return the appropriate site alias Uri from the domain aliases
+		// If the domain alias matches the incoming server host name
+		if (
+			getDomainAliases().some( ( alias ) => alias.keyExists( "domainRegex" ) && reFindNoCase( alias.domainRegex, this.getServerName() ) )
+		) {
+			domainName = this.getServerName();
+		}
+
 		// Return the appropriate site Uri
-		return "http"
-		& ( this.getIsSSL() ? "s" : "" ) // SSL or not
-		& "://"
-		& this.getDomain() // Site Domain
-		& ( listFind( "80,443", serverPort ) ? "" : ":#serverPort#" ); // The right port
+		return arrayToList(
+			[
+				"http",
+				( this.getIsSSL() ? "s" : "" ),
+				"://",
+				domainName,
+				( listFind( "80,443", serverPort ) ? "" : ":#serverPort#" )
+			],
+			""
+		);
 	}
 
 	/**
@@ -505,6 +539,19 @@ component
 			return headers[ "x-forwarded-port" ];
 		}
 		return cgi.server_port;
+	}
+
+	/**
+	 * Get the server host according to lookup order
+	 * 1. x-forwarded-host header
+	 * 2. cgi.server_host
+	 */
+	private function getServerName(){
+		var headers = getHTTPRequestData( false ).headers;
+		if ( structKeyExists( headers, "x-forwarded-host" ) && len( headers[ "x-forwarded-host" ] ) ) {
+			return headers[ "x-forwarded-host" ];
+		}
+		return cgi.server_name;
 	}
 
 	/**
@@ -565,6 +612,41 @@ component
 		return variables.contentStore.filter( function( thisContent ){
 			return !arguments.thisContent.hasParent();
 		} );
+	}
+
+	/**
+	 * Get the domain aliases
+	 *
+	 * @return The domain aliases as an array
+	 */
+	array function getDomainAliases(){
+		return (
+			!isNull( variables.domainAliases ) AND isJSON( variables.domainAliases ) ? deserializeJSON(
+				variables.domainAliases
+			) : []
+		);
+	}
+
+	/**
+	 * Get the domain aliases as a string
+	 *
+	 * @return The domain aliases as a json string
+	 */
+	string function getDomainAliasesAsJSON(){
+		return isNull( variables.domainAliases ) ? "[]" : variables.domainAliases;
+	}
+
+	/**
+	 * Set the domain aliases. If the value is an array, it will be serialized to JSON
+	 * as domain aliases are stored as a JSON string.
+	 *
+	 * @aliases The domain aliases as an array or a JSON array string
+	 */
+	Site function setDomainAliases( any aliases = [] ){
+		variables.domainAliases = isSimpleValue( arguments.aliases ) ? arguments.aliases : serializeJSON(
+			arguments.aliases
+		);
+		return this;
 	}
 
 }

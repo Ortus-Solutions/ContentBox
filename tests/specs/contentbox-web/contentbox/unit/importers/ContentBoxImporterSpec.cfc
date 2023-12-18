@@ -11,11 +11,6 @@ component extends="tests.resources.BaseTest" {
 
 		setup();
 		contentboxImporter = getInstance( "ContentBoxImporter@contentbox" );
-
-		// Zip up the test package
-
-		// Path to the test package
-		testPackage = "";
 	}
 
 	function run( testResults, testBox ){
@@ -24,17 +19,24 @@ component extends="tests.resources.BaseTest" {
 				expect( contentboxImporter ).toBeComponent();
 			} );
 
-			story( "I want to prepare a .cbox packages for import via the setup() method", function(){
-				given( "a valid .cbox package", function(){
-					then( "it will prepare the import correctly", function(){
-						// fail( "not there yet" );
-					} );
-				} );
+			it( "can import settings", function(){
+				withRollback( () => {
+					var importData = deserializeJSON(
+						fileRead( expandPath( "/tests/resources/exports/setting.json" ) )
+					);
+					var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "" );
 
-				given( "an invalid .cbox package", function(){
-					then( "it will throw a '' exception", function(){
-					} );
-				} );
+					var output = getInstance( "settingService@contentbox" ).importFromData(
+						importData: importData,
+						override  : false,
+						importLog : importLog
+					);
+
+					expect( output ).notToBeEmpty();
+					expect( output ).toInclude(
+						"No settings imported as none where found or able to be overriden from the import file."
+					);
+				} )
 			} );
 		} );
 	}

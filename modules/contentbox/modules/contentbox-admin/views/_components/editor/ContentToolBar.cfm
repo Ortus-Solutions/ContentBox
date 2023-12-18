@@ -1,11 +1,17 @@
 <cfoutput>
-<div id="contentToolBar">
+<div
+	id="contentToolBar"
+	class="mb10"
+	x-data="{
+
+	}"
+>
 
 	<!--- editor selector --->
-	<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_EDITOR_SELECTOR" )>
 		<div class="btn-group btn-group-sm">
-			<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-				<i class="fa fa-keyboard-o"></i>
+			<a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+				<i class="fa fa-keyboard"></i>
 				Editor
 				<span class="caret"></span>
 			</a>
@@ -26,9 +32,8 @@
 		name	= "markup",
 		value	= prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup
 	)#
-
 	<div class="btn-group btn-group-sm">
-		<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+		<a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
 			<i class="fa fa-code"></i>
 			Markup : <span id="markupLabel">#prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup#</span>
 			<span class="caret"></span>
@@ -44,8 +49,8 @@
 
 	<!--- Auto Save Operations --->
 	<div class="btn-group btn-group-sm" id="contentAutoSave">
-		<a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
-			<i class="far fa-save"></i>
+		<a class="btn btn-secondary btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+			<i class="fa fa-save"></i>
 			Auto Saved
 			<span class="caret"></span>
 		</a>
@@ -54,11 +59,27 @@
 		</ul>
 	</div>
 
+	<!--- Focus Mode --->
+	<button
+		class="btn btn-secondary btn-sm"
+		@click="toggleFocusMode()"
+		type="button"
+	>
+		<i class="fas fa-toggle-on"  x-show="isFocusMode"></i>
+		<i class="fas fa-toggle-off" x-show="!isFocusMode"></i>
+		Focus Mode
+	</button>
+
 	<!--- Preview Panel --->
-	<div class="pull-right">
-		<a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-			<i class="far fa-eye fa-lg"></i>
-		</a>
-	</div>
+		<button
+			onclick="previewContent()"
+			class="btn btn-secondary btn-sm"
+			title="Quick Preview (ctrl+p)"
+			data-keybinding="ctrl+p"
+			type="button"
+		>
+			#cbAdminComponent( "ui/Icon", { name : "Eye", size : "sm" } )#
+			Preview
+		</button>
 </div>
 </cfoutput>

@@ -1,0 +1,372 @@
+.btn {
+    border: none;
+    box-shadow: none;
+    font-size: $cb-button-font-size;
+    @include roundBorders( $cb-button-size-border-radius );
+    padding: $cb-button-space-padding-y $cb-button-space-padding-x;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+    transition: border .25s linear, color .25s linear, background-color .25s linear, box-shadow 0.2s ease-in-out 0s;
+    
+    &:hover, &:focus, &:active, &.active {
+        outline: none;
+        box-shadow: $cb-shadow-sm;
+    }
+    &.disabled, &[disabled], fieldset[disabled] .btn {
+        opacity: 0.7;
+        filter: alpha( opacity=70 );
+    }
+}
+.btn-filled-primary {
+    @include buttonFilled( 
+        $cb-button-color-filled-bg-primary, 
+        $cb-button-color-filled-text-primary,
+        $cb-color-fill-primary
+    );
+}
+.btn-tinted-primary {
+    @include buttonFilled( 
+        $cb-button-color-tinted-bg-primary, 
+        $cb-button-color-tinted-text-primary,
+        $cb-color-fill-primary
+    );
+}
+.btn-outlined-primary {
+    background-color: transparent;
+    border : 1px solid $cb-button-color-outlined-border-primary;
+    color: $cb-button-color-outlined-text-primary;
+
+    &:hover, &:focus, &:active {
+        background-color: darken( desaturate( $cb-button-color-filled-bg-primary, 0.5 ), 10 );
+        border-color: $cb-button-color-filled-bg-primary;
+        color: $cb-button-color-filled-text-primary;
+    }
+}
+.btn-link {
+    color: $cb-color-link;
+    
+    &:hover, &:focus, &:active, &.active {
+        box-shadow: none;
+    }
+}
+/* Function Button Classes*/
+.btn-default, a.btn-default {
+    @extend .btn-outlined-primary;
+}
+.btn-primary, a.btn-primary {
+    @extend .btn-filled-primary;
+    box-shadow: $cb-shadow-xs;
+}
+.btn-secondary, a.btn-secondary {
+    @extend .btn-tinted-primary;
+}
+
+.btn-icon, a.btn-icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    padding: 0px;
+}
+
+// override in toggle/switch
+.btn-group-sm > .btn.btn-icon {
+    padding: 0px;
+}
+// menu manager specific style
+.btn-group > .btn.provider > span {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.btn-info {
+    color: #ffffff;
+    background-color: $infoColor;
+}
+
+.btn-info, a.btn-info:link,
+a.btn-info:visited {
+    color: #ffffff;
+    background-color: $infoColor;
+}
+
+a.btn-info:hover,
+a.btn-info:active {
+    color: #ffffff;
+    background-color: $infoColorHover;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.open .dropdown-toggle.btn-info {
+    color: #ffffff;
+    background-color: $infoColorHover;
+    border-color: $infoColorHover;
+}
+
+.btn-info:active,
+.btn-info.active,
+.open .dropdown-toggle.btn-info {
+    background: $infoColor;
+    border-color: $infoColor;
+}
+
+.btn-info.disabled,
+.btn-info[disabled],
+fieldset[disabled] .btn-info,
+.btn-info.disabled:hover,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info:hover,
+.btn-info.disabled:focus,
+.btn-info[disabled]:focus,
+fieldset[disabled] .btn-info:focus,
+.btn-info.disabled:active,
+.btn-info[disabled]:active,
+fieldset[disabled] .btn-info:active,
+.btn-info.disabled.active,
+.btn-info[disabled].active,
+fieldset[disabled] .btn-info.active {
+    background-color: $infoColor;
+    border-color: $infoColor;
+}
+
+.btn-danger {
+    color: #ffffff;
+    background-color: $dangerColor;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.open .dropdown-toggle.btn-danger {
+    color: #ffffff;
+    background-color: $dangerColorHover;
+    border-color: $dangerColorHover;
+}
+
+.btn-danger:active,
+.btn-danger.active,
+.open .dropdown-toggle.btn-danger {
+    background: $dangerColorHover;
+    border-color: $dangerColorHover;
+}
+
+.btn-danger.disabled,
+.btn-danger[disabled],
+fieldset[disabled] .btn-danger,
+.btn-danger.disabled:hover,
+.btn-danger[disabled]:hover,
+fieldset[disabled] .btn-danger:hover,
+.btn-danger.disabled:focus,
+.btn-danger[disabled]:focus,
+fieldset[disabled] .btn-danger:focus,
+.btn-danger.disabled:active,
+.btn-danger[disabled]:active,
+fieldset[disabled] .btn-danger:active,
+.btn-danger.disabled.active,
+.btn-danger[disabled].active,
+fieldset[disabled] .btn-danger.active {
+    background-color: $dangerColor;
+    border-color: $dangerColor;
+}
+
+.btn-success {
+    color: #ffffff;
+    background-color: $successColor;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.open .dropdown-toggle.btn-success {
+    color: #ffffff;
+    background-color: $successColorHover;
+    border-color: $successColorHover;
+}
+
+.btn-success:active,
+.btn-success.active,
+.open .dropdown-toggle.btn-success {
+    background: $successColor;
+    border-color: $successColor;
+}
+
+.btn-success.disabled,
+.btn-success[disabled],
+fieldset[disabled] .btn-success,
+.btn-success.disabled:hover,
+.btn-success[disabled]:hover,
+fieldset[disabled] .btn-success:hover,
+.btn-success.disabled:focus,
+.btn-success[disabled]:focus,
+fieldset[disabled] .btn-success:focus,
+.btn-success.disabled:active,
+.btn-success[disabled]:active,
+fieldset[disabled] .btn-success:active,
+.btn-success.disabled.active,
+.btn-success[disabled].active,
+ fieldset[disabled] .btn-success.active {
+    background-color: $successColor;
+    border-color: $successColor;
+}
+
+.btn-warning {
+    color: #ffffff;
+    background-color: $warningColor;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active,
+.open .dropdown-toggle.btn-warning {
+    color: #ffffff;
+    background-color: $warningColor;
+    border-color: $warningColor;
+}
+
+.btn-warning:active,
+.btn-warning.active,
+.open .dropdown-toggle.btn-warning {
+    background: $warningColorHover;
+    border-color: $warningColorHover;
+}
+
+.btn-warning.disabled,
+.btn-warning[disabled],
+fieldset[disabled] .btn-warning,
+.btn-warning.disabled:hover,
+.btn-warning[disabled]:hover,
+fieldset[disabled] .btn-warning:hover,
+.btn-warning.disabled:focus,
+.btn-warning[disabled]:focus,
+fieldset[disabled] .btn-warning:focus,
+.btn-warning.disabled:active,
+.btn-warning[disabled]:active,
+fieldset[disabled] .btn-warning:active,
+.btn-warning.disabled.active,
+.btn-warning[disabled].active,
+fieldset[disabled] .btn-warning.active {
+    background-color: $warningColor;
+    border-color: $warningColor;
+}
+
+/* square buttons */
+ .btn-square {
+    @include roundBorders(0);
+}
+/* Transparent buttons */
+ .btn-default.btn-trans {
+    color: $defaultColor;
+    background-color: transparent;
+    border: solid thin $defaultColor;
+}
+.btn-default.btn-trans:hover, .btn-default.btn-trans:active, .btn-default.btn-trans:focus {
+    color: #fff;
+    background-color: $defaultColor;
+    border: solid thin $defaultColor;
+}
+.btn-primary.btn-trans {
+    color: $primaryColor;
+    background-color: transparent;
+    border: solid thin $primaryColor;
+}
+.btn-primary.btn-trans:hover, .btn-primary.btn-trans:active, .btn-primary.btn-trans:focus {
+    color: #fff;
+    background-color: $primaryColor;
+    border: solid thin $primaryColor;
+}
+.btn-success.btn-trans {
+    color:$successColor;
+    background-color: transparent;
+    border: solid thin $successColor;
+}
+.btn-success.btn-trans:hover, .btn-success.btn-trans:active, .btn-success.btn-trans:focus {
+    color: #fff;
+    background-color:$successColor;
+    border: solid thin $successColor;
+}
+.btn-info.btn-trans {
+    color: $infoColor;
+    background-color: transparent;
+    border: solid thin $infoColor;
+}
+.btn-info.btn-trans:hover, .btn-info.btn-trans:active, .btn-info.btn-trans:focus {
+    color: #fff;
+    background-color: $infoColor;
+    border: solid thin $infoColor;
+}
+.btn-warning.btn-trans {
+    color: $warningColor;
+    background-color: transparent;
+    border: solid thin $warningColor;
+}
+.btn-warning.btn-trans:hover, .btn-warning.btn-trans:active, .btn-warning.btn-trans:focus {
+    color: #fff;
+    background-color: $warningColor;
+    border: solid thin $warningColor;
+}
+.btn-danger.btn-trans {
+    color:$dangerColor;
+    background-color: transparent;
+    border: solid thin $dangerColor;
+}
+.btn-danger.btn-trans:hover, .btn-danger.btn-trans:active, .btn-danger.btn-trans:focus {
+    color: #fff;
+    background-color: $dangerColor;
+    border: solid thin $dangerColor;
+}
+/* Button Sizes */
+ .btn-lg {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+}
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+   @include roundBorders($cb-radius-xs);
+}
+.btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+   @include roundBorders($cb-radius-xs);
+}
+
+
+/* ==========================================================================
+   Button Menu
+   ========================================================================== */
+ .dropdown-menu {
+    background-color:#FFF;
+    @include roundBorders(3px);
+    -webkit-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+    padding: $cb-spacer-sm;
+}
+.dropdown-menu>li {
+    &.dropdown-header {
+		color: $primaryColor;
+		padding-left: 10px;
+	}
+    > a {
+        @include roundBorders(0);
+		padding: ( $cb-spacer-sm / 2 ) $cb-spacer-sm;
+		
+        &:hover, &:focus, &:active {
+            background-color: $cb-dropdown-item-color-hover;
+        }
+        i {
+			margin-right: $cb-spacer-sm;
+		}
+	}
+}

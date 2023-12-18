@@ -38,9 +38,17 @@ component {
 			// cbSecurity settings
 			"cbSecurity"   : {
 				// Load the security rules for ContentBox from our db model
-				"rules"            : "model",
-				"rulesModel"       : "securityRuleService@contentbox",
-				"rulesModelMethod" : "getSecurityRules"
+				"firewall" : {
+					"rules" : {
+						"provider" : {
+							"source"     : "model",
+							"properties" : {
+								"model"  : "securityRuleService@contentbox",
+								"method" : "getSecurityRules"
+							}
+						}
+					}
+				}
 			},
 			// Array of mixins to inject into all content objects
 			"contentHelpers" : [],
@@ -120,7 +128,7 @@ component {
 		];
 
 		// Manual Mappings
-		binder.map( "customFieldService@contentbox" ).toDSL( "entityService:cbCustomField" );
+		// binder.map( "customFieldService@contentbox" ).toDSL( "entityService:cbCustomField" );
 		binder.map( "SystemUtil@contentbox" ).to( "coldbox.system.core.util.Util" );
 	}
 
@@ -143,6 +151,27 @@ component {
 		settingService.loadConfigOverrides();
 		// Load Environment Overrides Now, they take precedence
 		settingService.loadEnvironmentOverrides();
+
+		var diskService = wirebox.getInstance( "DiskService@cbfs" );
+
+		if ( !diskService.has( "contentbox" ) ) {
+			diskService.register(
+				"contentbox",
+				"Local",
+				{
+					path    : expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
+					diskUrl : function(){
+						return variables.wirebox
+							.getInstance( "CBHelper@contentBox" )
+							.site()
+							.getSiteRoot()
+						&
+						"/modules_app/contentbox-custom/_content"
+					}
+				}
+			);
+		}
+
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@contentbox" ).startup();
 	}

@@ -1,19 +1,35 @@
 <cfoutput>
-	<a class="dd-handle dd3-handle btn" title="Drag to reorder">
+	<cfset menuItemID = structKeyExists( args, "menuItemID" ) ? args.menuItemID : args.menuItem.getId()>
+
+	<div role="button" class="dd-handle dd3-handle btn" title="Drag to reorder">
 		<i class="fa fa-crosshairs fa-lg"></i>
-	</a>
-
-	<cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
-
-	<a class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#">
-		<i class="#args.provider.getIconClass()#"></i>
-	</a>
-
-	<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
-		#args.menuItem.getLabel()#
 	</div>
 
-	<div class="dd3-extracontent" style="display:none;">
+	<div class="dd3-actions">
+		<cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
+
+		<button type="button" class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#">
+			<i class="#args.provider.getIconClass()#"></i>
+		</button>
+
+		<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
+			#args.menuItem.getLabel()#
+		</div>
+
+		<button type="button" class="dd3-expand btn" title="Edit Details" @click="$store.menusStore.toggleEditor( '#menuItemID#' )">
+			<i class="fas fa-pen fa-lg"></i>
+		</button>
+
+		<button class="dd3-delete btn confirmIt"
+			data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."
+			data-title="Delete Menu Item"
+			title="Delete Menu Item + Descendants"
+			href="javascript:removeMenuItem( 'key_#args.menuItem.getMenuItemID()#' )">
+			<i class="fa fa-trash fa-lg"></i>
+		</button>
+	</div>
+
+	<div class="dd3-extracontent" x-show="$store.menusStore.editingMenus.indexOf( '#menuItemID#' ) > -1">
 		<!--- id --->
 		<cfset label = "label-#getTickCount()#">
 		#html.hiddenField( name="menuItemID", bind=args.menuItem, id="" )#
@@ -25,7 +41,7 @@
 			<div class="row">
 				<span class="col-md-6">
 					#html.textfield(
-						label="Item Content:",
+						label="Item Content:<span class='text-danger' aria-label='required'>*</span>",
 						name="label",
 						id="",
 						bind=args.menuItem,
@@ -55,17 +71,20 @@
 			</div>
 		</fieldset>
 
-		<!---End default fields--->
-		<cfif len( args.provider.getAdminTemplate( menuItem=args.menuItem ) )>
+		<!--- Render Provider Attributes --->
+		<cfset adminTemplate = args.provider.getAdminTemplate( menuItem=args.menuItem )>
+		<cfif len( adminTemplate )>
 			<fieldset>
 				<legend>#args.provider.getName()# Attributes</legend>
 				<p>These attributes can be used to customize the item's content</p>
+
 				<!---do provider thing--->
-				#args.provider.getAdminTemplate( menuItem=args.menuItem )#
+				#adminTemplate#
 
 				<div class="row">
+
+					<!--- data attribute --->
 					<span class="col-md-6">
-						<!--- data attribute --->
 						#html.textfield(
 							label="Data Attributes:",
 							name="data",
@@ -79,8 +98,9 @@
 							groupWrapper="div class=form-group"
 						)#
 					</span>
+
+					<!--- title --->
 					<span class="col-md-6">
-						<!--- title --->
 						#html.textfield(
 							label="Title:",
 							name="title",
@@ -100,15 +120,4 @@
 		</cfif>
 		<!---end provider thing--->
 	</div>
-
-	<a class="dd3-expand btn" title="Edit Details">
-		<i class="fas fa-pen fa-lg"></i>
-	</a>
-	<a 	class="dd3-delete btn btn-danger confirmIt"
-		data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."
-		data-title="Delete Menu Item"
-		title="Delete Menu Item + Descendants"
-		href="javascript:removeMenuItem( 'key_#args.menuItem.getMenuItemID()#' )">
-		<i class="far fa-trash-alt fa-lg"></i>
-	</a>
 </cfoutput>

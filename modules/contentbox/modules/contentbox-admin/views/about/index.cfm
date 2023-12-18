@@ -14,12 +14,12 @@
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
 				<h3 class="panel-title">
-					<i class="fab fa-medrt fa-lg"></i> #$r( "dashboard.about.help.title@admin" )#
+					<i class="fa fas fa-life-ring fa-lg"></i> #$r( "dashboard.about.help.title@admin" )#
 				</h3>
 		    </div>
 			<div class="panel-body">
 				<!--- Need Help --->
-				#renderView( view="_tags/needhelp", prePostExempt = true )#
+				#view( view="_tags/needhelp", prePostExempt = true )#
 
 				<h2>#$r( "dashboard.about.help.links@admin" )#</h2>
 				<ul>

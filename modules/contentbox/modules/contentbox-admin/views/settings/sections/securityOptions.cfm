@@ -1,7 +1,7 @@
 <cfoutput>
 #html.startForm( name="securitySettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
-	<legend><i class="fas fa-key fa-lg"></i> Password Options</legend>
+	<legend><i class="fa fa-key fa-lg"></i> Password Options</legend>
 
 	<!--- Min Password Length --->
 	<div class="form-group">
@@ -18,8 +18,8 @@
 						class="form-control slider"
 						id="cb_security_min_password_length"
 						name="cb_security_min_password_length"
-						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
 						data-provide="slider"
+						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
 						data-slider-min="8"
 						data-slider-max="50"
 						data-slider-step="1"
@@ -160,7 +160,7 @@
 </fieldset>
 
 <fieldset>
-	<legend><i class="fas fa-filter"></i> <strong>Rate Limiter</strong></legend>
+	<legend><i class="fa fa-filter"></i> <strong>Rate Limiter</strong></legend>
 	<!--- Rate Limiter --->
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter", content="Enable Rate Limiter:" )#
@@ -289,7 +289,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><i class="fas fa-key fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
+    <legend><i class="fa fa-key fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
 	<!--- Admin SSL --->
     <div class="form-group">
         #html.label(

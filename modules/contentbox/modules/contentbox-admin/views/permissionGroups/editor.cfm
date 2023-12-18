@@ -14,13 +14,13 @@
 							href="#event.buildLink( prc.xehPermissionGroups )#"
 							title="Back to listing"
 						>
-							<i class="fas fa-chevron-left"></i> Cancel
+							<i class="fa fa-chevron-left"></i> Cancel
 						</a>
 					</div>
 
 					<!--- Panel Title --->
 					<div class="size16 p10">
-						<i class="fas fa-users"></i>
+						<i class="fa fa-users"></i>
 						<cfif prc.oGroup.isLoaded()>
 							Update
 						<cfelse>
@@ -94,7 +94,7 @@
 									title="Clear Search"
 									onclick="clearFilter()"
 								>
-									<i class="far fa-times-circle fa-lg"></i>
+									<i class="fa fa-times-circle fa-lg"></i>
 								</span>
 							</div>
 						</div>
@@ -113,7 +113,7 @@
 									#html.checkbox(
 										name    = "permissions_#thisPerm.getPermissionId()#_toggle",
 										data	= { toggle: 'toggle', match: 'permissions_#thisPerm.getPermissionId()#' },
-										checked	= prc.oGroup.hasPermission( thisPerm )
+										checked	= prc.oGroup.hasPermissions( thisPerm )
 									)#
 									#html.hiddenField(
 										id 		= "permissions_" & thisPerm.getPermissionId()

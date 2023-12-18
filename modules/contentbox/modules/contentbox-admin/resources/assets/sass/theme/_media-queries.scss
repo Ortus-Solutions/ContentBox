@@ -1,0 +1,33 @@
+@media only screen and (max-width: 767px) and (min-width: 480px) {
+    /* Main Content */
+    #main-content .h1 {
+        font-size: 35px;
+    }
+}
+@media only screen and (max-width: 660px) {
+    #header {
+        height:160px;
+    }
+    #header .user-nav ul {
+        padding-left: 0;
+    }
+    #header .toggle-navigation.toggle-left {
+        float:left;
+    }
+    .sidebar-toggle {
+        margin-left:0;
+        width:100%;
+    }
+    .user-nav ul li {
+        font-size:12px;
+    }
+}
+@media only screen and (max-width: 479px) {
+    /* Main Content */
+    #main-content .h1 {
+        font-size: 22px;
+    }
+    #header .dropdown.messages {
+        display: none;
+    }
+}

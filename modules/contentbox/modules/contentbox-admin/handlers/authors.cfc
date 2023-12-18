@@ -40,12 +40,12 @@ component extends="baseHandler" {
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
 			if (
-				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )
+				!prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )
 				AND
 				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
 			) {
 				// relocate
-				cbMessagebox.error( "You do not have permissions to do this!" );
+				cbMessagebox().error( "You do not have permissions to do this!" );
 				relocate( event = prc.xehAuthors );
 				return;
 			}
@@ -104,7 +104,7 @@ component extends="baseHandler" {
 		authorService.saveAll( allAuthors );
 
 		// relocate
-		cbMessagebox.info( "Global password reset issued!" );
+		cbMessagebox().info( "Global password reset issued!" );
 		relocate( prc.xehAuthors );
 	}
 
@@ -254,9 +254,9 @@ component extends="baseHandler" {
 			);
 			// announce event
 			announce( "cbadmin_onPasswordReset", { author : oAuthor } );
-			cbMessagebox.info( "Author marked for password reset upon login and email notification sent!" );
+			cbMessagebox().info( "Author marked for password reset upon login and email notification sent!" );
 		} else {
-			cbMessagebox.error( "Invalid Author Sent!" );
+			cbMessagebox().error( "Invalid Author Sent!" );
 		}
 
 		// relocate
@@ -304,7 +304,7 @@ component extends="baseHandler" {
 		} );
 
 		// get and populate author
-		populateModel(
+		populate(
 			model                = oAuthor,
 			composeRelationships = true,
 			exclude              = "authorID,preference"
@@ -330,11 +330,11 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postNewAuthorSave", { author : oAuthor } );
 			// message
-			cbMessagebox.setMessage( "info", "New Author Created and Notified!" );
+			cbMessagebox().setMessage( "info", "New Author Created and Notified!" );
 			// relocate
 			relocate( prc.xehAuthors );
 		} else {
-			cbMessagebox.warn( vResults.getAllErrors() );
+			cbMessagebox().warn( vResults.getAllErrors() );
 			return new ( argumentCollection = arguments );
 		}
 	}
@@ -445,11 +445,12 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Save user preference async
+	 * Save a user preference usually called asynchronously
 	 */
 	function saveSinglePreference( event, rc, prc ){
+		// params
 		event.paramvalue( "preference", "" ).paramValue( "value", "" );
-		var results = { "ERROR" : false, "MESSAGES" : "" };
+		var response = event.getResponse();
 
 		// Check preference value
 		if ( len( rc.preference ) ) {
@@ -457,14 +458,15 @@ component extends="baseHandler" {
 			prc.oCurrentAuthor.setPreference( name = rc.preference, value = rc.value );
 			// save Author preference
 			variables.authorService.save( prc.oCurrentAuthor );
-			results[ "MESSAGES" ] = "Preference saved";
+			// response
+			response.setData( { "preference" : rc.preference, "value" : rc.value } ).addMessage( "Preference saved!" );
 		} else {
-			results[ "ERROR" ]    = true;
-			results[ "MESSAGES" ] = "No preference sent!";
+			response.setErrorMessage(
+				"No preference sent",
+				event.STATUS.BAD_REQUEST,
+				response.400
+			);
 		}
-
-		// return preference saved
-		event.renderData( type = "json", data = results );
 	}
 
 	/**
@@ -492,7 +494,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : newPreferences } );
 		// message
-		cbMessagebox.setMessage( "info", "Author Preferences Saved!" );
+		cbMessagebox().setMessage( "info", "Author Preferences Saved!" );
 		// relocate
 		relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
 	}
@@ -514,12 +516,12 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : rc.preferences } );
 			// message
-			cbMessagebox.setMessage( "info", "Author Preferences Saved!" );
+			cbMessagebox().setMessage( "info", "Author Preferences Saved!" );
 			// relocate
 			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
 		} else {
 			// message
-			cbMessagebox.error( vResult.getAllErrors() );
+			cbMessagebox().error( vResult.getAllErrors() );
 			// relocate
 			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
 		}
@@ -532,12 +534,12 @@ component extends="baseHandler" {
 		// Get new or persisted user
 		var oAuthor = authorService.get( id = rc.authorID );
 		// get and populate author
-		populateModel( model: oAuthor, exclude: "authorID" );
+		populate( model: oAuthor, exclude: "authorID" );
 		// Tag new or updated user
 		var newAuthor = ( NOT oAuthor.isLoaded() );
 
 		// role assignment if permission allows it
-		if ( prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) ) {
+		if ( prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) ) {
 			oAuthor.setRole( roleService.get( rc.roleID ) );
 		}
 
@@ -558,11 +560,11 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postAuthorSave", { author : oAuthor, isNew : newAuthor } );
 			// message
-			cbMessagebox.setMessage( "info", "Author saved!" );
+			cbMessagebox().setMessage( "info", "Author saved!" );
 			// relocate
 			relocate( prc.xehAuthors );
 		} else {
-			cbMessagebox.warn( vResults.getAllErrors() );
+			cbMessagebox().warn( vResults.getAllErrors() );
 			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()#" );
 		}
 	}
@@ -572,7 +574,9 @@ component extends="baseHandler" {
 	 */
 	function passwordChange( event, rc, prc ){
 		if ( prc.oCurrentAuthor.getAuthorID() != rc.authorID ) {
-			cbMessagebox.error( "You cannot change passwords for other users. Please start a password reset instead." );
+			cbMessagebox().error(
+				"You cannot change passwords for other users. Please start a password reset instead."
+			);
 			return relocate( event = prc.xehAuthorEditor, queryString = "authorID=#rc.authorID#" );
 		}
 		var oAuthor = authorService.get( id = rc.authorID );
@@ -585,10 +589,10 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_onAuthorPasswordChange", { author : oAuthor, password : rc.password } );
 			// message
-			cbMessagebox.info( "Password Updated!" );
+			cbMessagebox().info( "Password Updated!" );
 		} else {
 			// message
-			cbMessagebox.error( "Passwords do not match, please try again!" );
+			cbMessagebox().error( "Passwords do not match, please try again!" );
 		}
 
 		// relocate
@@ -604,7 +608,7 @@ component extends="baseHandler" {
 		var oAuthor = variables.authorService.get( rc.targetAuthorID );
 
 		if ( isNull( oAuthor ) ) {
-			cbMessagebox.setMessage( "warning", "Invalid Author!" );
+			cbMessagebox().setMessage( "warning", "Invalid Author!" );
 			relocate( prc.xehAuthors );
 		}
 		// announce event
@@ -614,7 +618,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postAuthorRemove", { authorID : rc.targetAuthorID } );
 		// message
-		cbMessagebox.setMessage( "info", "Author Removed!" );
+		cbMessagebox().setMessage( "info", "Author Removed!" );
 		// redirect
 		relocate( prc.xehAuthors );
 	}
@@ -649,8 +653,8 @@ component extends="baseHandler" {
 		var oPermission = permissionService.get( rc.permissionID );
 
 		// Assign it
-		if ( !oAuthor.hasPermission( oPermission ) ) {
-			oAuthor.addPermission( oPermission );
+		if ( !oAuthor.hasPermissions( oPermission ) ) {
+			oAuthor.addPermissions( oPermission );
 			// Save it
 			variables.authorService.save( oAuthor );
 		}
@@ -668,7 +672,7 @@ component extends="baseHandler" {
 		var oPermission = permissionService.get( rc.permissionID );
 
 		// Remove it
-		oAuthor.removePermission( oPermission );
+		oAuthor.removePermissions( oPermission );
 		// Save it
 		variables.authorService.save( oAuthor );
 		// Saved
@@ -757,15 +761,15 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Users imported sucessfully!" );
+				cbMessagebox().info( "Users imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessagebox().error( errorMessage );
 		}
 		relocate( prc.xehAuthors );
 	}
@@ -783,7 +787,7 @@ component extends="baseHandler" {
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// render out view
-		return renderView( view = "authors/listPreferences", module = "contentbox-admin" );
+		return view( view = "authors/listPreferences", module = "contentbox-admin" );
 	}
 
 }

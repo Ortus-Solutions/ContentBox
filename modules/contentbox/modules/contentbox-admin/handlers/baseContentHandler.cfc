@@ -20,6 +20,7 @@ component extends="baseHandler" {
 	property name="customFieldService" inject="customFieldService@contentbox";
 	property name="editorService" inject="editorService@contentbox";
 	property name="contentService" inject="contentService@contentbox";
+	property name="templateService" inject="ContentTemplateService@contentbox";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -64,6 +65,13 @@ component extends="baseHandler" {
 
 		// get all authors
 		prc.authors = variables.authorService.getAll( sortOrder = "lastName" );
+
+		// Get all available content templates
+		prc.availableTemplates = variables.templateService.getAvailableForContentType(
+			contentType = variables.ormService.new().getContentType(),
+			site        = prc.oCurrentSite,
+			fields      = "templateID,name"
+		);
 
 		// get all categories
 		prc.categories = variables.categoryService.list(
@@ -122,16 +130,17 @@ component extends="baseHandler" {
 
 		// search content with filters and all
 		var contentResults = variables.ormService.search(
-			search     : rc.searchContent,
-			isPublished: rc.fStatus,
-			category   : rc.fCategories,
-			author     : rc.fAuthors,
-			creator    : rc.fCreators,
-			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
-			sortOrder  : variables.defaultOrdering,
-			siteID     : prc.oCurrentSite.getsiteID(),
-			offset     : prc.paging.startRow - 1,
-			max        : prc.cbSettings.cb_paging_maxrows
+			search             : rc.searchContent,
+			isPublished        : rc.fStatus,
+			category           : rc.fCategories,
+			author             : rc.fAuthors,
+			creator            : rc.fCreators,
+			parent             : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
+			sortOrder          : variables.defaultOrdering,
+			siteID             : prc.oCurrentSite.getsiteID(),
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			searchActiveContent: false
 		);
 		prc.content      = contentResults[ variables.entityPlural ];
 		prc.contentCount = contentResults.count;
@@ -223,9 +232,9 @@ component extends="baseHandler" {
 				{ contentID : rc.contentID, status : rc.contentStatus }
 			);
 			// Message
-			variables.cbMessageBox.info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
+			cbMessageBox().info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
 		} else {
-			variables.cbMessageBox.warn( "No content selected!" );
+			cbMessageBox().warn( "No content selected!" );
 		}
 
 		// relocate back
@@ -268,13 +277,34 @@ component extends="baseHandler" {
 				event          = "contentbox-admin:versions.pager",
 				eventArguments = { contentID : rc.contentID }
 			);
+		} else {
+			prc.oContent.setSite( prc.oCurrentSite );
+			if ( rc.keyExists( "contentTemplate" ) && len( rc.contentTemplate ) ) {
+				prc.oContent.setContentTemplate( variables.templateService.get( rc.contentTemplate ) );
+			} else if ( rc.keyExists( "parentId" ) && len( rc.parentId ) ) {
+				// The UI will pick this up and handle the assignment
+				prc.oContent.setParent( variables.ormService.get( rc.parentId ) );
+			}
 		}
 		// Get all content names for parent drop downs excluding yourself and your children
 		prc.allContent = variables.ormService
 			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
 			.filter( function( item ){
-				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+				return prc.oContent.isLoaded() ? !reFindNoCase(
+					"#prc.oContent.getSlug()#\/?",
+					arguments.item[ "slug" ]
+				) : true;
 			} );
+
+		// Get all available content templates
+		prc.availableTemplates = variables.templateService.getAvailableForContentType(
+			contentType = prc.oContent.getContentType(),
+			site        = prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
+			fields      = "templateID,name"
+		);
+
+		// Provide JWT Tokens for communicating with the API
+		prc.jwtTokens     = jwtAuth().fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
@@ -342,6 +372,7 @@ component extends="baseHandler" {
 			.paramValue( "publishedDate", now() )
 			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
 			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
+			.paramValue( "saveAsTemplate", false )
 			.paramValue(
 				"publishedTime",
 				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
@@ -363,14 +394,19 @@ component extends="baseHandler" {
 		);
 
 		// Verify permission for publishing, else save as draft
-		if ( !prc.oCurrentAuthor.checkPermission( arguments.adminPermission ) ) {
+		if ( !prc.oCurrentAuthor.hasPermission( arguments.adminPermission ) ) {
 			rc.isPublished = "false";
 		}
 
 		// get new/persisted page and populate it with incoming data.
 		var oContent     = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		populateModel( model: oContent, exclude = "contentID,siteID" )
+		variables.ormService
+			.populate(
+				target  = oContent,
+				memento = rc,
+				exclude = "contentID,siteID"
+			)
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT oContent.isLoaded() );
@@ -382,7 +418,7 @@ component extends="baseHandler" {
 		// Override creator if persisted?
 		else if (
 			!isNew and
-			prc.oCurrentAuthor.checkPermission( arguments.adminPermission ) and
+			prc.oCurrentAuthor.hasPermission( arguments.adminPermission ) and
 			len( rc.creatorID ) and
 			oContent.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
@@ -392,7 +428,7 @@ component extends="baseHandler" {
 		// Validate Page And Incoming Data
 		var vResults = validate( oContent );
 		if ( vResults.hasErrors() ) {
-			variables.cbMessageBox.warn( vResults.getAllErrors() );
+			cbMessageBox().warn( vResults.getAllErrors() );
 			editor( argumentCollection = arguments );
 			return;
 		}
@@ -433,6 +469,12 @@ component extends="baseHandler" {
 		oContent.inflateCustomFields( rc.customFieldsCount, rc );
 		// Inflate Related Content into the page
 		oContent.inflateRelatedContent( rc.relatedContentIDs );
+		// If directed to create a template from the content item, do this now and assign it
+		if ( rc.saveAsTemplate ) {
+			var template = templateService.newFromContentItem( oContent );
+			templateService.save( template )
+			oContent.setContentTemplate( template );
+		}
 		// announce event
 		announce(
 			"cbadmin_pre#variables.Entity#Save",
@@ -462,7 +504,7 @@ component extends="baseHandler" {
 			event.renderData( type = "json", data = rData );
 		} else {
 			// relocate
-			variables.cbMessageBox.info( "Page Saved!" );
+			cbMessageBox().info( "Page Saved!" );
 			if ( oContent.hasParent() ) {
 				relocate( event = arguments.relocateTo, querystring = "parent=#oContent.getParent().getContentID()#" );
 			} else {
@@ -482,7 +524,7 @@ component extends="baseHandler" {
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
-			variables.cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			cbMessageBox().warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			relocate( arguments.relocateTo );
 			return;
 		}
@@ -515,7 +557,7 @@ component extends="baseHandler" {
 		);
 
 		// relocate
-		variables.cbMessageBox.info( "#variables.entity# Cloned!" );
+		cbMessageBox().info( "#variables.entity# Cloned!" );
 
 		// Relocate
 		if ( original.hasParent() ) {
@@ -536,7 +578,7 @@ component extends="baseHandler" {
 
 		// verify if contentID sent is valid
 		if ( !len( rc.contentID ) ) {
-			variables.cbMessageBox.warn( "No content sent to delete!" );
+			cbMessageBox().warn( "No content sent to delete!" );
 			relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
 		}
 
@@ -568,7 +610,7 @@ component extends="baseHandler" {
 		}
 
 		// messagebox
-		variables.cbMessageBox.info( messages );
+		cbMessageBox().info( messages );
 		// relocate
 		relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
 	}
@@ -671,17 +713,17 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				variables.cbMessageBox.info( "Content imported sucessfully!" );
+				cbMessageBox().info( "Content imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				variables.cbMessageBox.error(
+				cbMessageBox().error(
 					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			variables.cbMessageBox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 
 		relocate( arguments.relocateTo );
@@ -762,7 +804,7 @@ component extends="baseHandler" {
 		prc.contentPager_securityPrefix = variables.securityPrefix;
 
 		// view pager
-		return renderView( view = "content/pager", module = "contentbox-admin" );
+		return view( view = "content/pager", module = "contentbox-admin" );
 	}
 
 

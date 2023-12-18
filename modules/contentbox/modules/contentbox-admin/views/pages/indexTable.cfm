@@ -24,7 +24,7 @@
     <thead>
         <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-            	<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
+            	<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'contentID' )"/>
             </th>
 			<th>
 				Name
@@ -71,7 +71,7 @@
 			>
 				<!--- check box --->
 				<td class="text-center">
-					<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
+					<input type="checkbox" name="contentID" value="#page.getContentID()#" />
 				</td>
 
 				<td>
@@ -91,11 +91,11 @@
 							<i class="fa fa-plus-square"></i>
 						</a>
 					<cfelse>
-						<i class="far fa-dot-circle-thin"></i>
+						<i class="fa fa-dot-circle-thin"></i>
 					</cfif>
 
 					<!--- Title --->
-					<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+					<cfif prc.oCurrentAuthor.hasPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 						<a
 							href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 							title="Edit #page.getTitle()#"
@@ -109,7 +109,7 @@
 
 					<!--- password protected --->
 					<cfif page.isPasswordProtected()>
-						<i class="fas fa-key text-orange" title="Password Protected Content"></i>
+						<i class="fa fa-key text-orange" title="Password Protected Content"></i>
 					</cfif>
 
 					<!--- Search Label --->
@@ -120,7 +120,7 @@
 					</cfif>
 
 					<!--- Content Info --->
-					#renderView(
+					#view(
 						view : "_components/content/TableCreationInfo",
 						args : { content : page },
 						prepostExempt : true
@@ -128,7 +128,7 @@
 				</td>
 
 				<td class="text-center">
-					#renderView(
+					#view(
 						view : "_components/content/TableStatus",
 						args : { content : page },
 						prepostExempt : true
@@ -137,16 +137,16 @@
 
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
-						<i class="far fa-dot-circle fa-lg text-green"></i>
+						<i class="fa fa-dot-circle fa-lg text-green"></i>
 						<span class="hidden">yes</span>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg text-gray"></i>
+						<i class="fa fa-dot-circle fa-lg text-gray"></i>
 						<span class="hidden">no</span>
 					</cfif>
 				</td>
 
 				<td class="text-center">
-					#renderView(
+					#view(
 						view : "_components/content/TableSearchStatus",
 						args : { content : page },
 						prepostExempt : true
@@ -157,31 +157,30 @@
 					<span class="badge badge-info">#page.getNumberOfHits()#</span>
 				</td>
 
-				<td class="text-center">
+				<td class="text-center flex">
 					<!--- Drag Handle --->
 					<a
 						href="##"
 						onclick="return false;"
-						class="dragHandle btn btn-default btn-sm"
+						class="dragHandle btn btn-icon btn-sm"
 						title="Click and drag to change menu order"
-						style="padding:5px 15px"
 					>
-						<i class="fas fa-sort fa-lg"></i>
+						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 
 					<!--- Page Actions --->
 					<div class="btn-group btn-group-sm">
-						<a
-							class="btn btn-default btn-more dropdown-toggle"
+						<button
+							class="btn btn-icon btn-more dropdown-toggle"
 							data-toggle="dropdown"
-							href="##"
 							title="Page Actions"
 						>
-							<i class="fas fa-ellipsis-v fa-lg"></i>
-						</a>
+							<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+							<span class="visually-hidden">Page Actions</span>
+						</button>
 
 						<ul class="dropdown-menu text-left pull-right">
-							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 								<!--- Clone Command --->
 								<li class="mb5">
 									<a
@@ -190,7 +189,7 @@
 											'#encodeForJavascript( page.getTitle() )#'
 										)"
 									>
-										<i class="far fa-clone fa fa-lg"></i> Clone
+										<i class="fa fa-clone fa fa-lg"></i> Clone
 									</a>
 								</li>
 
@@ -199,22 +198,22 @@
 									<a
 										href="#event.buildLink( prc.xehPageEditor )#/parentID/#page.getContentID()#"
 									>
-										<i class="fas fa-sitemap fa-lg"></i> Create Child
+										<i class="fa fa-sitemap fa-lg"></i> Create Child
 									</a>
 								</li>
 
 								<!--- Delete Command --->
-								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
 									<li class="mb5">
 										<a
 											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
 											class="confirmIt"
-											data-title="<i class='far fa-trash-alt'></i> Delete Page?"
+											data-title="<i class='fa fa-trash'></i> Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
 										>
 											<i
 												id="delete_#page.getContentID()#"
-												class="far fa-trash-alt fa-lg"></i> Delete
+												class="fa fa-trash fa-lg"></i> Delete
 										</a>
 									</li>
 								</cfif>
@@ -229,7 +228,7 @@
 								</li>
 							</cfif>
 
-							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 								<!--- Export --->
 								<li class="mb5">
 									<a
@@ -247,7 +246,7 @@
 								<a
 									href="#event.buildLink( prc.xehContentHistory )#/contentID/#page.getContentID()#"
 								>
-									<i class="fas fa-history fa-lg"></i> History
+									<i class="fa fa-history fa-lg"></i> History
 								</a>
 							</li>
 
@@ -256,7 +255,7 @@
 								<a
 									href="javascript:contentListHelper.resetHits( '#page.getContentID()#' )"
 								>
-									<i class="fas fa-recycle fa-lg"></i> Reset Hits
+									<i class="fa fa-recycle fa-lg"></i> Reset Hits
 								</a>
 							</li>
 
@@ -266,7 +265,7 @@
 									href="#prc.cbHelper.linkPage( page )#"
 									target="_blank"
 								>
-									<i class="far fa-eye fa-lg"></i> Open In Site
+									<i class="fa fa-eye fa-lg"></i> Open In Site
 								</a>
 							</li>
 				    	</ul>

@@ -99,9 +99,10 @@
       	<copy todir="${dir.build}/module" encoding="UTF-8">
       		<fileset dir="modules/contentbox">
       			<exclude name="modules/contentbox-deps/modules/**" />
-				<exclude name="**/bower_components/**" />
-				<exclude name="**/app_modules/**" />
+      			<exclude name="modules/contentbox/modules/contentbox-admin/resources/**" />
+      			<exclude name="modules/contentbox/themes/default/resources/**" />
       			<exclude name="**/node_modules/**" />
+      			<exclude name="**/elixir-module.js" />
       		</fileset>
       		<fileset file="readme.md" />
         </copy>
@@ -110,6 +111,7 @@
         <replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
 			<fileset dir="${dir.build}/module" />
 		</replaceregexp>
+
         <!-- Determine snapshot vs master artifact -->
 		<if>
 			<equals arg1="${build.branch}" arg2="development" />
@@ -165,10 +167,17 @@
       			<exclude name="**/bower_components/**" />
 				<exclude name="**/app_modules/**" />
       			<exclude name="**/node_modules/**" />
+      			<exclude name="package.json" />
+      			<exclude name="package-*.json" />
+      			<exclude name="package.json" />
+      			<exclude name="webpack.config.js" />
       			<!-- Remove Dependencies -->
       			<exclude name="modules/contentbox/**" />
       		</fileset>
         </copy>
+
+		<!-- Ensure the migrations config is part of the installer -->
+		<copy file=".cfmigrations.json" toFile="${dir.build}/installer/.cfmigrations.json" overwrite="true"  encoding="UTF-8"/>
 
         <!-- Copy installer module source -->
       	<copy todir="${dir.build}/installer-module" encoding="UTF-8">
@@ -205,6 +214,7 @@
 			<fileset dir="${dir.build}/installer" />
 			<fileset dir="${dir.build}/installer-module" />
 		</replaceregexp>
+
         <!-- Determine snapshot vs master artifact -->
 		<if>
 			<equals arg1="${build.branch}" arg2="development" />
@@ -331,7 +341,7 @@
 		</exec>
 		<!-- Install ContentBox dependencies -->
 		<exec executable="box" dir="${dir.build}/war">
-			<arg line="install id=coldbox@${coldbox.version} production=true" />
+			<arg line="install production=true" />
 		</exec>
 
  		<!-- Create War -->
@@ -359,69 +369,11 @@
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" />
  	</target>
 
- 	<!-- Build Express Edition -->
- 	<target name="build.express" description="Build an express server" depends="build.war">
- 		<!-- Unzip tomcat -->
- 		<unzip dest="${dir.build}" src="${dir.dependencies}/apache-tomcat-${express.server.version}.zip"/>
- 		<move todir="${dir.build}/express">
-			<fileset dir="${dir.build}/apache-tomcat-${express.server.version}"/>
-  		</move>
-
- 		<!-- Remove current webapps -->
- 		<delete includeemptydirs="true" >
- 			<fileset dir="${dir.build}/express/webapps" />
- 		</delete>
-
- 		<!-- create root app -->
- 		<mkdir dir="${dir.build}/express/webapps/ROOT" />
-
- 		<!-- Copy ContentBox war into it -->
- 		<copy toDir="${dir.build}/express/webapps/ROOT" overwrite="true" encoding="UTF-8">
-			<fileset dir="${dir.build}/war" />
- 		</copy>
-
-		<!-- Copy admin password -->
-		<copy file="${dir.resources}/password.txt" toDir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee-server/context" overwrite="true" encoding="UTF-8"/>
-		<!-- Copy inline datasource -->
-		<copy file="${dir.resources}/datasource.cfm" toDir="${dir.build}/express/webapps/ROOT/config" overwrite="true" encoding="UTF-8"/>
-		<!-- Add datasource include -->
-		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc"
-				 value='include "config/datasource.cfm";'
-				 summary="true"
-				 token='this.datasource  = "contentbox";'
-				 encoding="UTF-8"/>
-
- 		<!-- Custom Server Config -->
- 		<copy todir="${dir.build}/express" overwrite="true" encoding="UTF-8">
- 			<fileset dir="${dir.resources}/express" />
- 		</copy>
-
- 		<!-- add execution perms -->
- 		<chmod perm="ugo+rx">
- 			<fileset dir="${dir.build}/express/bin" />
- 		</chmod>
-
- 		<!-- NO JRE EXPRESS -->
- 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express" />
-
- 		<!-- Build Checksums -->
-		<checksum forceoverwrite="true" fileext=".md5">
-			<fileset dir="${dir.contentbox.exports}">
-				<include name="contentbox-express-*.zip" />
-			</fileset>
-		</checksum>
-		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512">
-			<fileset dir="${dir.contentbox.exports}">
-				<include name="contentbox-express-*.zip" />
-			</fileset>
-		</checksum>
- 	</target>
-
 	<!-- Build all releases-->
 	<target
 		name="build.all"
 		description="Builds All ContentBox Release Flavors and patches"
-		depends="build.express"
+		depends="build.war"
 	>
 		<!-- Copy as BE to root -->
 		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8" verbose="true">
@@ -444,11 +396,6 @@
  						version="${tuckey.version}"
  						extension="jar"
  						destination="${dir.dependencies}"/>
- 		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="apache"
- 						artifactID="apache-tomcat"
- 						version="${express.server.version}"
- 						destination="${dir.dependencies}"/>
 		<!-- Download Dependency via box task-->
 		<if>
  			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
@@ -460,23 +407,6 @@
 		 						destination="${dir.dependencies}"/>
  			</then>
  		</if>
- 		<!-- Download Dependency via box task
- 		<box-dependency groupID="oracle"
- 						artifactID="jre"
- 						version="${jre.version}"
- 						destination="${dir.dependencies}"
- 						classifiers="win64"/>
- 		<box-dependency groupID="oracle"
- 						artifactID="jre"
- 						version="${jre.version}"
- 						destination="${dir.dependencies}"
- 						classifiers="darwin64"/>
- 		<box-dependency groupID="oracle"
- 						artifactID="jre"
- 						version="${jre.version}"
- 						destination="${dir.dependencies}"
- 						classifiers="linux64"/>
-		-->
 	</target>
 
 </project>

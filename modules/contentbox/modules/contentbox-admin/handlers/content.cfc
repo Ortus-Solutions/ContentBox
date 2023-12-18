@@ -106,7 +106,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "onGlobalSearchRequest" );
 		// renderdata
-		event.renderdata( data = renderView( "content/search" ) );
+		event.renderdata( data = view( "content/search" ) );
 	}
 
 	/**
@@ -174,7 +174,7 @@ component extends="baseHandler" {
 		prc.CBHelper     = variables.CBHelper;
 
 		// if ajax and searching, just return tables
-		return renderView( view = "content/relatedContentResults", module = "contentbox-admin" );
+		return view( view = "content/relatedContentResults", module = "contentbox-admin" );
 	}
 
 	/**
@@ -288,7 +288,7 @@ component extends="baseHandler" {
 		var aLatestEdits = variables.contentService.getLatestEdits( argumentCollection = args );
 
 		// view pager
-		return renderView(
+		return view(
 			view   = "content/contentViewlet",
 			module = "contentbox-admin",
 			args   = {
@@ -351,7 +351,7 @@ component extends="baseHandler" {
 		}
 
 		// view pager
-		return renderView(
+		return view(
 			view   = "content/contentViewlet",
 			module = "contentbox-admin",
 			args   = {

@@ -3,33 +3,33 @@
 		xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 	<url>
 		<loc>#XMLFormat( prc.linkHome )#</loc>
-	</url>  
+	</url>
 	<cfloop array="#prc.aPages#" index="content">
 	<url>
-		<loc>#xmlFormat( prc.siteBaseURL & content[ 'slug' ] )#</loc>
+		<loc>#xmlFormat( prc.siteBaseURL & "/" & content[ 'slug' ] )#</loc>
 		<lastmod>#dateFormat( content[ 'modifiedDate' ], "yyyy-mm-dd" )#</lastmod>
 		<cfif len( content.get( "featuredImageURL" ) )>
       		<image:image>
-       			<image:loc>#xmlFormat( prc.siteBaseURL & reReplace( content.get( "featuredImageURL" ), "^/", "" ) )#</image:loc>
+       			<image:loc>#xmlFormat( prc.siteBaseURL & "/" & reReplace( content.get( "featuredImageURL" ), "^/", "" ) )#</image:loc>
     		</image:image>
       	</cfif>
 	</url>
 	</cfloop>
-	<cfif !prc.disableBlog>				
+	<cfif !prc.disableBlog>
 		<url>
-			<loc>#xmlFormat( prc.siteBaseURL & prc.blogEntryPoint )#</loc>
-		</url>	
+			<loc>#xmlFormat( prc.siteBaseURL & "/" & prc.blogEntryPoint )#</loc>
+		</url>
 		<cfloop array="#prc.aEntries#" index="content">
 	   		<url>
-	      		<loc>#xmlFormat(  prc.siteBaseURL & prc.blogEntryPoint & content[ 'slug' ] )#</loc>
+	      		<loc>#xmlFormat(  prc.siteBaseURL & "/" & prc.blogEntryPoint & content[ 'slug' ] )#</loc>
 	      		<lastmod>#dateFormat( content[ 'modifiedDate' ], "yyyy-mm-dd" )#</lastmod>
 		      	<cfif len( content.get( "featuredImageURL" ) )>
 		      		<image:image>
-		       			<image:loc>#xmlFormat( prc.siteBaseURL & reReplace( content.get( "featuredImageURL" ), "^/", "" ) )#</image:loc>
+		       			<image:loc>#xmlFormat( prc.siteBaseURL & "/" & reReplace( content.get( "featuredImageURL" ), "^/", "" ) )#</image:loc>
 		    		</image:image>
 		      	</cfif>
 	   		</url>
 		</cfloop>
 	</cfif>
-</urlset> 	
+</urlset>
 </cfoutput>

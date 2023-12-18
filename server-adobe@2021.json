@@ -5,7 +5,8 @@
     },
     "name":"contentbox-adobe2021",
     "JVM":{
-        "heapSize":"1024"
+        "heapSize":"1024",
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,
@@ -25,5 +26,11 @@
             "disabled":false,
             "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
-    ]
+    ],
+    "scripts":{
+        "onServerInstall":"cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed,mail,debugger"
+    },
+	"cfconfig":{
+        "file":".cfconfig.json"
+    }
 }

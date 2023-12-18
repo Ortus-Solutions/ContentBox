@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="far fa-comments"></i> Site Comment Settings</h1>
+        <h1 class="h1"><i class="fa fa-comments"></i> Site Comment Settings</h1>
     </div>
 </div>
 
@@ -30,17 +30,17 @@
 					</p>
 
 					<!--- Vertical Nav --->
-                    <div class="tab-wrapper tab-left tab-primary">
+                    <div class="tabs tabs-left">
                         <!--- Documentation Navigation Bar --->
                         <ul class="nav nav-tabs">
-							<li class="active">
-								<a href="##general_options" data-toggle="tab">
-									<i class="fas fa-sliders-h fa-lg"></i> <span class="hidden-xs">Settings</span>
+							<li class="nav-item active">
+								<a href="##general_options" data-toggle="tab" class="nav-link">
+									<i class="fa fa-sliders-h fa-lg"></i> <span class="hidden-xs">Settings</span>
 								</a>
 							</li>
-							<li>
-								<a href="##notifications" data-toggle="tab">
-									<i class="far fa-envelope-open fa-lg"></i> <span class="hidden-xs">Notifications</span>
+							<li class="nav-item">
+								<a href="##notifications" data-toggle="tab" class="nav-link">
+									<i class="fa fa-envelope-open fa-lg"></i> <span class="hidden-xs">Notifications</span>
 								</a>
 							</li>
                             <!--- cbadmin Event --->
@@ -183,7 +183,7 @@
                             <!--- Notifications --->
                             <div class="tab-pane" id="notifications">
                                 <fieldset>
-                                    <legend><i class="far fa-envelope-open fa-lg"></i> Notifications</legend>
+                                    <legend><i class="fa fa-envelope-open fa-lg"></i> Notifications</legend>
                                     <p>
 										By default all comment notifications are sent to the global system email(s).
 										However, you can add per-site notification emails below:

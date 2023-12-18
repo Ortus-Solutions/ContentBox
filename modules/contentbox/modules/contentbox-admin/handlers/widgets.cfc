@@ -52,7 +52,7 @@ component extends="baseHandler" {
 	// Remove
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
-		cbMessagebox.info( "Widget Removed Forever!" );
+		cbMessageBox().info( "Widget Removed Forever!" );
 		relocate( prc.xehWidgets );
 	}
 
@@ -108,7 +108,7 @@ component extends="baseHandler" {
 		prc.vals                = rc;
 		prc.vals[ "widgetUDF" ] = prc.widget.udf;
 		if ( event.isAjax() ) {
-			event.renderData( data = renderView( view = "widgets/instance", layout = "ajax" ) );
+			event.renderData( data = view( view = "widgets/instance", layout = "ajax" ) );
 		} else {
 			event.setView( view = "widgets/instance", layout = "ajax" );
 		}

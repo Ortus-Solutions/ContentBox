@@ -24,6 +24,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="dateUtil" inject="DateUtil@contentbox";
 	property name="commentSubscriptionService" inject="CommentSubscriptionService@contentbox";
 	property name="subscriberService" inject="subscriberService@contentbox";
+	property name="relocationService" inject="RelocationService@contentbox";
 	property name="asyncManager" inject="coldbox:asyncManager";
 
 	/**
@@ -367,6 +368,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if ( arguments.content.hasLinkedContent() ) {
 				arguments.content.removeAllLinkedContent();
 			}
+			variables.relocationService.deleteWhere( relatedContent = arguments.content );
 			if ( arguments.content.hasChild() ) {
 				var aItemsToDelete = [];
 				for ( var thisChild in arguments.content.getChildren() ) {
@@ -826,8 +828,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		};
 		// setup
 		var thisContent = arguments.contentData;
+
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
-		var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
+		var oContent = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
 		if ( isNull( oContent ) ) {
 			logThis(
 				"! Content (#thisContent.contentType#:#thisContent.slug#) not found in site, proceeding to import as new content."
@@ -846,18 +849,23 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			);
 			return;
 		}
+
 		// Link to site
 		oContent.setSite( arguments.site );
+
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		arguments.newContent[ thisContent.slug ] = oContent;
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		var excludedFields = [
+			"contentID",
 			"categories",
 			"children",
 			"comments",
 			"commentSubscriptions",
 			"contentversions",
+			"contentTemplate",
+			"childContentTemplate",
 			"creator",
 			"customfields",
 			"linkedContent",
@@ -912,6 +920,27 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			}
 		}
 
+		// CATEGORIES
+		if ( arrayLen( thisContent.categories ) ) {
+			oContent.setCategories(
+				thisContent.categories.map( function( thisCategory ){
+					var oSiteCategory = site.getCategory( arguments.thisCategory );
+					return (
+						!isNull( oSiteCategory ) ? oSiteCategory : variables.categoryService.getOrCreateBySlug(
+							arguments.thisCategory,
+							site
+						)
+					);
+				} )
+			);
+			logThis(
+				"+ Categories (#thisContent.categories.toString()#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
+			);
+		}
+
+		// We now persist it to do child relationships
+		entitySave( oContent );
+
 		// CUSTOM FIELDS
 		if ( arrayLen( thisContent.customfields ) ) {
 			// wipe out custom fileds if they exist
@@ -933,27 +962,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				logThis( "+ Custom field (#thisCF.key#) imported for : (#thisContent.contentType#:#thisContent.slug#)" );
 			}
 		}
-
-		// CATEGORIES
-		if ( arrayLen( thisContent.categories ) ) {
-			oContent.setCategories(
-				thisContent.categories.map( function( thisCategory ){
-					var oSiteCategory = site.getCategory( arguments.thisCategory );
-					return (
-						!isNull( oSiteCategory ) ? oSiteCategory : variables.categoryService.getOrCreateBySlug(
-							arguments.thisCategory,
-							site
-						)
-					);
-				} )
-			);
-			logThis(
-				"+ Categories (#thisContent.categories.toString()#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
-			);
-		}
-
-		// We now persist it to do child relationships
-		entitySave( oContent );
 
 		// STATS
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
@@ -1141,20 +1149,21 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	 * Returns an array of [contentID, title, slug, createdDate, modifiedDate] structures of all the content in the system
 	 *
 	 * @sortOrder    The sort ordering of the results
 	 * @isPublished  Show all content or true/false published content
 	 * @showInSearch Show all content or true/false showInSearch flag
 	 * @siteID       The site id to use to filter on
 	 *
-	 * @return Array of content data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
+	 * @return Array of content data {contentID, title, slug, createdDate, modifiedDate}
 	 */
 	array function getAllFlatContent(
 		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteID = ""
+		string siteID      = "",
+		string contentType = ""
 	){
 		var c = newCriteria();
 
@@ -1179,6 +1188,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			c.isEq( "site.siteID", arguments.siteID );
 		}
 
+		if ( len( arguments.contentType ) ) {
+			c.isEq( "contentType", arguments.contentType );
+		}
+
 		// Show in Search
 		if (
 			structKeyExists( arguments, "showInSearch" )
@@ -1190,9 +1203,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		return c
-			.withProjections( property = "contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
+			.withProjections( property = "contentID,title,slug,createdDate,modifiedDate" )
 			.asStruct()
 			.list( sortOrder = arguments.sortOrder );
+	}
+
+	/**
+	 * Adds a relocation for a content item
+	 *
+	 * @contentItem  the target to relocate to
+	 * @originalSlug the URI from which to redirect
+	 */
+	function addRelocation( required BaseContent contentItem, required string originalSlug ){
+		variables.relocationService.createContentRelocation( argumentCollection = arguments );
+		return this;
 	}
 
 	/********************************************* PRIVATE *********************************************/

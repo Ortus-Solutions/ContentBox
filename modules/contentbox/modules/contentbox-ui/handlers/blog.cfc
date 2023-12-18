@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -9,6 +9,7 @@ component extends="content" {
 
 	// DI
 	property name="entryService" inject="id:entryService@contentbox";
+	property name="relocationService" inject="RelocationService@contentbox";
 	property name="paginator" inject="Paging@contentbox";
 
 	// Pre Handler Exceptions
@@ -100,13 +101,13 @@ component extends="content" {
 
 		// Search Paging Link Override?
 		if ( len( rc.q ) ) {
-			rc.q           = variables.antiSamy.clean( rc.q );
+			rc.q           = encodeForHTML( rc.q );
 			prc.pagingLink = prc.blogLink & "/search/#rc.q#/@page@?";
 		}
 
 		// Category Filter Link Override
 		if ( len( rc.category ) ) {
-			rc.category    = variables.antiSamy.clean( rc.category );
+			rc.category    = encodeForHTML( rc.category );
 			prc.pagingLink = prc.blogLink & "/category/#rc.category#/@page@?";
 		}
 
@@ -251,6 +252,15 @@ component extends="content" {
 				.setLayout( name = "#prc.cbTheme#/layouts/blog", module = prc.cbThemeRecord.module )
 				.setView( view = "#prc.cbTheme#/views/entry", module = prc.cbThemeRecord.module );
 		} else {
+			var relocation = variables.relocationService.getRelocationBySlug( rc.entrySlug, "Entry", prc.oCurrentSite );
+			if ( !isNull( relocation ) ) {
+				relocate(
+					URL = variables.CBHelper.linkBlog() & "/" & (
+						!isNull( relocation.getRelatedContent() ) ? relocation.getRelatedContent().getSlug() : relocation.getTarget()
+					),
+					statusCode = 301
+				);
+			}
 			// announce event
 			announce( "cbui_onEntryNotFound", { entry : prc.entry, entrySlug : rc.entrySlug } );
 			// missing page

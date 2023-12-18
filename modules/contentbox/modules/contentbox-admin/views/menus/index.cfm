@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-			<i class="fas fa-bars fa-lg"></i> Menu Manager
+			<i class="fa fa-bars fa-lg"></i> Menu Manager
 			<span id="menusCountContainer"></span>
         </h1>
     </div>
@@ -32,7 +32,7 @@
                             <div class="form-group form-inline no-margin">
                                 #html.textField(
                                     name        = "menuSearch",
-                                    class       = "form-control rounded quicksearch",
+                                    class       = "form-control quicksearch",
                                     placeholder = "Quick Search"
                                 )#
                             </div>
@@ -40,21 +40,21 @@
 
                         <div class="col-md-6 col-xs-8">
                             <div class="text-right">
-                                <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+                                <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
                                     <div class="btn-group">
-                                        <button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+                                        <button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
                                             Bulk Actions <span class="caret"></span>
 										</button>
                                         <ul class="dropdown-menu">
-                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
+                                            <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                                 <li>
-                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="far fa-trash-alt"></i> Delete Selected</a>
+                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
-                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-                                                <li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
+                                            <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
+                                                <li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
                                             </cfif>
-                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
+                                            <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -66,7 +66,7 @@
 													</a>
 												</li>
 											</cfif>
-                                            <li><a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All</a></li>
+                                            <li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
                                         </ul>
                                     </div>
                                 </cfif>
@@ -89,8 +89,8 @@
 </div>
 
 <!--- Import --->
-<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-    #renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
+    #view(
 		view 			= "_tags/dialog/import",
 		args 			= {
             title       : "Import Menus",

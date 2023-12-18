@@ -10,10 +10,10 @@ document.addEventListener( "DOMContentLoaded", () => {
 	// form validation handler
 	$importForm.submit( function( e ){
 		var formvals 	= $importForm.collect();
-		var active 		= formvals.importtype;
-		$importForm.resetValidations();
+		var importType 		= formvals.importtype;
+
 		// add validations as needed based on active tab
-		switch( active ) {
+		switch( importType ) {
 			case 'contentbox':
 				addUploadValidations();
 				// if overrideContent is visible, we are previewing; otherwise, regular upload
@@ -29,7 +29,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 					$importForm.attr( 'action', "#event.buildLink( rc.xehCBPreImport )#" );
 					$importForm.attr( 'target', 'uploadIframe' );
 					// now handle the action and response with a load listener
-					hiddenUpload.load(function() {
+					hiddenUpload.on( "load", function() {
 						var response = hiddenUpload.contents().find( 'body' ).html();
 						openModal( $importDialog, 900 );
 						$importDialog.find( '##modalContent' ).html( response );
@@ -51,6 +51,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 				$importForm.attr( 'action', '#event.buildLink( rc.xehDataImport )#' );
 				break;
 		}
+
 		// check valid state
 		if ( $importForm.valid() ) {
 			activateLoaders();
@@ -87,11 +88,13 @@ document.addEventListener( "DOMContentLoaded", () => {
 	$importDialog.delegate( '##closeButton', 'click', function( e ){
 		closeModal( $importDialog ); return false;
 	} );
+
 	// clone button
 	$importDialog.delegate( '##importButton', 'click', function( e ){
 		$importForm.submit();
 	} );
 } );
+
 /**
  * Handy method to remove all validaitons from the form so that we can add them conditionally when switching tabs
  */
@@ -100,12 +103,14 @@ function removeValidations() {
 	$importForm.find( '[name=defaultPassword]' ).removeAttr( 'required' );
 	$importForm.find( '[name=CBUpload]' ).removeAttr( 'required' );
 }
+
 /**
  * Adds validations for "upload" tab
  */
 function addUploadValidations() {
 	$importForm.find( '[name=CBUpload]' ).attr( 'required', 'required' );
 }
+
 /**
  * Add validations for "data" import tab
  */
@@ -113,6 +118,7 @@ function addDatabaseValidations() {
 	$importForm.find( '[name=dsn]' ).attr( 'required', 'required' );
 	$importForm.find( '[name=defaultPassword]' ).attr( 'required', 'required' );
 }
+
 /**
  * Little utility for showing progress bars
  */

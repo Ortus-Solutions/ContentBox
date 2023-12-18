@@ -3,13 +3,13 @@ function getContentTypeIconCls( contentType ) {
 	var iconCls = "";
 	switch( arguments.contentType ) {
 		case 'Page':
-			iconCls = "fas fa-file";
+			iconCls = "fa fa-file";
 			break;
 		case 'Entry':
 			iconCls = "fas fa-blog";
 			break;
 		case 'ContentStore':
-			iconCls = "far fa-hdd";
+			iconCls = "fa fa-hdd";
 			break;
 		default:
 			break;

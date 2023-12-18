@@ -1,123 +1,34 @@
 name: Pull Requests
 
 on:
+  push:
+    branches-ignore:
+      - "main"
+      - "master"
+      - "development"
+      - "releases/**"
   pull_request:
     branches:
       - development
+      - "releases/**"
 
 jobs:
   tests:
-    name: Tests
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+
+  format_check:
+    name: Checks Source Code Formatting
     runs-on: ubuntu-20.04
-    env:
-      DB_USER: root
-      DB_PASSWORD: root
-    strategy:
-      fail-fast: true
-      matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
-        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup Database and Fixtures
-        run: |
-          sudo systemctl start mysql.service
-          mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e 'CREATE DATABASE contentbox;'
-          mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
-
-      - name: Setup Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: "adopt"
-          java-version: "11"
+        uses: actions/checkout@v4
 
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
-          version: 5.4.2
-
-      - name: Setup .env For Runner
-        run: |
-          touch .env
-          printf "ENVIRONMENT=development\n" >> .env
-          printf "DB_HOST=127.0.0.1\n" >> .env
-          printf "DB_DATABASE=contentbox\n" >> .env
-          printf "DB_DRIVER=MySQL\n" >> .env
-          printf "DB_USER=${{ env.DB_USER }}\n" >> .env
-          printf "DB_PASSWORD=${{ env.DB_PASSWORD }}\n" >> .env
-          printf "DB_CLASS=com.mysql.cj.jdbc.Driver\n" >> .env
-          printf "DB_BUNDLEVERSION=8.0.19\n" >> .env
-          printf "DB_BUNDLENAME=com.mysql.cj\n" >> .env
-
-      - name: Install Dependencies
-        run: |
-          # Site dependencies
-          box install
-          # ContentBox dependencies
-          cd modules/contentbox && box install
-
-      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
-        run: |
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
-          # Install Adobe 2021 cfpm modules
-          if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
-            box run-script install:2021
-          fi
-          curl http://127.0.0.1:8589
-
-      - name: Run Web App Tests
-        run: |
-          mkdir tests/results/web
-          box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
-          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
-
-      - name: Run API Tests
-        run: |
-          mkdir tests/results/api
-          box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
-          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
-
-      - name: Publish PR Test Reports
-        uses: mikepenz/action-junit-report@v2
-        if: always()
-        with:
-          report_paths: 'tests/results/**/*.xml'
-          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
-
-      - name: Failure debugging
-        if: ${{ failure() }}
-        run: |
-          if [[ "{{ matrix.cfengine }}" == "adobe@2016" ]] ; then
-            cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
-          if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
-            cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
-          if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
-            cat .engines/acf2021/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
-          box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
-
-  format:
-    name: Format
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup CommandBox CLI
-        uses: Ortus-Solutions/setup-commandbox@v2.0.1
-        with:
-          version: 5.4.2
           install: commandbox-cfformat
           warmup: true
 
       - name: Run formatting rules
         run: box run-script format
-
-      - name: Commit Format Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply cfformat changes

@@ -15,7 +15,6 @@ component {
 	property name="CBHelper" inject="id:CBHelper@contentbox";
 	property name="rssService" inject="id:rssService@contentbox";
 	property name="themeService" inject="id:themeService@contentbox";
-	property name="antiSamy" inject="antisamy@cbantisamy";
 	property name="messagebox" inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller" inject="DataMarshaller@coldbox";
 	property name="markdown" inject="Processor@cbmarkdown";
@@ -30,7 +29,7 @@ component {
 	function preHandler( event, rc, prc, action, eventArguments ){
 		// Maintenance Mode?
 		if ( prc.cbSettings.cb_site_maintenance ) {
-			if ( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.checkPermission( "MAINTENANCE_MODE_VIEWER" ) ) {
+			if ( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.hasPermission( "MAINTENANCE_MODE_VIEWER" ) ) {
 				addAsset( "#prc.cbRoot#/includes/js/maintenance.js" );
 			} else {
 				event.overrideEvent( "contentbox-ui:page.maintenance" );
@@ -255,7 +254,7 @@ component {
 
 		// generate content only if content is not set, else means handler generated content.
 		if ( isNull( data.content ) ) {
-			data.content = renderLayout(
+			data.content = layout(
 				layout = "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout(
 					format = rc.format,
 					layout = listLast( event.getCurrentLayout(), "/" )
@@ -267,12 +266,6 @@ component {
 
 		// Multi format generation
 		switch ( rc.format ) {
-			case "pdf": {
-				data.content     = dataMarshaller.marshallData( data = data.content, type = "pdf" );
-				data.contentType = "application/pdf";
-				data.isBinary    = true;
-				break;
-			}
 			case "doc": {
 				data.contentType = "application/msword";
 				data.isBinary    = false;
@@ -372,10 +365,10 @@ component {
 		}
 
 		// Trim values & XSS Cleanup of fields
-		rc.author      = left( antiSamy.htmlSanitizer( trim( rc.author ) ), 100 );
-		rc.authorEmail = left( antiSamy.htmlSanitizer( trim( rc.authorEmail ) ), 255 );
-		rc.authorURL   = left( antiSamy.htmlSanitizer( trim( rc.authorURL ) ), 255 );
-		rc.content     = antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
+		rc.author      = left( encodeForHTML( trim( rc.author ) ), 100 );
+		rc.authorEmail = left( encodeForHTML( trim( rc.authorEmail ) ), 255 );
+		rc.authorURL   = left( encodeForHTML( trim( rc.authorURL ) ), 255 );
+		rc.content     = encodeForHTML( trim( rc.content ) );
 
 		// Validate incoming data
 		var commentErrors = [];
@@ -434,7 +427,7 @@ component {
 		required prc
 	){
 		// Get new comment to persist
-		var comment = populateModel( model: commentService.new(), exclude: "commentID" );
+		var comment = populate( model: commentService.new(), exclude: "commentID" );
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it

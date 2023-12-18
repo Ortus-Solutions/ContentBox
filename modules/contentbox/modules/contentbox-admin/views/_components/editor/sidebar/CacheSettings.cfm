@@ -1,11 +1,11 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_CACHING" )>
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
 			<h4 class="panel-title">
 				<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-					<i class="fas fa-database"></i> Cache Settings
+					<i class="fa fa-database"></i> Cache Settings
 				</a>
 			</h4>
 		</div>
@@ -15,7 +15,7 @@
 
 				<div class="form-group">
 					<label for="cache">
-						<i class="fas fa-file-code"></i> Cache Content Output:
+						<i class="fa fa-file-code"></i> Cache Content Output:
 					</label>
 					#html.select(
 						name          : "cache",

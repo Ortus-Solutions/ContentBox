@@ -46,7 +46,7 @@
 			#html.endFieldSet()#
 
 			<!--- Action Bar --->
-			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+			<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 			<div class="form-actions">
 				<input type="submit" value="Change Password" class="btn btn-danger">
 			</div>

@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_RELATED_CONTENT" )>
 <div class="panel panel-default">
 
 	<div class="panel-heading">
@@ -9,15 +9,16 @@
 				data-toggle="collapse"
 				data-parent="##accordion"
 				href="##relatedcontent">
-				<i class="fas fa-sitemap"></i> Related Content
+				<i class="fa fa-sitemap"></i> Related Content
 			</a>
 		</h4>
 	</div>
 
 	<div id="relatedcontent" class="panel-collapse collapse">
 		<div class="panel-body">
-			<button class="btn btn-sm btn-success" type="button" id="add-related-content">
-				<i class="fa fa-plus"></i>  Add related content
+			<button class="btn btn-sm btn-secondary" type="button" id="add-related-content">
+				#cbAdminComponent( "ui/Icon", { name : "PlusSmall", size : "sm" } )#
+				Add related content
 			</button>
 
 			<br /><br />
@@ -34,7 +35,7 @@
 								<cfelseif content.getContentType() eq "Entry">
 									<i class="fas fa-blog icon-small" title="Entry"></i>
 								<cfelseif content.getContentType() eq "ContentStore">
-									<i class="far fa-hdd icon-small" title="ContentStore"></i>
+									<i class="fa fa-hdd icon-small" title="ContentStore"></i>
 								</cfif>
 							</td>
 							<td class="#publishedClass#">#content.getTitle()#</td>
@@ -137,7 +138,7 @@
 					icon = '<i class="fas fa-blog icon-small" title="Entry"></i>';
 					break;
 				case 'ContentStore':
-					icon = '<i class="far fa-hdd icon-small" title="ContentStore"></i>';
+					icon = '<i class="fa fa-hdd icon-small" title="ContentStore"></i>';
 					break;
 			}
 			return icon;

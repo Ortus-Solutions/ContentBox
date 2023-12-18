@@ -57,6 +57,11 @@ component extends="baseHandler" {
 			propertyList = "contentID,slug,title"
 		).pages;
 
+		prc.registeredDisks = cbfs()
+			.getDisks()
+			.keyArray()
+			.filter( ( name ) => name != "default" && name != "temp" );
+
 		// exit handlers
 		prc.xehSiteSave = "#prc.cbAdminEntryPoint#.sites.save";
 
@@ -69,7 +74,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		prc.site     = populateModel( model: variables.siteService.get( rc.siteID ), exclude: "siteID" );
+		prc.site     = populate( model: variables.siteService.get( rc.siteID ), exclude: "siteID" );
 		// validate it
 		var vResults = validate( prc.site );
 		if ( !vResults.hasErrors() ) {
@@ -80,10 +85,10 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postSiteSave", { site : prc.site } );
 			// Message
-			cbMessagebox.info( "Site saved!" );
+			cbMessageBox().info( "Site saved!" );
 			relocate( prc.xehSitesManager );
 		} else {
-			cbMessagebox.warn( vResults.getAllErrors() );
+			cbMessageBox().warn( vResults.getAllErrors() );
 			return editor( argumentCollection = arguments );
 		}
 	}
@@ -101,7 +106,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postSiteRemove", { siteID : rc.siteID } );
 		// Message
-		cbMessagebox.setMessage( "info", "Site Removed!" );
+		cbMessageBox().setMessage( "info", "Site Removed!" );
 		// relocate
 		relocate( prc.xehSitesManager );
 	}
@@ -144,16 +149,16 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Site(s) imported sucessfully!" );
+				cbMessageBox().info( "Site(s) imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			rethrow;
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehSitesManager );
 	}

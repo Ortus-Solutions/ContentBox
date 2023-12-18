@@ -54,7 +54,7 @@
 				</td>
 
 				<td class="text-center">
-					#renderView(
+					#view(
 						view : "_components/content/TableStatus",
 						args : { content : content },
 						prepostExempt : true
@@ -72,8 +72,9 @@
 								'#encodeForJavaScript( content.getSlug() )#'
 							)"
 							title="Select"
+							type="button"
 						>
-                            <i class="far fa-check-circle fa-lg"></i>
+                            <i class="fa fa-check-circle fa-lg"></i>
                         </button>
                     </div>
                 </td>

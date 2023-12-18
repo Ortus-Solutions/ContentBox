@@ -21,7 +21,7 @@ component
 	public FreeProvider function init(){
 		setName( "Free" );
 		setType( "Free" );
-		setIconClass( "far fa-eye" );
+		setIconClass( "fa fa-eye" );
 		setEntityName( "cbFreeMenuItem" );
 		setDescription( "A menu item which creates a free-text menu item" );
 		return this;
@@ -48,7 +48,7 @@ component
 			menuItem : arguments.menuItem,
 			data     : arguments.menuItem.getMemento()
 		};
-		return variables.renderer.renderExternalView(
+		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/free/display",
 			module = "contentbox",
 			args   = viewArgs

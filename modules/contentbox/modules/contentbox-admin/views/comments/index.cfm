@@ -2,9 +2,9 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="far fa-comments"></i> Comments (#prc.commentsCount#)
+        	<i class="fa fa-comments"></i> Comments (#prc.commentsCount#)
 			<cfif len( rc.searchComments )>
-				<i class="fas fa-chevron-right fa-sm"></i> Search:
+				<i class="fa fa-chevron-right fa-sm"></i> Search:
 				#encodeForHTML( searchComments )#
 			</cfif>
 		</h1>
@@ -45,7 +45,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "commentSearch",
-									class		= "form-control rounded quicksearch",
+									class		= "form-control quicksearch",
 									placeholder = "Quick Filter"
 								)#
 							</div>
@@ -53,10 +53,10 @@
 
 						<!---Bulk Actions --->
 						<div class="col-md-6 col-xs-8">
-							<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 								<div class="text-right">
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
@@ -72,7 +72,7 @@
 											</li>
 											<li>
 												<a href="javascript:removeAllSelected()" class="confirmIt">
-													<i class="far fa-trash-alt"></i> Remove Selected
+													<i class="fa fa-trash"></i> Remove Selected
 												</a>
 											</li>
 											<li>
@@ -107,7 +107,7 @@
 									width="15">
 									<input
 										type="checkbox"
-										onClick="checkAll( this.checked, 'commentID' )"
+										onclick="window.checkAll( this.checked, 'commentID' )"
 									/>
 								</th>
 								<th width="200">Author</th>
@@ -138,7 +138,7 @@
 
 									<cfif len(comment.getAuthorURL())>
 										<div class="ml5 mt10">
-											<i class="fas fa-globe"></i>
+											<i class="fa fa-globe"></i>
 											<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 												#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 											</a>
@@ -146,13 +146,13 @@
 									</cfif>
 
 									<div class="ml5 mt10">
-										<i class="far fa-calendar mr5"></i>
+										<i class="fa fa-calendar mr5"></i>
 										#comment.getDisplayCreatedDate()#
 									</div>
 
 									<cfif len( comment.getauthorIP() )>
 										<div class="ml5 mt10">
-											<i class="fas fa-laptop"></i>
+											<i class="fa fa-laptop"></i>
 											<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 										</div>
 									</cfif>
@@ -177,36 +177,39 @@
 								</td>
 
 								<td class="text-center">
-									<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
-										<!--- Approve/Unapprove --->
-										<cfif !comment.getIsApproved()>
-											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
-										<cfelse>
-											<a class="btn btn-sm btn-default" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
-										</cfif>
-										<div class="btn-group">
-											<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-												<i class="fas fa-ellipsis-v fa-lg"></i>
-											</a>
-									    	<ul class="dropdown-menu text-left pull-right">
-									    		<!--- Edit Command --->
-												<li>
-													<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment">
-														<i class="fas fa-pen fa-lg"></i> Edit
-													</a>
-												</li>
-												<li><!--- Delete Command --->
-													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Comment?">
-														<i id="delete_#comment.getCommentID()#" class="far fa-trash-alt fa-lg"></i> Delete
-													</a>
-												</li>
-												<li>
-													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
-														<i class="far fa-eye fa-lg"></i> View In Site
-													</a>
-												</li>
-									    	</ul>
-									    </div>
+									<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
+										<div class="flex">
+											<!--- Approve/Unapprove --->
+											<cfif !comment.getIsApproved()>
+												<a class="btn btn-icon btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
+											<cfelse>
+												<a class="btn btn-icon btn-sm btn-default" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
+											</cfif>
+											<div class="btn-group">
+												<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+													<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+													<span class="visually-hidden">Actions</span>
+												</button>
+												<ul class="dropdown-menu text-left pull-right">
+													<!--- Edit Command --->
+													<li>
+														<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment">
+															<i class="fas fa-pen fa-lg"></i> Edit
+														</a>
+													</li>
+													<li><!--- Delete Command --->
+														<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Comment?">
+															<i id="delete_#comment.getCommentID()#" class="fa fa-trash fa-lg"></i> Delete
+														</a>
+													</li>
+													<li>
+														<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
+															<i class="fa fa-eye fa-lg"></i> View In Site
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
 									</cfif>
 								</td>
 							</tr>
@@ -251,7 +254,7 @@
 		</div>
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
+		        <h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 		    </div>
 		    <div class="panel-body<cfif rc.isFiltering> selected</cfif>">
 		    	#html.startForm( name="commentFilterForm",action=prc.xehComments, class="form-vertical", method="get" )#

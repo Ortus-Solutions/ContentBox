@@ -35,7 +35,7 @@ component
 	 */
 	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
 		var viewArgs = { menuItem : arguments.menuItem };
-		return variables.renderer.renderView(
+		return variables.renderer.view(
 			view   = "menus/providers/url/admin",
 			module = "contentbox-admin",
 			args   = viewArgs
@@ -53,7 +53,7 @@ component
 			menuItem : arguments.menuItem,
 			data     : arguments.menuItem.getMemento()
 		};
-		return variables.renderer.renderExternalView(
+		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/url/display",
 			module = "contentbox",
 			args   = viewArgs

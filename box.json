@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"5.3.0",
+    "version":"6.0.0",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -24,17 +24,17 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^6.0.0",
+        "coldbox":"^7.0.0",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
-        "commandbox-migrations":"*"
+        "commandbox-migrations":"^4.0.0"
     },
     "devDependencies":{
-        "testbox":"*",
-        "cbdebugger":"^3.0.0",
+        "testbox":"^5.0.0+1",
         "commandbox-cfformat":"*",
         "commandbox-docbox":"*",
-        "route-visualizer":"^1.4.0+24"
+        "cbdebugger":"be",
+        "route-visualizer":"^2.0.0+6"
     },
     "installPaths":{
         "testbox":"testbox/",
@@ -51,37 +51,24 @@
         "dbseed:mysql":"task run contentbox/modules/seeders/MSSQL.cfc",
         "dbseed:mssal":"task run contentbox/modules/seeders/SeedMySQL.cfc",
         "dbseed:postgres":"task run contentbox/modules/seeders/SeedPostgreSQL.cfc",
-        "format":"cfformat run config,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc --overwrite",
-        "format:watch":"cfformat watch config,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc ./.cfformat.json",
-        "format:check":"cfformat check config,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc",
-        "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force --debug",
-        "start:2016":"server start serverConfigFile='server-adobe@2016.json' --force --debug",
-        "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force --debug",
-        "start:2021":"server start serverConfigFile='server-adobe@2021.json' --force --debug",
+        "format":"cfformat run config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc --overwrite",
+        "format:watch":"cfformat watch config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
+        "format:watch:core":"cfformat watch config/**/*.cfc,modules/contentbox/models/**/*.cfc,Application.cfc ./.cfformat.json",
+        "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc",
+        "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force",
+        "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force",
+        "start:2021":"server start serverConfigFile='server-adobe@2021.json' --force",
+        "start:2023":"server start serverConfigFile='server-adobe@2023.json' --force",
         "log:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
-        "log:2016":"server log serverConfigFile=server-adobe@2016.json --follow",
         "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow",
         "log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
-        "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\"' | run",
-        "cfpm:install":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run",
-        "install:2021":"run-script cfpm:install zip,orm,mysql,postgresql,sqlserver,document,feed",
-        "contentbox:install":"install && cd modules/contentbox && install",
-        "contentbox:migrate:create":"migrate create name=${1} migrationsDirectory=modules/contentbox/migrations",
-        "contentbox:migrate":"migrate up migrationsDirectory=modules/contentbox/migrations",
+        "log:2023":"server log serverConfigFile=server-adobe@2023.json --follow",
+        "contentbox:install":"install --force && cd modules/contentbox && install --force",
+        "contentbox:migrate:create":"migrate create name=${1} manager=contentbox",
+        "contentbox:migrate":"migrate up manager=contentbox",
         "contentbox:migrate:up":"run-script contentbox:migrate",
-        "contentbox:migrate:down":"migrate down migrationsDirectory=modules/contentbox/migrations"
-    },
-    "cfmigrations":{
-        "schema":"${DB_DATABASE}",
-        "connectionInfo":{
-            "class":"${DB_CLASS}",
-            "connectionString":"${DB_CONNECTIONSTRING}",
-            "bundleName":"${DB_BUNDLENAME}",
-            "bundleVersion":"${DB_BUNDLEVERSION}",
-            "username":"${DB_USER}",
-            "password":"${DB_PASSWORD}"
-        },
-        "defaultGrammar":"AutoDiscover@qb"
+        "contentbox:migrate:down":"migrate down manager=contentbox",
+        "contentbox:migrate:fresh":"migrate fresh manager=contentbox"
     },
     "testbox":{
         "runner":[

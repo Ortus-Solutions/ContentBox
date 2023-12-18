@@ -27,7 +27,7 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^6.0.0",
+        "coldbox":"^7.0.0+7",
 		"contentbox":"~@version.number@+@build.number@",
 		"commandbox-dotenv":"*",
 		"commandbox-cfconfig":"*",
@@ -39,22 +39,14 @@
     },
     "ignores":[
 	],
-	"cfmigrations":{
-        "schema":"${DB_DATABASE}",
-        "connectionInfo":{
-            "class":"${DB_CLASS}",
-			"connectionString":"${DB_CONNECTIONSTRING}",
-            "bundleName":"${DB_BUNDLENAME}",
-            "bundleVersion":"${DB_BUNDLEVERSION}",
-            "username":"${DB_USER}",
-            "password":"${DB_PASSWORD}"
-        },
-        "defaultGrammar":"AutoDiscover@qb"
-    },
 	"scripts" : {
-		"contentbox:migrate" : "migrate up migrationsDirectory=modules/contentbox/migrations",
+		"contentbox:install":"install --force && cd modules/contentbox && install --force",
+		"contentbox:migrate" : "migrate up manager=contentbox",
 		"contentbox:migrate:up" : "run-script contentbox:migrate",
-		"contentbox:migrate:down" : "migrate down migrationsDirectory=modules/contentbox/migrations",
-        "install:2021":"!cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed"
+		"contentbox:migrate:down" : "migrate down manager=contentbox",
+        "install:2021":"!cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed",
+		"format":"cfformat run config/,handlers/,models/,modules_app/**/*.cfc,Application.cfc --overwrite",
+        "format:watch":"cfformat watch config/,handlers/,models/,modules_app/**/*.cfc,Application.cfc ./.cfformat.json",
+        "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc"
 	}
 }

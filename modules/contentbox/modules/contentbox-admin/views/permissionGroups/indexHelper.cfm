@@ -14,7 +14,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	    "order" 		: []
 	} );
 
-	<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 	$importDialog 	= $( "##importDialog" );
 	</cfif>
 
@@ -29,7 +29,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	);
 } );
 
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 function remove( permissionGroupID ){
 	var $groupForm = $( "##groupForm" );
 	$( "##delete_"+ permissionGroupID).removeClass( "fa-trash-o" ).addClass( "fa fa-spinner fa-spin" );

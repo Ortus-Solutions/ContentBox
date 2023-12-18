@@ -28,7 +28,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "refresh@fb" )# #prc.fbPreferences.listFolder#"
 			>
-				<i class="fas fa-recycle fa-lg"></i>
+				<i class="fa fa-recycle fa-lg"></i>
 			</a>
 			<a
 				href="javascript:fbDrilldown()"
@@ -37,7 +37,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "home@fb" )#"
 			>
-				<i class="fas fa-home fa-lg"></i>
+				<i class="fa fa-home fa-lg"></i>
 			</a>
 		</div>
 
@@ -49,7 +49,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "newFolder@fb" )#"
 			>
-				<i class="fas fa-folder-plus fa-lg"></i>
+				<i class="fa fa-folder-plus fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbRename()"
@@ -58,7 +58,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "rename@fb" )#"
 			>
-				<i class="fas fa-terminal fa-lg"></i>
+				<i class="fa fa-terminal fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbDelete()"
@@ -67,7 +67,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "delete@fb" )#"
 			>
-				<i class="far fa-trash-alt"></i>
+				<i class="fa fa-trash"></i>
 			</a>
 			<a
 				onclick="javascript:fbUpload()"
@@ -76,7 +76,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "upload@fb" )#"
 			>
-				<i class="fas fa-upload fa-lg"></i>
+				<i class="fa fa-upload fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbDownload()"
@@ -85,7 +85,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "download@fb" )#"
 			>
-				<i class="fas fa-download fa-lg"></i>
+				<i class="fa fa-download fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbQuickView()"
@@ -94,7 +94,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "quickview@fb" )#"
 			>
-				<i class="fas fa-camera fa-lg"></i>
+				<i class="fa fa-camera fa-lg"></i>
 			</a>
 		</div>
 
@@ -108,7 +108,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "filelisting@fb" )#"
 			>
-				<i class="fas fa-list fa-lg-ul"></i>
+				<i class="fa fa-list fa-lg-ul"></i>
 			</a>
 			<a
 				id="gridall"
@@ -118,7 +118,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "gridlisting@fb" )#"
 			>
-				<i class="fas fa-th fa-lg"></i>
+				<i class="fa fa-th fa-lg"></i>
 			</a>
 		</div>
 
@@ -133,7 +133,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "directorylistview@fb" )#"
 			>
-				<i class="fas fa-align-justify fa-lg"></i>
+				<i class="fa fa-align-justify fa-lg"></i>
 			</a>
 			<a
 				id="griddir"
@@ -143,7 +143,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "directorygridview@fb" )#"
 			>
-				<i class="fas fa-folder fa-lg"></i>
+				<i class="fa fa-folder fa-lg"></i>
 			</a>
 		</div>
 
@@ -162,7 +162,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div class="form-group pull-right">
 			#html.textField(
 				name 		= "fbQuickFilter",
-				class 		= "form-control quicksearch rounded",
+				class 		= "form-control quicksearch",
 				placeholder = "Quick Filter"
 			)#
 		</div>
@@ -214,7 +214,13 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				</div>
 
 			    <div class="col-md-12">
-					<span id="file_uploader_button" class="btn btn-block btn-primary hidden">Upload</span>
+					<button
+						type="button"
+						id="file_uploader_button"
+						class="btn btn-block btn-primary hidden"
+					>
+						Upload
+					</button>
 				</div>
 
 			</div>
@@ -242,16 +248,11 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<!--- Loader Bar --->
 			<div id="loaderBar" class="size14">
-				<i class="fas fa-circle-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
+				<i class="fa fa-circle-o-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
 			</div>
 
 			<!--- Status Text --->
 			<div id="statusText"></div>
-
-			<!--- Download IFrame --->
-			<cfif prc.fbSettings.allowDownload>
-				<iframe id="downloadIFrame" src="" style="display:none; visibility:hidden;"></iframe>
-			</cfif>
 
 			<!--- Selected Item & Type --->
 			<input type="hidden" name="selectedItem" id="selectedItem" value="">
@@ -290,7 +291,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 </div> <!--- end panel FileBrowser --->
 
 <!--- Image modal preview --->
-#announceInterception( "fb_preQuickViewBar" )#
+#announce( "fb_preQuickViewBar" )#
 <div
 	id="modalPreview"
 	class="modal fade"
@@ -305,7 +306,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="categoryLabel">
-					<i class="fas fa-image"></i> Image preview
+					<i class="fa fa-image"></i> Image preview
 				</h4>
 		    </div>
 			<!--- Create/Edit form --->
@@ -315,20 +316,5 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</div>
 	</div>
 </div>
-#announceInterception( "fb_postQuickViewBar" )#
-
-<!--- Hidden upload iframe --->
-<iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
-<form 	id="upload-form"
-		name="upload-form"
-		enctype="multipart/form-data"
-		method="POST"
-		target="upload-iframe"
-		action="#event.buildLink( prc.xehFBUpload )#"
->
-	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
-	<input type="hidden" name="manual" value="true" />
-</form>
-<!---Cancel: #rc.cancelCallBack#, Choose: #rc.callBack#
-<cfdump var="#flash.getScope()#">--->
+#announce( "fb_postQuickViewBar" )#
 </cfoutput>

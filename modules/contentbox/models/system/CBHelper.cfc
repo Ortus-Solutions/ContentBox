@@ -458,8 +458,6 @@ component accessors="true" singleton threadSafe {
 		prc.cbthemeRoot    = prc.cbThemeRecord.includePath;
 		// Place widgets root location
 		prc.cbWidgetRoot   = prc.cbRoot & "/widgets";
-		// Place current logged in Author if any
-		prc.oCurrentAuthor = variables.securityService.getAuthorSession();
 
 		// announce event
 		this.event( "cbui_preRequest" );
@@ -867,10 +865,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentTitle(){
 		var oCurrentContent = "";
+		var metaTitle       = getMetaTitle();
 
 		// If Meta Title is set Manually, return it
-		if ( len( getMetaTitle() ) ) {
-			return encodeForHTML( getMetaTitle() );
+		if ( len( metaTitle ) ) {
+			return encodeForHTML( metaTitle );
 		}
 
 		// Check if in page view or entry view
@@ -899,10 +898,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentDescription(){
 		var oCurrentContent = "";
+		var metaDescription = getMetaDescription();
 
 		// If Meta Description is set Manually, return it
-		if ( len( getMetaDescription() ) ) {
-			return encodeForHTMLAttribute( getMetaDescription() );
+		if ( len( metaDescription ) ) {
+			return encodeForHTMLAttribute( metaDescription );
 		}
 
 		// Check if in page view or entry view
@@ -912,7 +912,17 @@ component accessors="true" singleton threadSafe {
 			oCurrentContent = getCurrentEntry();
 		}
 
-		// in context view or global
+		// Home Page Rules:
+		// - Page SEO
+		// - Site Description
+		if ( isHomePage() ) {
+			metaDescription = oCurrentContent.getHTMLDescription();
+			return len( metaDescription ) ? encodeForHTMLAttribute( metaDescription ) : encodeForHTMLAttribute(
+				siteDescription()
+			);
+		}
+
+		// Page/Blog Rules
 		if ( isObject( oCurrentContent ) ) {
 			// Do we have current page SEO description set?
 			if ( len( oCurrentContent.getHTMLDescription() ) ) {
@@ -931,7 +941,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// Return global site description as metadata
-		return encodeForHTMLAttribute( trim( siteDescription() ) );
+		return encodeForHTMLAttribute( siteDescription() );
 	}
 
 	/**
@@ -939,10 +949,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentKeywords(){
 		var oCurrentContent = "";
+		var metaKeywords    = getMetaKeywords();
 
 		// If Meta Keywords is set Manually, return it
-		if ( len( getMetaKeywords() ) ) {
-			return encodeForHTMLAttribute( stripWhitespace( getMetaKeywords() ) );
+		if ( len( metaKeywords ) ) {
+			return encodeForHTMLAttribute( stripWhitespace( metaKeywords ) );
 		}
 
 		// Check if in page view or entry view
@@ -950,6 +961,16 @@ component accessors="true" singleton threadSafe {
 			oCurrentContent = getCurrentPage();
 		} else if ( isEntryView() ) {
 			oCurrentContent = getCurrentEntry();
+		}
+
+		// Home Page Rules:
+		// - Page SEO
+		// - Site
+		if ( isHomePage() ) {
+			metaKeywords = stripWhitespace( oCurrentContent.getHTMLKeywords() );
+			return len( metaKeywords ) ? encodeForHTMLAttribute( metaKeywords ) : encodeForHTMLAttribute(
+				siteKeywords()
+			);
 		}
 
 		// in context view or global
@@ -993,9 +1014,10 @@ component accessors="true" singleton threadSafe {
 	function getContentURL(){
 		var oCurrentContent    = "";
 		var oCurrentEntryPoint = "";
+		var metaURL            = getMetaURL();
 
-		if ( len( getMetaURL() ) ) {
-			return getMetaURL();
+		if ( len( metaURL ) ) {
+			return metaURL;
 		}
 
 		// Check if in page view or entry view
@@ -1011,17 +1033,19 @@ component accessors="true" singleton threadSafe {
 		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getslug() ) ) {
 			return siteBaseURL() & oCurrentEntryPoint & oCurrentContent.getslug();
 		}
+
+		return "";
 	}
 
 	/**
 	 * Set the Meta ImageURL for the request
 	 *
-	 * @ImageURL - The new ImageURL
+	 * @imageURL - The new imageURL
 	 */
-	function setMetaImageURL( required string ImageURL ){
+	function setMetaImageURL( required string imageURL ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
-		prc.meta.ImageURL = arguments.ImageURL;
+		prc.meta.imageURL = arguments.imageURL;
 	}
 
 	/**
@@ -1030,8 +1054,8 @@ component accessors="true" singleton threadSafe {
 	function getMetaImageURL(){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
-		if ( structKeyExists( prc.meta, "ImageURL" ) ) {
-			return prc.meta.ImageURL;
+		if ( structKeyExists( prc.meta, "imageURL" ) ) {
+			return prc.meta.imageURL;
 		} else {
 			return "";
 		}
@@ -1042,9 +1066,10 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getContentImageURL(){
 		var oCurrentContent = "";
+		var metaImageUrl    = getMetaImageURL();
 
-		if ( len( getMetaImageURL() ) ) {
-			return getMetaImageURL();
+		if ( len( metaImageURL ) ) {
+			return metaImageURL;
 		}
 
 		// Check if in page view or entry view
@@ -1058,6 +1083,8 @@ component accessors="true" singleton threadSafe {
 		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getFeaturedImageURL() ) ) {
 			return siteBaseURL() & oCurrentContent.getFeaturedImageURL();
 		}
+
+		return "";
 	}
 
 	/**
@@ -1088,8 +1115,10 @@ component accessors="true" singleton threadSafe {
 	 * Get the Content Open Graph Type based on content type
 	 */
 	function getContentOGType(){
-		if ( len( getMetaOGType() ) ) {
-			return getMetaOGType();
+		var metaOGType = getMetaOGType();
+
+		if ( len( metaOGType ) ) {
+			return metaOGType;
 		}
 
 		// Check if in page view or entry view
@@ -1102,8 +1131,6 @@ component accessors="true" singleton threadSafe {
 		return "website";
 	}
 
-
-
 	/**
 	 * getOpenGraphMeta - return Open Graph Facebook friendly meta data
 	 * More information: https://developers.facebook.com/docs/reference/opengraph
@@ -1111,23 +1138,21 @@ component accessors="true" singleton threadSafe {
 	 */
 	function getOpenGraphMeta(){
 		var content         = "";
+		// cfformat-ignore-start
 		savecontent variable="content" {
-			writeOutput( "<meta property=""og:title""              content=""#getContentTitle()#"" />#chr( 10 )#" );
-			writeOutput( "<meta property=""og:type""               content=""#getContentOGType()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:title"" content=""#getContentTitle()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:type"" content=""#getContentOGType()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:description"" content=""#getContentDescription()#"" />#chr( 10 )#" );
+
 			if ( len( getContentURL() ) ) {
-				writeOutput( "<meta property=""og:url""                content=""#getContentURL()#"" />#chr( 10 )#" );
+				writeOutput( "<meta property=""og:url"" content=""#getContentURL()#"" />#chr( 10 )#" );
 			}
-			if ( len( getContentURL() ) ) {
-				writeOutput(
-					"<meta property=""og:description""        content=""#getContentDescription()#"" />#chr( 10 )#"
-				);
-			}
+
 			if ( len( getContentImageURL() ) ) {
-				writeOutput(
-					"<meta property=""og:image""              content=""#getContentImageURL()#"" />#chr( 10 )#"
-				);
+				writeOutput( "<meta property=""og:image"" content=""#getContentImageURL()#"" />#chr( 10 )#" );
 			}
 		}
+		// cfformat-ignore-end
 
 		return content;
 	}
@@ -1829,7 +1854,7 @@ component accessors="true" singleton threadSafe {
 		var entries = getCurrentEntries();
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = entries,
 				collectionAs = arguments.collectionAs,
@@ -1852,7 +1877,7 @@ component accessors="true" singleton threadSafe {
 		var entries = [ getCurrentEntry() ];
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = entries,
 				collectionAs = arguments.collectionAs,
@@ -1877,7 +1902,7 @@ component accessors="true" singleton threadSafe {
 		var categories = getCurrentCategories( argumentCollection = arguments );
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = categories,
 				collectionAs = arguments.collectionAs,
@@ -1900,7 +1925,7 @@ component accessors="true" singleton threadSafe {
 		var relatedContent = getCurrentRelatedContent();
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = relatedContent,
 				collectionAs = arguments.collectionAs,
@@ -1941,7 +1966,7 @@ component accessors="true" singleton threadSafe {
 		var comments = getCurrentComments();
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = comments,
 				collectionAs = arguments.collectionAs,
@@ -1976,8 +2001,8 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
-	 * theme you are using. All the arguments are the same as `renderView()'s` methods
+	 * QuickView is a proxy to ColdBox's view method with the addition of prefixing the location of the view according to the
+	 * theme you are using. All the arguments are the same as `view()'s` methods
 	 *
 	 * @view                   The view in the theme to render
 	 * @cache                  Cache the output or not
@@ -2012,12 +2037,12 @@ component accessors="true" singleton threadSafe {
 	){
 		arguments.view   = "#themeName()#/views/#arguments.view#";
 		arguments.module = themeRecord().module;
-		return controller.getRenderer().renderView( argumentCollection = arguments );
+		return controller.getRenderer().view( argumentCollection = arguments );
 	}
 
 	/**
 	 * QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
-	 * layout theme you are using. All the arguments are the same as renderLayout()'s methods
+	 * layout theme you are using. All the arguments are the same as layout()'s methods
 	 *
 	 * @layout        The layout to render out
 	 * @view          The view to render within this layout
@@ -2035,7 +2060,7 @@ component accessors="true" singleton threadSafe {
 		boolean prePostExempt = false
 	){
 		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
-		return controller.getRenderer().renderLayout( argumentCollection = arguments );
+		return controller.getRenderer().layout( argumentCollection = arguments );
 	}
 
 	/**
@@ -2048,12 +2073,12 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().renderView().
+	 * Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().view().
 	 *
 	 * @args
 	 */
 	function mainView( struct args = structNew() ){
-		return controller.getRenderer().renderView( view = "", args = arguments.args );
+		return controller.getRenderer().view( view = "", args = arguments.args );
 	}
 
 	/************************************** MENUS *********************************************/
@@ -2400,16 +2425,9 @@ component accessors="true" singleton threadSafe {
 
 			if ( !len( arguments.excludes ) OR !listFindNoCase( arguments.excludes, pageResults.content[ x ][ "title" ] ) ) {
 				// Do we need to nest?
-				try {
-					var doNesting = (
-						arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][ "numberOfChildren" ] > 0
-					);
-				} catch ( any e ) {
-					writeDump( var = callStackGet() );
-					writeDump( var = pageResults, top = 5 );
-					writeDump( var = e );
-					abort;
-				}
+				var doNesting = (
+					arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][ "numberOfChildren" ] > 0
+				);
 				// Is element active (or one of its decendants)
 				var isElementActive         = currentPageID eq pageResults.content[ x ][ "contentID" ];
 				var isElementActiveAncestor = (

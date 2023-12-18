@@ -44,6 +44,17 @@ component {
 
 		/**
 		 * --------------------------------------------------------------------------
+		 * Content Template Routing
+		 * --------------------------------------------------------------------------
+		 */
+		resources(
+			resource: "contentTemplates",
+			pattern = "/content-templates",
+			except  : except
+		);
+
+		/**
+		 * --------------------------------------------------------------------------
 		 * Entry Based Routing
 		 * --------------------------------------------------------------------------
 		 */
@@ -62,6 +73,17 @@ component {
 		resources(
 			resource: "entries",
 			pattern = "#siteprefix#/entries",
+			except  : except
+		);
+
+		/**
+		 * --------------------------------------------------------------------------
+		 * Content Relocations
+		 * --------------------------------------------------------------------------
+		 */
+		resources(
+			resource: "relocations",
+			pattern = "#siteprefix#/relocations",
 			except  : except
 		);
 

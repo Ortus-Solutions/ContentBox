@@ -28,38 +28,26 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	boolean function deletePermission( required permissionID ){
 		transaction {
 			// We do SQL deletions as those relationships are not bi-directional
-			// delete role relationships
-			var q = new Query( sql = "delete from cb_rolePermissions where FK_permissionID = :permissionID" );
-			q.addParam(
-				name      = "permissionID",
-				value     = arguments.permissionID,
-				cfsqltype = "varchar"
+
+			queryExecute(
+				"delete from cb_rolePermissions where FK_permissionID = :permissionID",
+				{ "permissionID" : arguments.permissionID }
 			);
-			q.execute();
-			// delete user relationships
-			var q = new Query( sql = "delete from cb_authorPermissions where FK_permissionID = :permissionID" );
-			q.addParam(
-				name      = "permissionID",
-				value     = arguments.permissionID,
-				cfsqltype = "varchar"
+
+			queryExecute(
+				"delete from cb_authorPermissions where FK_permissionID = :permissionID",
+				{ "permissionID" : arguments.permissionID }
 			);
-			q.execute();
-			// delete group permissions now
-			var q = new Query( sql = "delete from cb_groupPermissions where FK_permissionID = :permissionID" );
-			q.addParam(
-				name      = "permissionID",
-				value     = arguments.permissionID,
-				cfsqltype = "varchar"
+
+			queryExecute(
+				"delete from cb_groupPermissions where FK_permissionID = :permissionID",
+				{ "permissionID" : arguments.permissionID }
 			);
-			q.execute();
-			// delete permission now
-			var q = new Query( sql = "delete from cb_permission where permissionID = :permissionID" );
-			q.addParam(
-				name      = "permissionID",
-				value     = arguments.permissionID,
-				cfsqltype = "varchar"
+
+			queryExecute(
+				"delete from cb_permission where permissionID = :permissionID",
+				{ "permissionID" : arguments.permissionID }
 			);
-			q.execute();
 		}
 
 		return true;

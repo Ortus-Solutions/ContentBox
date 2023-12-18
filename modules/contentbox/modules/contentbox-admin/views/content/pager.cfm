@@ -59,7 +59,7 @@
 				<td class="text-center">
 					<cfif thisContent.isExpired()>
 						<i
-							class="fas fa-history fa-lg text-red"
+							class="fa fa-history fa-lg text-red"
 							title="Page has expired on ( (#thisContent.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif thisContent.isPublishedInFuture()>
@@ -69,12 +69,12 @@
 						<span class="hidden">published in future</span>
 					<cfelseif thisContent.isContentPublished()>
 						<i
-							class="far fa-dot-circle fa-lg text-green"
+							class="fa fa-dot-circle fa-lg text-green"
 							title="Page Published"></i>
 						<span class="hidden">published in future</span>
 					<cfelse>
 						<i
-							class="far fa-dot-circle fa-lg text-red"
+							class="fa fa-dot-circle fa-lg text-red"
 							title="Page Draft"></i>
 						<span class="hidden">draft</span>
 					</cfif>
@@ -93,10 +93,10 @@
 				    		data-toggle="dropdown"
 				    		href="##"
 				    		title="Page Actions">
-							<i class="fas fa-ellipsis-v fa-lg"></i>
+							<i class="fa fa-ellipsis-v fa-lg"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
-				    		<cfif prc.oCurrentAuthor.checkPermission( "#prc.contentPager_securityPrefix#_EDITOR,#prc.contentPager_securityPrefix#_ADMIN" )>
+				    		<cfif prc.oCurrentAuthor.hasPermission( "#prc.contentPager_securityPrefix#_EDITOR,#prc.contentPager_securityPrefix#_ADMIN" )>
 								<!--- Edit Command --->
 								<li>
 									<a href="#event.buildLink( prc.xehContentPagerEditor )#/contentID/#thisContent.getContentID()#">
@@ -107,14 +107,14 @@
 							<!--- History Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentPagerHistory )#/contentID/#thisContent.getContentID()#">
-									<i class="fas fa-history fa-lg"></i> History
+									<i class="fa fa-history fa-lg"></i> History
 								</a>
 							</li>
 							<!--- View in Site --->
 							<cfif thisContent.getContentType() neq "contentStore">
 								<li>
 									<a href="#prc.CBHelper.linkContent( thisContent )#" target="_blank">
-										<i class="far fa-eye fa-lg"></i> View In Site
+										<i class="fa fa-eye fa-lg"></i> View In Site
 									</a>
 								</li>
 							</cfif>

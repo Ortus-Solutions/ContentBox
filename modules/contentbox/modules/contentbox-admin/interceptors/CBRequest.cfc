@@ -51,8 +51,6 @@ component extends="coldbox.system.Interceptor" {
 		} else {
 			prc.cbEntryPoint = "";
 		}
-		// Place user in prc
-		prc.oCurrentAuthor   = variables.securityService.getAuthorSession();
 		// Place all sites in prc for usage by the UI switcher
 		prc.allSites         = variables.siteService.getAllFlat( isActive: true );
 		// Get the current working site object on PRC
@@ -102,6 +100,7 @@ component extends="coldbox.system.Interceptor" {
 		prc.xehEntries               = "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntriesEditor         = "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehCategories            = "#prc.cbAdminEntryPoint#.categories";
+		prc.xehTemplates             = "#prc.cbAdminEntryPoint#.contentTemplates";
 		// Content Tab
 		prc.xehPages                 = "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPagesEditor           = "#prc.cbAdminEntryPoint#.pages.editor";

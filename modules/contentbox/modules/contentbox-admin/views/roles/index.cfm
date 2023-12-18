@@ -39,29 +39,29 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "roleFilter",
-									class       = "form-control rounded quicksearch",
+									class       = "form-control quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
 						</div>
 
 						<div class="col-md-6 col-xs-8">
-							<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 								<div class="text-right">
 									<!---Global --->
 									<div class="btn-group">
-										<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+										<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -91,7 +91,7 @@
 
 					<!--- Info Bar --->
 					<div class="alert alert-warning">
-						<i class="fas fa-exclamation-circle fa-lg"></i>
+						<i class="fa fa-exclamation-circle fa-lg"></i>
 						You cannot delete roles that have authors attached to them.  You will need to un-attach those authors from the role first.
 					</div>
 
@@ -100,7 +100,7 @@
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-									<input type="checkbox" onClick="checkAll( this.checked, 'roleID' )"/>
+									<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'roleID' )"/>
 								</th>
 								<th>Role</th>
 								<th width="95" class="text-center">Permissions</th>
@@ -121,7 +121,7 @@
 										value="#role.getRoleID()#" />
 								</td>
 								<td>
-									<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN" )>
 										<a
 											href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getRoleId()#")#"
 											title="Edit #role.getName()#"
@@ -148,20 +148,21 @@
 								<td class="text-center">
 									<!--- Actions --->
 									<div class="btn-group">
-								    	<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-											<i class="fas fa-ellipsis-v fa-lg"></i>
-										</a>
+								    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+											<span class="visually-hidden">Role Actions</span>
+										</button>
 								    	<ul class="dropdown-menu text-left pull-right">
-											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 
 												<!--- Delete Command --->
 												<cfif role.getNumberOfAuthors() eq 0>
 													<li>
 														<a 	href="javascript:remove( '#role.getRoleId()#' )"
 															class="confirmIt"
-															data-title="<i class='far fa-trash-alt'></i> Delete Role?"
+															data-title="<i class='fa fa-trash'></i> Delete Role?"
 														>
-															<i class="far fa-trash-alt fa-lg" id="delete_#role.getRoleId()#"></i> Delete
+															<i class="fa fa-trash fa-lg" id="delete_#role.getRoleId()#"></i> Delete
 														</a>
 													</li>
 												</cfif>
@@ -176,7 +177,7 @@
 											   	</li>
 
 												<!--- Export --->
-												<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+												<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a
 															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.json"
@@ -200,8 +201,8 @@
     </div>
 </div>
 <!--- Import --->
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+	#view(
 		view			= "_tags/dialog/import",
 		args			= {
 			title       : "Import Roles",

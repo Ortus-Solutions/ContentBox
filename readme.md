@@ -49,7 +49,7 @@ And constructed with the following guidelines:
 ## System Requirements
 
 * Lucee 5+
-* Adobe ColdFusion 2016+
+* Adobe ColdFusion 2018+
 
 # ContentBox Installation
 
@@ -76,26 +76,31 @@ install contentbox
 
 ## Collaboration
 
-If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.  
+If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.
 
 You can then go ahead and start an embedded server according to which engine you would like to hack in. Please note that the default CFML engine is a Lucee 5 engine.  You can start any of the following engines:
 
-* `run-script start:2016` - ACF 2016
 * `run-script start:2018` - ACF 2018
+* `run-script start:2021` - ACF 2021
 * `run-script start:lucee` - Lucee 5
-
-You can also stop any server:
-
-* `run-script stop:2016` - ACF 2016
-* `run-script stop:2018` - ACF 2018
-* `run-script stop:lucee` - Lucee 5
 
 You can also tail the logs for each server:
 
-* `run-script log:2016` - ACF 2016
 * `run-script log:2018` - ACF 2018
+* `run-script log:2021` - ACF 2021
 * `run-script log:lucee` - Lucee 5
 
+### Environment Variables
+
+Be sure to setup your environment variables by copying the file .env.template to .env.
+
+### JavaScript Assets
+
+You will need to run the following command to ensure that JavaScript assets are compiled for development.
+
+```bash
+npm run build-dev
+```
 
 ### Test Suites
 

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-key fa-lg"></i>
+        	<i class="fa fa-key fa-lg"></i>
 			Permissions (#arrayLen( prc.permissions )#)
         </h1>
     </div>
@@ -39,7 +39,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name		= "permissionFilter",
-									class		= "form-control rounded quicksearch",
+									class		= "form-control quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>
@@ -47,20 +47,20 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    			<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
@@ -91,7 +91,7 @@
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-									<input type="checkbox" onClick="checkAll( this.checked, 'permissionID' )"/>
+									<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'permissionID' )"/>
 								</th>
 								<th>Permission</th>
 								<th class="text-center">Roles Assigned</th>
@@ -111,7 +111,7 @@
 										value="#permission.getpermissionID()#" />
 								</td>
 								<td>
-									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<a href="javascript:edit(
 										'#permission.getPermissionID()#',
 										'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
@@ -136,15 +136,16 @@
 								</td>
 
 								<td class="text-center">
-									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 										<div class="btn-group">
-											<a
-												class="btn btn-sm btn-default btn-more dropdown-toggle"
+											<button
+												class="btn btn-sm btn-icon btn-more dropdown-toggle"
 												data-toggle="dropdown"
-												href="##"
-												title="Actions">
-												<i class="fas fa-ellipsis-v fa-lg"></i>
-											</a>
+												title="Actions"
+											>
+												<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+												<span class="visually-hidden">Actions</span>
+											</button>
 									    	<ul class="dropdown-menu text-left pull-right">
 									    		<!--- Edit Command --->
 												<li>
@@ -159,7 +160,7 @@
 														<i class="fas fa-pen fa-lg"></i> Edit
 													</a>
 												</li>
-												<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+												<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 													<li>
 														<a
 															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
@@ -175,7 +176,7 @@
 														title="Delete Permission"
 														href="javascript:remove( '#permission.getPermissionID()#' );"
 														data-title="Delete Permission?">
-														<i id="delete_#permission.getPermissionID()#" class="far fa-trash-alt fa-lg"></i> Delete
+														<i id="delete_#permission.getPermissionID()#" class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 									    	</ul>
@@ -191,14 +192,14 @@
 		#html.endForm()#
     </div>
 </div>
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 	<!--- Permissions Editor --->
 	<div id="permissionEditorContainer" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4><i class="fas fa-key"></i> Permission Editor</h4>
+					<h4><i class="fa fa-key"></i> Permission Editor</h4>
 				</div>
 				<!--- Create/Edit form --->
 				#html.startForm(
@@ -249,8 +250,8 @@
 		</div>
 	</div>
 </cfif>
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+	#view(
 		view 		= "_tags/dialog/import",
 		args 		= {
 			title       : "Import Permissions",

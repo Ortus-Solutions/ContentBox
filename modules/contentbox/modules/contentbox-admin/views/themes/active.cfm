@@ -3,14 +3,15 @@
     <div class="col-md-12">
 
 		<div class="pull-right mt10">
-	    	<button class="btn btn-success"
+	    	<button class="btn btn-primary"
 	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#encodeForJavaScript( prc.activeTheme.name )#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
-				<i class="far fa-eye fa-lg"></i> Preview
+					#cbAdminComponent( "ui/Icon", { name : "Eye" } )# 
+					Preview
 			</button>
 		</div>
 
 		<h1 class="h1">
-			<i class="fas fa-swatchbook fa-lg"></i> #encodeForHTML( prc.activeTheme.themeName )#
+			<i class="fa fa-swatchbook fa-lg"></i> #encodeForHTML( prc.activeTheme.themeName )#
 		</h1>
     </div>
 </div>
@@ -44,7 +45,7 @@
 
 				<!--- Version --->
 				<div id="theme-version>">
-					<i class="fas fa-history mr5"></i>
+					<i class="fa fa-history mr5"></i>
 					<strong>Version: </strong>
 					#encodeForHTML( prc.activeTheme.version )#
 				</div>

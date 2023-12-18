@@ -38,7 +38,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	    "order": []
 	} );
 } );
-<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 function changeStatus(status,recordID){
 	$commentForm.attr( "action","#event.buildlink(to=prc.xehCommentstatus)#" );
 	$commentForm.find( "##commentStatus" ).val(status);

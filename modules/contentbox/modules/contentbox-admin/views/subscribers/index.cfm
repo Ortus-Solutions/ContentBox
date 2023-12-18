@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
 		<h1 class="h1">
-			<i class="far fa-star fa-lg"></i> Subscribers
+			<i class="fa fa-star fa-lg"></i> Subscribers
 		</h1>
     </div>
 </div>
@@ -17,11 +17,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
-                <div class="tab-wrapper tab-primary">
+                <div class="tabs">
                     <!-- Tabs -->
                     <ul class="nav nav-tabs" id="contentTypes">
-                        <li class="active">
-                            <a href="##CommentSubscriptions" data-toggle="tab"><i class="fas fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
+                        <li class="nav-item active">
+                            <a href="##CommentSubscriptions" data-toggle="tab" class="nav-link"><i class="fas fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
                         </li>
                     </ul>
                     <!-- End Tabs -->

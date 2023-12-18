@@ -1,0 +1,161 @@
+/******************** Core Color Palette ****************************/
+
+$cb-color-green-kelly-95: #ecf8e4;
+$cb-color-green-kelly-80: #97d669;
+$cb-color-green-kelly-65: #6DBE46; 
+$cb-color-green-kelly-50: #548f27;
+$cb-color-green-kelly-40: #467821;
+$cb-color-green-kelly-30: #39611b;
+$cb-color-green-kelly-10: #1f350f;
+
+$cb-color-midnight-green-95: #eff5f7;
+$cb-color-midnight-green-80: #acc9d3;
+$cb-color-midnight-green-60: #6a9eb1;
+$cb-color-midnight-green-50: #4a89a0;
+$cb-color-midnight-green-40: #29758e;
+$cb-color-midnight-green-30: #085e7c;
+$cb-color-midnight-green-10: #043445;
+
+$cb-color-blue-95: #eaf6fd;
+$cb-color-blue-80: #8dcdf3;
+$cb-color-blue-60: #229fe7;
+$cb-color-blue-50: #1687c9;
+$cb-color-blue-40: #1272a9;
+$cb-color-blue-30: #0f5b88;
+$cb-color-blue-10: #08334d;
+
+$cb-color-blue-grey-95: #f2f4f6;
+$cb-color-blue-grey-90: #d8dde3;
+$cb-color-blue-grey-80: #bdc6cf;
+$cb-color-blue-grey-70: #a3afbc;
+$cb-color-blue-grey-60: #8999aa;
+$cb-color-blue-grey-50: #708397;
+$cb-color-blue-grey-40: #586e86;
+$cb-color-blue-grey-30: #405974;
+$cb-color-blue-grey-20: #284563;
+$cb-color-blue-grey-10: #1a314a;
+
+$cb-color-grey-30: #555454;
+$cb-color-grey-40: #717070;
+$cb-color-grey-80: #d1d1d1;
+$cb-color-grey-90: #e8e8e8;
+$cb-color-grey-95: #f2f2f2;
+
+$cb-color-white: #ffffff;
+
+/******************** Core Size ****************************/
+
+$cb-spacer-xs: .25rem;
+$cb-spacer-sm: .5rem;
+$cb-spacer-md: 1rem;
+$cb-spacer-lg: 1.5rem;
+
+$cb-radius-no: 0rem;
+$cb-radius-xs: .25rem;
+$cb-radius-sm: .5rem;
+$cb-radius-md: 1rem;
+$cb-radius-lg: 1.5rem;
+
+$cb-size-font-base: 1rem; // Assumes the browser default, typically `16px`
+$cb-size-font-sm: $cb-size-font-base * .875;
+$cb-size-font-lg: $cb-size-font-base * 1.25;
+
+$cb-shadow-xs: 0px 2px 6px rgb(  0 0 0 / 0.14 );
+$cb-shadow-sm: 0px 3px 1px -2px rgb(  0 0 0 / 0.2 ), 0px 2px 2px 0px rgb(  0 0 0  / 0.14 ), 0px 1px 5px 0px rgb(  0 0 0 / 0.12 );
+$cb-shadow-sm: 0px 3px 1px -2px rgb(  0 0 0 / 0.2 ), 0px 2px 2px 0px rgb(  0 0 0  / 0.14 ), 0px 1px 5px 0px rgb(  0 0 0 / 0.12 );
+$cb-shadow-md:  0px 2px 4px -1px rgb( 0 0 0 / 0.2), 0px 4px 5px 0px rgb(  0 0 0 / 0.14), 0px 1px 10px 0px rgb(  0 0 0 / 0.12 );
+
+$cb-sidebar-width: 240px;
+$cb-sidebarmini-width: 50px;
+
+/******************** Semantic Color  ****************************/
+
+$cb-color-primary: $cb-color-midnight-green-30;
+$cb-color-primary-weaker: $cb-color-midnight-green-95;
+$cb-color-primary-weak: $cb-color-midnight-green-80;
+$cb-color-primary-strong: $cb-color-midnight-green-10;
+$cb-color-primary-accent: $cb-color-green-kelly-65;
+
+$cb-color-tertiary: $cb-color-green-kelly-40;
+$cb-color-tertiary-weak: $cb-color-green-kelly-80;
+$cb-color-tertiary-strong: $cb-color-green-kelly-10;
+$cb-color-tertiary-weaker: $cb-color-green-kelly-95;
+$cb-color-tertiary-accent: $cb-color-green-kelly-65;
+
+$cb-color-neutral-weak: $cb-color-grey-90;
+
+$cb-color-info-accent: $cb-color-blue-50;
+$cb-color-succes-accent: $cb-color-green-kelly-65;
+
+$cb-color-on-tertiary: $cb-color-green-kelly-95;
+$cb-color-on-primary: $cb-color-midnight-green-95;
+
+$cb-color-fill-tertiary: $cb-color-green-kelly-65;
+$cb-color-fill-primary: $cb-color-midnight-green-50;
+
+$cb-brand-color-primary: $cb-color-green-kelly-65;
+
+$cb-color-border: $cb-color-grey-80;
+$cb-color-font-base: $cb-color-grey-30;
+$cb-color-link: $cb-color-midnight-green-40;
+$cb-color-link-hover: $cb-color-midnight-green-10;
+
+$cb-background-color: $cb-color-blue-grey-95;
+$cb-surface-color: $cb-color-white; 
+
+/******************** Component  ****************************/
+$cb-button-color-filled-bg-primary: $cb-color-primary;
+$cb-button-color-filled-text-primary: $cb-color-white;
+$cb-button-color-tinted-bg-primary: $cb-color-primary-weaker;
+$cb-button-color-tinted-text-primary: $cb-color-primary;
+$cb-button-color-outlined-text-primary: $cb-color-primary;
+$cb-button-color-outlined-border-primary: $cb-color-primary;
+
+$cb-button-font-size: $cb-size-font-base;
+$cb-button-size-border-radius: $cb-radius-xs;
+$cb-button-space-padding-x: $cb-spacer-md;
+$cb-button-space-padding-y: $cb-spacer-sm;
+$cb-dropdown-item-color-hover: $cb-color-primary-weaker;
+
+$cb-card-bg-color: $cb-surface-color;
+$cb-card-border-color: $cb-color-border;
+
+$cb-panel-border-radius: $cb-radius-xs;
+$cb-panel-heading-radius: $cb-radius-xs;
+$cb-panel-heading-bg-default: $cb-color-blue-grey-90;
+$cb-panel-heading-bg-default-collapsed: $cb-color-blue-grey-90;
+$cb-panel-heading-bg-primary: $cb-color-primary-weaker;
+$cb-panel-heading-bg-primary-collapsed: $cb-surface-color;
+$cb-panel-heading-text-onDefault: $cb-color-font-base;
+$cb-panel-heading-text-onPrimary: $cb-color-font-base;
+$cb-panel-heading-text-transform: none;
+
+$cb-tabs-border-radius: $cb-radius-no;
+$cb-tabs-link-color-active: $cb-color-font-base;
+$cb-tabs-link-border-color-active: $cb-color-tertiary-accent;
+   
+$cb-sidebar-color-bg: $cb-surface-color;
+$cb-sidebar-subnav-color-bg: $cb-background-color;
+$cb-sidebar-link-color: $cb-color-font-base;
+$cb-sidebar-link-color-hover: $cb-color-on-primary;
+$cb-sidebar-link-color-bg-hover: $cb-color-primary-strong;
+$cb-sidebar-link-color-bg-active: $cb-color-primary-strong;
+$cb-sidebar-link-color-active: $cb-color-on-primary;
+
+
+   //Colors
+   //$defaultColor:#bdc3c7; //grey
+   $defaultColor: #a4a8aa;
+   $defaultColorHover:lighten($defaultColor,5%); //light grey
+   $primaryColor: $cb-color-primary; //turquoise (main app color)
+   $primaryColorHover:lighten($primaryColor,5%); //light turquoise (main app hover color)
+   $primaryColorLight:lighten($primaryColor,30%); //light turquoise (main app hover color)
+   $successColor:$cb-color-succes-accent; //green
+   $successColorHover:lighten($successColor,5%); //light green
+   $warningColor:#f1c40f; //yellow
+   $warningColorHover:lighten($warningColor,5%); //light yellow
+   $warningBackgroundColor:lighten($warningColor,40%); //very light yellow
+   $infoColor:$cb-color-info-accent; //blue
+   $infoColorHover:lighten($infoColor,5%); //light blue
+   $dangerColor:#e84c3d; //red
+   $dangerColorHover:lighten($dangerColor,5%); //light red

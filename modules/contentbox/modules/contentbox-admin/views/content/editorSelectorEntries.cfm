@@ -44,7 +44,7 @@
 			</td>
 
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableStatus",
 					args : { content : thisContent },
 					prepostExempt : true
@@ -60,7 +60,7 @@
 						'#thisContent.getContentType().lcase()#ssl'
 					)"
 					title="SSL Link">
-					<i class="fas fa-key"></i>
+					<i class="fa fa-key"></i>
 				</button>
 				<button
 					class="btn btn-more btn-sm"

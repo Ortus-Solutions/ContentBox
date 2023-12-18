@@ -5,7 +5,8 @@
     },
     "name":"contentbox-adobe2018",
     "JVM":{
-        "heapSize":"1024"
+        "heapSize":"1024",
+		"args": "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,
@@ -25,5 +26,8 @@
             "disabled":false,
             "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
-    ]
+    ],
+	"cfconfig":{
+        "file":".cfconfig.json"
+    }
 }

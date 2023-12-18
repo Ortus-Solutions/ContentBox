@@ -10,7 +10,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll( this.checked, 'securityRuleID' )"/>
+				<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'securityRuleID' )"/>
 			</th>
 			<th>Security Rule</th>
 			<th width="50" class="text-center">Order Index</th>
@@ -41,13 +41,13 @@
 
 				<cfif rule.getUseSSL()>
 					<span class="label label-danger">
-						<i class="fas fa-key"></i> SSL
+						<i class="fa fa-key"></i> SSL
 					</span>
 				</cfif>
 
 				<div class="mt10">
 					<span title="Securelist">
-						<i class="fas fa-lock"></i>
+						<i class="fa fa-lock"></i>
 						<code>#rule.getSecureList()#</code>
 					</span>
 				</div>
@@ -55,7 +55,7 @@
 				<cfif len( rule.getWhiteList() )>
 					<div class="mt10">
 						<span title="Whitelist">
-							<i class="fas fa-unlock text-green"></i>
+							<i class="fa fa-unlock text-green"></i>
 							<code>#rule.getWhiteList()#</code>
 						</span>
 					</div>
@@ -63,7 +63,7 @@
 
 				<div class="mt10">
 					<span title="Redirect Link">
-						<i class="fas fa-external-link-alt"></i>
+						<i class="fa fa-external-link-alt"></i>
 						<code>#rule.getRedirect()#</code>
 					</span>
 				</div>
@@ -90,15 +90,16 @@
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
-					</a>
+			    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Rule Actions">
+						<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+						<span class="visually-hidden">Rule Actions</span>
+					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li>
-								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Rule?">
-									<i class="far fa-trash-alt fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
+								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">
+									<i class="fa fa-trash fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
 								</a>
 							</li>
 							<!--- Edit Command --->

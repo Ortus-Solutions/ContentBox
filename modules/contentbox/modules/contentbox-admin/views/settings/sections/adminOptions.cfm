@@ -183,7 +183,7 @@
 
 
 <fieldset>
-    <legend><i class="far fa-clone fa-lg"></i>  Paging Options</legend>
+    <legend><i class="fa fa-clone fa-lg"></i>  Paging Options</legend>
 
     <!--- Quick Search --->
     <div class="form-group">

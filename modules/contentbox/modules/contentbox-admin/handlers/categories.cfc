@@ -86,7 +86,7 @@ component extends="baseHandler" {
 		}
 
 		// Pop/Get/Set
-		var oCategory = populateModel( model: variables.categoryService.get( rc.categoryID ), exclude: "categoryID" ).setSite(
+		var oCategory = populate( model: variables.categoryService.get( rc.categoryID ), exclude: "categoryID" ).setSite(
 			prc.oCurrentSite
 		);
 
@@ -190,15 +190,15 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Categories imported sucessfully!" );
+				cbMessageBox().info( "Categories imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehCategories );
 	}

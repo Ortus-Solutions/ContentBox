@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll( this.checked, 'settingID' )"/>
+				<input name="checkAll" type="checkbox" onclick="window.checkAll( this.checked, 'settingID' )"/>
 			</th>
 			<th width="280">Name</th>
 			<th width="80">Site</th>
@@ -59,9 +59,9 @@
 
 			<td class="text-center">
 				<cfif setting.getIsCore()>
-					<i class="far fa-dot-circle text-success" title="Core Setting"></i>
+					<i class="fa fa-dot-circle text-success" title="Core Setting"></i>
 				<cfelse>
-					<i class="far fa-dot-circle text-danger"></i>
+					<i class="fa fa-dot-circle text-danger"></i>
 				</cfif>
 			</td>
 
@@ -70,9 +70,10 @@
 
 					<!--- Actions --->
 					<div class="btn-group btn-group-sm">
-						<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-							<i class="fas fa-ellipsis-v fa-lg"></i>
-						</a>
+						<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Setting Actions">
+							<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+							<span class="visually-hidden">Setting Actions</span>
+						</button>
 						<ul class="dropdown-menu text-left pull-right">
 							<!--- Edit Command --->
 							<li>
@@ -89,7 +90,7 @@
 									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
-							<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/settingID/#setting.getSettingID()#.json" target="_blank">
 										<i class="fas fa-file-export fa-lg"></i> Export
@@ -107,9 +108,9 @@
 										href="javascript:remove( '#setting.getsettingID()#' )"
 										title="Delete Setting"
 								</cfif>
-										data-title="<i class='far fa-trash-alt'></i> Delete Setting?"
+										data-title="<i class='fa fa-trash'></i> Delete Setting?"
 									>
-										<i class="far fa-trash-alt fa-lg" id="delete_#setting.getsettingID()#"></i> Delete
+										<i class="fa fa-trash fa-lg" id="delete_#setting.getsettingID()#"></i> Delete
 									</a>
 							</li>
 						</ul>

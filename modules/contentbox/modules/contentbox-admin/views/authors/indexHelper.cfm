@@ -135,10 +135,10 @@ function contentLoad( criteria ){
 		}
 	);
 }
-<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 function removeAuthor( authorID ){
 	$( "##delete_"+ authorID )
-		.removeClass( "far fa-trash-alt" )
+		.removeClass( "fa fa-trash" )
 		.addClass( "fa fa-spinner fa-spin" );
 	checkAll( false, '##authorID' );
 	$( "##targetAuthorID" ).val( authorID );

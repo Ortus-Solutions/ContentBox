@@ -27,7 +27,7 @@
 						<div class="form-group form-inline no-margin">
 							#html.textField(
 								name        = "moduleFilter",
-								class       = "form-control rounded quicksearch",
+								class       = "form-control quicksearch",
 								placeholder = "Quick Search"
 							)#
 						</div>
@@ -38,16 +38,17 @@
 							<a
 								href="#event.buildLink( prc.xehModuleReset )#"
 								title="Deactivate + Rescan"
-								class="btn btn-primary text-white"
+								class="btn btn-default"
 							>
-								<i class="far fa-hdd"></i> Reset
+								#cbAdminComponent( "ui/Icon", { name : "ArrowUturnLeft" } )#
+								Reset
 							</a>
 							<a
 								href="#event.buildLink( prc.xehModuleRescan )#"
 								title="Scans For New Modules"
 								class="btn btn-primary text-white"
 							>
-								<i class="fas fa-recycle"></i> Rescan
+								<i class="fa fa-recycle"></i> Rescan
 							</a>
 						</div>
 					</div>
@@ -90,9 +91,10 @@
 
 								<td class="text-center">
 									<div class="btn-group">
-										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fas fa-ellipsis-v fa-lg"></i>
-										</a>
+										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Module Actions">
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+											<span class="visually-hidden">Module Actions</span>
+										</button>
 										<ul class="dropdown-menu text-left pull-right">
 											<!--- Check if active --->
 											<cfif module.getIsActive()>
@@ -121,9 +123,9 @@
 														class="confirmIt"
 														title="Delete Module"
 														href="javascript:remove( '#JSStringFormat(module.getName())#' )"
-														data-title="<i class='far fa-trash-alt'></i> Delete #module.getName()#?"
+														data-title="<i class='fa fa-trash'></i> Delete #module.getName()#?"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete
+														<i class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 											</cfif>

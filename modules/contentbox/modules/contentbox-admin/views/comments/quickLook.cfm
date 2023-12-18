@@ -11,7 +11,7 @@
 		    	data-dismiss="modal"
 		    	aria-hidden="true">&times;</button>
 		    <h4>
-				<i class="far fa-comments"></i> Comment Quick Look
+				<i class="fa fa-comments"></i> Comment Quick Look
 			</h4>
 		</div>
 
