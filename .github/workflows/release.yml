@@ -88,17 +88,38 @@ jobs:
           then
             echo "BRANCH=development" >> $GITHUB_ENV
           fi
+          # Env
+          touch .env
+          printf "ENVIRONMENT=development\n" >> .env
+          printf "DB_HOST=127.0.0.1\n" >> .env
+          printf "DB_DATABASE=contentbox\n" >> .env
+          printf "DB_DRIVER=MySQL\n" >> .env
+          printf "DB_USER=${{ env.DB_USER }}\n" >> .env
+          printf "DB_PASSWORD=${{ env.DB_PASSWORD }}\n" >> .env
+          printf "DB_CLASS=com.mysql.cj.jdbc.Driver\n" >> .env
+          printf "DB_BUNDLEVERSION=8.0.24\n" >> .env
+          printf "DB_BUNDLENAME=com.mysql.cj\n" >> .env
+          printf "DB_CONNECTIONSTRING=jdbc:mysql://127.0.0.1:3306/contentbox?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useLegacyDatetimeCode=true\n" >> .env
 
       - name: Download Test Artifacts
         uses: actions/download-artifact@v2
+        if: env.SNAPSHOT == 'true'
         with:
           path: tests/results
 
-      - name: Build Docs
+      - name: Start Docs Server
+        if: env.SNAPSHOT == 'false'
         run: |
-          # Normalize swagger doc results
-          cp -v tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
-          #ls -lR tests/results
+          box server start serverConfigFile="server-lucee@5.json" openBrowser=false saveSettings=false
+
+      - name: Build API Docs
+        run: |
+          # Normalize swagger doc results if they exist
+          if test -f tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json; then
+            cp -v tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
+          else
+            echo "File tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json does not exist"
+          fi
           # Run Docs Build
           box run-script build:allDocs
 
