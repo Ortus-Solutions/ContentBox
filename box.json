@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"6.0.0",
+    "version":"6.0.1",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",

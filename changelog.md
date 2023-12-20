@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * * *
 
 ## [Unreleased]
+### Bugs
+-   [CONTENTBOX-1500](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1500) Defensive coding for permissions migration on new instance
 
 ## [6.0.0] - 2023-12-18
 
