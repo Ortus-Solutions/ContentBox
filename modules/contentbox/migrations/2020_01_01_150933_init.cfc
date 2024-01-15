@@ -48,32 +48,31 @@ component {
 		];
 
 		systemOutput( "Starting to initialize the ContentBox Database, this will take a while...", true );
-		var newDB = false;
 
 		migrations.each( ( migration, record ) => {
 			systemOutput( "Migrating [#migration#]...", true );
 
 			if ( !schema.hasTable( record.table ) ) {
-				newDB = true;
 				systemOutput( "- Table doesn't exist (#record.table#) creating it...", true );
 				new "init.create_#migration#"( ).up( schema, query );
+
+				// Seeding Permissions
+				if ( migration == "permissions" ) {
+					systemOutput( "- Seeding permissions...", true );
+					new init.seed_permissions().seed( schema, query );
+				}
+
+				// Seeding Roles
+				if ( migration == "roles" ) {
+					systemOutput( "- Seeding roles...", true );
+					new init.seed_roles().seed( schema, query );
+				}
 			} else {
 				systemOutput( "√ Table (#record.table#) already exists, skipping...", true );
 			}
 		} );
 
 		systemOutput( "√ Database structure complete", true );
-
-		// Seed the database only if we created the tables
-		// This protects agains seeding an already ran migration
-		if ( newDB ) {
-			systemOutput( "- Database seeding required, starting...", true );
-
-			new init.seed_permissions().seed( schema, query );
-			new init.seed_roles().seed( schema, query );
-
-			systemOutput( "√ Database seeding completed", true );
-		}
 	}
 
 	function down( schema, query ){
