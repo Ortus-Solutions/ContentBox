@@ -57,17 +57,16 @@ component {
 				new "init.create_#migration#"( ).up( schema, query );
 
 				// Seeding Permissions
-				if( migration == "permissions" ){
+				if ( migration == "permissions" ) {
 					systemOutput( "- Seeding permissions...", true );
 					new init.seed_permissions().seed( schema, query );
 				}
 
 				// Seeding Roles
-				if( migration == "roles" ){
+				if ( migration == "roles" ) {
 					systemOutput( "- Seeding roles...", true );
 					new init.seed_roles().seed( schema, query );
 				}
-
 			} else {
 				systemOutput( "√ Table (#record.table#) already exists, skipping...", true );
 			}
