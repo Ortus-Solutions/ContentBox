@@ -124,7 +124,7 @@ jobs:
         if: always()
         with:
           files: tests/results/**/*.xml
-          check_name: "${{ matrix.cfengine }} Test Results"
+          check_name: "${{ matrix.cfengine }} jdk:${{ matrix.jdkVersion }} coldbox:${{ matrix.coldboxVersion }} experimental:${{ matrix.experimental }} Test Results"
 
       - name: Upload Test Results Artifacts
         if: always()
