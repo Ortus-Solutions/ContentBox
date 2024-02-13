@@ -6,7 +6,7 @@
     "name":"contentbox-lucee6",
     "JVM":{
         "heapSize":"1024",
-        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -Dlucee-extensions=D062D72F-F8A2-46F0-8CBC91325B2F067B"
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,
@@ -29,5 +29,8 @@
     ],
     "cfconfig":{
         "file":".cfconfig.json"
+    },
+	"env":{
+        "lucee-extensions":"D062D72F-F8A2-46F0-8CBC91325B2F067B;version=6.4.0"
     }
 }
