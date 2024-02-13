@@ -612,7 +612,7 @@ component
 			} )
 			// Build out array of settings to save
 			.each( function( key, value ){
-				var thisSetting = findWhere( { name : key } );
+				var thisSetting = findWhere( { name : key, site : !isNull( arguments.site ) ? arguments.site : javaCast( "null", "" ) } );
 
 				// Maybe it's a new setting :)
 				if ( isNull( thisSetting ) ) {
