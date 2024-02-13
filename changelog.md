@@ -9,15 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.3] - 2024-02-13
+
 ### Updated
 
-- All github actions
+-   All github actions
 
 ### Bugs
 
-- [CONTENTBOX-1507](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1507) BulkSave not accounting for sites when filtering and saving
-- [CONTENTBOX-1506](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1506) Updated all server.jsons to use \`env\` for the ortus orm extension since the latest lucee build broken extensions via jvm args
-- [CONTENTBOX-1505](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1505) RenderView widget exception when using \`view\(\)\` to render the view
+-   [CONTENTBOX-1507](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1507) BulkSave not accounting for sites when filtering and saving
+-   [CONTENTBOX-1506](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1506) Updated all server.jsons to use \`env\` for the ortus orm extension since the latest lucee build broken extensions via jvm args
+-   [CONTENTBOX-1505](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1505) RenderView widget exception when using \`view()\` to render the view
 
 ## [6.0.2] - 2024-01-15
 
@@ -98,7 +100,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   [CONTENTBOX-1478](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1478) Remove old tuckey urlrewrite.xml as this is now in the CommandBox Core
 -   [CONTENTBOX-1493](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1493) ContentBox Express removed since we now have CommandBox
 
-[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.2...HEAD
+[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.3...HEAD
+
+[6.0.3]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.2...v6.0.3
 
 [6.0.2]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.1...v6.0.2
 
