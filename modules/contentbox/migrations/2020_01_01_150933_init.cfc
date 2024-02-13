@@ -14,11 +14,11 @@ component {
 		var migrations = [
 			"sites"                   : { table : "cb_site" },
 			"settings"                : { table : "cb_setting" },
-			"roles"                   : { table : "cb_role" },
 			"permissions"             : { table : "cb_permission" },
 			"permission_groups"       : { table : "cb_permissionGroup" },
-			"role_permissions"        : { table : "cb_rolePermissions" },
 			"group_permissions"       : { table : "cb_groupPermissions" },
+			"roles"                   : { table : "cb_role" },
+			"role_permissions"        : { table : "cb_rolePermissions" },
 			"author"                  : { table : "cb_author" },
 			"author_permissions"      : { table : "cb_authorPermissions" },
 			"author_permission_groups": { table : "cb_authorPermissionGroups" },
@@ -63,7 +63,7 @@ component {
 				}
 
 				// Seeding Roles
-				if ( migration == "roles" ) {
+				if ( migration == "role_permissions" ) {
 					systemOutput( "- Seeding roles...", true );
 					new init.seed_roles().seed( schema, query );
 				}
