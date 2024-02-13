@@ -115,10 +115,10 @@ jobs:
       - name: Build API Docs
         run: |
           # Normalize swagger doc results if they exist
-          if test -f tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json; then
-            cp -v tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
+          if test -f tests/results/contentbox-test-results-lucee@5-jdk11-experimental-false/contentbox-swagger.json; then
+            cp -v tests/results/contentbox-test-results-lucee@5-jdk11-experimental-false/contentbox-swagger.json tests/results/
           else
-            echo "File tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json does not exist"
+            echo "File tests/results/contentbox-test-results-lucee@5-jdk11-experimental-false/contentbox-swagger.json does not exist"
           fi
           # Run Docs Build
           box run-script build:allDocs
