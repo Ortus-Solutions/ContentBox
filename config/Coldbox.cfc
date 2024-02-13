@@ -159,6 +159,7 @@ component {
 	function development(){
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching          = false;
+		coldbox.debugMode               = true;
 		coldbox.reinitpassword          = "";
 		coldbox.customErrorTemplate     = "/coldbox/system/exceptions/Whoops.cfm";
 
