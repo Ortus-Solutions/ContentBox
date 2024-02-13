@@ -119,18 +119,11 @@ jobs:
         run: |
           curl "http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb" -o "tests/results/contentbox-swagger.json"
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          files: tests/results/**/*.xml
-          check_name: "${{ matrix.cfengine }} Test Results"
-
       - name: Upload Test Results Artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: contentbox-test-results-${{ matrix.cfengine }}
+          name: contentbox-test-results-${{ matrix.cfengine }}-jdk${{ matrix.jdkVersion }}-coldbox${{ matrix.coldboxVersion }}
           path: |
             tests/results/**/*
 
@@ -163,9 +156,29 @@ jobs:
 
       - name: Upload Debugging Info To Artifacts
         if: ${{ failure() && !startsWith( 'pull_request', github.event_name ) }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Failure Debugging Info - ${{ matrix.cfengine }}
+          name: Failure Debugging Info - ${{ matrix.cfengine }} jdk:${{ matrix.jdkVersion }} coldbox:${{ matrix.coldboxVersion }}
           path: |
             .engine/**/logs/*
             .engine/**/WEB-INF/cfusion/logs/*
+
+  # Publish Test Results
+  publish_test_results:
+    name: Publish Test Results
+    needs: tests
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    if: always()
+    steps:
+      # Download the test results
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: artifacts/**/*.xml

@@ -61,7 +61,7 @@ component extends="contentbox.models.ui.BaseWidget" {
 		structDelete( arguments, "event" );
 
 		// Execute rendering
-		return view( argumentCollection = arguments );
+		return this.view( argumentCollection = arguments );
 	}
 
 }
