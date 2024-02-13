@@ -123,7 +123,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: contentbox-test-results-${{ matrix.cfengine }}-jdk${{ matrix.jdkVersion }}-coldbox${{ matrix.coldboxVersion }}
+          name: contentbox-test-results-${{ matrix.cfengine }}
           path: |
             tests/results/**/*
 
