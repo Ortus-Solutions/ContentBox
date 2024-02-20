@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- JS Library Patches
 - [CONTENTBOX-1509](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1509) `featuredImage` URL on initial migration should be nullable
 
 ## [6.0.3] - 2024-02-13
