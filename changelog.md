@@ -107,6 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.2...HEAD
 
+[6.0.3]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.2...v6.0.3
+
 [6.0.2]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.1...v6.0.2
 
 [6.0.1]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.0...v6.0.1
