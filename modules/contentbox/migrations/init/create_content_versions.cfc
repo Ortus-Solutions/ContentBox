@@ -7,7 +7,7 @@ component {
 			table.datetime( "createdDate" ).withCurrent();
 			table.datetime( "modifiedDate" ).withCurrent();
 			table.boolean( "isDeleted" ).default( false );
-
+			// Content Version Columns
 			table.longText( "content" );
 			table.longText( "changelog" ).nullable();
 			table.integer( "version" ).default( 1 );
