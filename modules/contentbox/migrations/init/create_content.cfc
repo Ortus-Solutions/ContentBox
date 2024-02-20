@@ -7,7 +7,7 @@ component {
 			table.datetime( "createdDate" ).withCurrent();
 			table.datetime( "modifiedDate" ).withCurrent();
 			table.boolean( "isDeleted" ).default( false );
-
+			// Content Columns
 			table.string( "contentType" );
 			table.string( "title", 500 );
 			table.string( "slug" );
@@ -24,7 +24,7 @@ component {
 			table.integer( "cacheLastAccessTimeout" ).default( 0 );
 			table.string( "markup", 100 ).default( "HTML" );
 			table.boolean( "showInSearch" ).default( true );
-			table.string( "featuredImage", 500 );
+			table.string( "featuredImage", 500 ).nullable();
 
 			// Relationships
 			table.string( "FK_siteID", 36 );
