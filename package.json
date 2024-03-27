@@ -20,7 +20,7 @@
 		"webpack-cli": "^4.9.2"
 	},
 	"dependencies": {
-		"@alpinejs/focus": "^3.13.5",
+		"@alpinejs/focus": "^3.13.6",
 		"@alpinejs/ui": "^3.10.4-beta.5",
 		"@fortawesome/fontawesome-free": "^5.15.4",
 		"@popperjs/core": "^2.11.8",
