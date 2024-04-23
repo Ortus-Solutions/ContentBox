@@ -1,83 +1,83 @@
 {
-    "name":"ContentBox Tester Site",
-    "version":"6.2.0",
-    "author":"Ortus Solutions <info@ortussolutions.com>",
-    "shortDescription":"A tester site for developing the ContentBox Modular CMS",
-    "type":"cms",
-    "keywords":"cms,content management,modular cms",
-    "homepage":"https://www.contentboxcms.org",
-    "documentation":"https://contentbox.ortusbooks.com",
-    "repository":{
-        "type":"git",
-        "url":"https://github.com/Ortus-Solutions/ContentBox"
-    },
-    "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
-    "license":[
-        {
-            "type":"Apache2",
-            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
-        }
-    ],
-    "contributors":[
-        "Joel Watson <existdissolve@gmail.com>",
-        "Brad Wood <bdw429s@gmail.com>",
-        "Curt Gratz <gratz@computerknowhow.com>"
-    ],
-    "dependencies":{
-        "coldbox":"^7.0.0",
-        "commandbox-dotenv":"*",
-        "commandbox-cfconfig":"*",
-        "commandbox-migrations":"^4.0.0"
-    },
-    "devDependencies":{
-        "testbox":"^5.0.0+1",
-        "commandbox-cfformat":"*",
-        "commandbox-docbox":"*",
-        "cbdebugger":"be",
-        "route-visualizer":"^2.0.0+6"
-    },
-    "installPaths":{
-        "testbox":"testbox/",
-        "coldbox":"coldbox/",
-        "cbdebugger":"modules/cbdebugger/",
-        "route-visualizer":"modules/route-visualizer/"
-    },
-    "ignores":[],
-    "scripts":{
-        "release":"recipe build/release.boxr",
-        "build:allDocs":"task run taskFile=build/BuildDocs.cfc :version=`package show version`",
-        "build:apidocs":"task run taskFile=build/BuildDocs.cfc target=apiDocs :version=`package show version`",
-        "build:swagger":"task run taskFile=build/BuildDocs.cfc target=swagger :version=`package show version`",
-        "dbseed:mysql":"task run contentbox/modules/seeders/MSSQL.cfc",
-        "dbseed:mssal":"task run contentbox/modules/seeders/SeedMySQL.cfc",
-        "dbseed:postgres":"task run contentbox/modules/seeders/SeedPostgreSQL.cfc",
-        "format":"cfformat run config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc --overwrite",
-        "format:watch":"cfformat watch config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
-        "format:watch:core":"cfformat watch config/**/*.cfc,modules/contentbox/models/**/*.cfc,Application.cfc ./.cfformat.json",
-        "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc",
-        "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force",
-        "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force",
-        "start:2021":"server start serverConfigFile='server-adobe@2021.json' --force",
-        "start:2023":"server start serverConfigFile='server-adobe@2023.json' --force",
-        "log:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
-        "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow",
-        "log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
-        "log:2023":"server log serverConfigFile=server-adobe@2023.json --follow",
-        "contentbox:install":"install --force && cd modules/contentbox && install --force",
-        "contentbox:migrate:create":"migrate create name=${1} manager=contentbox",
-        "contentbox:migrate":"migrate up manager=contentbox",
-        "contentbox:migrate:up":"run-script contentbox:migrate",
-        "contentbox:migrate:down":"migrate down manager=contentbox",
-        "contentbox:migrate:fresh":"migrate fresh manager=contentbox"
-    },
-    "testbox":{
-        "runner":[
-            {
-                "default":"http://127.0.0.1:8589/tests/runner.cfm"
-            },
-            {
-                "api":"http://127.0.0.1:8589/tests/runner-api.cfm"
-            }
-        ]
-    }
+	"name": "ContentBox Tester Site",
+	"version": "6.1.0",
+	"author": "Ortus Solutions <info@ortussolutions.com>",
+	"shortDescription": "A tester site for developing the ContentBox Modular CMS",
+	"type": "cms",
+	"keywords": "cms,content management,modular cms",
+	"homepage": "https://www.contentboxcms.org",
+	"documentation": "https://contentbox.ortusbooks.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Ortus-Solutions/ContentBox"
+	},
+	"bugs": "https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+	"license": [
+		{
+			"type": "Apache2",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	],
+	"contributors": [
+		"Joel Watson <existdissolve@gmail.com>",
+		"Brad Wood <bdw429s@gmail.com>",
+		"Curt Gratz <gratz@computerknowhow.com>"
+	],
+	"dependencies": {
+		"coldbox": "^7.0.0",
+		"commandbox-dotenv": "*",
+		"commandbox-cfconfig": "*",
+		"commandbox-migrations": "^4.0.0"
+	},
+	"devDependencies": {
+		"testbox": "^5.0.0+1",
+		"commandbox-cfformat": "*",
+		"commandbox-docbox": "*",
+		"cbdebugger": "be",
+		"route-visualizer": "^2.0.0+6"
+	},
+	"installPaths": {
+		"testbox": "testbox/",
+		"coldbox": "coldbox/",
+		"cbdebugger": "modules/cbdebugger/",
+		"route-visualizer": "modules/route-visualizer/"
+	},
+	"ignores": [],
+	"scripts": {
+		"release": "recipe build/release.boxr",
+		"build:allDocs": "task run taskFile=build/BuildDocs.cfc :version=`package show version`",
+		"build:apidocs": "task run taskFile=build/BuildDocs.cfc target=apiDocs :version=`package show version`",
+		"build:swagger": "task run taskFile=build/BuildDocs.cfc target=swagger :version=`package show version`",
+		"dbseed:mysql": "task run contentbox/modules/seeders/MSSQL.cfc",
+		"dbseed:mssal": "task run contentbox/modules/seeders/SeedMySQL.cfc",
+		"dbseed:postgres": "task run contentbox/modules/seeders/SeedPostgreSQL.cfc",
+		"format": "cfformat run config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc --overwrite",
+		"format:watch": "cfformat watch config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
+		"format:watch:core": "cfformat watch config/**/*.cfc,modules/contentbox/models/**/*.cfc,Application.cfc ./.cfformat.json",
+		"format:check": "cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc",
+		"start:lucee": "server start serverConfigFile='server-lucee@5.json' --force",
+		"start:2018": "server start serverConfigFile='server-adobe@2018.json' --force",
+		"start:2021": "server start serverConfigFile='server-adobe@2021.json' --force",
+		"start:2023": "server start serverConfigFile='server-adobe@2023.json' --force",
+		"log:lucee": "server log serverConfigFile=server-lucee@5.json --follow",
+		"log:2018": "server log serverConfigFile=server-adobe@2018.json --follow",
+		"log:2021": "server log serverConfigFile=server-adobe@2021.json --follow",
+		"log:2023": "server log serverConfigFile=server-adobe@2023.json --follow",
+		"contentbox:install": "install --force && cd modules/contentbox && install --force",
+		"contentbox:migrate:create": "migrate create name=${1} manager=contentbox",
+		"contentbox:migrate": "migrate up manager=contentbox",
+		"contentbox:migrate:up": "run-script contentbox:migrate",
+		"contentbox:migrate:down": "migrate down manager=contentbox",
+		"contentbox:migrate:fresh": "migrate fresh manager=contentbox"
+	},
+	"testbox": {
+		"runner": [
+			{
+				"default": "http://127.0.0.1:8589/tests/runner.cfm"
+			},
+			{
+				"api": "http://127.0.0.1:8589/tests/runner-api.cfm"
+			}
+		]
+	}
 }
