@@ -366,7 +366,7 @@ component {
 
 		// Trim values & XSS Cleanup of fields
 		rc.author      = left( encodeForHTML( trim( rc.author ) ), 100 );
-		rc.authorEmail = left( encodeForHTML( trim( rc.authorEmail ) ), 255 );
+		rc.authorEmail = left( canonicalize( trim( rc.authorEmail ), true, true ), 255 );
 		rc.authorURL   = left( encodeForHTML( trim( rc.authorURL ) ), 255 );
 		rc.content     = encodeForHTML( trim( rc.content ) );
 
