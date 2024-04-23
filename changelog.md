@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.5] - 2024-04-23
+
 ### Fixed
 
-- CONTENTBOX-1510 - Emails being sanitized and invalidated on Comment form submission
+-   CONTENTBOX-1510 - Emails being sanitized and invalidated on Comment form submission
 
 ## [6.0.4] - 2024-02-20
 
@@ -111,7 +113,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   [CONTENTBOX-1478](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1478) Remove old tuckey urlrewrite.xml as this is now in the CommandBox Core
 -   [CONTENTBOX-1493](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1493) ContentBox Express removed since we now have CommandBox
 
-[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.4...HEAD
+[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.5...HEAD
+
+[6.0.5]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.4...v6.0.5
 
 [6.0.4]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.0.3...v6.0.4
 
