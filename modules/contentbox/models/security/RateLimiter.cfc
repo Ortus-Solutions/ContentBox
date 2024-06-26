@@ -8,12 +8,13 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="settingService" inject="id:settingService@contentbox";
-	property name="securityService" inject="id:securityService@contentbox";
+	property name = "settingService" 	inject = "id:settingService@contentbox";
+	property name = "securityService" 	inject = "id:securityService@contentbox";
 	property name = "cachebox"			inject = "Cachebox";
 
 	/**
-	 * Limiter
+	 * onRequestCapture
+	 * fires before any event caching or processing
 	 */
 	function onRequestCapture( event, data, buffer ){
 		var allSettings = variables.settingService.getAllSettings();
@@ -50,11 +51,15 @@ component extends="coldbox.system.Interceptor" {
 		var cache 		= cachebox.getDefaultCache();
 		var cacheKey 	= 'limiter'&realIP;
 
-		// If first time visit, create record.
-		var targetData = cache.get( cacheKey );
-		if( isNull( targetData ) ){
-			cache.set( cacheKey, { attempts = 1, lastAttempt = now() });
-			return this;
+		var targetData = cache.getOrSet( cacheKey, function(){
+				return { attempts = 0, lastAttempt = now() }
+		} );
+
+		// on first visit no further processing
+		if( targetData.attempts == 0 ){
+			targetData.attempts++;
+			cache.set( cacheKey, targetData );
+  			return this;
 		}
 
 		log.debug( "Limit data", targetData );
