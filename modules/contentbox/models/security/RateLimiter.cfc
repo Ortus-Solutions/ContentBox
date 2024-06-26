@@ -8,9 +8,9 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name = "settingService" 	inject = "id:settingService@contentbox";
-	property name = "securityService" 	inject = "id:securityService@contentbox";
-	property name = "cachebox"			inject = "Cachebox";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="securityService" inject="id:securityService@contentbox";
+	property name="cachebox" inject="Cachebox";
 
 	/**
 	 * onRequestCapture
@@ -36,69 +36,79 @@ component extends="coldbox.system.Interceptor" {
 		}
 	}
 
-	/** 
-	* Written by Charlie Arehart, charlie@carehart.org, in 2009, updated 2012, modified by Luis Majano 2016
-	* - Throttles requests made more than "count" times within "duration" seconds from single IP. 
-	* - Duck typed for performance
-	* @count	The throttle counter
-	* @duration	The time in seconds to limit
-	* @event	The request context object
-	* @settings	The settings structure
-	*/
-	private function limiter( count, duration, event, settings ) {
+	/**
+	 * Written by Charlie Arehart, charlie@carehart.org, in 2009, updated 2012, modified by Luis Majano 2016
+	 * - Throttles requests made more than "count" times within "duration" seconds from single IP.
+	 * - Duck typed for performance
+	 *
+	 * @count    The throttle counter
+	 * @duration The time in seconds to limit
+	 * @event    The request context object
+	 * @settings The settings structure
+	 */
+	private function limiter( count, duration, event, settings ){
 		// Get real IP address of requester
-		var realIP 		= variables.securityService.getRealIP();
-		var cache 		= cachebox.getDefaultCache();
-		var cacheKey 	= 'limiter'&realIP;
+		var realIP   = variables.securityService.getRealIP();
+		var cache    = cachebox.getDefaultCache();
+		var cacheKey = "limiter" & realIP;
 
 		var targetData = cache.getOrSet( cacheKey, function(){
-				return { attempts = 0, lastAttempt = now() }
+			return { attempts : 0, lastAttempt : now() }
 		} );
 
 		// on first visit no further processing
-		if( targetData.attempts == 0 ){
+		if ( targetData.attempts == 0 ) {
 			targetData.attempts++;
 			cache.set( cacheKey, targetData );
-  			return this;
+			return this;
 		}
 
 		log.debug( "Limit data", targetData );
-		//log.info( "DateDiff " & dateDiff( "s", targetData.lastAttempt, Now() ) );
-		//log.info( "Within Duration " & dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration );
-		
-		// Are we executing another request withing our duration in seconds? Ex: Has X seconds passed before last attempt
-		if( dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration ){
-			// Limit by count?
-			if( targetData.attempts GT arguments.count ){
+		// log.info( "DateDiff " & dateDiff( "s", targetData.lastAttempt, Now() ) );
+		// log.info( "Within Duration " & dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration );
 
-				if( settings.cb_security_rate_limiter_logging && log.canInfo() ){
+		// Are we executing another request withing our duration in seconds? Ex: Has X seconds passed before last attempt
+		if ( dateDiff( "s", targetData.lastAttempt, now() ) LT arguments.duration ) {
+			// Limit by count?
+			if ( targetData.attempts GT arguments.count ) {
+				if ( settings.cb_security_rate_limiter_logging && log.canInfo() ) {
 					// Log it to app logs
-					log.info( "'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listlen(cgi.http_cookie,";" )#" );
+					log.info( "'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listLen( cgi.http_cookie, ";" )#" );
 				}
-				
+
 				// Log attempt
 				targetData.attempts++;
 				targetData.lastAttempt = now();
 				cache.set( cacheKey, targetData );
 
 				// Do we have a redirect URL setup?
-				if( len( settings.cb_security_rate_limiter_redirectURL ) ){
-					location( settings.cb_security_rate_limiter_redirectURL, "false", "301" );
+				if ( len( settings.cb_security_rate_limiter_redirectURL ) ) {
+					location(
+						settings.cb_security_rate_limiter_redirectURL,
+						"false",
+						"301"
+					);
 					return;
 				}
 
 				// Output Message
-				writeOutput( 
-					replaceNoCase( settings[ "cb_security_rate_limiter_message" ], "{duration}", arguments.duration, "all" ) 
+				writeOutput(
+					replaceNoCase(
+						settings[ "cb_security_rate_limiter_message" ],
+						"{duration}",
+						arguments.duration,
+						"all"
+					)
 				);
-				arguments.event.setHTTPHeader( statusCode="503", statusText="Service Unavailable" )
-					.setHTTPHeader( name="Retry-After", value=arguments.duration );
+				arguments.event
+					.setHTTPHeader( statusCode = "503", statusText = "Service Unavailable" )
+					.setHTTPHeader( name = "Retry-After", value = arguments.duration );
 
 				// No execution anymore.
 				event.noExecution();
 
 				// Hard abort;
-				abort; 
+				abort;
 			} else {
 				// Log attempt
 				targetData.attempts++;
@@ -106,11 +116,12 @@ component extends="coldbox.system.Interceptor" {
 			}
 		} else {
 			// Reset attempts counter, since we are in the safe zone, just log the last attempt timestamp
-				targetData.attempts = 0;
-	       		targetData.lastAttempt = now();
+			targetData.attempts    = 0;
+			targetData.lastAttempt = now();
 		}
 
 		cache.set( cacheKey, targetData );
 		return this;
 	}
+
 }
