@@ -603,7 +603,7 @@ component
 	 */
 	SettingService function bulkSave( struct memento, site ){
 		var settings    = isNull( arguments.site ) ? getAllSettings() : getAllSiteSettings( arguments.site.getSlug() );
-		var siteId 		= arguments.site ?: javacast( "null", 0 );
+		var siteId      = arguments.site ?: javacast( "null", 0 );
 		var newSettings = [];
 
 		arguments.memento
