@@ -603,6 +603,7 @@ component
 	 */
 	SettingService function bulkSave( struct memento, site ){
 		var settings    = isNull( arguments.site ) ? getAllSettings() : getAllSiteSettings( arguments.site.getSlug() );
+		var siteId 		= arguments.site ?: javacast( "null", 0 );
 		var newSettings = [];
 
 		arguments.memento
@@ -614,7 +615,7 @@ component
 			.each( function( key, value ){
 				var thisSetting = findWhere( {
 					name : key,
-					site : !isNull( arguments.site ) ? arguments.site : javacast( "null", "" )
+					site : !isNull( siteId ) ? siteId : javacast( "null", "" )
 				} );
 
 				// Maybe it's a new setting :)
@@ -625,8 +626,8 @@ component
 				thisSetting.setValue( toString( value ) );
 
 				// Site mapping
-				if ( !isNull( site ) ) {
-					thisSetting.setSite( site );
+				if ( !isNull( siteId ) ) {
+					thisSetting.setSite( siteId );
 				}
 
 				newSettings.append( thisSetting );
