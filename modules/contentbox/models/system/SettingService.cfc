@@ -517,6 +517,9 @@ component
 	/**
 	 * Try to find a setting object by site and name
 	 *
+	 * @site The site object, this can be null
+	 * @name The name of the setting
+	 *
 	 * @return The setting object or null
 	 */
 	function findSiteSetting( required site, required name ){
@@ -603,7 +606,6 @@ component
 	 */
 	SettingService function bulkSave( struct memento, site ){
 		var settings    = isNull( arguments.site ) ? getAllSettings() : getAllSiteSettings( arguments.site.getSlug() );
-		var siteId      = arguments.site ?: javacast( "null", 0 );
 		var newSettings = [];
 
 		arguments.memento
@@ -613,10 +615,13 @@ component
 			} )
 			// Build out array of settings to save
 			.each( function( key, value ){
-				var thisSetting = findWhere( {
-					name : key,
-					site : !isNull( siteId ) ? siteId : javacast( "null", "" )
-				} );
+				var thisSetting = "";
+				// Find the setting globally or by site, depending on the context
+				if( isNull( site ) ){
+					thisSetting = findWhere( { name : key } );
+				} else {
+					thisSetting = findSiteSetting( site, key );
+				}
 
 				// Maybe it's a new setting :)
 				if ( isNull( thisSetting ) ) {
@@ -626,8 +631,8 @@ component
 				thisSetting.setValue( toString( value ) );
 
 				// Site mapping
-				if ( !isNull( siteId ) ) {
-					thisSetting.setSite( siteId );
+				if ( !isNull( site ) ) {
+					thisSetting.setSite( site );
 				}
 
 				newSettings.append( thisSetting );
