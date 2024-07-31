@@ -617,7 +617,7 @@ component
 			.each( function( key, value ){
 				var thisSetting = "";
 				// Find the setting globally or by site, depending on the context
-				if( isNull( site ) ){
+				if ( isNull( site ) ) {
 					thisSetting = findWhere( { name : key } );
 				} else {
 					thisSetting = findSiteSetting( site, key );
