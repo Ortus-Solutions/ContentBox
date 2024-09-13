@@ -405,7 +405,8 @@ component extends="baseHandler" {
 			.populate(
 				target  = oContent,
 				memento = rc,
-				exclude = "contentID,siteID"
+				exclude = "contentID,siteID",
+				nullEmptyInclude="expireDate"
 			)
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
