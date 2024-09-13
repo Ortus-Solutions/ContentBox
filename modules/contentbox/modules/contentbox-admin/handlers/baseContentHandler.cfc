@@ -403,10 +403,10 @@ component extends="baseHandler" {
 		var originalSlug = oContent.getSlug();
 		variables.ormService
 			.populate(
-				target  = oContent,
-				memento = rc,
-				exclude = "contentID,siteID",
-				nullEmptyInclude="expireDate"
+				target           = oContent,
+				memento          = rc,
+				exclude          = "contentID,siteID",
+				nullEmptyInclude = "expireDate"
 			)
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
