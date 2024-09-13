@@ -486,7 +486,7 @@ component extends="baseHandler" {
 		);
 
 		// save content
-		variables.ormService.save( oContent, originalSlug );
+		variables.ormService.save( oContent, originalSlug != oContent.getSlug() ? originalSlug : "" );
 
 		// announce event
 		announce(
