@@ -100,7 +100,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				properties = {
 					"slug"           : arguments.originalSlug,
 					"relatedContent" : arguments.contentItem,
-					"site"           : site
+					"site"           : siteId
 				}
 			);
 		} else {
