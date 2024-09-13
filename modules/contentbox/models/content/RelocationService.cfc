@@ -89,7 +89,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @originalSlug the slug which will be relocated
 	 */
 	Relocation function createContentRelocation( required BaseContent contentItem, required string originalSlug ){
-		var siteId       = arguments.contentItem.getSite().getSiteID();
+		var siteId     = arguments.contentItem.getSite().getSiteID();
 		var relocation = newCriteria()
 			.createAlias( "site", "site" )
 			.isEq( "site.siteID", siteId )
