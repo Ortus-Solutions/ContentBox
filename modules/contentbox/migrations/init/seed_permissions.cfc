@@ -196,7 +196,7 @@ component {
 			.from( "cb_permission" )
 			.insert( perms );
 
-		systemOutput( "√ "Permission"s seeded", true );
+		systemOutput( "√ "Permission's seeded", true );
 	}
 
 }
