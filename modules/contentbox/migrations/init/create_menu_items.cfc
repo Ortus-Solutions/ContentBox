@@ -28,7 +28,7 @@ component {
 				.foreignKey( "FK_menuID" )
 				.references( "menuID" )
 				.onTable( "cb_menu" );
-			table.string( "FK_parentID", 36 );
+			table.string( "FK_parentID", 36 ).nullable();
 			table
 				.foreignKey( "FK_parentID" )
 				.references( "menuItemID" )
