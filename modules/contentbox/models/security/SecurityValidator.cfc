@@ -9,7 +9,7 @@
 component
 	singleton
 	threadsafe
-	extends="cbsecurity.models.validators.CBAuthValidator"
+	extends="cbsecurity.models.validators.AuthValidator"
 {
 
 	// Dependencies
