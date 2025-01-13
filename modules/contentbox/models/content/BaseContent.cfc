@@ -330,8 +330,8 @@ component
 		cfc         ="contentbox.models.content.ContentVersion"
 		orderby     ="version desc"
 		fkcolumn    ="FK_contentID"
-		insert	  = false
-		update = false;
+		insert      =false
+		update      =false;
 
 	// M20 -> Parent Page loaded as a proxy
 	property
@@ -1139,19 +1139,23 @@ component
 
 	/**
 	 * Get the latest active version object, empty new one if none assigned
+	 *
+	 * @asString Default false.  When provided as true, a projection list query to retrieve only the string content will be executed
 	 */
 	any function getActiveContent( asString = false ){
 		// If we don't have any versions, send back a new one
 		if ( !hasActiveContentVersion() ) {
 			return arguments.asString ? "" : variables.contentVersionService.new();
-		} else if( arguments.asString ) {
-			var activeContentStruct =  contentVersionService.newCriteria()
-										.isEq( "relatedContent.contentID", getContentID() )
-										.isEq( "isActive", javacast( "boolean", true ) )
-										.withProjections( property="content" )
-										.asStruct()
-										.order( "version", "desc" )
-										.list( max=1 ).first();
+		} else if ( arguments.asString ) {
+			var activeContentStruct = contentVersionService
+				.newCriteria()
+				.isEq( "relatedContent.contentID", getContentID() )
+				.isEq( "isActive", javacast( "boolean", true ) )
+				.withProjections( property = "content" )
+				.asStruct()
+				.order( "version", "desc" )
+				.list( max = 1 )
+				.first();
 			return activeContentStruct[ "content" ];
 		} else {
 			return getActiveContentVersions().first();
