@@ -1176,7 +1176,7 @@ component
 	 * Verify if this content object has an active version with content
 	 */
 	boolean function hasActiveContent(){
-		return !isLoaded() || !hasActiveContentVersion();
+		return isLoaded() && hasActiveContentVersion();
 	}
 
 	/**
