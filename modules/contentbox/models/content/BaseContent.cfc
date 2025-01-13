@@ -1120,18 +1120,7 @@ component
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
 	string function getContent(){
-		var thisContent = getActiveContent().getContent();
-
-		// Check for json and format it for pretty print
-		if ( isJSON( thisContent ) ) {
-			return variables.JSONPrettyPrint.formatJson(
-				json           : thisContent,
-				lineEnding     : chr( 10 ),
-				spaceAfterColon: true
-			);
-		}
-
-		return thisContent;
+		return getActiveContent().getContent();
 	}
 
 	/**
