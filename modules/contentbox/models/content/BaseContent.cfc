@@ -311,13 +311,27 @@ component
 		singularName="contentVersion"
 		fieldtype   ="one-to-many"
 		type        ="array"
-		lazy        ="true"
+		lazy        ="extra"
 		batchsize   ="25"
 		cfc         ="contentbox.models.content.ContentVersion"
 		orderby     ="version desc"
 		fkcolumn    ="FK_contentID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
+
+	property
+		name        ="activeContentVersions"
+		singularName="activeContentVersion"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="extra"
+		where       ="isActive = 1"
+		batchsize   ="2"
+		cfc         ="contentbox.models.content.ContentVersion"
+		orderby     ="version desc"
+		fkcolumn    ="FK_contentID"
+		insert	  = false
+		update = false;
 
 	// M20 -> Parent Page loaded as a proxy
 	property
@@ -1120,34 +1134,28 @@ component
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
 	string function getContent(){
-		return getActiveContent().getContent();
+		return getActiveContent( true );
 	}
 
 	/**
 	 * Get the latest active version object, empty new one if none assigned
 	 */
-	ContentVersion function getActiveContent(){
+	any function getActiveContent( asString = false ){
 		// If we don't have any versions, send back a new one
-		if ( !hasContentVersion() ) {
-			return variables.contentVersionService.new();
+		if ( !hasActiveContentVersion() ) {
+			return arguments.asString ? "" : variables.contentVersionService.new();
+		} else if( arguments.asString ) {
+			var activeContentStruct =  contentVersionService.newCriteria()
+										.isEq( "relatedContent.contentID", getContentID() )
+										.isEq( "isActive", javacast( "boolean", true ) )
+										.withProjections( property="content" )
+										.asStruct()
+										.order( "version", "desc" )
+										.list( max=1 ).first();
+			return activeContentStruct[ "content" ];
+		} else {
+			return getActiveContentVersions().first();
 		}
-
-		// Load up the active content if not set yet
-		if ( isNull( variables.activeContent ) ) {
-			// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
-			for ( var thisVersion in variables.contentVersions ) {
-				if ( thisVersion.getIsActive() ) {
-					variables.activeContent = thisVersion;
-					break;
-				}
-			}
-			// We didn't find one, something is out of sync, return just an empty version
-			if ( isNull( variables.activeContent ) ) {
-				return variables.contentVersionService.new();
-			}
-		}
-
-		return variables.activeContent;
 	}
 
 	/**
@@ -1164,17 +1172,7 @@ component
 	 * Verify if this content object has an active version with content
 	 */
 	boolean function hasActiveContent(){
-		// If we are not persisted, then no exit out.
-		if ( !hasContentVersion() || !isLoaded() ) {
-			return false;
-		}
-		// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
-		for ( var thisVersion in variables.contentVersions ) {
-			if ( thisVersion.getIsActive() ) {
-				return true;
-			}
-		}
-		return false;
+		return !isLoaded() || !hasActiveContentVersion();
 	}
 
 	/**
