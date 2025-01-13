@@ -36,7 +36,6 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_contentID"
 		lazy     ="true"
-		fetch    ="join"
 		orderBy  ="Title ASC";
 
 	/* *********************************************************************

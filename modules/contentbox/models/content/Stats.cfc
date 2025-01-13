@@ -46,8 +46,7 @@ component
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="one-to-one"
 		fkcolumn ="FK_contentID"
-		lazy     ="true"
-		fetch    ="join";
+		lazy     ="true";
 
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS

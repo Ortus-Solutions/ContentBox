@@ -85,7 +85,6 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_contentID"
 		lazy     ="true"
-		fetch    ="join"
 		index    ="idx_contentComment";
 
 	/* *********************************************************************

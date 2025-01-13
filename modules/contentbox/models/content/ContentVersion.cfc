@@ -75,7 +75,6 @@ component
 		cfc      ="contentbox.models.security.Author"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_authorID"
-		lazy     ="true"
 		fetch    ="join";
 
 	// M20 -> relatedContent

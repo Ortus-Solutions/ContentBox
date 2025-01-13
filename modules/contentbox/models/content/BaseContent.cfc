@@ -275,7 +275,6 @@ component
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
-		lazy     ="true"
 		fetch    ="join";
 
 	// O2M -> Comments
@@ -415,9 +414,7 @@ component
 		cfc      ="contentbox.models.content.Stats"
 		fieldtype="one-to-one"
 		mappedBy ="relatedContent"
-		cascade  ="all-delete-orphan"
-		fetch    ="join"
-		lazy     ="true";
+		cascade  ="all-delete-orphan";
 
 	property
 		name     ="contentTemplate"
