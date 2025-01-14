@@ -115,7 +115,6 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
 		lazy     ="true"
-		fetch    ="join"
 		insert   =true
 		update   =false;
 
