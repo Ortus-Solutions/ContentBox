@@ -195,8 +195,6 @@ component {
 			.newQuery()
 			.from( "cb_permission" )
 			.insert( perms );
-
-		systemOutput( "√ "Permission's seeded", true );
 	}
 
 }

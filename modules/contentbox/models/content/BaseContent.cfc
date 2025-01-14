@@ -1146,7 +1146,7 @@ component
 	 */
 	any function getActiveContent( asString = false ){
 		// If we don't have any versions, send back a new one
-		if( variables.keyExists( "activeContent" ) && !isSimpleValue( variables.activeContent ) ){
+		if ( variables.keyExists( "activeContent" ) && !isSimpleValue( variables.activeContent ) ) {
 			return arguments.asString ? variables.activeContent.getContent() : variables.activeContent;
 		} else if ( !isLoaded() || !hasActiveContentVersion() ) {
 			return arguments.asString ? "" : variables.contentVersionService.new();
