@@ -842,6 +842,11 @@ component
 			variables.renderedContent = "";
 			// Add it to the content versions array so it can be saved as part of this content object
 			addContentVersion( oNewVersion );
+
+			// Update our active content versions, even though they are not persisted
+			param variables.activeContentVersions = [];
+			variables.activeContentVersions.clear();
+			addActiveContentVersion( oNewVersion );
 		}
 		return this;
 	}
@@ -1141,7 +1146,9 @@ component
 	 */
 	any function getActiveContent( asString = false ){
 		// If we don't have any versions, send back a new one
-		if ( !hasActiveContentVersion() ) {
+		if( variables.keyExists( "activeContent" ) && !isSimpleValue( variables.activeContent ) ){
+			return arguments.asString ? variables.activeContent.getContent() : variables.activeContent;
+		} else if ( !isLoaded() || !hasActiveContentVersion() ) {
 			return arguments.asString ? "" : variables.contentVersionService.new();
 		} else if ( arguments.asString ) {
 			var activeContentStruct = contentVersionService
@@ -1155,7 +1162,7 @@ component
 				.first();
 			return activeContentStruct[ "content" ];
 		} else {
-			return getActiveContentVersions().first();
+			return getContentVersions().filter( ( version ) => version.getIsActive() ).first();
 		}
 	}
 
