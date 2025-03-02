@@ -23,7 +23,7 @@ component {
 			table.index( [ "isPublic" ], "idx_isPublic" );
 			table.index( [ "slug" ], "idx_categorySlug" );
 			table.index( [ "category" ], "idx_categoryName" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_category_deleted" );
 		} );
 	}
 

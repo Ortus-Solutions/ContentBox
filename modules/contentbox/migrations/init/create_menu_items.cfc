@@ -36,7 +36,7 @@ component {
 
 			// Index
 			table.index( [ "title" ], "idx_menuItemTitle" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_menuitems_deleted" );
 		} );
 	}
 

@@ -29,7 +29,7 @@ component {
 
 			// Indexes
 			table.index( [ "email" ], "idx_email" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_author_deleted" );
 			table.index( [ "isActive" ], "idx_activeAuthor" );
 			table.index( [ "isPasswordReset" ], "idx_passwordReset" );
 			table.index( [ "is2FactorAuth" ], "idx_2factorauth" );

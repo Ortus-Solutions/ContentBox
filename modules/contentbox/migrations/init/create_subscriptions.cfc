@@ -19,7 +19,7 @@ component {
 				.onTable( "cb_subscribers" );
 
 			// Indexes
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_subscriptions_deleted" );
 		} );
 	}
 

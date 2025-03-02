@@ -37,7 +37,7 @@ component {
 				.default( "info" );
 
 			// Indexes
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_securityrules_deleted" );
 		} );
 	}
 
