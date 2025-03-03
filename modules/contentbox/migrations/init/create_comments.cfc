@@ -25,7 +25,7 @@ component {
 			// Indexes
 			table.index( [ "isApproved", "FK_contentID" ], "idx_contentComment" );
 			table.index( [ "isApproved" ], "idx_approved" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_comments_deleted" );
 		} );
 	}
 

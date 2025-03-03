@@ -13,7 +13,7 @@ component {
 
 			// Indexes
 			table.index( [ "subscriberEmail" ], "idx_subscriberEmail" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_subscribers_deleted" );
 		} );
 	}
 

@@ -21,7 +21,7 @@ component {
 
 			// Indexes
 			table.index( [ "isCore" ], "idx_core" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_settings_deleted" );
 		} );
 	}
 

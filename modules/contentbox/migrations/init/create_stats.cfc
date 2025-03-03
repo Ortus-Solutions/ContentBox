@@ -18,7 +18,7 @@ component {
 				.onTable( "cb_content" );
 
 			// Index
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_stats_deleted" );
 		} );
 	}
 
