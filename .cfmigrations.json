@@ -5,13 +5,14 @@
 		"seedsDirectory": "tests/resources/seeds/",
         "properties": {
             "defaultGrammar": "AutoDiscover@qb",
-			"schema" : "${DB_DATABASE}",
+			"schema" : "${DB_SCHEMA}",
             "migrationsTable": "cfmigrations",
             "connectionInfo": {
 				"connectionString": "${DB_CONNECTIONSTRING}",
                 "class": "${DB_CLASS}",
                 "username": "${DB_USER}",
                 "password": "${DB_PASSWORD}",
+				"database" : "${DB_DATABASE}",
                 "bundleName": "${DB_BUNDLENAME}",
                 "bundleVersion": "${DB_BUNDLEVERSION}"
             }
@@ -23,13 +24,14 @@
 		"seedsDirectory": "resources/database/seeds/",
         "properties": {
             "defaultGrammar": "AutoDiscover@qb",
-			"schema" : "${DB_DATABASE}",
+			"schema" : "${DB_SCHEMA}",
             "migrationsTable": "cfmigrations_app",
             "connectionInfo": {
 				"connectionString": "${DB_CONNECTIONSTRING}",
                 "class": "${DB_CLASS}",
                 "username": "${DB_USER}",
                 "password": "${DB_PASSWORD}",
+				"database" : "${DB_DATABASE}",
                 "bundleName": "${DB_BUNDLENAME}",
                 "bundleVersion": "${DB_BUNDLEVERSION}"
             }

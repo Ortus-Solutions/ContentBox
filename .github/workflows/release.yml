@@ -37,7 +37,7 @@ jobs:
   #############################################
   build:
     name: Build & Publish Release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "11"
+          java-version: "21"
 
       - name: Setup CommandBox
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
@@ -59,7 +59,6 @@ jobs:
           box install commandbox-docbox
           cd modules/contentbox && box install --production
 
-      # Focal ships with node 16.x so we need to update to 18
       - name:  Install Node 18
         uses: actions/setup-node@v4
         with:
@@ -115,10 +114,10 @@ jobs:
       - name: Build API Docs
         run: |
           # Normalize swagger doc results if they exist
-          if test -f tests/results/contentbox-test-results-lucee@5-jdk11-coldbox^7-experimental-false/contentbox-swagger.json; then
-            cp -v tests/results/contentbox-test-results-lucee@5-jdk11-coldbox^7-experimental-false/contentbox-swagger.json tests/results/
+          if test -f tests/results/contentbox-test-results-lucee@5-coldbox^7-experimental-false/contentbox-swagger.json; then
+            cp -v tests/results/contentbox-test-results-lucee@5-coldbox^7-experimental-false/contentbox-swagger.json tests/results/
           else
-            echo "File tests/results/contentbox-test-results-lucee@5-jdk11-coldbox^7-experimental-false/contentbox-swagger.json does not exist"
+            echo "File tests/results/contentbox-test-results-lucee@5-coldbox^7-experimental-false/contentbox-swagger.json does not exist"
           fi
           # Run Docs Build
           box run-script build:allDocs

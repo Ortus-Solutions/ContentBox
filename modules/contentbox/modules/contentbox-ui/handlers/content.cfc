@@ -209,10 +209,7 @@ component {
 				// Set cache headers if allowed
 				if ( prc.cbSettings.cb_content_cachingHeader ) {
 					event
-						.setHTTPHeader(
-							statusCode = "203",
-							statustext = "ContentBoxCache Non-Authoritative Information"
-						)
+						.setHTTPHeader( statusCode = "203" )
 						.setHTTPHeader( name = "x-contentbox-cached-content", value = "true" );
 				}
 				// Store hits

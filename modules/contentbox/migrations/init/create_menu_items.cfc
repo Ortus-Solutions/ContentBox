@@ -28,7 +28,7 @@ component {
 				.foreignKey( "FK_menuID" )
 				.references( "menuID" )
 				.onTable( "cb_menu" );
-			table.string( "FK_parentID", 36 );
+			table.string( "FK_parentID", 36 ).nullable();
 			table
 				.foreignKey( "FK_parentID" )
 				.references( "menuItemID" )
@@ -36,7 +36,7 @@ component {
 
 			// Index
 			table.index( [ "title" ], "idx_menuItemTitle" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_menuitems_deleted" );
 		} );
 	}
 

@@ -96,8 +96,7 @@ component
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
-		lazy     ="true"
-		fetch    ="join";
+		lazy     ="true";
 
 	// O2M -> Comments
 	property

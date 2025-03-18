@@ -8,7 +8,7 @@
     },
     "JVM": {
         "heapSize": "768",
-		"args": "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
+		"args": "-Dcom.sun.net.ssl.enableECC=false"
 	},
 	"openBrowserURL" : "/",
     "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
@@ -23,6 +23,6 @@
         "file":".cfconfig.json"
     },
 	"env":{
-        "lucee-extensions":"D062D72F-F8A2-46F0-8CBC91325B2F067B;version=6.4.0"
+        "lucee-extensions":"D062D72F-F8A2-46F0-8CBC91325B2F067B"
     }
 }

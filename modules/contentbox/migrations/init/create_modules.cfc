@@ -24,7 +24,7 @@ component {
 			table.index( [ "entryPoint" ], "idx_entryPoint" );
 			table.index( [ "isActive" ], "idx_activeModule" );
 			table.index( [ "moduleType" ], "idx_moduleType" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_modules_deleted" );
 		} );
 	}
 

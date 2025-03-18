@@ -403,9 +403,10 @@ component extends="baseHandler" {
 		var originalSlug = oContent.getSlug();
 		variables.ormService
 			.populate(
-				target  = oContent,
-				memento = rc,
-				exclude = "contentID,siteID"
+				target           = oContent,
+				memento          = rc,
+				exclude          = "contentID,siteID",
+				nullEmptyInclude = "expireDate"
 			)
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
@@ -486,7 +487,7 @@ component extends="baseHandler" {
 		);
 
 		// save content
-		variables.ormService.save( oContent, originalSlug );
+		variables.ormService.save( oContent, originalSlug != oContent.getSlug() ? originalSlug : "" );
 
 		// announce event
 		announce(

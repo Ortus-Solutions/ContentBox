@@ -33,10 +33,11 @@ component extends="tests.resources.BaseApiTest" {
 			} );
 
 			story( "I want to view a page item by id or slug", function(){
-				given( "an valid id", function(){
+				given( "a valid id", function(){
 					then( "then I should get the requested page", function(){
 						var testContent = variables.pageService.findWhere( { slug : "products" } );
 						var event       = this.get( "/cbapi/v1/sites/default/pages/#testContent.getContentID()#" );
+						// debug( event.getResponse().getData() )
 						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData().slug ).toBe( "products" );
 						expect( event.getResponse().getData() ).toHaveKey(

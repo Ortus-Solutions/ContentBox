@@ -5,8 +5,9 @@
     },
     "name":"contentbox-adobe2023",
     "JVM":{
+		"javaVersion":"openjdk21_jre",
         "heapSize":"1024",
-        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
+        "args":"-Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,

@@ -81,11 +81,7 @@ component singleton {
 		var iData = { mediaPath : prc.mediaPath };
 		announce( "cbui_onInvalidMediaRequest", iData );
 		// Render invalid media
-		event.renderData(
-			data       = "<h1>404: Requested path not found</h1>",
-			statusCode = "404",
-			statusText = "Requested Path Not Found"
-		);
+		event.renderData( data = "<h1>404: Requested path not found</h1>", statusCode = "404" );
 	}
 
 }

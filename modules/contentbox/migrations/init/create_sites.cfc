@@ -32,7 +32,7 @@ component {
 
 			// Indexes
 			table.index( [ "slug" ], "idx_siteSlug" );
-			table.index( [ "isDeleted" ], "idx_deleted" );
+			table.index( [ "isDeleted" ], "idx_sites_deleted" );
 		} );
 	}
 

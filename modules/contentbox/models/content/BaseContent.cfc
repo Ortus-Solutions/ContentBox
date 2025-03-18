@@ -275,7 +275,6 @@ component
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
-		lazy     ="true"
 		fetch    ="join";
 
 	// O2M -> Comments
@@ -311,13 +310,27 @@ component
 		singularName="contentVersion"
 		fieldtype   ="one-to-many"
 		type        ="array"
-		lazy        ="true"
+		lazy        ="extra"
 		batchsize   ="25"
 		cfc         ="contentbox.models.content.ContentVersion"
 		orderby     ="version desc"
 		fkcolumn    ="FK_contentID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
+
+	property
+		name        ="activeContentVersions"
+		singularName="activeContentVersion"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="extra"
+		where       ="isActive = 1"
+		batchsize   ="2"
+		cfc         ="contentbox.models.content.ContentVersion"
+		orderby     ="version desc"
+		fkcolumn    ="FK_contentID"
+		insert      =false
+		update      =false;
 
 	// M20 -> Parent Page loaded as a proxy
 	property
@@ -401,9 +414,7 @@ component
 		cfc      ="contentbox.models.content.Stats"
 		fieldtype="one-to-one"
 		mappedBy ="relatedContent"
-		cascade  ="all-delete-orphan"
-		fetch    ="join"
-		lazy     ="true";
+		cascade  ="all-delete-orphan";
 
 	property
 		name     ="contentTemplate"
@@ -462,6 +473,7 @@ component
 			"cacheLastAccessTimeout",
 			"cacheTimeout",
 			"categoriesArray:categories",
+			"childrenSnapshot:children",
 			"contentID",
 			"contentType",
 			"createdDate",
@@ -474,6 +486,7 @@ component
 			"HTMLTitle",
 			"isPublished",
 			"isDeleted",
+			"linkedContentSnapshot:linkedContent",
 			"lastEditorSnapshot:lastEditor",
 			"markup",
 			"modifiedDate",
@@ -483,21 +496,17 @@ component
 			"numberOfVersions",
 			"parentSnapshot:parent",
 			"publishedDate",
+			"relatedContentSnapshot:relatedContent",
 			"showInSearch",
 			"slug",
 			"siteID",
 			"title"
 		],
 		defaultExcludes : [
-			"children",
 			"comments",
 			"commentSubscriptions",
 			"contentVersions",
 			"contentTemplate",
-			"customFields",
-			"linkedContent",
-			"parent",
-			"relatedContent",
 			"site",
 			"stats"
 		],
@@ -831,6 +840,11 @@ component
 			variables.renderedContent = "";
 			// Add it to the content versions array so it can be saved as part of this content object
 			addContentVersion( oNewVersion );
+
+			// Update our active content versions, even though they are not persisted
+			param variables.activeContentVersions = [];
+			variables.activeContentVersions.clear();
+			addActiveContentVersion( oNewVersion );
 		}
 		return this;
 	}
@@ -1120,45 +1134,34 @@ component
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
 	string function getContent(){
-		var thisContent = getActiveContent().getContent();
-
-		// Check for json and format it for pretty print
-		if ( isJSON( thisContent ) ) {
-			return variables.JSONPrettyPrint.formatJson(
-				json           : thisContent,
-				lineEnding     : chr( 10 ),
-				spaceAfterColon: true
-			);
-		}
-
-		return thisContent;
+		return getActiveContent( true );
 	}
 
 	/**
 	 * Get the latest active version object, empty new one if none assigned
+	 *
+	 * @asString Default false.  When provided as true, a projection list query to retrieve only the string content will be executed
 	 */
-	ContentVersion function getActiveContent(){
+	any function getActiveContent( asString = false ){
 		// If we don't have any versions, send back a new one
-		if ( !hasContentVersion() ) {
-			return variables.contentVersionService.new();
+		if ( variables.keyExists( "activeContent" ) && !isSimpleValue( variables.activeContent ) ) {
+			return arguments.asString ? variables.activeContent.getContent() : variables.activeContent;
+		} else if ( !isLoaded() || !hasActiveContentVersion() ) {
+			return arguments.asString ? "" : variables.contentVersionService.new();
+		} else if ( arguments.asString ) {
+			var activeContentStruct = contentVersionService
+				.newCriteria()
+				.isEq( "relatedContent.contentID", getContentID() )
+				.isEq( "isActive", javacast( "boolean", true ) )
+				.withProjections( property = "content" )
+				.asStruct()
+				.order( "version", "desc" )
+				.list( max = 1 )
+				.first();
+			return activeContentStruct[ "content" ];
+		} else {
+			return getContentVersions().filter( ( version ) => version.getIsActive() ).first();
 		}
-
-		// Load up the active content if not set yet
-		if ( isNull( variables.activeContent ) ) {
-			// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
-			for ( var thisVersion in variables.contentVersions ) {
-				if ( thisVersion.getIsActive() ) {
-					variables.activeContent = thisVersion;
-					break;
-				}
-			}
-			// We didn't find one, something is out of sync, return just an empty version
-			if ( isNull( variables.activeContent ) ) {
-				return variables.contentVersionService.new();
-			}
-		}
-
-		return variables.activeContent;
 	}
 
 	/**
@@ -1175,17 +1178,7 @@ component
 	 * Verify if this content object has an active version with content
 	 */
 	boolean function hasActiveContent(){
-		// If we are not persisted, then no exit out.
-		if ( !hasContentVersion() || !isLoaded() ) {
-			return false;
-		}
-		// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
-		for ( var thisVersion in variables.contentVersions ) {
-			if ( thisVersion.getIsActive() ) {
-				return true;
-			}
-		}
-		return false;
+		return isLoaded() && hasActiveContentVersion();
 	}
 
 	/**

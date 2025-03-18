@@ -1,12 +1,13 @@
 {
     "app":{
-        "cfengine":"lucee@6-SNAPSHOT",
-        "serverHomeDirectory":".engines/lucee-be"
+        "cfengine":"adobe@2025",
+        "serverHomeDirectory":".engines/acf2025"
     },
-    "name":"contentbox-lucee-be",
+    "name":"contentbox-adobe2025",
     "JVM":{
-        "args" : "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false",
-        "heapSize":"1024"
+		"javaVersion":"openjdk21_jre",
+        "heapSize":"1024",
+        "args":"-Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,
@@ -27,10 +28,10 @@
             "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
     ],
+    "scripts":{
+        "onServerInstall":"cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed,mail,debugger"
+    },
 	"cfconfig":{
         "file":".cfconfig.json"
-    },
-	"env":{
-        "lucee-extensions":"D062D72F-F8A2-46F0-8CBC91325B2F067B;version=6.4.0"
     }
 }

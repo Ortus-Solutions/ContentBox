@@ -117,7 +117,6 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_menuID"
 		lazy     ="true"
-		fetch    ="join"
 		notnull  ="true";
 
 	// M20 - Parent Menu item
@@ -126,7 +125,6 @@ component
 		cfc      ="BaseMenuItem"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_parentID"
-		fetch    ="join"
 		lazy     ="true";
 
 	// O2M - Child Menu Item
