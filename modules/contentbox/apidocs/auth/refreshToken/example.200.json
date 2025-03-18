@@ -83,7 +83,6 @@
 	"jsonQueryFormat": "query",
 	"contentType": "",
 	"statusCode": 400,
-	"statusText": "Missing refresh token",
 	"responsetime": 1,
 	"headers": [
 		{

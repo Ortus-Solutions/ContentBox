@@ -23,7 +23,6 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 				.getResponse()
 				.setError( true )
 				.setStatusCode( arguments.event.STATUS.NOT_FOUND )
-				.setStatusText( "The site requested doesn't exist" )
 				.addMessage( "The site requested doesn't exist" );
 			return;
 		}

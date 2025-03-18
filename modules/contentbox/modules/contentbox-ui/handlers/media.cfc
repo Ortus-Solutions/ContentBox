@@ -83,8 +83,7 @@ component singleton {
 		// Render invalid media
 		event.renderData(
 			data       = "<h1>404: Requested path not found</h1>",
-			statusCode = "404",
-			statusText = "Requested Path Not Found"
+			statusCode = "404"
 		);
 	}
 

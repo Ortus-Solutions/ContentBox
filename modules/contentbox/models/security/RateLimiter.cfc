@@ -101,7 +101,7 @@ component extends="coldbox.system.Interceptor" {
 					)
 				);
 				arguments.event
-					.setHTTPHeader( statusCode = "503", statusText = "Service Unavailable" )
+					.setHTTPHeader( statusCode = "503" )
 					.setHTTPHeader( name = "Retry-After", value = arguments.duration );
 
 				// No execution anymore.
