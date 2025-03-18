@@ -5,6 +5,7 @@
     },
     "name":"contentbox-adobe2021",
     "JVM":{
+		"javaVersion":"openjdk11_jre",
         "heapSize":"1024",
         "args":"-Dcom.sun.net.ssl.enableECC=false"
     },
