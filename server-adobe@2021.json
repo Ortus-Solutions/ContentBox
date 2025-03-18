@@ -6,7 +6,7 @@
     "name":"contentbox-adobe2021",
     "JVM":{
         "heapSize":"1024",
-        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
+        "args":"-Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,

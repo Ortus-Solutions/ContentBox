@@ -8,7 +8,7 @@
     },
     "JVM": {
         "heapSize": "768",
-		"args": "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
+		"args": "-Dcom.sun.net.ssl.enableECC=false"
 	},
 	"openBrowserURL" : "/",
     "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
