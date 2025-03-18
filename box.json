@@ -31,6 +31,7 @@
 		"testbox": "^5.0.0+1",
 		"commandbox-boxlang": "*",
 		"commandbox-cfformat": "*",
+		"commandbox-cfconfig" : "*",
 		"commandbox-docbox": "*",
 		"cbdebugger": "*",
 		"route-visualizer": "*"
