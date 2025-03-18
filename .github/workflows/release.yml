@@ -37,7 +37,7 @@ jobs:
   #############################################
   build:
     name: Build & Publish Release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "11"
+          java-version: "21"
 
       - name: Setup CommandBox
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
@@ -59,7 +59,6 @@ jobs:
           box install commandbox-docbox
           cd modules/contentbox && box install --production
 
-      # Focal ships with node 16.x so we need to update to 18
       - name:  Install Node 18
         uses: actions/setup-node@v4
         with:
