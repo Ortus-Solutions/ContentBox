@@ -37,7 +37,7 @@ component extends="tests.resources.BaseApiTest" {
 					then( "then I should get the requested page", function(){
 						var testContent = variables.pageService.findWhere( { slug : "products" } );
 						var event       = this.get( "/cbapi/v1/sites/default/pages/#testContent.getContentID()#" );
-						//debug( event.getResponse().getData() )
+						// debug( event.getResponse().getData() )
 						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData().slug ).toBe( "products" );
 						expect( event.getResponse().getData() ).toHaveKey(
@@ -137,7 +137,7 @@ component extends="tests.resources.BaseApiTest" {
 								}
 							);
 							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
-							//debug( event.getResponse().getData() );
+							// debug( event.getResponse().getData() );
 							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
 							expect( event.getResponse().getData().excerpt ).toInclude( "bdd" );
