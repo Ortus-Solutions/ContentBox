@@ -5,7 +5,7 @@
     },
     "name":"contentbox-lucee5",
     "JVM":{
-		"javaVersion":"openjdk11_jre",
+        "javaVersion":"openjdk11_jre",
         "heapSize":"1024",
         "args":"-Dcom.sun.net.ssl.enableECC=false"
     },
