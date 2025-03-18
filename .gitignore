@@ -23,7 +23,7 @@ build/dependencies
 config/logs/**
 
 # Engines + Docker Libraries
-.engines
+.engines/**
 bin/.db/**
 tests/resources/dbs/.db/**
 

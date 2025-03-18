@@ -46,10 +46,6 @@ jobs:
             coldboxVersion: "be"
             jdkVersion: "21"
             experimental: true
-          - cfengine: "adobe@2025"
-            coldboxVersion: "be"
-            jdkVersion: "21"
-            experimental: true
 
     steps:
       - name: Checkout Repository

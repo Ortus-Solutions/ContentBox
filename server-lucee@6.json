@@ -1,11 +1,11 @@
 {
     "app":{
-		"cfengine":"lucee@6",
-        "serverHomeDirectory":".engine/lucee6"
+        "cfengine":"lucee@6",
+        "serverHomeDirectory":".engines/lucee6"
     },
     "name":"contentbox-lucee6",
     "JVM":{
-		"javaVersion":"openjdk21_jre",
+        "javaVersion":"openjdk21_jre",
         "heapSize":"1024",
         "args":"-Dcom.sun.net.ssl.enableECC=false"
     },
@@ -31,7 +31,7 @@
     "cfconfig":{
         "file":".cfconfig.json"
     },
-	"env":{
+    "env":{
         "lucee-extensions":"D062D72F-F8A2-46F0-8CBC91325B2F067B"
     }
 }
