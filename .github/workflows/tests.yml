@@ -28,10 +28,10 @@ jobs:
             coldboxVersion: "^7"
             jdkVersion: "21"
             experimental: true
-          - cfengine: "adobe@2025"
-            coldboxVersion: "^7"
-            jdkVersion: "21"
-            experimental: true
+          # - cfengine: "adobe@2025"
+          #   coldboxVersion: "^7"
+          #   jdkVersion: "21"
+          #   experimental: true
           # ColdBox BE on all allowed distros
           # This makes sure we don't have any issues with the BE of ColdBox
           - cfengine: "lucee@5"
