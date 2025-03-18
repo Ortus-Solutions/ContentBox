@@ -142,11 +142,10 @@ component
 				useTLS    : settings.cb_site_mail_tls,
 				useSSL    : settings.cb_site_mail_ssl
 			);
-
 			mail.setBody(
 				variables.renderer.layout(
 					layout = "/contentbox/email_templates/layouts/email",
-					view   = "/contentbox-email-twofactor/emails/verification"
+					view   = "contentbox-email-twofactor/emails/verification"
 				)
 			);
 

@@ -560,7 +560,7 @@ component
 		mail.setBody(
 			variables.renderer.layout(
 				layout = "/contentbox/email_templates/layouts/email",
-				view   = "/contentbox/email_templates/author_welcome"
+				view   = "contentbox/email_templates/author_welcome"
 			)
 		);
 
