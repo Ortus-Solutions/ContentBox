@@ -31,12 +31,14 @@ component {
 				domain              : "",
 				// Use encryption of values
 				useEncryption       : false,
+				// The encryption key to use for the encryption
+				encryptionKey : generateSecretKey( "AES", "128" ),
 				// The unique seeding key to use: keep it secret, keep it safe
-				encryptionSeed      : "",
+				encryptionSeed      : "cbstorages",
 				// The algorithm to use: https://cfdocs.org/encrypt
-				encryptionAlgorithm : "BLOWFISH",
+				encryptionAlgorithm : "AES",
 				// The encryption encoding to use
-				encryptionEncoding  : "HEX"
+				encryptionEncoding  : "Base64"
 			}
 		};
 	}
