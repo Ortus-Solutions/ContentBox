@@ -320,17 +320,7 @@ component
 
 	property
 		name        ="activeContentVersions"
-		singularName="activeContentVersion"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="extra"
-		where       ="isActive = 1"
-		batchsize   ="2"
-		cfc         ="contentbox.models.content.ContentVersion"
-		orderby     ="version desc"
-		fkcolumn    ="FK_contentID"
-		insert      =false
-		update      =false;
+		persistent  = "false";
 
 	// M20 -> Parent Page loaded as a proxy
 	property
@@ -811,13 +801,6 @@ component
 	){
 		// lock it for new content creation to avoid version overlaps
 		lock name="contentbox.addNewContentVersion.#getSlug()#" type="exclusive" timeout="10" throwOnTimeout=true {
-			// get a new version object with our incoming content + relationships
-			var oNewVersion = variables.contentVersionService.new( {
-				content        : arguments.content,
-				changelog      : arguments.changelog,
-				author         : arguments.author,
-				relatedContent : this
-			} );
 
 			// Do we already have an active version?
 			if ( hasActiveContent() ) {
@@ -826,8 +809,16 @@ component
 					maxContentVersionChecks();
 				}
 				// deactive the curent version, we do it after in case the content versions check kick off a transaction
-				getActiveContent().setIsActive( false );
+				getContentVersions().filter( ( version ) => version.getIsActive() ).each( ( version ) => version.setIsActive( false ) );
 			}
+
+			// get a new version object with our incoming content + relationships
+			var oNewVersion = variables.contentVersionService.new( {
+				content        : arguments.content,
+				changelog      : arguments.changelog,
+				author         : arguments.author,
+				relatedContent : this
+			} );
 
 			// Get the latest content version, to increase the new version number, collection is ordered by 'version' descending
 			if ( hasContentVersion() ) {
@@ -844,7 +835,7 @@ component
 			// Update our active content versions, even though they are not persisted
 			param variables.activeContentVersions = [];
 			variables.activeContentVersions.clear();
-			addActiveContentVersion( oNewVersion );
+			variables.activeContentVersions.append( oNewVersion );
 		}
 		return this;
 	}
@@ -1146,7 +1137,7 @@ component
 		// If we don't have any versions, send back a new one
 		if ( variables.keyExists( "activeContent" ) && !isSimpleValue( variables.activeContent ) ) {
 			return arguments.asString ? variables.activeContent.getContent() : variables.activeContent;
-		} else if ( !isLoaded() || !hasActiveContentVersion() ) {
+		} else if ( !isLoaded() ) {
 			return arguments.asString ? "" : variables.contentVersionService.new();
 		} else if ( arguments.asString ) {
 			var activeContentStruct = contentVersionService
@@ -1160,8 +1151,13 @@ component
 				.first();
 			return activeContentStruct[ "content" ];
 		} else {
-			return getContentVersions().filter( ( version ) => version.getIsActive() ).first();
+			var activeVersions = getContentVersions().filter( ( version ) => version.getIsActive() );
+			return activeVersions.len() ? activeVersions.first() : variables.contentVersionService.new();
 		}
+	}
+
+	function hasActiveContentVersion(){
+		return ( isLoaded() && hasContentVersion() && getActiveContent().getIsActive() );
 	}
 
 	/**
