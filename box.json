@@ -26,13 +26,19 @@
     "dependencies":{
         "coldbox":"be",
         "commandbox-migrations":"^5.0.0"
+        "coldbox":"be",
+        "commandbox-migrations":"^5.0.0"
     },
     "devDependencies":{
         "testbox":"^5.0.0+1",
         "commandbox-boxlang":"*",
+        "commandbox-boxlang":"*",
         "commandbox-cfformat":"*",
         "commandbox-cfconfig":"*",
+        "commandbox-cfconfig":"*",
         "commandbox-docbox":"*",
+        "cbdebugger":"*",
+        "route-visualizer":"*"
         "cbdebugger":"*",
         "route-visualizer":"*"
     },
@@ -54,6 +60,7 @@
         "format":"cfformat run config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc --overwrite",
         "format:watch":"cfformat watch config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
         "format:watch:core":"cfformat watch config/**/*.cfc,modules/contentbox/models/**/*.cfc,Application.cfc ./.cfformat.json",
+        "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
         "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc ./.cfformat.json",
         "contentbox:install":"install --force && cd modules/contentbox && install --force",
         "contentbox:migrate:create":"migrate create name=${1} manager=contentbox",
