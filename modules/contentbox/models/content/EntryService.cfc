@@ -169,13 +169,13 @@ component extends="ContentService" singleton {
 		// we use HQL so we can be DB independent using the map() hql function thanks to John Wish, you rock!
 		var hql = "SELECT new map( count(*) as count, YEAR(publishedDate) as year, MONTH(publishedDate) as month )
 				   FROM cbEntry
-				  WHERE isPublished = true
+				  WHERE isPublished = :isPublished
 				    AND passwordProtection = ''
 				    AND publishedDate <= :now
 				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
 				  ORDER BY 2 DESC, 3 DESC";
 		// run report
-		return executeQuery( query = hql, params = { "now" : now() } );
+		return executeQuery( query = hql, params = { "isPublished" : true, "now" : now() } );
 	}
 
 	/**
@@ -202,10 +202,10 @@ component extends="ContentService" singleton {
 	){
 		var results = {};
 		var hql     = "FROM cbEntry
-				  WHERE isPublished = true
+				  WHERE isPublished = :isPublished
 				    AND passwordProtection = ''
 				    AND publishedDate <= :now";
-		var params      = {};
+		var params      = { "isPublished" : true };
 		params[ "now" ] = now();
 
 		// Site
