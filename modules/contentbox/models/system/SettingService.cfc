@@ -77,6 +77,8 @@ component
 		"cb_security_2factorAuth_trusted_days"  : "30",
 		"cb_security_login_signout_url"         : "",
 		"cb_security_login_signin_text"         : "",
+		"cb_security_limit_sites_by_author"     : "false",
+		"cb_security_all_sites_permission"      : "_ALL_SITES",
 		// Admin settings
 		"cb_admin_ssl"                          : "false",
 		"cb_admin_quicksearch_max"              : "5",

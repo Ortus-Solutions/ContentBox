@@ -4,6 +4,7 @@
 ( () => {
 	$permissionForm = $( "##permissionForm" );
 	$groupsForm 	= $( "##groupsForm" );
+	$siteForm       = $( "##siteForm" )
 } )();
 <cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 function addPermissions(){
@@ -70,6 +71,40 @@ function removePermissionGroup( permissionGroupID ){
 		function(){
 			$( "##groupsLoader" ).slideUp();
 			// load permissions via container
+			loadPermissions();
+		}
+	);
+}
+function addSite(){
+	// loader
+	$( "##siteLoader" ).slideDown();
+	// Assign it
+	$.post(
+		'#event.buildLink( prc.xehSiteSave )#',
+		{
+			authorID : '#rc.authorID#',
+			siteID	 : $siteForm.find( "##siteID" ).val()
+		},
+		function(){
+			$( "##siteLoader" ).slideUp();
+			// load permissions via container
+			loadPermissions();
+		}
+	);
+}
+function removeSite( siteID ){
+	// loader
+	$( "##siteLoader" ).slideDown();
+	// Assign it
+	$.post(
+		'#event.buildLink( prc.xehSiteRemove )#',
+		{
+			authorID : '#rc.authorID#',
+			siteID	 : siteID
+		},
+		function(){
+			$( "##siteLoader" ).slideUp();
+			/// load permissions via container
 			loadPermissions();
 		}
 	);

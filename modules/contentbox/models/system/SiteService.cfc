@@ -210,6 +210,41 @@ component
 	}
 
 	/**
+	 * Site Security
+	 * Get an array/struct representation of sites available to the current user [ON site.siteID = author.FK_siteID]
+	 *
+	 * @authorId the author to get the authorised sites for
+	 * @isActive If passed, bind via this boolean flag 
+	 *
+	 * @return array of { siteID, name, slug, domainRegex, domainAliases, isActive }
+	 */
+	array function getAuthorSitesFlat( required string authorID, boolean isActive ){
+		return executeQuery(
+			query: "
+				SELECT site.siteID,
+				       site.name,
+				       site.slug,
+				       site.domainRegex,
+				       site.domainAliases,
+				       site.isActive
+				FROM cbSite site JOIN site.authors authors  
+				WHERE authors.authorID = :authorID
+			",
+			params: { "authorID" : arguments.authorID }
+			
+		).map(function(row) {
+			return {
+				"siteID": row[1],
+				"name": row[2],
+				"slug": row[3],
+				"domainRegex": row[4],
+				"domainAliases": row[5],
+			    "isActive": row[6]
+			};
+		});
+	}
+
+	/**
 	 * Returns a collection of all the themes that are used in all active sites
 	 *
 	 * @return array of { activeTheme:string, siteID:numeric }

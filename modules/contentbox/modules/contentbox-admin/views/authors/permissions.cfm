@@ -129,7 +129,7 @@
 	<!--- Add Permission Form--->
 	#html.startForm( name="permissionForm", class="form-vertical" )#
 	#html.startFieldset( legend="A-la-Carte Permissions" )#
-	<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
+		<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 			#html.hiddenField( name="authorID", bind=prc.author )#
 
 			<!--- Loader --->
@@ -182,7 +182,7 @@
 				</div>
 
 			</div>
-			</div>
+		</div>
 	</cfif>
 	#html.endFieldSet()#
 	#html.endForm()#
@@ -209,5 +209,86 @@
 
 	#html.endForm()#
 
-</div>
+	<cfif prc.cbSettings.cb_security_limit_sites_by_author>
+		<cfif prc.author.hasPermission( prc.cbSettings.cb_security_all_sites_permission )>
+			<p><div class="alert alert-info">This user has the overiding '#prc.cbSettings.cb_security_all_sites_permission#' permission assigned!</div></p>
+		<cfelse>
+			<!--- Site Selection Form --->
+			#html.startForm( name="siteForm", class="form-vertical" )#
+			#html.startFieldset( legend="Site Assignments" )#
+				<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
+					<!--- Loader --->
+					<div class="loaders float-right text-center" id="siteLoader">
+						<i class="fa fa-circle-o-notch fa-spin fa-lg"></i><br/>
+						<div class="text-center"><small>Please Wait...</small></div>
+					</div>
+
+					<!--- Sites --->
+					<p>You can assign sites to the user by adding from the selection below:</p>
+					<div class="row">
+						<div class="col-md-8 mb5">
+							<select
+								name="siteID"
+								id="siteID"
+								class="form-control input-sm"
+							>
+	
+								<cfloop array="#prc.allSites#" index="thisSite">
+									<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()><cfset siteOK = true></cfif>
+									<option
+										value="#thisSite[ 'siteID' ]#"
+										<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()>selected="selected"</cfif>
+									>
+										#thisSite[ 'name' ]#
+									</option>
+								</cfloop>
+							</select>
+						</div>
+						<div class="col-md-4">
+							<cfif arrayLen( prc.allSites ) GT 0>
+								<button
+									type="button"
+									class="btn btn-primary btn-block p11"
+									onclick="addSite();return false;"
+								>
+									Add Site
+								</button>
+							<cfelse>
+								<button
+									type="button"
+									class="btn btn-primary btn-block p11"
+									onclick="alert( 'No Sites Found, Cannot Add!' ); return false"
+									disabled
+								>
+									Add Site
+								</button>
+							</cfif>
+						</div>
+					</div>
+				</cfif>
+			#html.endFieldSet()#
+			#html.endForm()#
+
+			<!--- Show/Remove Site Form --->
+			#html.startForm( name="assignedSites", class="form-vertical" )#
+				<cfif !arrayLen(prc.author.getSites())>
+					<div class="alert alert-info">No sites assigned!</div>
+				<cfelse>
+					<p>Below are the currently assigned sites. You can remove sites by clicking on the remove button (<i class="fa fa-dot-circle fa-lg text-red"></i>).</p>
+				</cfif>
+
+				<cfloop array="#prc.author.getSites()#" index="site">
+					<div>
+						<!--- Assigned --->
+						<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
+							<!--- Remove --->
+							<a href="javascript:removeSite('#site.getID()#')" onclick="return confirm('Are you sure?')" title="Remove Site"><i class="fa fa-dot-circle fa-lg text-red"></i></a>
+						</cfif>
+						<!--- Name --->
+						<strong>#site.getName()#</strong>
+					</div>
+				</cfloop>
+			#html.endForm()#
+		</cfif>
+	</cfif>
 </cfoutput>

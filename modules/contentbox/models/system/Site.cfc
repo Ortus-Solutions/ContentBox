@@ -278,8 +278,24 @@ component
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
+	// M2M -> authors
+	// Added to support Site Security
+	property
+		name              = "authors"
+		singularName      = "author"
+		fieldtype         = "many-to-many"
+		type              = "array"
+		lazy              = "true"
+		orderby           = "name"
+		cfc               = "contentbox.models.security.Author"
+		cascade           = "all"
+		linktable         = "cb_authorsite"
+		fkcolumn          = "FK_siteID"
+		inversejoincolumn = "FK_authorID"
+		inverse           = "true";
+
 	/* *********************************************************************
-	 **							CALUCLATED FIELDS
+	 **							CALCULATED FIELDS
 	 ********************************************************************* */
 
 	property
@@ -355,7 +371,8 @@ component
 			"entries",
 			"menus",
 			"pages",
-			"settings"
+			"settings",
+			"authors"
 		],
 		profiles : {
 			export : {
@@ -365,7 +382,8 @@ component
 					"entries",
 					"menus",
 					"pages",
-					"settings"
+					"settings",
+					"authors"
 				],
 				defaultExcludes : [
 					"settings.siteSnapshot",

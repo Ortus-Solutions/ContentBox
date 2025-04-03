@@ -115,6 +115,15 @@
 					</div>
 
 					<!-- Site Switcher -->
+					<!--- support security by site --->
+					<cfif prc.oCurrentAuthor.hasPermission( "_ALL_SITES" )>
+						<cfset siteListName = "allSites">
+					<cfelse>
+						<cfset siteListName = "authorSites">
+					</cfif>
+
+					<cfif structKeyExists(prc, siteListName) AND arrayLen(prc[siteListName])>
+						<cfset siteOK = false>
 					<span
 						class="form-inline ml10 mt10"
 						id="div-siteswitcher"
@@ -130,7 +139,9 @@
 							onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteID/' + this.value )"
 							style="width: 175px;"
 						>
-							<cfloop array="#prc.allSites#" index="thisSite">
+						
+							<cfloop array="#prc[siteListName]#" index="thisSite">
+								<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()><cfset siteOK = true></cfif>
 								<option
 									value="#thisSite[ 'siteID' ]#"
 									<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()>selected="selected"</cfif>
@@ -140,6 +151,15 @@
 							</cfloop>
 						</select>
 					</span>
+						<!--- if the user is not allowed to edit this site redirect to the first valid site  --->
+						<cfif NOT siteOK>
+							<cflocation url="#event.buildLink( prc.xehChangeSite )#/siteID/#prc[siteListName][1].siteID#">
+						</cfif>
+					<cfelse>
+						<!--- if the user does not have any authorised sites redirect to site home page --->
+						<cflocation url="/" >
+					</cfif>
+					<!--- End of Code updated to support ziblix security by site --->
 
 					<!---Search --->
 					<cfif prc.oCurrentAuthor.hasPermission( "GLOBAL_SEARCH" )>

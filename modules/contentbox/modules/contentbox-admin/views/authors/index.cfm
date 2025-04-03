@@ -27,7 +27,7 @@
 					<div class="row">
 
 						<!--- Quick Search --->
-						<div class="col-md-6 col-xs-4">
+						<div class="col-md-3 col-xs-3">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "userSearch",

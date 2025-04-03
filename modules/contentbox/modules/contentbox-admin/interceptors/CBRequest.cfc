@@ -51,13 +51,21 @@ component extends="coldbox.system.Interceptor" {
 		} else {
 			prc.cbEntryPoint = "";
 		}
-		// Place all sites in prc for usage by the UI switcher
-		prc.allSites         = variables.siteService.getAllFlat( isActive: true );
+
 		// Get the current working site object on PRC
 		prc.oCurrentSite     = variables.siteService.getCurrentWorkingSite();
 		// Place global cb options on scope
 		prc.cbSettings       = variables.settingService.getAllSettings();
 		prc.cbSiteSettings   = variables.settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
+
+		// Place all sites in prc for usage by the UI switcher
+		prc.allSites         = variables.siteService.getAllFlat( isActive: true );
+
+		// If we are limiting sites by author get the list of sites allowed for this author
+		if ( prc.cbSettings.cb_security_limit_sites_by_author ?: false and len( prc.oCurrentAuthor.getAuthorID() )){
+			prc.authorSites  = variables.siteService.getAuthorSitesFlat( authorID: prc.oCurrentAuthor.getAuthorID(), isActive: true );
+		}
+
 		// Place widgets root location
 		prc.cbWidgetRoot     = getContextRoot() & event.getModuleRoot( "contentbox" ) & "/widgets";
 		// store admin menu service

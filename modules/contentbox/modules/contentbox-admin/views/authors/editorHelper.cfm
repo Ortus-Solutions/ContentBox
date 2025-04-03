@@ -83,8 +83,9 @@ document.addEventListener( "DOMContentLoaded", () => {
 			'Passwords need to match'
 		);
 
-		// Setup Permissions
+		// Setup Permissions and Sites
 		$permissions = $( "##permissions" );
+		$sites       = $( "##sites" );
 	</cfif>
 
 	// Password change rules

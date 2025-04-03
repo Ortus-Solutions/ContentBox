@@ -232,6 +232,7 @@ component
 	 * @sortOrder        The sort order to apply
 	 * @permissionGroups Single or list of permissiong groups to search on
 	 * @twoFactorAuth    Two factor auth or any
+	 * @siteList         a comma separated list of site IDs
 	 *
 	 * @return {authors:array, count:numeric}
 	 */
@@ -244,7 +245,8 @@ component
 		boolean asQuery  = false,
 		string sortOrder = "lastName",
 		string permissionGroups,
-		string twoFactorAuth
+		string twoFactorAuth,
+		string siteList = ""
 	){
 		var results = { "count" : 0, "authors" : [] };
 		var c       = newCriteria();

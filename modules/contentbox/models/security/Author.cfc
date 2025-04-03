@@ -196,6 +196,21 @@ component
 		inversejoincolumn="FK_permissionGroupID"
 		orderby          ="name";
 
+	// M2M -> A-la-carte Author Sites
+	// Added to support Ziblix Site Security
+	property
+		name              = "sites"
+		singularName      = "site"
+		fieldtype         = "many-to-many"
+		type              = "array"
+		lazy              = "true"
+		orderby           = "name"
+		cfc               = "contentbox.models.system.Site"
+		cascade           = "all"
+		linktable         = "cb_authorsite"
+		fkcolumn          = "FK_authorID"
+		inversejoincolumn = "FK_siteID";
+
 	/* *********************************************************************
 	 **							CALCULATED FIELDS
 	 ********************************************************************* */
@@ -455,7 +470,7 @@ component
 	/**
 	 * Remove both sides of this relationship: PermissionGroup <-> Author
 	 *
-	 * @group The permission group to add
+	 * @group The permission group to remove
 	 */
 	Author function removePermissionGroup( required group ){
 		// Only add if not already there.

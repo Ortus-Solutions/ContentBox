@@ -124,7 +124,8 @@ component extends="baseHandler" {
 			.paramValue( "f2FactorAuth", "true" )
 			.paramValue( "fRole", "any" )
 			.paramValue( "fGroups", "any" )
-			.paramValue( "sortOrder", "lastname_asc" );
+			.paramValue( "sortOrder", "lastname_asc" )
+			.paramValue( "siteList", "" );
 
 		// prepare paging object
 		prc.oPaging    = variables.paging;
@@ -189,7 +190,8 @@ component extends="baseHandler" {
 			isActive         = rc.fStatus,
 			role             = rc.fRole,
 			permissionGroups = rc.fGroups,
-			twoFactorAuth    = rc.f2FactorAuth
+			twoFactorAuth    = rc.f2FactorAuth,
+			siteList         = rc.siteList
 		);
 		prc.authors     = results.authors;
 		prc.authorCount = results.count;
@@ -633,6 +635,8 @@ component extends="baseHandler" {
 		prc.xehRolePermissions  = "#prc.cbAdminEntryPoint#.authors.permissions";
 		prc.xehGroupRemove      = "#prc.cbAdminEntryPoint#.authors.removePermissionGroup";
 		prc.xehGroupSave        = "#prc.cbAdminEntryPoint#.authors.savePermissionGroup";
+		prc.xehSiteRemove       = "#prc.cbAdminEntryPoint#.authors.removeSite";
+		prc.xehSiteSave         = "#prc.cbAdminEntryPoint#.authors.saveSite";
 
 		// Get all permissions
 		prc.aPermissions      = permissionService.list( sortOrder = "permission", asQuery = false );
@@ -711,6 +715,46 @@ component extends="baseHandler" {
 		if ( oAuthor.hasPermissionGroup( oGroup ) ) {
 			// Remove it
 			oAuthor.removePermissionGroup( oGroup );
+			// Save it
+			variables.authorService.save( oAuthor );
+		}
+
+		// Saved
+		event.renderData( data = "true", type = "json" );
+	}
+
+	/**
+	 * Save sites to the author and gracefully end.
+	 *
+	 * @return json
+	 */
+	function saveSite( event, rc, prc ){
+		var oAuthor = authorService.get( rc.authorID );
+		var oSite   = siteService.get( rc.siteID );
+
+		// Assign it
+		if ( !oAuthor.hasSite( oSite ) ) {
+			oAuthor.addSite( oSite );
+			// Save it
+			variables.authorService.save( oAuthor );
+		}
+
+		// Saved
+		event.renderData( data = "true", type = "json" );
+	}
+
+	/**
+	 * Remove sites to a author and gracefully end.
+	 *
+	 * @return json
+	 */
+	function removeSite( event, rc, prc ){
+		var oAuthor = authorService.get( rc.authorID );
+		var oSite   = siteService.get( rc.siteID );
+
+		if ( oAuthor.hasSite( oSite ) ) {
+			// Remove it
+			oAuthor.removeSite( oSite );
 			// Save it
 			variables.authorService.save( oAuthor );
 		}

@@ -160,7 +160,41 @@
 </fieldset>
 
 <fieldset>
-	<legend><i class="fa fa-filter"></i> <strong>Rate Limiter</strong></legend>
+	<legend><i class="fa fa-lock fa-lg"></i> Sites by User</legend>
+
+	<!--- Author Site Permissions --->
+	<div class="form-group">
+        #html.label( class="control-label", field="cb_security_limit_sites_by_author", content="Limit sites by user:" )#
+        <div class="controls">
+            <small>When enabled, users will be limited to sites they can edit or administrate by default.</small><br/><br />
+            #html.checkbox(
+				name    = "cb_limit_sites_by_author_toggle",
+				data	= { toggle: 'toggle', match: 'cb_limit_sites_by_author' },
+				checked	= prc.cbSettings.cb_security_limit_sites_by_author
+			)#
+			#html.hiddenField(
+				name	= "cb_limit_sites_by_author",
+				value	= prc.cbSettings.cb_security_limit_sites_by_author
+			)#
+        </div>
+    </div>
+    <!--- All Sites Permission --->
+    <div class="form-group">
+        #html.label(class="control-label",field="cb_security_all_sites_permission",content="All Sites Permission: " )#
+        <div class="controls">
+            <small>The permission that will allow a user to administer or edit all sites.</small><br/>
+            #html.textField(
+                name="cb_security_all_sites_permission",
+                size="60",
+                class="form-control",
+                value=prc.cbSettings.cb_security_all_sites_permission
+            )#
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+	<legend><i class="fa fa-filter"></i> Rate Limiter</legend>
 	<!--- Rate Limiter --->
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter", content="Enable Rate Limiter:" )#
