@@ -3,7 +3,7 @@ component {
 	function seed( schema, query ){
 		var admin = {
 			"roleID"       : createUUID(),
-			"isDeleted"    : 0,
+			"isDeleted"    : false,
 			"createdDate"  : now(),
 			"modifiedDate" : now(),
 			"role"         : "Administrator",
@@ -11,7 +11,7 @@ component {
 		};
 		var editor = {
 			"roleID"       : createUUID(),
-			"isDeleted"    : 0,
+			"isDeleted"    : false,
 			"createdDate"  : now(),
 			"modifiedDate" : now(),
 			"role"         : "Editor",

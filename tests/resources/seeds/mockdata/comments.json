@@ -10,9 +10,9 @@
         "isApproved": 0,
         "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502142",
         "modifiedDate": "2021-02-18 17:58:20",
-        "isDeleted": 0
+        "isDeleted": false
     },
-	{
+    {
         "commentID": "387451B5-C025-43F5-AB400FA9C5D48E12",
         "content": "test",
         "author": "Luis Majano",
@@ -23,9 +23,9 @@
         "isApproved": 1,
         "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141",
         "modifiedDate": "2016-05-11 16:12:33",
-        "isDeleted": 0
+        "isDeleted": false
     },
-	{
+    {
         "commentID": "387451B5-C025-43F5-AB400FA9C5D48E13",
         "content": "test",
         "author": "Luis Majano",
@@ -36,9 +36,9 @@
         "isApproved": 1,
         "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141",
         "modifiedDate": "2016-05-12 12:34:17",
-        "isDeleted": 0
+        "isDeleted": false
     },
-	{
+    {
         "commentID": "387451B5-C025-43F5-AB400FA9C5D48E14",
         "content": "My awesome comment",
         "author": "Luis Majano",
@@ -46,9 +46,9 @@
         "authorEmail": "lmajano@gmail.com",
         "authorURL": "",
         "createdDate": "2016-11-28 15:35:51",
-        "isApproved": 1,
+        "isApproved": true,
         "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502142",
         "modifiedDate": "2016-11-28 15:35:51",
-        "isDeleted": 0
+        "isDeleted": false
     }
 ]

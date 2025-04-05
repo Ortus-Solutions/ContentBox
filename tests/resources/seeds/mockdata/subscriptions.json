@@ -6,7 +6,7 @@
         "createdDate": "2015-08-04 16:17:43",
         "FK_subscriberID": "A79DDE98-0937-4625-BC631EB13DE809D2",
         "modifiedDate": "2016-05-03 16:23:25",
-        "isDeleted": 0
+        "isDeleted": false
     },
     {
         "subscriptionID": "3015B09A-8F90-472E-81DA55DE807CB315",
@@ -15,7 +15,7 @@
         "createdDate": "2016-05-11 16:12:34",
         "FK_subscriberID": "A79DDE98-0937-4625-BC631EB13DE809D2",
         "modifiedDate": "2016-05-11 16:12:34",
-        "isDeleted": 0
+        "isDeleted": false
     },
     {
         "subscriptionID": "3015B09A-8F90-472E-81DA55DE807CB316",
@@ -24,6 +24,6 @@
         "createdDate": "2016-05-12 12:34:18",
         "FK_subscriberID": "A79DDE98-0937-4625-BC631EB13DE809D1",
         "modifiedDate": "2016-05-12 12:34:18",
-        "isDeleted": 0
+        "isDeleted": false
     }
 ]

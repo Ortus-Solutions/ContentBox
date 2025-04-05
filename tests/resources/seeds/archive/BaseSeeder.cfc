@@ -113,7 +113,7 @@ component {
 						"permissionGroupID" : uuidLib.randomUUID().toString(),
 						"createdDate"       : "2017-06-12 16:01:13",
 						"modifiedDate"      : "2017-06-12 20:31:52",
-						"isDeleted"         : 0,
+						"isDeleted"         : false,
 						"name"              : "Finance",
 						"description"       : "Finance team permissions"
 					},
@@ -121,7 +121,7 @@ component {
 						"permissionGroupID" : uuidLib.randomUUID().toString(),
 						"createdDate"       : "2017-06-16 13:02:12",
 						"modifiedDate"      : "2017-06-16 13:02:12",
-						"isDeleted"         : 0,
+						"isDeleted"         : false,
 						"name"              : "Security",
 						"description"       : ""
 					}
@@ -205,7 +205,7 @@ component {
 							"isCore"       : 0,
 							"createdDate"  : "2020-09-09 17:34:50",
 							"modifiedDate" : "2020-09-09 17:34:50",
-							"isDeleted"    : 0,
+							"isDeleted"    : false,
 							"FK_siteID"    : thisSite.siteID
 						} );
 					} );
@@ -440,7 +440,7 @@ component {
 						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"createdDate"   : "2016-05-03 16:23:25",
 						"modifiedDate"  : "2016-05-03 16:23:25",
-						"isDeleted"     : 0
+						"isDeleted"     : false
 					},
 					{
 						"customFieldID" : "3E0AB238-1783-4DD6-93518F0B67B9B5F4",
@@ -449,7 +449,7 @@ component {
 						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"createdDate"   : "2016-05-03 16:23:25",
 						"modifiedDate"  : "2016-05-03 16:23:25",
-						"isDeleted"     : 0
+						"isDeleted"     : false
 					}
 				];
 
@@ -481,7 +481,7 @@ component {
 						"menuClass"    : "",
 						"listClass"    : "",
 						"modifiedDate" : "2016-05-04 17:20:11",
-						"isDeleted"    : 0,
+						"isDeleted"    : false,
 						"FK_siteId"    : "ff80808178fbc7620178fbc7e5f400af"
 					},
 					{
@@ -493,7 +493,7 @@ component {
 						"menuClass"    : "",
 						"listClass"    : "",
 						"modifiedDate" : "2016-05-04 17:02:54",
-						"isDeleted"    : 0,
+						"isDeleted"    : false,
 						"FK_siteId"    : "ff80808178fbc7620178fbc7e5f400af"
 					}
 				];
@@ -525,7 +525,7 @@ component {
 						"urlClass"     : { "value" : "", "null" : true },
 						"createdDate"  : "2016-05-04 17:22:08",
 						"modifiedDate" : "2016-05-04 17:22:08",
-						"isDeleted"    : 0
+						"isDeleted"    : false
 					},
 					{
 						"menuItemID"   : "2508B7D0-F3B7-4395-BDFBD12BCBB8CE98",
@@ -533,7 +533,7 @@ component {
 						"title"        : "",
 						"label"        : "hello",
 						"data"         : "",
-						"active"       : 1,
+						"active"       : true,
 						"FK_menuID"    : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
 						"FK_parentID"  : { "value" : "", "null" : true },
 						"mediaPath"    : { "value" : "", "null" : true },
@@ -546,7 +546,7 @@ component {
 						"urlClass"     : "test",
 						"createdDate"  : "2016-05-04 17:22:08",
 						"modifiedDate" : "2016-05-04 17:22:08",
-						"isDeleted"    : 0
+						"isDeleted"    : false
 					}
 				];
 

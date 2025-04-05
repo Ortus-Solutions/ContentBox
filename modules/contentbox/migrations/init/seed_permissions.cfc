@@ -186,7 +186,7 @@ component {
 
 		perms = perms.map( ( thisPerm ) => {
 			thisPerm[ "permissionID" ] = createUUID();
-			thisPerm[ "isDeleted" ]    = 0;
+			thisPerm[ "isDeleted" ]    = false;
 			thisPerm[ "createdDate" ]  = thisPerm[ "modifiedDate" ] = now();
 			return thisPerm;
 		} );

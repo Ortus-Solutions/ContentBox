@@ -245,7 +245,7 @@ component {
 					"permissionID" : uuidLib.randomUUID().toString(),
 					"createdDate"  : today,
 					"modifiedDate" : today,
-					"isDeleted"    : 0,
+					"isDeleted"    : false,
 					"permission"   : thisPermission.name,
 					"description"  : thisPermission.description
 				} );
@@ -313,8 +313,8 @@ component {
 				"siteID"             : initialSiteIdentifier,
 				"createdDate"        : today,
 				"modifiedDate"       : today,
-				"isDeleted"          : 0,
-				"isActive"           : 1,
+				"isDeleted"          : false,
+				"isActive"           : true,
 				"name"               : allSettings.cb_site_name,
 				"slug"               : "default",
 				"homepage"           : allSettings.cb_site_homepage,
