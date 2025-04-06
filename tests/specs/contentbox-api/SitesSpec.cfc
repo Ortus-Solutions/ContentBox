@@ -185,6 +185,8 @@ component extends="tests.resources.BaseApiTest" {
 								homepage      : "cbBlog"
 							} )
 						);
+						// clear the session to make sure our delete is working with a new entity
+						ormClearSession();
 						var event = this.delete( "/cbapi/v1/sites/#testSite.getSiteId()#" );
 						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getMessagesString() ).toInclude( "deleted" );
