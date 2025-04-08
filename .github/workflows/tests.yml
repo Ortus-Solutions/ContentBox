@@ -24,6 +24,15 @@ jobs:
         experimental: [ false ]
         include:
           # Lucee 6 has a regression
+          - cfengine: "boxlang@1"
+            coldboxVersion: "^7"
+            jdkVersion: "21"
+            experimental: true
+          - cfengine: "boxlang@1"
+            coldboxVersion: "be"
+            jdkVersion: "21"
+            experimental: true
+          # Lucee 6 has a regression
           - cfengine: "lucee@6"
             coldboxVersion: "^7"
             jdkVersion: "21"
