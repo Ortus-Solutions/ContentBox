@@ -10,7 +10,7 @@ on:
 jobs:
   tests:
     name: Test Suites
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       DB_USER: root
       DB_PASSWORD: root
