@@ -25,14 +25,13 @@
     ],
     "dependencies":{
         "coldbox":"be",
-        "commandbox-migrations":"^5.0.0"
+        "commandbox-migrations":"*"
     },
     "devDependencies":{
-        "testbox":"^5.0.0+1",
-        "commandbox-boxlang":"*",
+		"commandbox-boxlang":"*",
         "commandbox-cfformat":"*",
-        "commandbox-cfconfig":"*",
         "commandbox-docbox":"*",
+        "testbox":"*",
         "cbdebugger":"*",
         "route-visualizer":"*"
     },

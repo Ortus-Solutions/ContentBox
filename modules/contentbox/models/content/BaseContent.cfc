@@ -161,7 +161,6 @@ component
 		column ="expireDate"
 		notnull="false"
 		ormtype="timestamp"
-		default=""
 		index  ="idx_expireDate";
 
 	property
