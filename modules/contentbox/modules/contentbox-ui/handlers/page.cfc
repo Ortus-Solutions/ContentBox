@@ -169,21 +169,33 @@ component extends="content" {
 		prc.missingPage      = rc.pageUri;
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
 
+		var data = 	
+		{
+			page        	: prc.page,
+			missingPage 	: prc.missingPage,
+			routedURL   	: prc.missingRoutedURL,
+
+			layout			: "#prc.cbTheme#/layouts/pages",
+			layoutModule	: prc.cbThemeRecord.module,
+
+			view			: "#prc.cbTheme#/views/notfound",
+			viewModule		: prc.cbThemeRecord.module,
+
+			statusCode		: "404",
+			statusMessage	: "Page not found"
+		};
+
 		// announce event
 		announce(
 			"cbui_onPageNotFound",
-			{
-				page        : prc.page,
-				missingPage : prc.missingPage,
-				routedURL   : prc.missingRoutedURL
-			}
+			data
 		);
 
 		// Not Found layout + view
 		event
-			.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
-			.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
-			.setHTTPHeader( "404", "Page not found" );
+			.setLayout( name = data.layout, module = data.layoutModule )
+			.setView( view = data.view, module = data.viewModule )
+			.setHTTPHeader( data.statusCode, data.statusMessage );
 	}
 
 	/**
