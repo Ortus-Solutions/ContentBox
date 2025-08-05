@@ -169,7 +169,7 @@ component extends="content" {
 		prc.missingPage      = rc.pageUri;
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
 
-		var data = 	
+		var interceptData = 	
 		{
 			page        	: prc.page,
 			missingPage 	: prc.missingPage,
@@ -188,14 +188,14 @@ component extends="content" {
 		// announce event
 		announce(
 			"cbui_onPageNotFound",
-			data
+			interceptData
 		);
 
 		// Not Found layout + view
 		event
-			.setLayout( name = data.layout, module = data.layoutModule )
-			.setView( view = data.view, module = data.viewModule )
-			.setHTTPHeader( data.statusCode, data.statusMessage );
+			.setLayout( name = interceptData.layout, module = interceptData.layoutModule )
+			.setView( view = interceptData.view, module = interceptData.viewModule )
+			.setHTTPHeader( interceptData.statusCode, interceptData.statusMessage );
 	}
 
 	/**
