@@ -169,27 +169,21 @@ component extends="content" {
 		prc.missingPage      = rc.pageUri;
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
 
-		var interceptData = 	
+		var interceptData =
 		{
-			page        	: prc.page,
-			missingPage 	: prc.missingPage,
-			routedURL   	: prc.missingRoutedURL,
-
-			layout			: "#prc.cbTheme#/layouts/pages",
-			layoutModule	: prc.cbThemeRecord.module,
-
-			view			: "#prc.cbTheme#/views/notfound",
-			viewModule		: prc.cbThemeRecord.module,
-
-			statusCode		: "404",
-			statusMessage	: "Page not found"
+			page          : prc.page,
+			missingPage   : prc.missingPage,
+			routedURL     : prc.missingRoutedURL,
+			layout        : "#prc.cbTheme#/layouts/pages",
+			layoutModule  : prc.cbThemeRecord.module,
+			view          : "#prc.cbTheme#/views/notfound",
+			viewModule    : prc.cbThemeRecord.module,
+			statusCode    : "404",
+			statusMessage : "Page not found"
 		};
 
 		// announce event
-		announce(
-			"cbui_onPageNotFound",
-			interceptData
-		);
+		announce( "cbui_onPageNotFound", interceptData );
 
 		// Not Found layout + view
 		event
