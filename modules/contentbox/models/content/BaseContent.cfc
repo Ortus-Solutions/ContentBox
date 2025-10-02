@@ -765,7 +765,7 @@ component
 	function getFeaturedImageURL(){
 		var featured = getFeaturedImage();
 		return !isNull( featured ) && len( featured ) ? (
-			find( ":", featured )
+			!find( mediaService.getCoreMediaRoot(), featured ) && find( ":", featured )
 			 ? "/__media/" & featured
 			// legacy column values without disk annoations
 			 : replaceNoCase(
