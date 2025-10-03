@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"6.1.1",
+    "version":"6.3.0",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -25,14 +25,13 @@
     ],
     "dependencies":{
         "coldbox":"be",
-        "commandbox-migrations":"^5.0.0"
+        "commandbox-migrations":"*"
     },
     "devDependencies":{
-        "testbox":"^5.0.0+1",
-        "commandbox-boxlang":"*",
+		"commandbox-boxlang":"*",
         "commandbox-cfformat":"*",
-        "commandbox-cfconfig":"*",
         "commandbox-docbox":"*",
+        "testbox":"*",
         "cbdebugger":"*",
         "route-visualizer":"*"
     },

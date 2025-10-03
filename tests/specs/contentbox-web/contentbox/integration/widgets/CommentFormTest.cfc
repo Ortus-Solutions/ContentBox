@@ -37,7 +37,7 @@ component extends="tests.resources.BaseTest" {
 
 			it( "can render a form with an valid slug", function(){
 				var r = widget.renderIt( "support" );
-				expect( r ).toInclude( "<form action=" );
+				expect( r ).toInclude( "<form " ).toInclude( "action=" );
 			} );
 		} );
 	}

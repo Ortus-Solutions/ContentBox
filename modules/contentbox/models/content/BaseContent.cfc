@@ -161,7 +161,6 @@ component
 		column ="expireDate"
 		notnull="false"
 		ormtype="timestamp"
-		default=""
 		index  ="idx_expireDate";
 
 	property
@@ -318,9 +317,7 @@ component
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
-	property
-		name        ="activeContentVersions"
-		persistent  = "false";
+	property name="activeContentVersions" persistent="false";
 
 	// M20 -> Parent Page loaded as a proxy
 	property
@@ -768,7 +765,7 @@ component
 	function getFeaturedImageURL(){
 		var featured = getFeaturedImage();
 		return !isNull( featured ) && len( featured ) ? (
-			find( ":", featured )
+			!findNoCase( mediaService.getCoreMediaRoot(), featured ) && find( ":", featured )
 			 ? "/__media/" & featured
 			// legacy column values without disk annoations
 			 : replaceNoCase(
@@ -801,7 +798,6 @@ component
 	){
 		// lock it for new content creation to avoid version overlaps
 		lock name="contentbox.addNewContentVersion.#getSlug()#" type="exclusive" timeout="10" throwOnTimeout=true {
-
 			// Do we already have an active version?
 			if ( hasActiveContent() ) {
 				// cap checks if not in preview mode
@@ -809,7 +805,9 @@ component
 					maxContentVersionChecks();
 				}
 				// deactive the curent version, we do it after in case the content versions check kick off a transaction
-				getContentVersions().filter( ( version ) => version.getIsActive() ).each( ( version ) => version.setIsActive( false ) );
+				getContentVersions()
+					.filter( ( version ) => version.getIsActive() )
+					.each( ( version ) => version.setIsActive( false ) );
 			}
 
 			// get a new version object with our incoming content + relationships

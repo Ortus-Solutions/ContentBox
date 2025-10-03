@@ -19,7 +19,7 @@ jobs:
 
   format_check:
     name: Checks Source Code Formatting
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4

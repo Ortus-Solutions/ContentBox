@@ -42,7 +42,7 @@
                             </li>
                             <li class="nav-item">
 								<a href="##login_options" data-toggle="tab" class="nav-link">
-									<i class="fa fa-sign-in fa-lg"></i> Login
+									<i class="fa fa-sign-in-alt fa-lg"></i> Login
 								</a>
                             </li>
                             <li class="nav-item">
