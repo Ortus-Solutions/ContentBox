@@ -764,26 +764,35 @@ component
 	 */
 	function getFeaturedImageURL(){
 		var featured = getFeaturedImage();
-		if( !len( featured ) ){
+		if ( !len( featured ) ) {
 			return "";
 		}
-		var mediaRoot = mediaService.getCoreMediaRoot();
+		var mediaRoot         = mediaService.getCoreMediaRoot();
 		var expandedMediaRoot = expandPath( mediaRoot );
 		// We have three scenarios in how the featured image entries are stored.
 		// The first is that the image was stored with a fully expanded path
-		if( findNoCase( expandedMediaRoot, featured ) ){
-			return replaceNoCase( replaceNoCase( featured, expandedMediaRoot, "/__media" ), "\","/","All" );
+		if ( findNoCase( expandedMediaRoot, featured ) ) {
+			return replaceNoCase(
+				replaceNoCase( featured, expandedMediaRoot, "/__media" ),
+				"\",
+				"/",
+				"All"
+			);
 		}
 		// The second is a match to the relative media root
-		if( findNoCase( mediaRoot, featured ) ){
+		if ( findNoCase( mediaRoot, featured ) ) {
 			// Replace and change any windows delimiters that might be in the path
-			return replaceNoCase( replaceNoCase( featured, mediaRoot, "/__media" ), "\","/","All" );
+			return replaceNoCase(
+				replaceNoCase( featured, mediaRoot, "/__media" ),
+				"\",
+				"/",
+				"All"
+			);
 		}
 		// The last is that it is modern cbfs disk paths
 		return find( ":", featured )
-				? "/__media/" & featured
-				: featured;
-
+		 ? "/__media/" & featured
+		 : featured;
 	}
 
 	/**
