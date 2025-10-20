@@ -116,7 +116,7 @@
 											<cfloop array="#prc.availableTemplates#" item="template">
 												<li class="mb-5">
 													<a
-														href="#event.buildLink(  prc.xehContentEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) & "?contentTemplate=" & #encodeForHTMLAttribute( template[ "templateID" ] )# )#"
+														href="#event.buildLink(  prc.xehContentEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) & "?contentTemplate=" & encodeForHTMLAttribute( template[ "templateID" ] ) )#"
 													><small><i class="fa fa-plus"></i> #template[ "name" ]#</small></a>
 												</li>
 											</cfloop>

@@ -380,8 +380,6 @@ component extends="cbadmin.handlers.baseHandler" {
 		// param values
 		event.paramValue( "path", "" ).paramValue( "manual", false );
 
-		systemOutput( "path: [#rc.path#]", true );
-
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( urlDecode( trim( rc.path ) ) );
 
