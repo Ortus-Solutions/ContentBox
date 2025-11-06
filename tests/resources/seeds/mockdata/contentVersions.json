@@ -5,11 +5,11 @@
 		"changelog": "Test",
 		"version": 1,
 		"createdDate": "2013-07-12 09:53:01",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a63",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7123",
@@ -17,11 +17,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-07-12 09:53:31",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a64",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7124",
@@ -29,11 +29,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2013-07-12 09:53:40",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a64",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7125",
@@ -41,11 +41,11 @@
 		"changelog": "Imported content",
 		"version": 1,
 		"createdDate": "2013-04-07 10:45:28",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a65",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7133",
@@ -53,11 +53,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-07-15 17:56:10",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a67",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7140",
@@ -65,11 +65,11 @@
 		"changelog": "quick save",
 		"version": 1,
 		"createdDate": "2013-07-19 18:45:08",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a69",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7141",
@@ -77,11 +77,11 @@
 		"changelog": "What up daugh!",
 		"version": 2,
 		"createdDate": "2013-07-19 18:45:28",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a69",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7158",
@@ -89,11 +89,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2013-07-20 16:10:43",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a86",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7159",
@@ -101,11 +101,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2013-07-20 16:12:16",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a87",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7160",
@@ -113,11 +113,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2013-07-20 16:12:23",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7163",
@@ -125,11 +125,11 @@
 		"changelog": "quick save",
 		"version": 2,
 		"createdDate": "2013-07-26 12:58:21",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7164",
@@ -137,11 +137,11 @@
 		"changelog": "quick save",
 		"version": 3,
 		"createdDate": "2013-07-26 12:59:43",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7165",
@@ -149,11 +149,11 @@
 		"changelog": "",
 		"version": 4,
 		"createdDate": "2013-07-26 13:00:05",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7166",
@@ -161,11 +161,11 @@
 		"changelog": "",
 		"version": 5,
 		"createdDate": "2013-07-26 13:00:21",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7168",
@@ -173,11 +173,11 @@
 		"changelog": "quick save",
 		"version": 6,
 		"createdDate": "2013-07-26 13:02:18",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7169",
@@ -185,11 +185,11 @@
 		"changelog": "quick save",
 		"version": 7,
 		"createdDate": "2013-07-26 13:02:34",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7170",
@@ -197,11 +197,11 @@
 		"changelog": "quick save",
 		"version": 8,
 		"createdDate": "2013-07-26 13:02:38",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7171",
@@ -209,11 +209,11 @@
 		"changelog": "quick save",
 		"version": 9,
 		"createdDate": "2013-07-26 13:02:51",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7172",
@@ -221,11 +221,11 @@
 		"changelog": "Editor Change Quick Save",
 		"version": 10,
 		"createdDate": "2013-07-26 13:03:02",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7173",
@@ -233,11 +233,11 @@
 		"changelog": "quick save",
 		"version": 11,
 		"createdDate": "2013-07-26 13:03:09",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7174",
@@ -245,11 +245,11 @@
 		"changelog": "quick save",
 		"version": 12,
 		"createdDate": "2013-07-26 13:04:31",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7193",
@@ -257,11 +257,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-07-26 16:53:43",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502109",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7194",
@@ -269,11 +269,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-07-26 16:55:00",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502110",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7195",
@@ -281,11 +281,11 @@
 		"changelog": "quick save",
 		"version": 1,
 		"createdDate": "2013-08-12 11:59:12",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7198",
@@ -293,11 +293,11 @@
 		"changelog": "",
 		"version": 4,
 		"createdDate": "2013-08-12 12:18:13",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7200",
@@ -305,11 +305,11 @@
 		"changelog": "",
 		"version": 6,
 		"createdDate": "2013-08-12 12:18:29",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7215",
@@ -317,11 +317,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-08-14 18:14:43",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7216",
@@ -329,11 +329,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2013-08-14 18:15:14",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7221",
@@ -341,11 +341,11 @@
 		"changelog": "Reverting to version 4",
 		"version": 7,
 		"createdDate": "2013-08-21 13:43:59",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7222",
@@ -353,11 +353,11 @@
 		"changelog": "Reverting to version 5",
 		"version": 8,
 		"createdDate": "2013-08-21 13:44:18",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7223",
@@ -365,11 +365,11 @@
 		"changelog": "Reverting to version 6",
 		"version": 9,
 		"createdDate": "2013-08-21 13:44:22",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7224",
@@ -377,11 +377,11 @@
 		"changelog": "Reverting to version 4",
 		"version": 10,
 		"createdDate": "2013-08-21 18:15:46",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7225",
@@ -389,11 +389,11 @@
 		"changelog": "Reverting to version 6",
 		"version": 11,
 		"createdDate": "2013-08-21 18:16:55",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7226",
@@ -401,11 +401,11 @@
 		"changelog": "Reverting to version 9",
 		"version": 12,
 		"createdDate": "2013-08-21 18:17:41",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7227",
@@ -413,11 +413,11 @@
 		"changelog": "Reverting to version 8",
 		"version": 13,
 		"createdDate": "2013-08-21 18:18:13",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7228",
@@ -425,22 +425,22 @@
 		"changelog": "Reverting to version 9",
 		"version": 14,
 		"createdDate": "2013-08-21 18:18:29",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7238",
 		"content": "<p>Sidebar Top</p>\r\n','",
 		"version": 1,
 		"createdDate": "2013-08-22 20:42:37",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502122",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7239",
@@ -448,11 +448,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-08-22 20:43:59",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502123",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7240",
@@ -460,55 +460,55 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-08-22 20:45:19",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7263",
 		"content": "Test\r\n\r\nasdf\r\n\r\nasdf','quick save",
 		"version": 1,
 		"createdDate": "2013-08-29 08:29:36",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7264",
 		"content": "Test\r\n\r\nasdf\r\n\r\nasdf','quick save",
 		"version": 2,
 		"createdDate": "2013-08-29 08:30:10",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7265",
 		"content": "Test\r\n\r\nasdf\r\n\r\nasdf','Editor Change Quick Save",
 		"version": 3,
 		"createdDate": "2013-08-29 08:30:21",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7266",
 		"content": "lorem ipsum lorem','quick save",
 		"version": 4,
 		"createdDate": "2013-08-29 08:31:17",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7267",
@@ -516,22 +516,22 @@
 		"changelog": "quick save",
 		"version": 2,
 		"createdDate": "2013-08-29 08:32:16",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502110",
 		"modifiedDate": "2021-02-19 10:54:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7272",
 		"content": "<p>I am at the conference</p>\r\n','",
 		"version": 1,
 		"createdDate": "2013-09-13 16:54:52",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502132",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7273",
@@ -539,22 +539,22 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-09-13 16:55:05",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502133",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7277",
 		"content": "<p>An awesome link</p>\r\n','",
 		"version": 1,
 		"createdDate": "2013-10-15 16:48:56",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502135",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7278",
@@ -562,11 +562,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2013-10-15 16:57:47",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7279",
@@ -574,11 +574,11 @@
 		"changelog": "",
 		"version": 3,
 		"createdDate": "2013-10-15 16:57:56",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7280",
@@ -586,11 +586,11 @@
 		"changelog": "",
 		"version": 4,
 		"createdDate": "2013-10-15 16:58:18",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7287",
@@ -598,11 +598,11 @@
 		"changelog": "",
 		"version": 5,
 		"createdDate": "2013-10-15 17:00:33",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7288",
@@ -610,11 +610,11 @@
 		"changelog": "",
 		"version": 6,
 		"createdDate": "2013-10-15 17:00:52",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7289",
@@ -622,11 +622,11 @@
 		"changelog": "",
 		"version": 7,
 		"createdDate": "2013-10-15 17:03:19",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7290",
@@ -634,11 +634,11 @@
 		"changelog": "",
 		"version": 8,
 		"createdDate": "2013-10-15 17:03:34",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7305",
@@ -646,11 +646,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2013-11-11 11:53:03",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7306",
@@ -658,44 +658,44 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2013-11-11 11:53:49",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7315",
 		"content": "<p>This is a test.</p>\r\n','",
 		"version": 1,
 		"createdDate": "2014-01-31 14:41:16",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502142",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7326",
 		"content": "<p>lorem ipsum lorem</p>\r\n','quick save",
 		"version": 5,
 		"createdDate": "2014-02-05 14:31:57",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7339",
 		"content": "<p>lorem ipsum lorem</p>\r\n','",
 		"version": 6,
 		"createdDate": "2014-07-01 16:44:54",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7367",
@@ -703,11 +703,11 @@
 		"changelog": "",
 		"version": 26,
 		"createdDate": "2014-08-25 12:40:55",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7368",
@@ -715,11 +715,11 @@
 		"changelog": "",
 		"version": 27,
 		"createdDate": "2014-08-25 12:41:44",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7369",
@@ -727,11 +727,11 @@
 		"changelog": "",
 		"version": 28,
 		"createdDate": "2014-08-25 12:46:10",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7370",
@@ -739,11 +739,11 @@
 		"changelog": "",
 		"version": 29,
 		"createdDate": "2014-08-25 12:46:29",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7371",
@@ -751,11 +751,11 @@
 		"changelog": "",
 		"version": 30,
 		"createdDate": "2014-08-25 12:46:59",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7372",
@@ -763,11 +763,11 @@
 		"changelog": "",
 		"version": 31,
 		"createdDate": "2014-08-25 13:22:47",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7373",
@@ -775,11 +775,11 @@
 		"changelog": "",
 		"version": 32,
 		"createdDate": "2014-08-25 13:23:14",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7374",
@@ -787,11 +787,11 @@
 		"changelog": "",
 		"version": 33,
 		"createdDate": "2014-08-25 13:23:55",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7381",
@@ -799,11 +799,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2014-09-26 16:00:44",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502159",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7382",
@@ -811,11 +811,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2014-09-26 16:25:23",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502159",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7383",
@@ -823,11 +823,11 @@
 		"changelog": "",
 		"version": 3,
 		"createdDate": "2014-09-26 16:25:31",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502159",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7384",
@@ -835,11 +835,11 @@
 		"changelog": "",
 		"version": 4,
 		"createdDate": "2014-09-26 16:25:53",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502159",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7387",
@@ -847,11 +847,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2015-03-29 10:13:59",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502160",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7390",
@@ -859,11 +859,11 @@
 		"changelog": "quick save",
 		"version": 2,
 		"createdDate": "2015-04-01 11:17:19",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502160",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7391",
@@ -871,11 +871,11 @@
 		"changelog": "Reverting to version 1",
 		"version": 3,
 		"createdDate": "2015-05-09 22:31:13",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502160",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7392",
@@ -883,11 +883,11 @@
 		"changelog": "",
 		"version": 4,
 		"createdDate": "2015-05-09 22:39:03",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502160",
 		"modifiedDate": "2016-05-18 11:50:02",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7395",
@@ -895,11 +895,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2015-09-16 10:33:56",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502162",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7400",
@@ -907,22 +907,22 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2015-09-23 11:04:54",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502162",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7413",
 		"content": "<p>Test</p>\r\n','",
 		"version": 1,
 		"createdDate": "2016-01-14 11:44:58",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502168",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7414",
@@ -930,11 +930,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2016-01-14 11:45:17",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502168",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7415",
@@ -942,11 +942,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-01-14 11:45:35",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502169",
 		"modifiedDate": "2016-05-05 15:53:13",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7418",
@@ -954,11 +954,11 @@
 		"changelog": "",
 		"version": 34,
 		"createdDate": "2016-04-10 16:27:12",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7419",
@@ -966,11 +966,11 @@
 		"changelog": "",
 		"version": 35,
 		"createdDate": "2016-04-11 11:40:14",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7442",
@@ -978,11 +978,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-04-12 13:18:51",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502189",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7443",
@@ -990,11 +990,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2016-04-12 13:19:21",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502189",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7444",
@@ -1002,11 +1002,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-04-12 13:19:04",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502190",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7445",
@@ -1014,11 +1014,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-04-12 13:19:10",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502191",
 		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7448",
@@ -1026,11 +1026,11 @@
 		"changelog": "quick save",
 		"version": 2,
 		"createdDate": "2016-05-05 15:53:13",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502169",
 		"modifiedDate": "2016-05-05 15:55:34",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7449",
@@ -1038,11 +1038,11 @@
 		"changelog": "quick save",
 		"version": 3,
 		"createdDate": "2016-05-05 15:55:34",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502169",
 		"modifiedDate": "2016-05-05 15:56:12",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7450",
@@ -1050,11 +1050,11 @@
 		"changelog": "",
 		"version": 4,
 		"createdDate": "2016-05-05 15:56:11",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502169",
 		"modifiedDate": "2016-05-05 15:56:11",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7454",
@@ -1062,11 +1062,11 @@
 		"changelog": "",
 		"version": 6,
 		"createdDate": "2016-05-06 15:47:42",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-06 16:12:27",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7455",
@@ -1074,11 +1074,11 @@
 		"changelog": "quick save",
 		"version": 7,
 		"createdDate": "2016-05-06 16:12:27",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-06 16:16:02",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7456",
@@ -1086,11 +1086,11 @@
 		"changelog": "quick save",
 		"version": 8,
 		"createdDate": "2016-05-06 16:16:02",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-09 15:18:20",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7457",
@@ -1098,11 +1098,11 @@
 		"changelog": "quick save",
 		"version": 9,
 		"createdDate": "2016-05-09 15:18:20",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-10 14:31:20",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7458",
@@ -1110,11 +1110,11 @@
 		"changelog": "quick save",
 		"version": 10,
 		"createdDate": "2016-05-10 14:31:20",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-11 15:52:40",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7459",
@@ -1122,11 +1122,11 @@
 		"changelog": "quick save",
 		"version": 11,
 		"createdDate": "2016-05-11 15:52:40",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-11 15:52:45",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7460",
@@ -1134,11 +1134,11 @@
 		"changelog": "quick save",
 		"version": 12,
 		"createdDate": "2016-05-11 15:52:45",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-18 11:42:34",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7478",
@@ -1146,11 +1146,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502206",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7479",
@@ -1158,11 +1158,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502206",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7480",
@@ -1170,22 +1170,22 @@
 		"changelog": "",
 		"version": 3,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502206",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7481",
 		"content": "<p><img alt=\"\" src=\"/__media/ContentBox_300.png\" style=\"width: 300px; height: 178px;\" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n','",
 		"version": 4,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502206",
 		"modifiedDate": "2016-05-18 15:11:18",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7482",
@@ -1193,22 +1193,22 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502207",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7483",
 		"content": "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n','",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502208",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7484",
@@ -1216,11 +1216,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502209",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7485",
@@ -1228,11 +1228,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502210",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7486",
@@ -1240,11 +1240,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502211",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7487",
@@ -1252,11 +1252,11 @@
 		"changelog": "",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502212",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7488",
@@ -1264,11 +1264,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502213",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7489",
@@ -1276,11 +1276,11 @@
 		"changelog": "",
 		"version": 2,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502213",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7490",
@@ -1288,11 +1288,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502214",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7491",
@@ -1300,11 +1300,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502215",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7492",
@@ -1312,11 +1312,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502216",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7493",
@@ -1324,11 +1324,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502217",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7494",
@@ -1336,11 +1336,11 @@
 		"changelog": "Content Cloned!",
 		"version": 1,
 		"createdDate": "2016-05-18 11:35:32",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502218",
 		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7495",
@@ -1348,11 +1348,11 @@
 		"changelog": "",
 		"version": 13,
 		"createdDate": "2016-05-18 11:42:34",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-05-18 11:45:50",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7496",
@@ -1360,22 +1360,22 @@
 		"changelog": "",
 		"version": 14,
 		"createdDate": "2016-05-18 11:45:50",
-		"isActive": 0,
+		"isActive": false,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
 		"modifiedDate": "2016-06-14 13:46:47",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7497",
 		"content": "My Products Rock','",
 		"version": 5,
 		"createdDate": "2017-06-13 17:08:36",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502206",
 		"modifiedDate": "2017-06-13 17:08:36",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7498",
@@ -1383,11 +1383,11 @@
 		"changelog": "Expired content",
 		"version": 1,
 		"createdDate": "2018-03-20 09:48:13",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502219",
 		"modifiedDate": "2018-03-20 09:48:13",
-		"isDeleted": 0
+		"isDeleted": false
 	},
 	{
 		"contentVersionID": "D39109DF-6950-4D38-989D9B0DF17D7499",
@@ -1395,10 +1395,10 @@
 		"changelog": "",
 		"version": 3,
 		"createdDate": "2021-02-19 10:54:25",
-		"isActive": 1,
+		"isActive": true,
 		"FK_authorID": "0e35bbec-a441-11eb-ab6f-0290cc502ae3",
 		"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502110",
 		"modifiedDate": "2021-02-19 10:54:25",
-		"isDeleted": 0
+		"isDeleted": false
 	}
 ]

@@ -28,7 +28,7 @@ component {
 					"permissionID" : permID,
 					"createdDate"  : today,
 					"modifiedDate" : today,
-					"isDeleted"    : 0,
+					"isDeleted"    : false,
 					"permission"   : "RELOAD_CACHES",
 					"description"  : "Ability to reload caches"
 				} );
