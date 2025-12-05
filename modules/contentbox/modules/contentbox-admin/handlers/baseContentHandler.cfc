@@ -265,13 +265,6 @@ component extends="baseHandler" {
 				event          = "contentbox-admin:comments.pager",
 				eventArguments = { contentID : rc.contentID }
 			);
-			// Get Child Pages Viewlet
-			prc.childPagesViewlet = pager(
-				event  = arguments.event,
-				rc     = arguments.rc,
-				prc    = arguments.prc,
-				parent = prc.oContent.getContentID()
-			);
 			// Get History Versions Viewlet
 			prc.versionsViewlet = runEvent(
 				event          = "contentbox-admin:versions.pager",
