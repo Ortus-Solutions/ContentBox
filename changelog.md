@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.3.2] - 2025-12-05
+
 ### Fixed
 
-* Fixed an issue where different engines were handing defaults
+-   Fixed an issue where different engines were handing defaults
 
 ## [6.3.1] - 2025-10-20
 
@@ -125,7 +127,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   [CONTENTBOX-1478](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1478) Remove old tuckey urlrewrite.xml as this is now in the CommandBox Core
 -   [CONTENTBOX-1493](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1493) ContentBox Express removed since we now have CommandBox
 
-[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.1...HEAD
+[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.2...HEAD
+
+[6.3.2]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.1...v6.3.2
 
 [6.3.1]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.0...v6.3.1
 
