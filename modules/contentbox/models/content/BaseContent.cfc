@@ -764,7 +764,7 @@ component
 	 */
 	function getFeaturedImageURL(){
 		var featured = getFeaturedImage();
-		if ( !len( featured ) ) {
+		if ( isNull( featured ) || !len( featured ) ) {
 			return "";
 		}
 		var mediaRoot         = mediaService.getCoreMediaRoot();
