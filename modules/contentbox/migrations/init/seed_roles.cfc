@@ -1,9 +1,10 @@
 component {
 
 	function seed( schema, query ){
+		var falseBinding = query.getGrammar().convertToBooleanType( false );
 		var admin = {
 			"roleID"       : createUUID(),
-			"isDeleted"    : 0,
+			"isDeleted"    : falseBinding,
 			"createdDate"  : now(),
 			"modifiedDate" : now(),
 			"role"         : "Administrator",
@@ -11,7 +12,7 @@ component {
 		};
 		var editor = {
 			"roleID"       : createUUID(),
-			"isDeleted"    : 0,
+			"isDeleted"    : falseBinding,
 			"createdDate"  : now(),
 			"modifiedDate" : now(),
 			"role"         : "Editor",

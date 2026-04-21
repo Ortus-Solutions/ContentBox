@@ -184,9 +184,10 @@ component {
 			}
 		];
 
+		var falseBinding = query.getGrammar().convertToBooleanType( false );
 		perms = perms.map( ( thisPerm ) => {
 			thisPerm[ "permissionID" ] = createUUID();
-			thisPerm[ "isDeleted" ]    = 0;
+			thisPerm[ "isDeleted" ]    = falseBinding;
 			thisPerm[ "createdDate" ]  = thisPerm[ "modifiedDate" ] = now();
 			return thisPerm;
 		} );

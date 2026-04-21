@@ -20,22 +20,16 @@ function getUUID(){
  * @targetcolumn The column to check
  */
 boolean function hasColumn( targetTable, targetColumn ){
-	// Check for column created
-	cfdbinfo(
-		name  = "local.qSettingColumns",
-		type  = "columns",
-		table = arguments.targetTable
+	// Use information_schema directly so the check is dialect-safe and preserves
+	// identifier case (cfdbinfo lowercases table names which breaks on PostgreSQL).
+	var result = queryExecute(
+		"SELECT 1 FROM information_schema.columns WHERE table_name = :tableName AND column_name = :columnName",
+		{
+			tableName  : arguments.targetTable,
+			columnName : arguments.targetColumn
+		}
 	);
-
-	if (
-		qSettingColumns.filter( ( thisRow ) => {
-			// systemOutput( thisRow, true );
-			return thisRow.column_name == targetColumn
-		} ).recordCount > 0
-	) {
-		return true;
-	}
-	return false;
+	return result.recordCount > 0;
 }
 
 /**

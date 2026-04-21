@@ -12,7 +12,7 @@ component {
 			.newQuery()
 			.from( "cb_setting" )
 			.where( "name", "cb_media_directoryRoot" )
-			.where( "isCore", 1 )
+			.where( "isCore", qb.getGrammar().convertToBooleanType( true ) )
 			.first();
 
 		if ( !structKeyExists( mediaRoot, "value" ) ) {
