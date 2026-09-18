@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"7.0.0",
+    "version":"7.1.0",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -40,7 +40,7 @@
         "cbdebugger":"lib/modules/cbdebugger/",
         "route-visualizer":"lib/modules/route-visualizer/"
     },
-	"installPathConventions":{
+    "installPathConventions":{
         "modules":"lib/modules"
     },
     "ignores":[],
@@ -57,8 +57,8 @@
         "contentbox:migrate:up":"run-script contentbox:migrate",
         "contentbox:migrate:down":"migrate down manager=contentbox",
         "contentbox:migrate:fresh":"migrate fresh manager=contentbox",
-		"format":"!boxlang format --source config,handlers,modules/contentbox,tests/specs --excludes modules/contentbox/modules/contentbox-deps",
-		"format:check":"!boxlang format --check --source config,handlers,modules/contentbox,tests/specs --excludes modules/contentbox/modules/contentbox-deps"
+        "format":"!boxlang format --source config,handlers,modules/contentbox,tests/specs --excludes modules/contentbox/modules/contentbox-deps",
+        "format:check":"!boxlang format --check --source config,handlers,modules/contentbox,tests/specs --excludes modules/contentbox/modules/contentbox-deps"
     },
     "testbox":{
         "runner":[
