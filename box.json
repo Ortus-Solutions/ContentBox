@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"7.1.0",
+    "version":"7.0.0",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -36,9 +36,7 @@
     },
     "installPaths":{
         "testbox":"lib/testbox/",
-        "coldbox":"lib/coldbox/",
-        "cbdebugger":"lib/modules/cbdebugger/",
-        "route-visualizer":"lib/modules/route-visualizer/"
+        "coldbox":"lib/coldbox/"
     },
     "installPathConventions":{
         "modules":"lib/modules"
