@@ -36,7 +36,9 @@
     },
     "installPaths":{
         "testbox":"lib/testbox/",
-        "coldbox":"lib/coldbox/"
+        "coldbox":"lib/coldbox/",
+        "cbdebugger":"lib/modules/cbdebugger/",
+        "route-visualizer":"lib/modules/route-visualizer/"
     },
     "installPathConventions":{
         "modules":"lib/modules"
