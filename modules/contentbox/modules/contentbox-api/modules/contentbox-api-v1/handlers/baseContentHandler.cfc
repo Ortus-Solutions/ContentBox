@@ -11,8 +11,6 @@ component extends="baseHandler" {
 
 	property name="customFieldService" inject="customFieldService@contentbox";
 
-	property name="securityService" inject="securityService@contentbox";
-
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 	// The name of the method to use for save persistence on the ORM service
 	variables.saveMethod = "save";
@@ -21,6 +19,10 @@ component extends="baseHandler" {
 
 	/**
 	 * Executes before all handler actions
+	 *
+	 * Callers without full content access (see hasFullContentAccess()) may only operate
+	 * against a live (active) site, mirroring SiteService.discoverSite()'s front-end rule.
+	 * An inactive site 404s exactly like a non-existent one for them.
 	 */
 	any function preHandler(
 		event,
@@ -32,15 +34,23 @@ component extends="baseHandler" {
 		// Verify incoming site
 		param rc.site = "";
 		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
+
+		if ( !hasFullContentAccess( prc ) && !prc.oCurrentSite.getIsActive() ) {
+			throw(
+				message      = "No site found for ID/Slug #prc.oCurrentSite.getSlug()#",
+				type         = "EntityNotFound",
+				extendedinfo = "Site"
+			);
+		}
 	}
 
 	/**
 	 * Show a content item using an incoming slug or id
 	 *
-	 * Anonymous (unauthenticated) requests may only resolve content that is already
-	 * publicly live on the front-end site: published, not expired, and not password
-	 * protected. Everything else 404s exactly like a non-existent id/slug, so we never
-	 * confirm the existence of private content to an anonymous caller.
+	 * Callers without full content access (see hasFullContentAccess()) may only resolve
+	 * content that is already publicly live on the front-end site: published, not expired,
+	 * and not password protected. Everything else 404s exactly like a non-existent id/slug,
+	 * so we never confirm the existence of private content to an unprivileged caller.
 	 */
 	function show( event, rc, prc ) {
 		param rc.includes = arrayToList(
@@ -54,15 +64,13 @@ component extends="baseHandler" {
 			]
 		);
 
-		if ( !variables.securityService.isLoggedIn() ) {
+		if ( !hasFullContentAccess( prc ) ) {
 			param rc.id = 0;
 			var oContent = (
 				variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 			);
 
-			if (
-				!oContent.isContentPublished() || oContent.isExpired() || oContent.isPasswordProtected()
-			) {
+			if ( !oContent.isContentPublished() || oContent.isExpired() || oContent.isPasswordProtected() ) {
 				throw(
 					message      = "No entity found for ID/Slug #rc.id.toString()#",
 					type         = "EntityNotFound",
@@ -72,6 +80,39 @@ component extends="baseHandler" {
 		}
 
 		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * True when the current caller (if any) holds admin/editor permission for this content
+	 * type, in which case they bypass the public-visibility restrictions applied to
+	 * anonymous callers and authenticated callers without that permission alike.
+	 *
+	 * These actions are whitelisted out of the JWT firewall entirely (see ModuleConfig.cfc),
+	 * so the firewall never parses an incoming token or populates prc.oCurrentAuthor for them.
+	 * We therefore parse it ourselves: a missing/invalid/expired token throws and is treated
+	 * as anonymous. Author.hasPermission() matches its argument as a single permission name,
+	 * so each candidate permission must be checked individually rather than as a comma list.
+	 */
+	private boolean function hasFullContentAccess( required prc ) {
+		try {
+			jwtAuth().parseToken();
+		} catch (any e) {
+			return false;
+		}
+
+		for ( var thisPermission in listToArray(
+			"#variables.contentType#_ADMIN,#variables.contentType#_EDITOR"
+		) ) {
+			if (
+				arguments
+					.prc
+					.oCurrentAuthor
+					.hasPermission( thisPermission )
+			) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/***************************************************************************/

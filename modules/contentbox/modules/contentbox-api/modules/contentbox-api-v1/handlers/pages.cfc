@@ -10,6 +10,8 @@ component extends="baseContentHandler" {
 	variables.sortOrder = "publishedDate DESC";
 	// The name of the entity this resource handler controls. Singular name please.
 	variables.entity = "Page";
+	// The permission prefix used to check for full (admin/editor) content access
+	variables.contentType = "PAGES";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 
@@ -114,7 +116,7 @@ component extends="baseContentHandler" {
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR" {
 		// Supersize it
-		arguments.contentType = "PAGES";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 
@@ -127,7 +129,7 @@ component extends="baseContentHandler" {
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR" {
 		// Supersize it
-		arguments.contentType = "PAGES";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 

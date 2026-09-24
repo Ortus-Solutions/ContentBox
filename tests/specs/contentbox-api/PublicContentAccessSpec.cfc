@@ -75,28 +75,35 @@ component extends="tests.resources.BaseApiTest" {
 								then(
 									"show returns a 404, never the draft content",
 									() => {
-										withRollback(
-											() => {
-												var authorCriteria = { username: variables.testAdminUsername };
-												var oAuthor = variables.authorService.findWhere( authorCriteria );
-												var oDraft = variables.entryService.save(
-														variables.entryService.new(
-																{
-																	title      : "anon-draft-entry",
-																	slug       : "anon-draft-entry",
-																	isPublished: false,
-																	changelog  : "draft fixture for anonymous API access test",
-																	site       : variables.siteService.getDefaultSite(),
-																	creator    : oAuthor
-																}
-															)
-													);
+										// Not wrapped in withRollback(): the simulated this.get() request
+										// runs its own ORM session/transaction and cannot see an uncommitted
+										// row, which would make this pass for the wrong reason (invisible,
+										// not correctly filtered). Commit for real and clean up after.
+										var authorCriteria = { username: variables.testAdminUsername };
+										var oAuthor = variables.authorService.findWhere( authorCriteria );
+										var oDraft = variables.entryService.new(
+												{
+													title      : "anon-draft-entry",
+													slug       : "anon-draft-entry",
+													isPublished: false,
+													site       : variables.siteService.getDefaultSite(),
+													creator    : oAuthor
+												}
+											);
+										oDraft.addNewContentVersion(
+												content   = "should never be publicly visible",
+												changelog = "draft fixture for anonymous API access test",
+												author    = oAuthor
+											);
+										oDraft = variables.entryService.save( oDraft );
 
-												var event = this.get( "/cbapi/v1/sites/default/entries/#oDraft.getContentID()#" );
-												expect( event.getResponse() ).toHaveStatus( 404,
-														event.getResponse().getMessagesString() );
-											}
-										);
+										try {
+											var event = this.get( "/cbapi/v1/sites/default/entries/#oDraft.getContentID()#" );
+											expect( event.getResponse() ).toHaveStatus( 404,
+													event.getResponse().getMessagesString() );
+										} finally {
+											variables.entryService.delete( oDraft );
+										}
 									}
 								);
 							}
@@ -155,28 +162,35 @@ component extends="tests.resources.BaseApiTest" {
 								then(
 									"show returns a 404, never the draft content",
 									() => {
-										withRollback(
-											() => {
-												var authorCriteria = { username: variables.testAdminUsername };
-												var oAuthor = variables.authorService.findWhere( authorCriteria );
-												var oDraft = variables.pageService.save(
-														variables.pageService.new(
-																{
-																	title      : "anon-draft-page",
-																	slug       : "anon-draft-page",
-																	isPublished: false,
-																	changelog  : "draft fixture for anonymous API access test",
-																	site       : variables.siteService.getDefaultSite(),
-																	creator    : oAuthor
-																}
-															)
-													);
+										// Not wrapped in withRollback(): the simulated this.get() request
+										// runs its own ORM session/transaction and cannot see an uncommitted
+										// row, which would make this pass for the wrong reason (invisible,
+										// not correctly filtered). Commit for real and clean up after.
+										var authorCriteria = { username: variables.testAdminUsername };
+										var oAuthor = variables.authorService.findWhere( authorCriteria );
+										var oDraft = variables.pageService.new(
+												{
+													title      : "anon-draft-page",
+													slug       : "anon-draft-page",
+													isPublished: false,
+													site       : variables.siteService.getDefaultSite(),
+													creator    : oAuthor
+												}
+											);
+										oDraft.addNewContentVersion(
+												content   = "should never be publicly visible",
+												changelog = "draft fixture for anonymous API access test",
+												author    = oAuthor
+											);
+										oDraft = variables.pageService.save( oDraft );
 
-												var event = this.get( "/cbapi/v1/sites/default/pages/#oDraft.getContentID()#" );
-												expect( event.getResponse() ).toHaveStatus( 404,
-														event.getResponse().getMessagesString() );
-											}
-										);
+										try {
+											var event = this.get( "/cbapi/v1/sites/default/pages/#oDraft.getContentID()#" );
+											expect( event.getResponse() ).toHaveStatus( 404,
+													event.getResponse().getMessagesString() );
+										} finally {
+											variables.pageService.delete( oDraft );
+										}
 									}
 								);
 							}
@@ -235,30 +249,37 @@ component extends="tests.resources.BaseApiTest" {
 								then(
 									"show returns a 404, never the draft content",
 									() => {
-										withRollback(
-											() => {
-												var authorCriteria = { username: variables.testAdminUsername };
-												var oAuthor = variables.authorService.findWhere( authorCriteria );
-												var oDraft = variables.contentStoreService.save(
-														variables.contentStoreService.new(
-																{
-																	title      : "anon-draft-contentstore",
-																	slug       : "anon-draft-contentstore",
-																	isPublished: false,
-																	changelog  : "draft fixture for anonymous API access test",
-																	site       : variables.siteService.getDefaultSite(),
-																	creator    : oAuthor
-																}
-															)
-													);
+										// Not wrapped in withRollback(): the simulated this.get() request
+										// runs its own ORM session/transaction and cannot see an uncommitted
+										// row, which would make this pass for the wrong reason (invisible,
+										// not correctly filtered). Commit for real and clean up after.
+										var authorCriteria = { username: variables.testAdminUsername };
+										var oAuthor = variables.authorService.findWhere( authorCriteria );
+										var oDraft = variables.contentStoreService.new(
+												{
+													title      : "anon-draft-contentstore",
+													slug       : "anon-draft-contentstore",
+													isPublished: false,
+													site       : variables.siteService.getDefaultSite(),
+													creator    : oAuthor
+												}
+											);
+										oDraft.addNewContentVersion(
+												content   = "should never be publicly visible",
+												changelog = "draft fixture for anonymous API access test",
+												author    = oAuthor
+											);
+										oDraft = variables.contentStoreService.save( oDraft );
 
-												var event = this.get(
-														"/cbapi/v1/sites/default/contentstore/#oDraft.getContentID()#"
-													);
-												expect( event.getResponse() ).toHaveStatus( 404,
-														event.getResponse().getMessagesString() );
-											}
-										);
+										try {
+											var event = this.get(
+													"/cbapi/v1/sites/default/contentstore/#oDraft.getContentID()#"
+												);
+											expect( event.getResponse() ).toHaveStatus( 404,
+													event.getResponse().getMessagesString() );
+										} finally {
+											variables.contentStoreService.delete( oDraft );
+										}
 									}
 								);
 							}

@@ -92,6 +92,41 @@ component extends="tests.resources.BaseApiTest" {
 								);
 							}
 						);
+						given(
+							"a draft (unpublished) entry and an authenticated admin",
+							() => {
+								then(
+									"then I should still be able to view it, unlike an anonymous caller",
+									() => {
+										// Not wrapped in withRollback(): the simulated this.get() request
+										// runs its own ORM session/transaction and cannot see an
+										// uncommitted row. Commit for real and clean up afterwards.
+										var oDraft = variables.entryService.new( {
+												title      : "authed-draft-entry",
+												slug       : "authed-draft-entry",
+												isPublished: false,
+												site       : variables.siteService.getDefaultSite(),
+												creator    : variables.loggedInData.user
+											} );
+										oDraft.addNewContentVersion(
+												content   = "visible only to a privileged caller",
+												changelog = "draft fixture for authenticated ENTRIES_ADMIN visibility test",
+												author    = variables.loggedInData.user
+											);
+										oDraft = variables.entryService.save( oDraft );
+
+										try {
+											var event = this.get( "/cbapi/v1/sites/default/entries/#oDraft.getContentID()#" );
+											expect( event.getResponse() ).toHaveStatus( 200,
+													event.getResponse().getMessagesString() );
+											expect( event.getResponse().getData().slug ).toBe( "authed-draft-entry" );
+										} finally {
+											variables.entryService.delete( oDraft );
+										}
+									}
+								);
+							}
+						);
 					}
 				); // end story view site by id or slug
 
