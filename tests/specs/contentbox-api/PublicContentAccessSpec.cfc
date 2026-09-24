@@ -60,10 +60,38 @@ component extends="tests.resources.BaseApiTest" {
 								then(
 									"I can view it via show using its slug",
 									() => {
-										var event = this.get( "/cbapi/v1/sites/default/entries/disk-queues-77caf" );
-										expect( event.getResponse() ).toHaveStatus( 200,
-												event.getResponse().getMessagesString() );
-										expect( event.getResponse().getData().slug ).toBe( "disk-queues-77caf" );
+										// Not relying on the seeded "disk-queues-77caf" fixture: it's
+										// touched by several other specs (creates/edits that reference
+										// its slug for uniqueness checks), and on Adobe CF it has been
+										// observed coming out of that non-visible to anonymous callers.
+										// Use a disposable published entry instead.
+										var authorCriteria = { username: variables.testAdminUsername };
+										var oAuthor = variables.authorService.findWhere( authorCriteria );
+										var oEntry = variables.entryService.new(
+												{
+													title        : "anon-published-entry",
+													slug         : "anon-published-entry",
+													isPublished  : true,
+													publishedDate: dateAdd( "d", -1, now() ),
+													site         : variables.siteService.getDefaultSite(),
+													creator      : oAuthor
+												}
+											);
+										oEntry.addNewContentVersion(
+												content   = "publicly visible content",
+												changelog = "published fixture for anonymous API access test",
+												author    = oAuthor
+											);
+										oEntry = variables.entryService.save( oEntry );
+
+										try {
+											var event = this.get( "/cbapi/v1/sites/default/entries/#oEntry.getContentID()#" );
+											expect( event.getResponse() ).toHaveStatus( 200,
+													event.getResponse().getMessagesString() );
+											expect( event.getResponse().getData().slug ).toBe( "anon-published-entry" );
+										} finally {
+											variables.entryService.delete( oEntry );
+										}
 									}
 								);
 							}
