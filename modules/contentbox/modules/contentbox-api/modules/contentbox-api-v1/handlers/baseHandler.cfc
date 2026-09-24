@@ -235,6 +235,54 @@ component extends="cborm.models.resources.BaseHandler" {
 	}
 
 	/**
+	 * Workaround for COLDBOX-1453: the ColdBox RestHandler version fails on Adobe 2023
+	 * with a MissingArgumentException when calling setData().
+	 * TODO: Remove once a ColdBox release with COLDBOX-1453 is the minimum version.
+	 *
+	 * @event          The request context
+	 * @rc             The rc reference
+	 * @prc            The prc reference
+	 * @eventArguments The original event arguments
+	 * @exception      The thrown exception
+	 */
+	function onEntityNotFoundException( event, rc, prc, eventArguments, exception = {} ) {
+		// Param Exceptions, just in case
+		param name="arguments.exception.message"      default="";
+		param name="arguments.exception.extendedInfo" default="";
+
+		// Announce exception
+		announce( "onEntityNotFoundException", { "exception" : arguments.exception } );
+		// Log it
+		log.warn(
+			"onEntityNotFoundException of (#arguments.event.getCurrentEvent()#)",
+			arguments.exception.extendedInfo
+		);
+
+		// Resolve the id first, ACF 2023 drops an inline Elvis expression passed to setData()
+		var entityId = structKeyExists( arguments.rc, "id" ) ? arguments.rc.id : "";
+
+		// Setup Response
+		arguments.event
+			.getResponse()
+			.setError( true )
+			.setData( entityId )
+			.addMessage(
+				len( arguments.exception.message ) ? arguments.exception.message : "The record you requested cannot be found in this system"
+			)
+			.setStatusCode( arguments.event.STATUS.NOT_FOUND );
+
+		// Render Error Out
+		arguments.event.renderData(
+			type        = arguments.prc.response.getFormat(),
+			data        = arguments.prc.response.getDataPacket( reset = this.resetDataOnError ),
+			contentType = arguments.prc.response.getContentType(),
+			statusCode  = arguments.prc.response.getStatusCode(),
+			location    = arguments.prc.response.getLocation(),
+			isBinary    = arguments.prc.response.getBinary()
+		);
+	}
+
+	/**
 	 * This utility tries to get the incoming resource by id or slug or fails
 	 *
 	 * @id  The id/slug identifier to retrieve the entity
