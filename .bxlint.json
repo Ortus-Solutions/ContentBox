@@ -57,6 +57,10 @@
         "unusedPrivateMethod": {
             "enabled": false,
             "severity": "warning"
+        },
+		"possibleTypo": {
+            "enabled": false,
+            "severity": "warning"
         }
     }
 }
