@@ -16,11 +16,12 @@ component extends="baseContentHandler" {
 	/**
 	 * Display all pages using different filters
 	 *
+	 * Publicly accessible: only published pages are returned, so no authentication is required.
+	 *
 	 * @tags      Pages
 	 * @responses contentbox/apidocs/pages/index/responses.json
-	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
-	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR" {
+	function index( event, rc, prc ) {
 		param rc.page = 1;
 		param rc.excludes = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
@@ -81,11 +82,13 @@ component extends="baseContentHandler" {
 	/**
 	 * Show an page using the id
 	 *
+	 * Publicly accessible: anonymous requests only resolve pages that are published,
+	 * not expired, and not password protected. See baseContentHandler.show().
+	 *
 	 * @tags      Pages
 	 * @responses contentbox/apidocs/pages/show/responses.json
-	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
-	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR" {
+	function show( event, rc, prc ) {
 		param rc.includes = arrayToList(
 			[
 				"activeContent",

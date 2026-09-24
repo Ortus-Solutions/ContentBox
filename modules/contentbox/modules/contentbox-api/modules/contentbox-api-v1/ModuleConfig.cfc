@@ -41,7 +41,11 @@ component {
 						{
 							"match"     : "event",
 							"secureList": "contentbox\-api\-v1\:.*", // Secure all api endpoints
-							"whitelist" : "(auth|echo)" // Except the auth and echo endpoints
+							// Except the auth/echo endpoints and the read-only (index/show) actions on
+							// content resources that are already publicly viewable on the front-end site.
+							// Anonymous visibility for those is enforced by BaseContent.isContentPublished()
+							// in baseContentHandler.show() and by ContentService.findPublishedContent() for index().
+							"whitelist" : "(auth|echo|entries\.(index|show)|pages\.(index|show)|contentStore\.(index|show))"
 						}
 					],
 					// The validator is an object that will validate rules and annotations and provide feedback on either authentication or authorization issues.

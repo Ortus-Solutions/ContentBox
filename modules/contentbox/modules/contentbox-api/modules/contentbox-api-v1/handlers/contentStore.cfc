@@ -16,11 +16,12 @@ component extends="baseContentHandler" {
 	/**
 	 * Display all content store items using different filters
 	 *
+	 * Publicly accessible: only published items are returned, so no authentication is required.
+	 *
 	 * @tags      ContentStore
 	 * @responses contentbox/apidocs/contentStore/index/responses.json
-	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
+	function index( event, rc, prc ) {
 		// Paging + Mementifier
 		param rc.page = 1;
 		param rc.excludes = "HTMLTitle,HTMLKeywords,HTMLDescription";
@@ -77,11 +78,13 @@ component extends="baseContentHandler" {
 	/**
 	 * Show a content store item using the id
 	 *
+	 * Publicly accessible: anonymous requests only resolve items that are published,
+	 * not expired, and not password protected. See baseContentHandler.show().
+	 *
 	 * @tags      ContentStore
 	 * @responses contentbox/apidocs/contentStore/show/responses.json
-	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
+	function show( event, rc, prc ) {
 		param rc.includes = arrayToList(
 			[
 				"activeContent",

@@ -11,6 +11,8 @@ component extends="baseHandler" {
 
 	property name="customFieldService" inject="customFieldService@contentbox";
 
+	property name="securityService" inject="securityService@contentbox";
+
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 	// The name of the method to use for save persistence on the ORM service
 	variables.saveMethod = "save";
@@ -34,6 +36,11 @@ component extends="baseHandler" {
 
 	/**
 	 * Show a content item using an incoming slug or id
+	 *
+	 * Anonymous (unauthenticated) requests may only resolve content that is already
+	 * publicly live on the front-end site: published, not expired, and not password
+	 * protected. Everything else 404s exactly like a non-existent id/slug, so we never
+	 * confirm the existence of private content to an anonymous caller.
 	 */
 	function show( event, rc, prc ) {
 		param rc.includes = arrayToList(
@@ -46,6 +53,23 @@ component extends="baseHandler" {
 				"renderedContent"
 			]
 		);
+
+		if ( !variables.securityService.isLoggedIn() ) {
+			param rc.id = 0;
+			var oContent = (
+				variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
+			);
+
+			if (
+				!oContent.isContentPublished() || oContent.isExpired() || oContent.isPasswordProtected()
+			) {
+				throw(
+					message      = "No entity found for ID/Slug #rc.id.toString()#",
+					type         = "EntityNotFound",
+					extendedinfo = variables.entity
+				);
+			}
+		}
 
 		super.show( argumentCollection = arguments );
 	}
