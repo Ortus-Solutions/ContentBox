@@ -44,6 +44,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="relocationService" inject="RelocationService@contentbox";
 
 	property name="asyncManager" inject="coldbox:asyncManager";
+	property name="siteService" inject="SiteService@contentBox";
 
 	/**
 	 * Constructor
@@ -845,8 +846,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws InvalidImportFormat
 	 */
-	string function importFromFile( required importFile, boolean override = false ) {
-		var data = fileRead( arguments.importFile );
+	string function importFromFile( required importFile, boolean override = false, site ){
+		var data      = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
 				"Starting import with override = #arguments.override#...<br>"
 			);
@@ -862,7 +863,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return importFromData(
 			deserializeJSON( data ),
 			arguments.override,
-			importLog
+			importLog,
+			arguments.site ?: javacast( "null", 0 )
 		);
 	}
 
@@ -900,10 +902,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisContent in arguments.importData ) {
 				// Determine Site if not passed from import data
 				if ( isNull( arguments.site ) ) {
-					logThis(
-						"+ Site not passed, inflating from import data (#thisContent.site.slug#)"
-					);
-					arguments.site = siteService.getBySlugOrFail( thisContent.site.slug );
+					logThis( "+ Site not passed, inflating from import data (#thisContent.site.slug#)" );
+					arguments.site = thisContent.keyExists( "site" ) ? siteService.getBySlugOrFail( thisContent.site.slug ) : variables.siteService.discoverSite();
 				}
 
 				logThis(
@@ -1035,13 +1035,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			logThis(
 				"+ Content parent (#arguments.parent.getSlug()#) passed and linked for: (#thisContent.contentType#:#thisContent.slug#)"
 			);
-		} else if ( structCount( thisContent.parent ) ) {
-			var oParent = findWhere(
-				{
-					"slug": thisContent.parent.slug,
-					"site": arguments.site
-				}
-			);
+		} else if ( structKeyExists( thisContent, "parent" ) and structCount( thisContent.parent ) ) {
+			var oParent = findWhere( {
+				"slug" : thisContent.parent.slug,
+				"site" : arguments.site
+			} );
 			// assign if persisted
 			if ( !isNull( oParent ) ) {
 				oContent.setParent( oParent );
@@ -1056,7 +1054,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// CATEGORIES
-		if ( arrayLen( thisContent.categories ) ) {
+		if ( structKeyExists( thisContent, "categories") && arrayLen( thisContent.categories ) ) {
 			oContent.setCategories(
 					thisContent.categories.map(
 							function( thisCategory ) {
@@ -1078,7 +1076,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		entitySave( oContent );
 
 		// CUSTOM FIELDS
-		if ( arrayLen( thisContent.customfields ) ) {
+		if ( structKeyExists( thisContent, "customfields") && arrayLen( thisContent.customfields ) ) {
 			// wipe out custom fileds if they exist
 			oContent.removeAllCustomFields();
 			logThis(
@@ -1104,18 +1102,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// STATS
-		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
-			var oStat = variables
-				.statsService
-				.newCriteria()
-				.isEq( "relatedContent.contentID", oContent.getContentID() )
-				.get();
-			if ( !isNull( oStat ) ) {
-				oStat.setHits( thisContent.stats.hits );
-				variables.statsService.save( oStat );
-				logThis(
-					"+ Content stats found and updated for : (#thisContent.contentType#:#thisContent.slug#)"
-				);
+		if ( structKeyExists( thisContent, "stats") && structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
+			if ( oContent.hasStats() ) {
+				oContent.getStats().setHits( thisContent.stats.hits );
+				logThis( "+ Content stats found and updated for : (#thisContent.contentType#:#thisContent.slug#)" );
 			} else {
 				logThis(
 					"+ Content stats imported for : (#thisContent.contentType#:#thisContent.slug#)"
@@ -1129,7 +1119,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// CHILDREN
-		if ( arrayLen( thisContent.children ) ) {
+		if ( structKeyExists( thisContent, "children") && arrayLen( thisContent.children ) ) {
 			logThis(
 				"+ Content children (#arrayLen( thisContent.children )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
@@ -1158,7 +1148,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// RELATED CONTENT
-		if ( arrayLen( thisContent.relatedContent ) ) {
+		if ( structKeyExists( thisContent, "relatedContent") && arrayLen( thisContent.relatedContent ) ) {
 			var allRelatedContent = [];
 			logThis(
 				"+ Content related content (#arrayLen( thisContent.relatedContent )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
@@ -1194,7 +1184,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// COMMENTS
-		if ( arrayLen( thisContent.comments ) ) {
+		if ( structKeyExists( thisContent, "comments") && arrayLen( thisContent.comments ) ) {
 			logThis(
 				"+ Content comments (#arrayLen( thisContent.comments )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
@@ -1216,7 +1206,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// SUBSCRIPTIONS
-		if ( arrayLen( thisContent.commentSubscriptions ) ) {
+		if ( structKeyExists( thisContent, "commentSubscriptions") && arrayLen( thisContent.commentSubscriptions ) ) {
 			var allSubscriptions = [];
 			logThis(
 				"+ Content comment subscriptions (#arrayLen( thisContent.commentSubscriptions )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
@@ -1258,29 +1248,25 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// CONTENT VERSIONS
-		if ( arrayLen( thisContent.contentversions ) ) {
+		if ( structKeyExists( thisContent, "contentversions") && arrayLen( thisContent.contentversions ) ) {
 			logThis(
 				"+ Content versions (#arrayLen( thisContent.contentversions )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			oContent.setContentVersions(
-					thisContent.contentVersions.map(
-							function( thisVersion ) {
-								logThis(
-									"+ Importing content version (#thisVersion.version#) to : (#thisContent.contentType#:#thisContent.slug#)"
-								);
-								var oVersion = getBeanPopulator().populateFromStruct(
-										target               = variables.contentVersionService.new(),
-										memento              = thisVersion,
-										exclude              = "contentVersionID,author",
-										composeRelationships = false
-									);
-								var oEditor = variables.authorService.findByEmail( thisVersion.author.email );
-								return oVersion.setAuthor(
-										isNull( oEditor ) ? oAuthor : oEditor
-									).setRelatedContent( oContent );
-							}
-						)
-				);
+				thisContent.contentversions.map( function( thisVersion ){
+					logThis(
+						"+ Importing content version (#thisVersion.version#) to : (#thisContent.contentType#:#thisContent.slug#)"
+					);
+					var oVersion = getBeanPopulator().populateFromStruct(
+						target               = variables.contentVersionService.new(),
+						memento              = thisVersion,
+						exclude              = "contentVersionID,author",
+						composeRelationships = false
+					);
+					var oEditor = variables.authorService.findByEmail( thisVersion.author.email );
+					return oVersion.setAuthor( isNull( oEditor ) ? oAuthor : oEditor ).setRelatedContent( oContent );
+				} )
+			);
 		}
 
 		return oContent;
