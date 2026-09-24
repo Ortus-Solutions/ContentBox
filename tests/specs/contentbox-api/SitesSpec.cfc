@@ -269,7 +269,14 @@ component extends="tests.resources.BaseApiTest" {
 											expect( event.getResponse().getData().description ).toInclude( "bdd test baby!" );
 											expect( event.getResponse().getData().isActive ).toBeFalse();
 										} finally {
-											variables.siteService.delete( testSite );
+											// Clean up through the API, not the ORM service directly: the
+											// PUT above ran in a separate simulated request with its own
+											// ORM session, so `testSite` is stale here. Calling
+											// siteService.delete() on it triggers "An exception occurred
+											// when committing the transaction" on Adobe CF, same as the
+											// Hibernate cascade quirk SiteService.delete() already comments
+											// on. The delete-site test below avoids it the same way.
+											this.delete( "/cbapi/v1/sites/#testSite.getSiteId()#" );
 										}
 									}
 								);
