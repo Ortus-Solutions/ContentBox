@@ -401,6 +401,9 @@ component
         variables.pages = [];
         variables.contentStore = [];
         variables.domainAliases = '[]';
+        // Some engines (e.g. Adobe ColdFusion) don't apply a property's `default` attribute
+        // to a freshly new()'d ORM entity, so set it explicitly here, same as Author.cfc.
+        variables.isActive = true;
 
         super.init();
 
