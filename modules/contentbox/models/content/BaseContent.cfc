@@ -320,6 +320,7 @@ component
 		inverse="true"
 		cascade="all-delete-orphan";
 
+	// Transient property for active content versions
 	property name="activeContentVersions" persistent="false";
 
 	// M20 -> Parent Page loaded as a proxy
@@ -400,6 +401,7 @@ component
 		linktable="cb_relatedContent"
 		inversejoincolumn="FK_contentID";
 
+	// M2O -> Content Template - The template associated with this content
 	property
 		name="contentTemplate"
 		fieldtype="many-to-one"
@@ -407,6 +409,7 @@ component
 		fkcolumn="FK_contentTemplateID"
 		lazy="true";
 
+	// M2O -> Child Content Template - The template associated with child content
 	property
 		name="childContentTemplate"
 		fieldtype="many-to-one"
@@ -424,10 +427,12 @@ component
 		name="numberOfComments"
 		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID"
 		default="0";
+
 	/**
 	 * --------------------------------------------------------------------------
-	 * MEMENTIFIER + CONSTRAINTS
+	 * Mementifier Options
 	 * --------------------------------------------------------------------------
+	 * https://forgebox.io/view/mementifier
 	 */
 
 	this.pk = "contentID";
@@ -468,7 +473,13 @@ component
 			"siteID",
 			"title"
 		],
-		defaultExcludes: [ "comments", "commentSubscriptions", "contentVersions", "contentTemplate", "site"],
+		defaultExcludes: [
+			"comments",
+			"commentSubscriptions",
+			"contentVersions",
+			"contentTemplate",
+			"site"
+		],
 		neverInclude   : [ "passwordProtection"],
 		mappers        : {},
 		defaults       : { "contentTemplate": {} },
@@ -549,6 +560,12 @@ component
 		}
 	};
 
+	/**
+	 * --------------------------------------------------------------------------
+	 * Validation Constraints
+	 * --------------------------------------------------------------------------
+	 * https://coldbox-validation.ortusbooks.com/overview/valid-constraints
+	 */
 	this.constraints = {
 		"cacheLastAccessTimeout": { required: false, type: "numeric" },
 		"cacheTimeout"          : { required: false, type: "numeric" },
@@ -586,21 +603,31 @@ component
 
 	/**
 	 * Base constructor
+	 * Initialize the base content object with default values
 	 */
 	function init() {
-		super.init();
-		variables.isPublished = true;
-		variables.publishedDate = now();
-		variables.allowComments = true;
-		variables.cache = true;
-		variables.cacheTimeout = 0;
-		variables.cacheLastAccessTimeout = 0;
-		variables.markup = "HTML";
-		variables.contentType = "";
-		variables.showInSearch = true;
-		variables.renderedContent = "";
-		variables.children = [];
-		return this;
+		super.init()
+		variables.isPublished = true
+		variables.publishedDate = now()
+		variables.allowComments = true
+		variables.cache = true
+		variables.cacheTimeout = 0
+		variables.cacheLastAccessTimeout = 0
+		variables.markup = "HTML"
+		variables.contentType = ""
+		variables.showInSearch = true
+		variables.renderedContent = ""
+		variables.featuredImageURL = ""
+		// Initialize relationships
+		variables.categories = []
+		variables.children = []
+		variables.comments = []
+		variables.commentSubscriptions = []
+		variables.contentVersions = []
+		variables.customFields = []
+		variables.linkedContent = []
+		variables.relatedContent = []
+		return this
 	}
 
 	/**

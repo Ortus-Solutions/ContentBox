@@ -762,9 +762,12 @@ component extends="baseHandler" {
 		event.paramValue( "overrideContent", false );
 
 		try {
-			if ( len( rc.importFile ) && fileExists( rc.importFile ) ) {
-				var importLog = variables.ormService.importFromFile( importFile = rc.importFile,
-						override = rc.overrideContent );
+			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
+				var importLog = variables.ormService.importFromFile(
+					importFile = rc.importFile,
+					override   = rc.overrideContent,
+					site       = prc.oCurrentSite
+				);
 				cbMessageBox().info( "Content imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
