@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,20 +6,21 @@
  * Manages ContentBox UI Module Requests
  */
 component extends="coldbox.system.Interceptor" {
-
 	// DI
 	property name="settingService" inject="settingService@contentbox";
+
 	property name="contentService" inject="contentService@contentbox";
+
 	property name="CBHelper" inject="id:CBHelper@contentbox";
 
 	/**
 	 * Configure CB Request
 	 */
-	function configure(){
+	function configure() {
 		// Make sure we attach ourselves to the singleton renderer in ColdBox 6
 		var renderer = variables.controller.getRenderer();
 
-		renderer.cb        = variables.CBHelper;
+		renderer.cb = variables.CBHelper;
 		renderer.$cbinject = variables.$cbinject;
 		renderer.$cbinject();
 	}
@@ -27,7 +28,13 @@ component extends="coldbox.system.Interceptor" {
 	/**
 	 * Fired on contentbox requests
 	 */
-	function preProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox\-ui"{
+	function preProcess(
+		event,
+		data,
+		buffer,
+		rc,
+		prc
+	) eventPattern="^contentbox\-ui" {
 		// Verify ContentBox installer has been ran?
 		if ( !settingService.isCBReady() ) {
 			// Check if installer module exists, else throw exception
@@ -36,9 +43,9 @@ component extends="coldbox.system.Interceptor" {
 				relocate( "cbInstaller" );
 			} else {
 				throw(
-					message: "Oops! ContentBox is not installed and the Installer module cannot be found",
-					detail : "To install the installer module use CommandBox via 'install contentbox-installer'",
-					type   : "ContentBoxInstallerMissing"
+					message = "Oops! ContentBox is not installed and the Installer module cannot be found",
+					detail  = "To install the installer module use CommandBox via 'install contentbox-installer'",
+					type    = "ContentBoxInstallerMissing"
 				);
 			}
 		}
@@ -50,31 +57,26 @@ component extends="coldbox.system.Interceptor" {
 	/**
 	 * Fired on post rendering
 	 */
-	function postRender( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui\:(page|blog)"{
+	function postRender(
+		event,
+		data,
+		buffer,
+		rc,
+		prc
+	) eventPattern="^contentbox-ui\:(page|blog)" {
 		// Rules to turn off the admin bar
 		if (
-			// Disabled SiteBar Setting
-			!prc.oCurrentSite.getAdminBar()
-			||
-			// Disabled SiteBar per request
-			structKeyExists( prc, "cbAdminBar" ) and !prc.cbAdminBar
-			||
-			// Ajax Request
-			event.isAjax()
-			||
-			// Output Format not HTML
-			( structKeyExists( rc, "format" ) && rc.format != "html" )
-			||
-			// Preview actions disabled
-			event.getCurrentAction() == "preview"
-			||
-			// Logged In
-			!prc.oCurrentAuthor.isLoggedIn()
-			||
-			// Permissions
-			!prc.oCurrentAuthor.hasPermission(
-				"CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR"
-			)
+			!prc.oCurrentSite.getAdminBar() || structKeyExists( prc, "cbAdminBar" ) && !prc.cbAdminBar ||
+								event// Ajax Request
+									.isAjax() ||
+							( structKeyExists( rc, "format" ) && rc.format != "html" ) ||
+						event.getCurrentAction() == "preview" ||
+					// Logged In
+					!prc.oCurrentAuthor.isLoggedIn() ||
+				// Permissions
+				!prc.oCurrentAuthor.hasPermission(
+						"CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR"
+					)
 		) {
 			return;
 		}
@@ -82,7 +84,7 @@ component extends="coldbox.system.Interceptor" {
 		// Verify if we are in cache mode.
 		if ( structKeyExists( prc, "contentCacheData" ) ) {
 			// skip out if not in text/html mode
-			if ( prc.contentCacheData.contentType neq "text/html" ) {
+			if ( prc.contentCacheData.contentType NEQ "text/html" ) {
 				return;
 			}
 			// Inflate content for admin bar
@@ -109,22 +111,24 @@ component extends="coldbox.system.Interceptor" {
 
 		// Render the admin bar out
 		buffer.append(
-			view(
-				view   = "adminbar/index",
-				module = "contentbox-ui",
-				args   = {
-					oContent       : oContent ?: javacast( "null", "" ),
-					linkEdit       : linkEdit,
-					linkLogout     : "#prc.cbAdminEntryPoint#/security/doLogout",
-					oCurrentAuthor : prc.oCurrentAuthor
-				}
-			)
-		);
+				view(
+					view   = "adminbar/index",
+					module = "contentbox-ui",
+					args   = {
+						oContent      : oContent ?: javacast( "null", "" ),
+						linkEdit      : linkEdit,
+						linkLogout    : "#prc.cbAdminEntryPoint#/security/doLogout",
+						oCurrentAuthor: prc.oCurrentAuthor
+					}
+				)
+			);
 
 		// Append adminbar styles to the html head
 		try {
-			cfhtmlhead( text = view( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
-		} catch ( any e ) {
+			cfhtmlhead(
+				text = view( view = "adminbar/adminbarCSS", module = "contentbox-ui" )
+			);
+		} catch (any e) {
 			log.error( "Error sending adminbar styles via cfhtmlhead", e );
 		}
 	}
@@ -132,7 +136,13 @@ component extends="coldbox.system.Interceptor" {
 	/**
 	 * Fired on contentbox requests
 	 */
-	function postProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui"{
+	function postProcess(
+		event,
+		data,
+		buffer,
+		rc,
+		prc
+	) eventPattern="^contentbox-ui" {
 		// announce event
 		announce( "cbui_postRequest" );
 	}
@@ -140,7 +150,7 @@ component extends="coldbox.system.Interceptor" {
 	/**
 	 * private inject
 	 */
-	function $cbinject(){
+	function $cbinject() {
 		variables.cb = this.cb;
 	}
 

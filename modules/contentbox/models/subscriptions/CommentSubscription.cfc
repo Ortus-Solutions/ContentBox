@@ -14,44 +14,46 @@ component
 	cachename ="cbCommentSubscription"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **                          DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          DI
+	 **********************************************************************/
 
 	property
-		name      ="commentSubscriptionService"
-		inject    ="provider:commentSubscriptionService@contentbox"
+		name="commentSubscriptionService"
+		inject="provider:commentSubscriptionService@contentbox"
 		persistent="false";
 
-	/* *********************************************************************
-	 **                          RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          RELATIONSHIPS
+	 **********************************************************************/
 
 	// M20 -> Content loaded as a proxy
 	property
-		name     ="relatedContent"
-		notnull  ="true"
-		cfc      ="contentbox.models.content.BaseContent"
+		name="relatedContent"
+		notnull="true"
+		cfc="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_contentID"
-		lazy     ="true"
-		orderBy  ="Title ASC";
+		fkcolumn="FK_contentID"
+		lazy="true"
+		orderBy="Title ASC";
 
-	/* *********************************************************************
-	 **                          METHODS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          METHODS
+	 **********************************************************************/
 
-	function init(){
+	function init() {
 		super.init();
-		appendToMemento( [ "relatedContentSnapshot:relatedContent" ], "defaultIncludes" );
+		appendToMemento(
+			[ "relatedContentSnapshot:relatedContent"],
+			"defaultIncludes"
+		);
 		return this;
 	}
 
 	/**
 	 * Build a snapshot of the related content
 	 */
-	struct function getRelatedContentSnapshot(){
+	struct function getRelatedContentSnapshot() {
 		if ( hasRelatedContent() ) {
 			return getRelatedContent().getInfoSnapshot();
 		}
@@ -61,7 +63,7 @@ component
 	/**
 	 * Before insertion verify if we have a token, else generate one.
 	 */
-	public void function preInsert(){
+	public void function preInsert() {
 		super.preInsert();
 
 		if ( isNull( getSubscriptionToken() ) ) {
@@ -70,11 +72,13 @@ component
 		}
 	}
 
-	public boolean function isExtantSubscription(){
-		var extantSubscription = variables.commentSubscriptionService.findWhere( {
-			relatedContent : getRelatedContent(),
-			subscriber     : getSubscriber()
-		} );
+	public boolean function isExtantSubscription() {
+		var extantSubscription = variables.commentSubscriptionService.findWhere(
+				{
+					relatedContent: getRelatedContent(),
+					subscriber    : getSubscriber()
+				}
+			);
 		return isNull( extantSubscription ) ? false : true;
 	}
 

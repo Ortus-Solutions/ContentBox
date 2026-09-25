@@ -56,7 +56,7 @@ module.exports = function( mix ) {
 
 						if ( process.env.NODE_ENV != "development" ){
 							// Clean up compiled root assets
-							fs.rmdir( "includes/js", { recursive: true } );
+							fs.rm( "includes/js", { recursive: true, force: true } );
 							fs.remove( "includes/rev-manifest.json" );
 						}
 					} );

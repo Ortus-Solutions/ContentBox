@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,20 +6,24 @@
  */
 component extends="tests.resources.BaseTest" skip {
 
-	function setup(){
+	function setup() {
 		super.setup();
 		mockSettingsService = prepareMock( getInstance( "SettingService@contentbox" ) );
-		mockCBHelper        = prepareMock( getInstance( "CBHelper@contentbox" ) );
-		service             = prepareMock( getInstance( "RSSService@contentbox" ) );
+		mockCBHelper = prepareMock( getInstance( "CBHelper@contentbox" ) );
+		service = prepareMock( getInstance( "RSSService@contentbox" ) );
 		service.$property(
-			"settingService",
-			"variables",
-			mockSettingsService
-		);
-		service.$property( "CBHelper", "variables", mockCBHelper );
+				"settingService",
+				"variables",
+				mockSettingsService
+			);
+		service.$property(
+				"CBHelper",
+				"variables",
+				mockCBHelper
+			);
 	}
 
-	function testBuildCommentFeed(){
+	function testBuildCommentFeed() {
 		// mock cb
 		mockCBHelper
 			.$( "siteName", "Unit Test" )
@@ -33,7 +37,7 @@ component extends="tests.resources.BaseTest" skip {
 
 		// Slug
 		var b = entityLoad( "cbEntry" )[ 1 ];
-		r     = service.buildCommentFeed( slug = b.getSlug() );
+		r = service.buildCommentFeed( slug = b.getSlug() );
 		assertTrue( isXML( r ) );
 
 		// ContentType
@@ -41,8 +45,12 @@ component extends="tests.resources.BaseTest" skip {
 		assertTrue( isXML( r ) );
 	}
 
-	function testBuildContentFeed(){
-		getRequestContext().setValue( "CBENTRYPOINT", "http://localhost", true );
+	function testBuildContentFeed() {
+		getRequestContext().setValue(
+				"CBENTRYPOINT",
+				"http://localhost",
+				true
+			);
 		// mock cb
 		mockCBHelper
 			.$( "siteName", "Unit Test" )
@@ -60,8 +68,12 @@ component extends="tests.resources.BaseTest" skip {
 		assertTrue( isXML( r ) );
 	}
 
-	function testBuildEntryFeed(){
-		getRequestContext().setValue( "CBENTRYPOINT", "http://localhost", true );
+	function testBuildEntryFeed() {
+		getRequestContext().setValue(
+				"CBENTRYPOINT",
+				"http://localhost",
+				true
+			);
 		// mock cb
 		mockCBHelper
 			.$( "siteName", "Unit Test" )
@@ -79,8 +91,12 @@ component extends="tests.resources.BaseTest" skip {
 		assertTrue( isXML( r ) );
 	}
 
-	function testbuildPageFeed(){
-		getRequestContext().setValue( "CBENTRYPOINT", "http://localhost", true );
+	function testbuildPageFeed() {
+		getRequestContext().setValue(
+				"CBENTRYPOINT",
+				"http://localhost",
+				true
+			);
 		// mock cb
 		mockCBHelper
 			.$( "siteName", "Unit Test" )

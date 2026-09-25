@@ -10,18 +10,18 @@ component extends="coldbox.system.Interceptor" {
 	/**
 	 * Configure
 	 */
-	function configure(){
+	function configure() {
+
 	}
 
 	/**
 	 * Unenrolls all users from two-factor authentication on two-factor provider change
 	 */
-	public void function cbadmin_preSettingsSave( required any event, required struct data ){
+	public void function cbadmin_preSettingsSave( required any event, required struct data ) {
 		// Verify settings sent?
 		if (
-			!data.oldSettings.keyExists( "cb_security_2factorAuth_provider" ) || !data.newSettings.keyExists(
-				"cb_security_2factorAuth_provider"
-			)
+			!data.oldSettings.keyExists( "cb_security_2factorAuth_provider" ) ||
+				!data.newSettings.keyExists( "cb_security_2factorAuth_provider" )
 		) {
 			return;
 		}

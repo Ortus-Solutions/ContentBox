@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -15,77 +15,67 @@ component
 	cachename ="cbSetting"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="settingID"
-		column   ="settingID"
+		name="settingID"
+		column="settingID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
+
+	property name="name" column="name" notnull="true" length="100";
+
+	property name="value" column="value" notnull="true" ormtype="text";
 
 	property
-		name   ="name"
-		column ="name"
-		notnull="true"
-		length ="100";
-
-	property
-		name   ="value"
-		column ="value"
-		notnull="true"
-		ormtype="text";
-
-	property
-		name   ="isCore"
-		column ="isCore"
+		name="isCore"
+		column="isCore"
 		ormtype="boolean"
 		notnull="true"
 		default="false"
-		index  ="idx_core";
+		index="idx_core";
 
-	/* *********************************************************************
-	 **							RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							RELATIONSHIPS
+	 **********************************************************************/
 
 	// M20 -> The site this setting belongs to
 	property
-		name     ="site"
-		notnull  ="false"
-		cfc      ="contentbox.models.system.Site"
+		name="site"
+		notnull="false"
+		cfc="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteID"
-		lazy     ="true";
-
-	/* *********************************************************************
-	 **							PK + CONSTRAINTS + Memento
-	 ********************************************************************* */
+		fkcolumn="FK_siteID"
+		lazy="true";
+	/**********************************************************************
+	 * **							PK + CONSTRAINTS + Memento
+	 **********************************************************************/
 
 	this.pk = "settingID";
 
 	this.constraints = {
-		"name"  : { required : true, size : "1..100" },
-		"value" : { required : true }
+		"name" : { required: true, size: "1..100" },
+		"value": { required: true }
 	};
 
 	this.memento = {
-		defaultIncludes : [ "name", "value", "isCore", "siteSnapshot:site" ],
-		defaultExcludes : [ "site" ]
+		defaultIncludes: [ "name", "value", "isCore", "siteSnapshot:site"],
+		defaultExcludes: [ "site"]
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC METHODS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC METHODS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		variables.isCore = false;
 
 		super.init();
@@ -96,7 +86,7 @@ component
 	/**
 	 * Build a site snapshot
 	 */
-	struct function getSiteSnapshot(){
+	struct function getSiteSnapshot() {
 		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
 	}
 
@@ -105,7 +95,7 @@ component
 	 *
 	 * @return The associated site id or empty if none
 	 */
-	function getSiteID(){
+	function getSiteID() {
 		if ( hasSite() ) {
 			return getSite().getsiteID();
 		}

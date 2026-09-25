@@ -12,57 +12,55 @@ component
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="URL"
 {
-
-	/* *********************************************************************
-	 **                          DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          DI
+	 **********************************************************************/
 
 	property
-		name      ="provider"
+		name="provider"
 		persistent="false"
-		inject    ="provider:contentbox.models.menu.providers.URLProvider";
+		inject="provider:contentbox.models.menu.providers.URLProvider";
 
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name   ="url"
-		column ="url"
+		name="url"
+		column="url"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="target"
-		column ="target"
+		name="target"
+		column="target"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="urlClass"
-		column ="urlClass"
+		name="urlClass"
+		column="urlClass"
 		notnull="false"
 		ormtype="string"
 		default="";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+	this.constraints[ "url" ] = { required: false, size: "1..255" };
+	this.constraints[ "target" ] = { required: false, size: "1..255" };
+	this.constraints[ "urlClass" ] = { required: false, size: "1..255" };
 
-	this.constraints[ "url" ]      = { required : false, size : "1..255" };
-	this.constraints[ "target" ]   = { required : false, size : "1..255" };
-	this.constraints[ "urlClass" ] = { required : false, size : "1..255" };
+	/**********************************************************************
+	 * **                          PUBLIC FUNCTIONS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
-	function init(){
+	function init() {
 		super.init();
 
-		appendToMemento( [ "target", "url", "urlClass" ], "defaultIncludes" );
+		appendToMemento( [ "target", "url", "urlClass"], "defaultIncludes" );
 
 		return this;
 	}

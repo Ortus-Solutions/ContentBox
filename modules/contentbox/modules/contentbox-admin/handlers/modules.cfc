@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,16 +6,21 @@
  * Manage modules
  */
 component extends="baseHandler" {
-
 	// Dependencies
 	property name="moduleService" inject="moduleService@contentbox";
-	property name="routingService" inject="coldbox:routingService";
 
+	property name="routingService" inject="coldbox:routingService";
 	// PrePost Actions
 	this.prehandler_except = "execute";
 
 	// pre handler
-	function preHandler( event, action, eventArguments, rc, prc ){
+	function preHandler(
+		event,
+		action,
+		eventArguments,
+		rc,
+		prc
+	) {
 		// Tab control
 		prc.tabModules = true;
 	}
@@ -23,40 +28,53 @@ component extends="baseHandler" {
 	/**
 	 * Build Module Links
 	 */
-	function buildModuleLink( event, rc, prc ){
+	function buildModuleLink( event, rc, prc ) {
 		return cb.buildModuleLink(
-			module      = event.getValue( "module", "" ),
-			linkTo      = event.getValue( "moduleEvent", "" ),
-			queryString = event.getValue( "moduleQS", "" )
-		);
+				module      = event.getValue( "module", "" ),
+				linkTo      = event.getValue( "moduleEvent", "" ),
+				queryString = event.getValue( "moduleQS", "" )
+			);
 	}
 
 	/**
 	 * proxy a call to a module, all module calls are supposed to return content
 	 * This is used to proxy /cbadmin/{module} type of calls
 	 */
-	function execute( event, rc, prc ){
+	function execute( event, rc, prc ) {
 		event
 			.paramValue( "moduleEntryPoint", "" )
 			.paramValue( "moduleHandler", "" )
 			.paramValue( "moduleAction", "index" );
 
 		// Clean incoming routed URL from base proxy: cbadmin/module
-		var routedURL    = event.getCurrentRoutedURL().replacenocase( "cbadmin/module", "" );
+		var routedURL = event.getCurrentRoutedURL().replacenocase( "cbadmin/module", "" );
 		// Discover it's route
 		var routeResults = routingService.findRoute( routedURL, event );
 
 		// Check if route is discovered, basically if we get handler => contentbox-ui:page then it was not found
 		if ( routeResults.route.handler == "contentbox-ui:page" ) {
-			cbMessageBox().warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
+			cbMessageBox().warn(
+					"No module where found with the incoming route: #encodeForHTML( routedURL )#"
+				);
 			return relocate( prc.xehModules );
 		}
 
 		// Process the route, this discovers the route
-		prc.contentbox_moduleEvent = routingService.processRoute( routeResults, event, rc, prc );
+		prc.contentbox_moduleEvent = routingService.processRoute(
+				routeResults,
+				event,
+				rc,
+				prc
+			);
 
 		// Default module actions
-		if ( isSimpleValue( routeResults.route.action ) and !routeResults.route.action.len() ) {
+		if (
+			isSimpleValue( routeResults.route.action ) &&
+				!routeResults
+					.route
+					.action
+					.len()
+		) {
 			prc.contentbox_moduleEvent &= ".index";
 		}
 
@@ -69,7 +87,7 @@ component extends="baseHandler" {
 		}
 
 		// stash the module view, so it renders in the admin layout if not set already
-		if ( !structKeyExists( prc, "viewModule" ) or !len( prc.viewModule ) ) {
+		if ( !structKeyExists( prc, "viewModule" ) || !len( prc.viewModule ) ) {
 			prc.viewModule = routeResults.route.module;
 		}
 
@@ -83,13 +101,13 @@ component extends="baseHandler" {
 	/**
 	 * Module Manager
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// exit Handlers
-		prc.xehModuleRemove     = "#prc.cbAdminEntryPoint#.modules.remove";
-		prc.xehModuleUpload     = "#prc.cbAdminEntryPoint#.modules.upload";
-		prc.xehModuleReset      = "#prc.cbAdminEntryPoint#.modules.reset";
-		prc.xehModuleRescan     = "#prc.cbAdminEntryPoint#.modules.rescan";
-		prc.xehModuleActivate   = "#prc.cbAdminEntryPoint#.modules.activate";
+		prc.xehModuleRemove = "#prc.cbAdminEntryPoint#.modules.remove";
+		prc.xehModuleUpload = "#prc.cbAdminEntryPoint#.modules.upload";
+		prc.xehModuleReset = "#prc.cbAdminEntryPoint#.modules.reset";
+		prc.xehModuleRescan = "#prc.cbAdminEntryPoint#.modules.rescan";
+		prc.xehModuleActivate = "#prc.cbAdminEntryPoint#.modules.activate";
 		prc.xehmoduleDeactivate = "#prc.cbAdminEntryPoint#.modules.deactivate";
 
 		// tab
@@ -101,8 +119,8 @@ component extends="baseHandler" {
 		}
 
 		// Get all modules
-		var modules      = variables.moduleService.findModules();
-		prc.modules      = modules.modules;
+		var modules = variables.moduleService.findModules();
+		prc.modules = modules.modules;
 		prc.modulesCount = modules.count;
 
 		// view
@@ -112,7 +130,7 @@ component extends="baseHandler" {
 	/**
 	 * Activate a module
 	 */
-	function activate( event, rc, prc ){
+	function activate( event, rc, prc ) {
 		variables.moduleService.activateModule( rc.moduleName );
 		cbMessageBox().info( "Modules Activated, woohoo!" );
 		relocate( prc.xehModules );
@@ -121,7 +139,7 @@ component extends="baseHandler" {
 	/**
 	 * Deactivate a module
 	 */
-	function deactivate( event, rc, prc ){
+	function deactivate( event, rc, prc ) {
 		variables.moduleService.deactivateModule( rc.moduleName );
 		cbMessageBox().info( "Modules Deactivated!" );
 		relocate( prc.xehModules );
@@ -130,7 +148,7 @@ component extends="baseHandler" {
 	/**
 	 * Reset all modules
 	 */
-	function reset( event, rc, prc ){
+	function reset( event, rc, prc ) {
 		variables.moduleService.resetModules();
 		cbMessageBox().info( "Modules Reset!" );
 		relocate( prc.xehModules );
@@ -139,7 +157,7 @@ component extends="baseHandler" {
 	/**
 	 * Rescan all modules
 	 */
-	function rescan( event, rc, prc ){
+	function rescan( event, rc, prc ) {
 		variables.moduleService.startup();
 		cbMessageBox().info( "Modules Rescaned and Revamped!" );
 		relocate( prc.xehModules );
@@ -148,7 +166,7 @@ component extends="baseHandler" {
 	/**
 	 * Remove a module
 	 */
-	function remove( event, rc, prc ){
+	function remove( event, rc, prc ) {
 		variables.moduleService.deleteModule( rc.moduleName );
 		cbMessageBox().info( "Module Removed Forever!" );
 		relocate( prc.xehModules );

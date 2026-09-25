@@ -1,13 +1,13 @@
 {
     "app":{
-        "cfengine":"lucee@5",
-        "serverHomeDirectory":".engines/lucee5"
+        "cfengine":"boxlang@be",
+        "serverHomeDirectory":".engines/boxlang-be"
     },
-    "name":"contentbox-lucee5",
+    "name":"contentbox-boxlang-be",
     "JVM":{
-        "javaVersion":"openjdk11_jre",
+        "javaVersion":"openjdk21_jre",
         "heapSize":"1024",
-        "args":"-Dcom.sun.net.ssl.enableECC=false"
+        "args":"-Dcom.sun.net.ssl.enableECC=false -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9999"
     },
     "web":{
         "directoryBrowsing":true,
@@ -32,6 +32,9 @@
         "file":".cfconfig.json"
     },
     "env":{
-        "lucee-extensions":"D062D72F-F8A2-46F0-8CBC91325B2F067B"
+        "BOXLANG_DEBUG":true
+    },
+    "scripts":{
+        "onServerInitialInstall":"install bx-mail,bx-pdf,bx-mysql,bx-oracle,bx-postgresql,bx-compat-cfml@be,bx-esapi,bx-orm@be --noSave"
     }
 }

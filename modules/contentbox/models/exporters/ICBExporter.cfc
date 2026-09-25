@@ -21,5 +21,4 @@ interface {
 	 * Gets "total" based on content type
 	 */
 	public numeric function getTotal();
-
 }

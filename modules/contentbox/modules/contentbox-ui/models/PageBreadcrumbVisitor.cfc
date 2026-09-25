@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,14 +6,13 @@
  * Visit page hierarchies and create breadcrumbs
  */
 component singleton {
-
 	// DI
 	property name="CBHelper" inject="CBHelper@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	PageBreadcrumbVisitor function init(){
+	PageBreadcrumbVisitor function init() {
 		return this;
 	}
 
@@ -23,7 +22,7 @@ component singleton {
 	 * @page      The page object
 	 * @separator The separator to use, defaults to '>'
 	 */
-	function visit( required page, string separator = ">" ){
+	function visit( required page, string separator = ">" ) {
 		var bc = "";
 		// recursive lookup
 		if ( arguments.page.hasParent() ) {
@@ -32,7 +31,9 @@ component singleton {
 
 		// check if page slug is home, to ignore it
 		if ( arguments.page.getSlug() NEQ CBHelper.getHomePage() ) {
-			bc &= "#( len( bc ) ? arguments.separator : "" )# <a href=""#CBHelper.linkPage( arguments.page )#"">#arguments.page.getTitle()#</a>
+			bc &= "#(
+				len( bc ) ? arguments.separator : ""
+			)# <a href=""#CBHelper.linkPage( arguments.page )#"">#arguments.page.getTitle()#</a>
 ";
 		}
 

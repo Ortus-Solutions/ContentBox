@@ -6,16 +6,15 @@
  * Base Provider
  */
 component accessors="true" {
-
-	/* *********************************************************************
-	 **                      DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      DI
+	 **********************************************************************/
 
 	property name="renderer" inject="coldbox:renderer";
 
-	/* *********************************************************************
-	 **                      PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      PROPERTIES
+	 **********************************************************************/
 
 	property name="name" type="string";
 
@@ -27,42 +26,42 @@ component accessors="true" {
 
 	property name="description" type="string";
 
-	/* *********************************************************************
-	 **                      PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Gets the name of the menu item provider
 	 */
-	public string function getName(){
+	public string function getName() {
 		return name;
 	}
 
 	/**
 	 * Gets the entityName for the menu item provider
 	 */
-	public string function getEntityName(){
+	public string function getEntityName() {
 		return entityName;
 	}
 
 	/**
 	 * Gets the name of the menu item provider
 	 */
-	public string function getType(){
+	public string function getType() {
 		return type;
 	}
 
 	/**
 	 * Gets the iconCls of the menu item provider
 	 */
-	public string function getIconClass(){
+	public string function getIconClass() {
 		return iconClass;
 	}
 
 	/**
 	 * Gets the description of the menu item provider
 	 */
-	public string function getDescription(){
+	public string function getDescription() {
 		return description;
 	}
 

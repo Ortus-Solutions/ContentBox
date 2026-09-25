@@ -5,12 +5,7 @@
  * ---
  * Exporter for Data-based content
  */
-component
-	extends   ="BaseExporter"
-	implements="contentbox.models.exporters.ICBExporter"
-	accessors =true
-{
-
+component extends   ="BaseExporter" implements="contentbox.models.exporters.ICBExporter" accessors ="#true#" {
 	/**
 	 * The records this exporter will export
 	 */
@@ -19,10 +14,10 @@ component
 	/**
 	 * Constructor
 	 */
-	DataExporter function init(){
+	DataExporter function init() {
 		super.init();
-		variables.format         = "json";
-		variables.name           = "DataExporter";
+		variables.format = "json";
+		variables.name = "DataExporter";
 		variables.allowedFormats = "json,xml";
 		return this;
 	}
@@ -30,7 +25,7 @@ component
 	/**
 	 * Gets "total" based on content type
 	 */
-	numeric function getTotal(){
+	numeric function getTotal() {
 		var total = 0;
 		if ( !isNull( variables.content ) ) {
 			if ( isArray( variables.content ) ) {
@@ -49,7 +44,7 @@ component
 	/**
 	 * Custom validator for this exporter...any rules can be applied
 	 */
-	array function validate(){
+	array function validate() {
 		var errors = [];
 		if ( isNull( getContent() ) || isSimpleValue( getContent() ) ) {
 			arrayAppend( errors, "The data exporter does not contain any content!" );
@@ -61,7 +56,10 @@ component
 			);
 		}
 		if ( isNull( getFileName() ) || !len( getFileName() ) ) {
-			arrayAppend( errors, "A valid file name for the export must be specified!" );
+			arrayAppend(
+				errors,
+				"A valid file name for the export must be specified!"
+			);
 		}
 		return errors;
 	}

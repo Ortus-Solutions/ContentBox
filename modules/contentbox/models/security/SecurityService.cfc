@@ -6,32 +6,42 @@
  * Our contentbox security service must match our interface: ISecurityService
  */
 component singleton {
-
 	// Dependencies
 	property name="authorService" inject="authorService@contentbox";
+
 	property name="settingService" inject="settingService@contentbox";
+
 	property name="siteService" inject="siteService@contentbox";
+
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
+
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
+
 	property name="requestStorage" inject="RequestStorage@cbstorages";
+
 	property name="mailService" inject="mailService@cbmailservices";
+
 	property name="renderer" inject="coldbox:renderer";
+
 	property name="CBHelper" inject="CBHelper@contentbox";
+
 	property name="log" inject="logbox:logger:{this}";
+
 	property name="cache" inject="cachebox:template";
+
 	property name="bCrypt" inject="BCrypt@BCrypt";
+
 	property name="cbCSRF" inject="@cbcsrf";
 
 	// Properties
 	property name="encryptionKey";
-
 	// Static key to identify an author in a request: more for api interaction than web.
 	variables.AUTHOR_KEY = "contentbox_author";
 
 	/**
 	 * Constructor
 	 */
-	SecurityService function init(){
+	SecurityService function init() {
 		variables.encryptionKey = "";
 		return this;
 	}
@@ -41,7 +51,7 @@ component singleton {
 	 *
 	 * @author The author object
 	 */
-	Author function updateAuthorLoginTimestamp( required author ){
+	Author function updateAuthorLoginTimestamp( required author ) {
 		arguments.author.setLastLogin( now() );
 		variables.authorService.save( arguments.author );
 		return arguments.author;
@@ -50,7 +60,7 @@ component singleton {
 	/**
 	 * Alias to getAuthorSession() created to satisfy JWT Services
 	 */
-	function getUser(){
+	function getUser() {
 		return this.getAuthorSession();
 	}
 
@@ -64,7 +74,7 @@ component singleton {
 	 *
 	 * @return Logged in or new author object
 	 */
-	Author function getAuthorSession(){
+	Author function getAuthorSession() {
 		// Check if valid author id in session or request respectively
 		var oAuthor = variables.requestStorage.get( variables.AUTHOR_KEY, variables.authorService.new() );
 		if ( oAuthor.isLoggedIn() ) {
@@ -81,7 +91,7 @@ component singleton {
 		// If we found an authorID, load it up and check it
 		if ( len( authorID ) ) {
 			// try to get it with that ID
-			var author = variables.authorService.findWhere( { authorID : authorID, isActive : true, isDeleted : false } );
+			var author = variables.authorService.findWhere( { authorID: authorID, isActive: true, isDeleted: false } );
 			// If user found? Inflate them back
 			if ( !isNull( author ) ) {
 				return login( author );
@@ -95,7 +105,7 @@ component singleton {
 	/**
 	 * Verifies if a user is logged in or not. Required for JWT Services
 	 */
-	boolean function isLoggedIn(){
+	boolean function isLoggedIn() {
 		var oAuthor = this.getAuthorSession();
 		return oAuthor.isLoaded() && oAuthor.isLoggedIn();
 	}
@@ -105,7 +115,7 @@ component singleton {
 	 *
 	 * @author The author to log in
 	 */
-	Author function login( required author ){
+	Author function login( required author ) {
 		// Mark as logged in
 		arguments.author.setLoggedIn( true );
 		// Store for the duration of the request, API mode
@@ -120,7 +130,7 @@ component singleton {
 	 *
 	 * @return SecurityService
 	 */
-	SecurityService function logout(){
+	SecurityService function logout() {
 		variables.requestStorage.delete( variables.AUTHOR_KEY );
 		variables.cacheStorage.clearAll();
 		variables.cookieStorage.delete( "contentbox_keep_logged_in" );
@@ -149,32 +159,38 @@ component singleton {
 		required username,
 		required password,
 		boolean logThemIn = false
-	){
+	) {
 		// Find them
 		try {
 			var oAuthor = variables.authorService.retrieveUserByUsername( arguments.username );
-		} catch ( EntityNotFound e ) {
+		} catch (EntityNotFound e) {
 			variables.log.warn(
-				"Invalid username authentication from #getRealIP()# for username: #arguments.username#",
-				getHTTPRequestData( false )
+					"Invalid username authentication from #getRealIP()# for username: #arguments.username#",
+					getHTTPRequestData( false )
+				);
+			throw(
+				type    = "InvalidCredentials",
+				message = "Incorrect Credentials Entered"
 			);
-			throw( type = "InvalidCredentials", message = "Incorrect Credentials Entered" );
 		}
 
 		// Validate password using bcrypt
 		try {
 			var isSamePassword = variables.bcrypt.checkPassword( arguments.password, oAuthor.getPassword() );
-		} catch ( any e ) {
+		} catch (any e) {
 			var isSamePassword = false;
 		}
 
 		// Verify Password
 		if ( !isSamePassword ) {
 			variables.log.warn(
-				"Invalid password authentication from #getRealIP()# for username: #arguments.username#",
-				getHTTPRequestData( false )
+					"Invalid password authentication from #getRealIP()# for username: #arguments.username#",
+					getHTTPRequestData( false )
+				);
+			throw(
+				type    = "InvalidCredentials",
+				message = "Incorrect Credentials Entered"
 			);
-			throw( type = "InvalidCredentials", message = "Incorrect Credentials Entered" );
 		}
 
 		// Set last login date
@@ -193,7 +209,7 @@ component singleton {
 	 *
 	 * @string The string to bcrypt
 	 */
-	string function encryptString( required string ){
+	string function encryptString( required string ) {
 		return variables.bCrypt.hashPassword( arguments.string );
 	}
 
@@ -202,16 +218,18 @@ component singleton {
 	 *
 	 * @author The author to create the reset token for.
 	 */
-	string function generateResetToken( required Author author ){
+	string function generateResetToken( required Author author ) {
 		var tokenTimeout = variables.settingService.getSetting( "cb_security_password_reset_expiration" );
 		// Store Security Token For X minutes
-		var token        = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
-		cache.set(
-			"reset-token-#token#",
-			arguments.author.getAuthorID(),
-			tokenTimeout,
-			tokenTimeout
+		var token = hash(
+			arguments.author.getEmail() & arguments.author.getAuthorID() & now()
 		);
+		cache.set(
+				"reset-token-#token#",
+				arguments.author.getAuthorID(),
+				tokenTimeout,
+				tokenTimeout
+			);
 		return token;
 	}
 
@@ -229,45 +247,46 @@ component singleton {
 		required Author author,
 		boolean adminIssued = false,
 		Author issuer
-	){
+	) {
 		// Generate security token
 		var token = generateResetToken( arguments.author );
 
 		// get settings
-		var settings    = variables.settingService.getAllSettings();
+		var settings = variables.settingService.getAllSettings();
 		var defaultSite = variables.siteService.getDefaultSite();
 
 		// get mail payload
 		var bodyTokens = {
-			name        : arguments.author.getFullName(),
-			ip          : getRealIP(),
-			linkTimeout : settings.cb_security_password_reset_expiration,
-			siteName    : defaultSite.getName(),
-			linkToken   : CBHelper.linkAdmin( event = "security.verifyReset", ssl = settings.cb_admin_ssl ) & "?token=#token#",
-			issuedBy    : "",
-			issuedEmail : ""
+			name       : arguments.author.getFullName(),
+			ip         : getRealIP(),
+			linkTimeout: settings.cb_security_password_reset_expiration,
+			siteName   : defaultSite.getName(),
+			linkToken  : CBHelper.linkAdmin( event = "security.verifyReset",
+					ssl = settings.cb_admin_ssl ) & "?token=#token#",
+			issuedBy   : "",
+			issuedEmail: ""
 		};
 
 		// Check if an issuer was passed
 		if ( !isNull( arguments.issuer ) ) {
-			bodyTokens.issuedBy    = arguments.issuer.getFullName();
+			bodyTokens.issuedBy = arguments.issuer.getFullName();
 			bodyTokens.issuedEmail = arguments.issuer.getEmail();
 		}
 
 		// Build email out
 		var mail = variables.mailservice.newMail(
-			to         = arguments.author.getEmail(),
-			from       = settings.cb_site_outgoingEmail,
-			subject    = "#defaultSite.getName()# Password Reset Verification",
-			bodyTokens = bodyTokens,
-			type       = "html",
-			server     = settings.cb_site_mail_server,
-			username   = settings.cb_site_mail_username,
-			password   = settings.cb_site_mail_password,
-			port       = settings.cb_site_mail_smtp,
-			useTLS     = settings.cb_site_mail_tls,
-			useSSL     = settings.cb_site_mail_ssl
-		);
+				to         = arguments.author.getEmail(),
+				from       = settings.cb_site_outgoingEmail,
+				subject    = "#defaultSite.getName()# Password Reset Verification",
+				bodyTokens = bodyTokens,
+				type       = "html",
+				server     = settings.cb_site_mail_server,
+				username   = settings.cb_site_mail_username,
+				password   = settings.cb_site_mail_password,
+				port       = settings.cb_site_mail_smtp,
+				useTLS     = settings.cb_site_mail_tls,
+				useSSL     = settings.cb_site_mail_ssl
+			);
 
 		// Decide template depending if issued by user or admin
 		var emailTemplate = "password_verification";
@@ -276,11 +295,11 @@ component singleton {
 		}
 
 		mail.setBody(
-			renderer.layout(
-				view   = "/contentbox/email_templates/#emailTemplate#",
-				layout = "/contentbox/email_templates/layouts/email"
-			)
-		);
+				renderer.layout(
+						view   = "/contentbox/email_templates/#emailTemplate#",
+						layout = "/contentbox/email_templates/layouts/email"
+					)
+			);
 
 		// send it out
 		return mailService.send( mail ).getResults();
@@ -294,8 +313,8 @@ component singleton {
 	 *
 	 * @return {error, author}
 	 */
-	struct function validateResetToken( required token ){
-		var results  = { "error" : false, "author" : "" };
+	struct function validateResetToken( required token ) {
+		var results = { "error": false, "author": "" };
 		var cacheKey = "reset-token-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
@@ -303,14 +322,14 @@ component singleton {
 		if ( isNull( authorID ) ) {
 			results.error = true;
 			return results;
-		};
+		}
 
 		// Verify the author of the token
 		results.author = variables.authorService.get( authorID );
 		if ( isNull( results.author ) ) {
 			results.error = true;
 			return results;
-		};
+		}
 
 		return results;
 	}
@@ -328,30 +347,30 @@ component singleton {
 		required token,
 		required Author author,
 		required password
-	){
-		var results  = { "error" : false, "messages" : "" };
+	) {
+		var results = { "error": false, "messages": "" };
 		var cacheKey = "reset-token-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
 		if ( isNull( authorID ) ) {
-			results.error    = true;
+			results.error = true;
 			results.messages = "Token does not exist or has expired";
 			return results;
-		};
+		}
 
 		// Verify the author of the token
-		if ( arguments.author.getAuthorID() neq authorID ) {
-			results.error    = true;
+		if ( arguments.author.getAuthorID() NEQ authorID ) {
+			results.error = true;
 			results.messages = "Author reset token mismatch";
 			return results;
-		};
+		}
 
 		// Remove token now that we have the data and it has been validated
 		cache.clear( cacheKey );
 
 		// get settings
-		var settings    = settingService.getAllSettings();
+		var settings = settingService.getAllSettings();
 		var defaultSite = variables.siteService.getDefaultSite();
 
 		// set it in the user and save reset password
@@ -361,32 +380,32 @@ component singleton {
 
 		// get mail payload
 		var bodyTokens = {
-			name       : arguments.author.getFullName(),
-			ip         : getRealIP(),
-			linkLogin  : CBHelper.linkAdminLogin( ssl = settings.cb_admin_ssl ),
-			siteName   : defaultSite.getName(),
-			adminEmail : settings.cb_site_email
+			name      : arguments.author.getFullName(),
+			ip        : getRealIP(),
+			linkLogin : CBHelper.linkAdminLogin( ssl = settings.cb_admin_ssl ),
+			siteName  : defaultSite.getName(),
+			adminEmail: settings.cb_site_email
 		};
 		var mail = mailservice.newMail(
-			to         = arguments.author.getEmail(),
-			from       = settings.cb_site_outgoingEmail,
-			subject    = "#defaultSite.getName()# Password Reset Completed",
-			bodyTokens = bodyTokens,
-			type       = "html",
-			server     = settings.cb_site_mail_server,
-			username   = settings.cb_site_mail_username,
-			password   = settings.cb_site_mail_password,
-			port       = settings.cb_site_mail_smtp,
-			useTLS     = settings.cb_site_mail_tls,
-			useSSL     = settings.cb_site_mail_ssl
-		);
+				to         = arguments.author.getEmail(),
+				from       = settings.cb_site_outgoingEmail,
+				subject    = "#defaultSite.getName()# Password Reset Completed",
+				bodyTokens = bodyTokens,
+				type       = "html",
+				server     = settings.cb_site_mail_server,
+				username   = settings.cb_site_mail_username,
+				password   = settings.cb_site_mail_password,
+				port       = settings.cb_site_mail_smtp,
+				useTLS     = settings.cb_site_mail_tls,
+				useSSL     = settings.cb_site_mail_ssl
+			);
 		// ,body=renderer.$get().externalView(view="/contentbox/email_templates/password_reminder" )
 		mail.setBody(
-			renderer.layout(
-				view   = "/contentbox/email_templates/password_reset",
-				layout = "/contentbox/email_templates/layouts/email"
-			)
-		);
+				renderer.layout(
+						view   = "/contentbox/email_templates/password_reset",
+						layout = "/contentbox/email_templates/layouts/email"
+					)
+			);
 		// send it out
 		mailService.send( mail );
 
@@ -399,14 +418,14 @@ component singleton {
 	 * @content  The content object
 	 * @password The password to check
 	 */
-	boolean function authorizeContent( required content, required password ){
+	boolean function authorizeContent( required content, required password ) {
 		// Validate Password
-		if ( compare( arguments.content.getPasswordProtection(), arguments.password ) eq 0 ) {
+		if ( compare( arguments.content.getPasswordProtection(), arguments.password ) EQ 0 ) {
 			// Set simple validation
 			cacheStorage.set(
-				"protection-#hash( arguments.content.getSlug() )#",
-				getContentProtectedHash( arguments.content )
-			);
+					"protection-#hash( arguments.content.getSlug() )#",
+					getContentProtectedHash( arguments.content )
+				);
 			return true;
 		}
 
@@ -418,52 +437,54 @@ component singleton {
 	 *
 	 * @content The content object to check
 	 */
-	boolean function isContentViewable( required content ){
+	boolean function isContentViewable( required content ) {
 		var protectedHash = cacheStorage.get( "protection-#hash( arguments.content.getSlug() )#", "" );
 		// check hash against validated content
-		if ( compare( protectedHash, getContentProtectedHash( arguments.content ) ) EQ 0 ) {
+		if (
+			compare(
+					protectedHash,
+					getContentProtectedHash( arguments.content )
+				) EQ
+				0
+		) {
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Get password content protected salt
-	 *
-	 * @content The content object
-	 */
-	private string function getContentProtectedHash( required content ){
-		return hash( arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256" );
-	}
-
-	/**
 	 * Get remember me cookie
 	 */
-	any function getRememberMe(){
+	any function getRememberMe() {
 		var cookieValue = cookieStorage.get( "contentbox_remember_me", "" );
 
 		try {
 			return decryptIt( cookieValue );
-		} catch ( Any e ) {
+		} catch (Any e) {
 			// Errors on decryption
-			log.error( "Error decrypting remember me key: #e.message# #e.detail#", cookieValue );
+			log.error(
+					"Error decrypting remember me key: #e.message# #e.detail#",
+					cookieValue
+				);
 			cookieStorage.delete( "contentbox_remember_me" );
 			return "";
 		}
 	}
 
-
 	/**
 	 * Get keep me logged in cookie
 	 */
-	any function getKeepMeLoggedIn(){
+	any function getKeepMeLoggedIn() {
 		var cookieValue = cookieStorage.get( "contentbox_keep_logged_in", "" );
 
 		try {
 			return decryptIt( cookieValue );
-		} catch ( Any e ) {
+		} catch (Any e) {
 			// Errors on decryption
-			log.error( "Error decrypting Keep Me Logged in key: #e.message# #e.detail#", cookieValue );
+			log.error(
+					"Error decrypting Keep Me Logged in key: #e.message# #e.detail#",
+					cookieValue
+				);
 			cookieStorage.delete( "contentbox_keep_logged_in" );
 			return "";
 		}
@@ -475,7 +496,7 @@ component singleton {
 	 * @username The username to store
 	 * @days     The days to store
 	 */
-	SecurityService function setRememberMe( required username, required numeric days = 0 ){
+	SecurityService function setRememberMe( required username, required numeric days = 0 ) {
 		// If the user now only wants to be remembered for this session, remove any existing cookies.
 		if ( !arguments.days ) {
 			variables.cookieStorage.delete( "contentbox_remember_me" );
@@ -485,24 +506,26 @@ component singleton {
 
 		// Save the username to pre-populate the login field after their login expires for up to a year.
 		variables.cookieStorage.set(
-			name    = "contentbox_remember_me",
-			value   = encryptIt( arguments.username ),
-			expires = 365
-		);
+				name    = "contentbox_remember_me",
+				value   = encryptIt( arguments.username ),
+				expires = 365
+			);
 
 		// Look up the user ID and store for the duration specified
-		var author = variables.authorService.findWhere( {
-			username  : arguments.username,
-			isActive  : true,
-			isDeleted : false
-		} );
+		var author = variables.authorService.findWhere(
+				{
+					username : arguments.username,
+					isActive : true,
+					isDeleted: false
+				}
+			);
 		if ( !isNull( author ) ) {
 			// The user will be auto-logged in as long as this cookie exists
 			variables.cookieStorage.set(
-				name    = "contentbox_keep_logged_in",
-				value   = encryptIt( author.getAuthorID() ),
-				expires = arguments.days
-			);
+					name    = "contentbox_keep_logged_in",
+					value   = encryptIt( author.getAuthorID() ),
+					expires = arguments.days
+				);
 		}
 
 		return this;
@@ -513,7 +536,7 @@ component singleton {
 	 *
 	 * @encValue value to encrypt
 	 */
-	string function encryptIt( required encValue ){
+	string function encryptIt( required encValue ) {
 		// if empty just return it
 		if ( !len( arguments.encValue ) ) {
 			return arguments.encValue;
@@ -531,7 +554,7 @@ component singleton {
 	 *
 	 * @decValue value to decrypt
 	 */
-	string function decryptIt( required decValue ){
+	string function decryptIt( required decValue ) {
 		if ( !len( arguments.decValue ) ) {
 			return arguments.decValue;
 		}
@@ -547,21 +570,23 @@ component singleton {
 	 * Verifies we have a salt in our installation
 	 * if not, it will generate a new cb_enc_key
 	 */
-	string function getEncryptionKey(){
+	string function getEncryptionKey() {
 		// Is the encryption key loaded?
 		if ( len( variables.encryptionKey ) ) {
 			return variables.encryptionKey;
 		}
 
 		// Verify we have one in the installation, else generate one
-		var oSetting = settingService.findWhere( { name : "cb_enc_key" } );
+		var oSetting = settingService.findWhere( { name: "cb_enc_key" } );
 
 		// if no key, then create it for this ContentBox installation
 		if ( isNull( oSetting ) ) {
-			oSetting = settingService.new( {
-				name  : "cb_enc_key",
-				value : generateSecretKey( "BLOWFISH" )
-			} );
+			oSetting = settingService.new(
+					{
+						name : "cb_enc_key",
+						value: generateSecretKey( "BLOWFISH" )
+					}
+				);
 			settingService.save( entity = oSetting );
 			log.info( "Registered new cookie encryption key" );
 		}
@@ -576,7 +601,7 @@ component singleton {
 	/**
 	 * Get Real IP, by looking at clustered, proxy headers and locally.
 	 */
-	function getRealIP(){
+	function getRealIP() {
 		var headers = getHTTPRequestData( false ).headers;
 
 		// When going through a proxy, the IP can be a delimtied list, thus we take the last one in the list
@@ -589,6 +614,18 @@ component singleton {
 		}
 
 		return len( cgi.remote_addr ) ? trim( listFirst( cgi.remote_addr ) ) : "127.0.0.1";
+	}
+
+	/**
+	 * Get password content protected salt
+	 *
+	 * @content The content object
+	 */
+	private string function getContentProtectedHash( required content ) {
+		return hash(
+			arguments.content.getSlug() & arguments.content.getPasswordProtection(),
+			"SHA-256"
+		);
 	}
 
 }

@@ -10,7 +10,7 @@ component singleton {
 	/**
 	 * Return now() in UTC
 	 */
-	function nowUTC(){
+	function nowUTC() {
 		return toUTC( now() );
 	}
 
@@ -20,7 +20,7 @@ component singleton {
 	 * @see      https://cfdocs.org/datetimeformat
 	 * @dateTime The date time object/string to convert
 	 */
-	function toUTC( required dateTime ){
+	function toUTC( required dateTime ) {
 		return dateTimeFormat(
 			arguments.dateTime,
 			"yyyy-mm-dd'T'HH:mm:ssZ",
@@ -35,7 +35,7 @@ component singleton {
 	 *
 	 * @return ColdFusion date/time equivalent
 	 */
-	function epochToLocal( epoch ){
+	function epochToLocal( epoch ) {
 		if ( !len( arguments.epoch ) || !isNumeric( arguments.epoch ) ) {
 			return arguments.epoch;
 		}

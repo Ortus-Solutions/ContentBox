@@ -18,47 +18,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "adobe@2021", "adobe@2023" ]
-        coldboxVersion: [ "^7" ]
+        cfengine: [ "adobe@2023", "adobe@2025" ]
+        coldboxVersion: [ "^8" ]
         jdkVersion: [ "21" ]
         experimental: [ false ]
         include:
-          # Lucee 6 has a regression
-          - cfengine: "boxlang@1"
-            coldboxVersion: "^7"
+          # BoxLang CFML
+          - cfengine: "boxlang-cfml@1"
+            coldboxVersion: "^8"
             jdkVersion: "21"
             experimental: true
-          - cfengine: "boxlang@1"
-            coldboxVersion: "be"
+          - cfengine: "boxlang-cfml@be"
+            coldboxVersion: "^8"
             jdkVersion: "21"
             experimental: true
-          # Lucee 6 has a regression
-          - cfengine: "lucee@6"
-            coldboxVersion: "^7"
-            jdkVersion: "21"
-            experimental: true
-          # - cfengine: "adobe@2025"
-          #   coldboxVersion: "^7"
-          #   jdkVersion: "21"
-          #   experimental: true
           # ColdBox BE on all allowed distros
           # This makes sure we don't have any issues with the BE of ColdBox
-          - cfengine: "lucee@5"
+          - cfengine: "boxlang-cfml@1"
             coldboxVersion: "be"
             jdkVersion: "21"
             experimental: true
-          - cfengine: "lucee@6"
-            coldboxVersion: "be"
-            jdkVersion: "21"
-            experimental: true
-          - cfengine: "adobe@2023"
+          - cfengine: "adobe@2025"
             coldboxVersion: "be"
             jdkVersion: "21"
             experimental: true
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Database and Fixtures
         run: |
@@ -67,7 +54,7 @@ jobs:
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: ${{ matrix.jdkVersion }}
@@ -93,10 +80,8 @@ jobs:
         if: contains( matrix.cfengine, 'adobe' )
         run: |
           # Log4j Hibernate Debug
-          mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2023/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2025/WEB-INF/cfusion/lib/
-          cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2023/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2025/WEB-INF/cfusion/lib/
 
@@ -130,7 +115,7 @@ jobs:
 
       - name: Upload Test Results Artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: contentbox-test-results-${{ matrix.cfengine }}-coldbox${{ matrix.coldboxVersion }}-experimental-${{ matrix.experimental }}
           path: |
@@ -151,9 +136,6 @@ jobs:
       - name: Failure Debugging Info
         if: ${{ failure() }}
         run: |
-          if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
-            cat .engines/acf2021/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
           if [[ "{{ matrix.cfengine }}" == "adobe@2023" ]] ; then
             cat .engines/acf2023/WEB-INF/cfusion/logs/hibernatesql.log
           fi
@@ -165,7 +147,7 @@ jobs:
 
       - name: Upload Debugging Info To Artifacts
         if: ${{ failure() && !startsWith( 'pull_request', github.event_name ) }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Failure Debugging Info - ${{ matrix.cfengine }} jdk:${{ matrix.jdkVersion }} coldbox:${{ matrix.coldboxVersion }}
           path: |
@@ -183,7 +165,7 @@ jobs:
     steps:
       # Download the test results
       - name: Download Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: artifacts
 
@@ -191,3 +173,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: artifacts/**/*.xml
+          compare_to_earlier_commit: false

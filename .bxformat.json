@@ -1,0 +1,125 @@
+{
+  "indentSize" : 4,
+  "tabIndent" : true,
+  "maxLineLength" : 120,
+  "newLine" : "\n",
+  "singleQuote" : false,
+  "preserveStringQuotes" : false,
+  "alignConsecutiveAssignments" : true,
+  "alignConsecutiveProperties" : false,
+  "bracketPadding" : true,
+  "parensPadding" : true,
+  "binaryOperatorsPadding" : true,
+  "semicolons" : true,
+  "cfFormatCompatibility" : true,
+  "sourceType" : null,
+  "struct" : {
+    "padding" : true,
+    "empty_padding" : false,
+    "quote_keys" : false,
+    "separator" : ": ",
+    "multiline" : {
+      "element_count" : 5,
+      "comma_dangle" : false,
+      "leading_comma" : {
+        "enabled" : false,
+        "padding" : true
+      },
+      "min_length" : 60
+    }
+  },
+  "property" : {
+    "multiline" : {
+      "element_count" : 5,
+      "comma_dangle" : false,
+      "leading_comma" : {
+        "enabled" : false,
+        "padding" : true
+      },
+      "min_length" : 80
+    },
+    "key_value" : {
+      "padding" : false
+    }
+  },
+  "array" : {
+    "padding" : true,
+    "empty_padding" : false,
+    "multiline" : {
+      "element_count" : 5,
+      "comma_dangle" : false,
+      "leading_comma" : {
+        "enabled" : false,
+        "padding" : true
+      },
+      "min_length" : 60
+    }
+  },
+  "for_loop_semicolons" : {
+    "padding" : true
+  },
+  "function" : {
+    "style" : "preserve",
+    "parameters" : {
+      "padding" : true,
+      "empty_padding" : false,
+      "comma_dangle" : false,
+      "multiline_count" : 5,
+      "multiline_length" : 50
+    },
+    "arrow" : {
+      "parens" : "always"
+    }
+  },
+  "arguments" : {
+    "padding" : true,
+    "empty_padding" : false,
+    "comma_dangle" : false,
+    "multiline_count" : 3,
+    "multiline_length" : 60
+  },
+  "braces" : {
+    "style" : "same-line",
+    "require_for_single_statement" : true,
+    "else" : {
+      "style" : "same-line"
+    }
+  },
+  "operators" : {
+    "position" : "end",
+    "comparison_style" : "preserve",
+    "ternary" : {
+      "style" : "flat",
+      "question_position" : "start"
+    }
+  },
+  "chain" : {
+    "break_count" : 3,
+    "break_length" : 2147483647
+  },
+  "template" : {
+    "component_prefix" : "bx",
+    "indent_content" : false,
+    "single_attribute_per_line" : false,
+    "self_closing" : false
+  },
+  "import" : {
+    "sort" : true,
+    "group" : false
+  },
+  "comments" : {
+    "preserve_blank_lines" : true,
+    "wrap" : false
+  },
+  "class" : {
+    "member_order" : "preserve",
+    "member_spacing" : 1,
+    "property_order" : "preserve",
+    "method_order" : "preserve",
+    "method_grouping" : true
+  },
+  "sql" : {
+    "uppercase_keywords" : true,
+    "indent_clauses" : true
+  }
+}

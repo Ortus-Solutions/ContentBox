@@ -6,16 +6,25 @@
  * Manage system settings
  */
 component extends="baseHandler" {
-
 	// Dependencies
 	property name="settingsService" inject="settingService@contentbox";
+
 	property name="siteService" inject="siteService@contentbox";
+
 	property name="pageService" inject="pageService@contentbox";
+
 	property name="editorService" inject="editorService@contentbox";
+
 	property name="mediaService" inject="mediaService@contentbox";
+
 	property name="LoginTrackerService" inject="LoginTrackerService@contentbox";
+
 	property name="mailService" inject="mailservice@cbMailservices";
-	property name="markdownEditor" inject="markdownEditor@contentbox-markdowneditor";
+
+	property
+		name="markdownEditor"
+		inject="markdownEditor@contentbox-markdowneditor";
+
 	property name="twoFactorService" inject="twoFactorService@contentbox";
 
 	/**
@@ -23,24 +32,24 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Exit Handler
-		prc.xehSaveSettings    = "#prc.cbAdminEntryPoint#.settings.save";
-		prc.xehEmailTest       = "#prc.cbAdminEntryPoint#.settings.emailTest";
+		prc.xehSaveSettings = "#prc.cbAdminEntryPoint#.settings.save";
+		prc.xehEmailTest = "#prc.cbAdminEntryPoint#.settings.emailTest";
 		// Get All registered editors so we can display them
-		prc.editors            = variables.editorService.getRegisteredEditorsMap();
+		prc.editors = variables.editorService.getRegisteredEditorsMap();
 		// Get All registered markups so we can display them
-		prc.markups            = variables.editorService.getRegisteredMarkups();
+		prc.markups = variables.editorService.getRegisteredMarkups();
 		// Get all registered media providers so we can display them
-		prc.mediaProviders     = variables.mediaService.getRegisteredProvidersMap();
+		prc.mediaProviders = variables.mediaService.getRegisteredProvidersMap();
 		// Get All registered two factor providers so we can display them
 		prc.twoFactorProviders = variables.twoFactorService.getRegisteredProvidersMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper
-		prc.cb                 = variables.CBHelper;
+		prc.cb = variables.CBHelper;
 		// caches
-		prc.cacheNames         = variables.cachebox.getCacheNames();
+		prc.cacheNames = variables.cachebox.getCacheNames();
 		// Markdown Editor Availability
 		variables.markdownEditor.loadAssets();
 		// view
@@ -52,19 +61,19 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function emailTest( event, rc, prc ){
+	function emailTest( event, rc, prc ) {
 		var mail = mailservice.newMail(
-			to       = rc.cb_site_outgoingEmail,
-			from     = rc.cb_site_outgoingEmail,
-			subject  = "ContentBox Test",
-			server   = rc.cb_site_mail_server,
-			username = rc.cb_site_mail_username,
-			password = rc.cb_site_mail_password,
-			port     = rc.cb_site_mail_smtp,
-			useTLS   = rc.cb_site_mail_tls,
-			useSSL   = rc.cb_site_mail_ssl,
-			body     = "Test Email From ContentBox"
-		);
+				to       = rc.cb_site_outgoingEmail,
+				from     = rc.cb_site_outgoingEmail,
+				subject  = "ContentBox Test",
+				server   = rc.cb_site_mail_server,
+				username = rc.cb_site_mail_username,
+				password = rc.cb_site_mail_password,
+				port     = rc.cb_site_mail_smtp,
+				useTLS   = rc.cb_site_mail_tls,
+				useSSL   = rc.cb_site_mail_ssl,
+				body     = "Test Email From ContentBox"
+			);
 		// send it out
 		var results = mailService.send( mail ).getResults();
 
@@ -74,34 +83,38 @@ component extends="baseHandler" {
 	/**
 	 * Save settings
 	 */
-	function save( event, rc, prc ){
+	function save( event, rc, prc ) {
 		// announce event
-		announce( "cbadmin_preSettingsSave", { oldSettings : prc.cbSettings, newSettings : rc } );
+		announce(
+			"cbadmin_preSettingsSave",
+			{ oldSettings: prc.cbSettings, newSettings: rc }
+		);
 
 		// bulk save the options
 		variables.settingsService.bulkSave( rc );
 
 		// Do blog entry point change?
 		if (
-			rc.keyExists( "cb_site_blog_entrypoint" ) && prc.cbSettings[ "cb_site_blog_entrypoint" ] != rc.cb_site_blog_entrypoint
+			rc.keyExists( "cb_site_blog_entrypoint" ) &&
+				prc.cbSettings[ "cb_site_blog_entrypoint" ] != rc.cb_site_blog_entrypoint
 		) {
 			var routingService = variables.controller.getRoutingService();
 			// Reroute using passed cb_site_blog_entryPoint just in case
 			routingService.setRoutes(
-				routingService
-					.getRoutes()
-					.map( function( item ){
-						if ( arguments.item.namespaceRouting eq "blog" ) {
-							arguments.item.pattern = item.regexpattern = replace(
-								rc[ "cb_site_blog_entrypoint" ],
-								"/",
-								"-",
-								"all"
-							) & "/";
-						}
-						return arguments.item;
-					} )
-			);
+					routingService.getRoutes().map(
+							function( item ) {
+								if ( arguments.item.namespaceRouting EQ "blog" ) {
+									arguments.item.pattern = item.regexpattern = replace(
+										rc[ "cb_site_blog_entrypoint" ],
+										"/",
+										"-",
+										"all"
+									) & "/";
+								}
+								return arguments.item;
+							}
+						)
+				);
 		}
 		// announce event
 		announce( "cbadmin_postSettingsSave" );
@@ -117,17 +130,17 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function raw( event, rc, prc ){
+	function raw( event, rc, prc ) {
 		// exit Handlers
-		prc.xehSettingRemove    = "#prc.cbAdminEntryPoint#.settings.remove";
-		prc.xehSettingsave      = "#prc.cbAdminEntryPoint#.settings.saveRaw";
-		prc.xehFlushCache       = "#prc.cbAdminEntryPoint#.settings.flushCache";
-		prc.xehFlushSingletons  = "#prc.cbAdminEntryPoint#.settings.flushSingletons";
-		prc.xehViewCached       = "#prc.cbAdminEntryPoint#.settings.viewCached";
-		prc.xehMappingDump      = "#prc.cbAdminEntryPoint#.settings.mappingDump";
+		prc.xehSettingRemove = "#prc.cbAdminEntryPoint#.settings.remove";
+		prc.xehSettingsave = "#prc.cbAdminEntryPoint#.settings.saveRaw";
+		prc.xehFlushCache = "#prc.cbAdminEntryPoint#.settings.flushCache";
+		prc.xehFlushSingletons = "#prc.cbAdminEntryPoint#.settings.flushSingletons";
+		prc.xehViewCached = "#prc.cbAdminEntryPoint#.settings.viewCached";
+		prc.xehMappingDump = "#prc.cbAdminEntryPoint#.settings.mappingDump";
 		prc.xehRawSettingsTable = "#prc.cbAdminEntryPoint#.settings.rawtable";
-		prc.xehExportAll        = "#prc.cbAdminEntryPoint#.settings.exportAll";
-		prc.xehSettingsImport   = "#prc.cbAdminEntryPoint#.settings.importAll";
+		prc.xehExportAll = "#prc.cbAdminEntryPoint#.settings.exportAll";
+		prc.xehSettingsImport = "#prc.cbAdminEntryPoint#.settings.importAll";
 
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
@@ -145,7 +158,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function rawtable( event, rc, prc ){
+	function rawtable( event, rc, prc ) {
 		// params
 		event
 			.paramValue( "page", 1 )
@@ -154,28 +167,28 @@ component extends="baseHandler" {
 			.paramValue( "siteId", "" );
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
+		prc.oPaging = getInstance( "Paging@contentbox" );
+		prc.paging = prc.oPaging.getBoundaries();
 		prc.pagingLink = event.buildLink( "#prc.xehRawSettings#.page.@page@?" );
 		prc.pagingLink = "javascript:settingsPaginate(@page@)";
-		prc.xehExport  = "#prc.cbAdminEntryPoint#.settings.export";
+		prc.xehExport = "#prc.cbAdminEntryPoint#.settings.export";
 
 		// View all?
 		var offset = prc.paging.startRow - 1;
-		var max    = prc.cbSettings.cb_paging_maxrows;
+		var max = prc.cbSettings.cb_paging_maxrows;
 		if ( rc.viewAll ) {
 			offset = max = 0;
 		}
 
 		// Get settings
 		var results = variables.settingsService.search(
-			search   : rc.search,
-			siteId   : rc.siteId,
-			offset   : offset,
-			max      : max,
-			sortOrder: "name asc, site asc"
-		);
-		prc.settings      = results.settings;
+				search    = rc.search,
+				siteId    = rc.siteId,
+				offset    = offset,
+				max       = max,
+				sortOrder = "name asc, site asc"
+			);
+		prc.settings = results.settings;
 		prc.settingsCount = results.count;
 
 		event.setView( view = "settings/rawSettingsTable", layout = "ajax" );
@@ -184,22 +197,31 @@ component extends="baseHandler" {
 	/**
 	 * Export a setting
 	 */
-	function export( event, rc, prc ){
-		return variables.settingsService.get( event.getValue( "settingID", 0 ) ).getMemento();
+	function export( event, rc, prc ) {
+		return variables
+			.settingsService
+			.get( event.getValue( "settingID", 0 ) )
+			.getMemento();
 	}
 
 	/**
 	 * Export multiple settings
 	 */
-	function exportAll( event, rc, prc ){
+	function exportAll( event, rc, prc ) {
 		param rc.settingID = "";
 		// Export all or some
 		if ( len( rc.settingID ) ) {
-			return rc.settingID
+			return rc
+				.settingID
 				.listToArray()
-				.map( function( id ){
-					return variables.settingsService.get( arguments.id ).getMemento( profile: "export" );
-				} );
+				.map(
+					function( id ) {
+						return variables
+							.settingsService
+							.get( arguments.id )
+							.getMemento( profile = "export" );
+					}
+				);
 		} else {
 			return variables.settingsService.getAllForExport();
 		}
@@ -208,21 +230,21 @@ component extends="baseHandler" {
 	/**
 	 * Import all settings from a file packet
 	 */
-	function importAll( event, rc, prc ){
+	function importAll( event, rc, prc ) {
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideSettings", false );
 		try {
-			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = settingsService.importFromFile(
-					importFile = rc.importFile,
-					override   = rc.overrideSettings
-				);
+			if ( len( rc.importFile ) && fileExists( rc.importFile ) ) {
+				var importLog = settingsService.importFromFile( importFile = rc.importFile,
+						override = rc.overrideSettings );
 				cbMessageBox().info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error(
+						"The import file is invalid: #rc.importFile# cannot continue with import"
+					);
 			}
-		} catch ( any e ) {
+		} catch (any e) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
 			log.error( errorMessage, e );
 			cbMessageBox().error( errorMessage );
@@ -235,7 +257,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function mappingDump( event, rc, prc ){
+	function mappingDump( event, rc, prc ) {
 		// params
 		event.paramValue( "id", "" );
 		prc.mapping = wirebox.getBinder().getMapping( rc.id );
@@ -245,16 +267,16 @@ component extends="baseHandler" {
 	/**
 	 * Save all raw settings
 	 */
-	function saveRaw( event, rc, prc ){
+	function saveRaw( event, rc, prc ) {
 		// params
 		event.paramValue( "page", 1 ).paramValue( "isCore", false );
 
 		// populate and get setting
 		var setting = populate(
-			model               : settingsService.get( rc.settingID ),
-			composeRelationships: true,
-			nullEmptyInclude    : "site",
-			exclude             : "settingID"
+			model                = settingsService.get( rc.settingID ),
+			composeRelationships = true,
+			nullEmptyInclude     = "site",
+			exclude              = "settingID"
 		);
 
 		// save new setting
@@ -269,15 +291,15 @@ component extends="baseHandler" {
 	/**
 	 * Remove a setting
 	 */
-	function remove( event, rc, prc ){
+	function remove( event, rc, prc ) {
 		// announce event
-		announce( "cbadmin_preSettingRemove", { settingID : rc.settingID } );
+		announce( "cbadmin_preSettingRemove", { settingID: rc.settingID } );
 		// delete by id
 		if ( !settingsService.deleteByID( rc.settingID ) ) {
 			cbMessageBox().setMessage( "warning", "Invalid Setting detected!" );
 		} else {
 			// announce event
-			announce( "cbadmin_postSettingRemove", { settingID : rc.settingID } );
+			announce( "cbadmin_postSettingRemove", { settingID: rc.settingID } );
 			// flush cache
 			settingsService.flushSettingsCache();
 			cbMessageBox().setMessage( "info", "Setting Removed!" );
@@ -288,13 +310,13 @@ component extends="baseHandler" {
 	/**
 	 * Flush settings cache
 	 */
-	function flushCache( event, rc, prc ){
-		var data = { error : false, messages : "" };
+	function flushCache( event, rc, prc ) {
+		var data = { error: false, messages: "" };
 		try {
 			settingsService.flushSettingsCache();
 			data.messages = "Settings cache flushed!";
-		} catch ( Any e ) {
-			data[ "ERROR" ]    = true;
+		} catch (Any e) {
+			data[ "ERROR" ] = true;
 			data[ "MESSAGES" ] = "Error executing flush, please check logs: #e.message#";
 			log.error( e.message & e.detail, e );
 		}
@@ -304,9 +326,12 @@ component extends="baseHandler" {
 	/**
 	 * Flush WireBox singletons
 	 */
-	function flushSingletons( event, rc, prc ){
+	function flushSingletons( event, rc, prc ) {
 		wirebox.clearSingletons();
-		cbMessageBox().setMessage( "info", "All singletons flushed and awaiting re-creation." );
+		cbMessageBox().setMessage(
+				"info",
+				"All singletons flushed and awaiting re-creation."
+			);
 		relocate( event = prc.xehRawSettings, queryString = "##wirebox" );
 	}
 
@@ -315,8 +340,8 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function viewCached( event, rc, prc ){
-		var cache    = settingsService.getSettingsCacheProvider();
+	function viewCached( event, rc, prc ) {
+		var cache = settingsService.getSettingsCacheProvider();
 		var cacheKey = settingsService.getSettingsCacheKey();
 		// get Cached Settings
 		prc.settings = cache.get( cacheKey );
@@ -330,11 +355,11 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function authLogs( event, rc, prc ){
-		prc.featureEnabled     = prc.cbsettings.cb_security_login_blocker;
-		prc.xehTruncate        = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
+	function authLogs( event, rc, prc ) {
+		prc.featureEnabled = prc.cbsettings.cb_security_login_blocker;
+		prc.xehTruncate = "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
 		// Get all logs
-		prc.logs               = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
+		prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
 		// Raw tab
 		prc.tabSystem_authLogs = true;
 		// View
@@ -344,7 +369,7 @@ component extends="baseHandler" {
 	/**
 	 * truncate all auth logs
 	 */
-	any function truncateAuthLogs( event, rc, prc ){
+	any function truncateAuthLogs( event, rc, prc ) {
 		variables.loginTrackerService.truncate();
 		relocate( "#prc.cbAdminEntryPoint#.settings.authLogs" );
 	}

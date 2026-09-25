@@ -6,34 +6,53 @@
  * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
  */
 component accessors="true" singleton threadSafe {
-
 	// DI
 	property name="categoryService" inject="categoryService@contentbox";
+
 	property name="settingService" inject="settingService@contentbox";
+
 	property name="entryService" inject="entryService@contentbox";
+
 	property name="pageService" inject="pageService@contentbox";
+
 	property name="authorService" inject="authorService@contentbox";
+
 	property name="commentService" inject="commentService@contentbox";
+
 	property name="contentStoreService" inject="contentStoreService@contentbox";
+
 	property name="widgetService" inject="widgetService@contentbox";
+
 	property name="moduleService" inject="moduleService@contentbox";
+
 	property name="themeService" inject="themeService@contentbox";
+
 	property name="mobileDetector" inject="mobileDetector@contentbox";
+
 	property name="menuService" inject="menuService@contentbox";
+
 	property name="menuItemService" inject="menuItemService@contentbox";
+
 	property name="siteService" inject="siteService@contentbox";
+
 	property name="requestService" inject="coldbox:requestService";
+
 	property name="wirebox" inject="wirebox";
+
 	property name="controller" inject="coldbox";
+
 	property name="cbResourceService" inject="resourceService@cbi18n";
+
 	property name="securityService" inject="securityService@contentbox";
+
 	property name="markdown" inject="Processor@cbmarkdown";
+
 	property name="requestStorage" inject="requestStorage@cbstorages";
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		return this;
 	}
 
@@ -44,7 +63,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return coldbox.system.web.context.RequestContext
 	 */
-	function getRequestContext(){
+	function getRequestContext() {
 		return variables.requestService.getContext();
 	}
 
@@ -53,14 +72,14 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @private The boolean bit that says give me the RC by default or true for the private collection (PRC)
 	 */
-	struct function getRequestCollection( boolean private = false ){
+	struct function getRequestCollection( boolean private = false ) {
 		return getRequestContext().getCollection( private = arguments.private );
 	}
 
 	/**
 	 * Get the private request collection
 	 */
-	struct function getPrivateRequestCollection(){
+	struct function getPrivateRequestCollection() {
 		return getRequestContext().getCollection( private = true );
 	}
 
@@ -69,7 +88,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @module The module to retrieve the configuration settings from
 	 */
-	struct function getModuleSettings( required module ){
+	struct function getModuleSettings( required module ) {
 		return getModuleConfig( arguments.module ).settings;
 	}
 
@@ -78,15 +97,15 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @module The module to retrieve the configuration structure from
 	 */
-	struct function getModuleConfig( required module ){
+	struct function getModuleConfig( required module ) {
 		var mConfig = controller.getSetting( "modules" );
 		if ( structKeyExists( mConfig, arguments.module ) ) {
 			return mConfig[ arguments.module ];
 		}
 		throw(
-			message: "The module you passed #arguments.module# is invalid.",
-			detail : "The loaded modules are #structKeyList( mConfig )#",
-			type   : "FrameworkSuperType.InvalidModuleException"
+			message = "The module you passed #arguments.module# is invalid.",
+			detail  = "The loaded modules are #structKeyList( mConfig )#",
+			type    = "FrameworkSuperType.InvalidModuleException"
 		);
 	}
 
@@ -99,7 +118,7 @@ component accessors="true" singleton threadSafe {
 	 * @defaultValue The default value to return if not found
 	 * @throw        InvalidSettingException
 	 */
-	any function setting( required key, defaultValue ){
+	any function setting( required key, defaultValue ) {
 		var prc = getPrivateRequestCollection();
 
 		// See if all the settings are loaded, else lazy load them
@@ -117,9 +136,9 @@ component accessors="true" singleton threadSafe {
 		}
 		// else throw exception
 		throw(
-			message: "Setting requested: #arguments.key# not found",
-			detail : "Settings keys are #structKeyList( prc.cbSettings )#",
-			type   : "InvalidSettingException"
+			message = "Setting requested: #arguments.key# not found",
+			detail  = "Settings keys are #structKeyList( prc.cbSettings )#",
+			type    = "InvalidSettingException"
 		);
 	}
 
@@ -131,7 +150,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws InvalidSettingException
 	 */
-	any function siteSetting( required key, defaultValue ){
+	any function siteSetting( required key, defaultValue ) {
 		var prc = getPrivateRequestCollection();
 
 		// See if all the settings are loaded, else lazy load them
@@ -149,44 +168,44 @@ component accessors="true" singleton threadSafe {
 		}
 		// else throw exception
 		throw(
-			message: "Site Setting requested: #arguments.key# not found",
-			detail : "Site Settings keys are #structKeyList( prc.cbSiteSettings )#",
-			type   : "InvalidSettingException"
+			message = "Site Setting requested: #arguments.key# not found",
+			detail  = "Site Settings keys are #structKeyList( prc.cbSiteSettings )#",
+			type    = "InvalidSettingException"
 		);
 	}
 
 	/**
 	 * The ContentBox version
 	 */
-	function getContentBoxVersion(){
+	function getContentBoxVersion() {
 		return getModuleConfig( "contentbox" ).version;
 	}
 
 	/**
 	 * The ContentBox Codename
 	 */
-	function getContentBoxCodeName(){
+	function getContentBoxCodeName() {
 		return getModuleSettings( "contentbox" ).codename;
 	}
 
 	/**
 	 * The ContentBox codename Uri
 	 */
-	function getContentBoxCodeNameURL(){
+	function getContentBoxCodeNameURL() {
 		return getModuleSettings( "contentbox" ).codenameLink;
 	}
 
 	/**
 	 * Get the blog entry point as specified in the global settings
 	 */
-	function getBlogEntryPoint(){
+	function getBlogEntryPoint() {
 		return setting( "cb_site_blog_entrypoint", "blog" );
 	}
 
 	/**
 	 * Get the maintenance message from the ContentBox settings in rendering condition.
 	 */
-	function getMaintenanceMessage(){
+	function getMaintenanceMessage() {
 		return variables.markdown.toHTML( setting( "cb_site_maintenance_message", "" ) );
 	}
 
@@ -201,8 +220,8 @@ component accessors="true" singleton threadSafe {
 		required slug,
 		defaultValue  = "",
 		string siteID = site().getsiteID()
-	){
-		var content = variables.contentStoreService.findBySlug( slug: arguments.slug, siteID: arguments.siteID );
+	) {
+		var content = variables.contentStoreService.findBySlug( slug = arguments.slug, siteID = arguments.siteID );
 
 		// Render if the object is loaded
 		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
@@ -215,12 +234,12 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return The content object or a new empty content object
 	 */
-	function contentStoreObject( required slug, string siteID = site().getsiteID() ){
+	function contentStoreObject( required slug, string siteID = site().getsiteID() ) {
 		return contentStoreService.findBySlug(
-			slug           : arguments.slug,
-			showUnpublished: true,
-			siteID         : arguments.siteID
-		);
+				slug            = arguments.slug,
+				showUnpublished = true,
+				siteID          = arguments.siteID
+			);
 	}
 
 	/************************************** root and pathing methods *********************************************/
@@ -228,28 +247,28 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Verifies if the admin module is loaded
 	 */
-	function isAdminLoaded(){
+	function isAdminLoaded() {
 		return structKeyExists( controller.getSetting( "modules" ), "contentbox-admin" );
 	}
 
 	/**
 	 * Get the admin site root location using the configured module's entry point
 	 */
-	function adminRoot(){
+	function adminRoot() {
 		return getPrivateRequestCollection().cbAdminEntryPoint;
 	}
 
 	/**
 	 * Get the name of the current set and active theme
 	 */
-	function themeName(){
+	function themeName() {
 		return getPrivateRequestCollection().cbTheme;
 	}
 
 	/**
 	 * Get the theme record of the current set and active theme
 	 */
-	function themeRecord(){
+	function themeRecord() {
 		return getPrivateRequestCollection().cbThemeRecord;
 	}
 
@@ -259,7 +278,7 @@ component accessors="true" singleton threadSafe {
 	 * @key          The name of the theme setting
 	 * @defaultValue The default value if the layout setting does not exist
 	 */
-	function themeSetting( required key, defaultValue ){
+	function themeSetting( required key, defaultValue ) {
 		arguments.key = "cb_theme_#themeName()#_#arguments.key#";
 		return siteSetting( argumentCollection = arguments );
 	}
@@ -275,14 +294,17 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @siteID The site id to get the root from, by default we use the current site you are on
 	 */
-	function site( string siteID = "" ){
+	function site( string siteID = "" ) {
 		// Verify incoming override/lookup
 		if ( len( arguments.siteID ) ) {
 			// Do a request storage lookup cache for optmizations when requesting the same site
 			// over and over again in the same request.
-			return variables.requestStorage.getOrSet( "cbhelper-request-site-#arguments.siteID#", function(){
-				return variables.siteService.getOrFail( siteID );
-			} );
+			return variables.requestStorage.getOrSet(
+					"cbhelper-request-site-#arguments.siteID#",
+					function() {
+						return variables.siteService.getOrFail( siteID );
+					}
+				);
 		}
 
 		// Verify PRC
@@ -298,7 +320,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
 	 */
-	function themeRoot(){
+	function themeRoot() {
 		return getPrivateRequestCollection().cbThemeRoot;
 	}
 
@@ -307,7 +329,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @siteID The site id to get the root from, by default we use the current site you are on
 	 */
-	function siteRoot( string siteID = "" ){
+	function siteRoot( string siteID = "" ) {
 		// Return the appropriate site Uri
 		return this.site( arguments.siteID ).getSiteRoot() & getModuleConfig( "contentbox-ui" ).entryPoint;
 	}
@@ -317,7 +339,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @siteID The site id to get the root from, by default we use the current site you are on
 	 */
-	function siteBaseURL( string siteID = "" ){
+	function siteBaseURL( string siteID = "" ) {
 		return reReplaceNoCase(
 			this.siteRoot( arguments.siteID ),
 			"index.cfm\/?",
@@ -328,42 +350,42 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Retrieve the site name
 	 */
-	function siteName(){
+	function siteName() {
 		return site().getName();
 	}
 
 	/**
 	 * Retrieve the site tagline
 	 */
-	function siteTagLine(){
+	function siteTagLine() {
 		return site().getTagLine();
 	}
 
 	/**
 	 * Retrieve the site description
 	 */
-	function siteDescription(){
+	function siteDescription() {
 		return site().getDescription();
 	}
 
 	/**
 	 * Retrieve the site keywords
 	 */
-	function siteKeywords(){
+	function siteKeywords() {
 		return site().getKeywords();
 	}
 
 	/**
 	 * Retrieve the site administrator email
 	 */
-	function siteEmail(){
+	function siteEmail() {
 		return site().getNotificationEmails();
 	}
 
 	/**
 	 * Retrieve the site outgoing email
 	 */
-	function siteOutgoingEmail(){
+	function siteOutgoingEmail() {
 		return setting( "cb_site_outgoingEmail" );
 	}
 
@@ -372,9 +394,9 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @content The entry or page content to validate comments also with
 	 */
-	boolean function isCommentsEnabled( content ){
+	boolean function isCommentsEnabled( content ) {
 		if ( !isNull( arguments.content ) ) {
-			return ( arguments.content.getAllowComments() AND siteSetting( "cb_comments_enabled" ) );
+			return ( arguments.content.getAllowComments() && siteSetting( "cb_comments_enabled" ) );
 		}
 		return ( siteSetting( "cb_comments_enabled" ) );
 	}
@@ -382,14 +404,14 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Determines if a comment form error has ocurred
 	 */
-	boolean function isCommentFormError(){
+	boolean function isCommentFormError() {
 		return getFlash().exists( "commentErrors" );
 	}
 
 	/**
 	 * Determine if you are in printing or exporting format
 	 */
-	boolean function isPrintFormat(){
+	boolean function isPrintFormat() {
 		var currentFormat = getRequestContext().getValue( "format", "contentbox" );
 		return ( listFindNoCase( "contentbox,html", currentFormat ) ? false : true );
 	}
@@ -399,7 +421,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return The errors array or an empty array
 	 */
-	array function getCommentErrors(){
+	array function getCommentErrors() {
 		return getFlash().get( "commentErrors", [] );
 	}
 
@@ -420,10 +442,10 @@ component accessors="true" singleton threadSafe {
 		string title,
 		string description,
 		string keywords
-	){
+	) {
 		var event = getRequestContext();
-		var prc   = getPrivateRequestCollection();
-		var rc    = getRequestCollection();
+		var prc = getPrivateRequestCollection();
+		var rc = getRequestCollection();
 
 		// Request Metadata
 		if ( structKeyExists( arguments, "title" ) ) {
@@ -437,7 +459,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// store UI module root
-		prc.cbRoot       = getContextRoot() & event.getModuleRoot( "contentbox" );
+		prc.cbRoot = getContextRoot() & event.getModuleRoot( "contentbox" );
 		// store module entry point
 		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store site entry point
@@ -447,29 +469,31 @@ component accessors="true" singleton threadSafe {
 			prc.cbAdminEntryPoint = "";
 		}
 		// Place site on request
-		prc.oCurrentSite   = variables.siteService.discoverSite();
+		prc.oCurrentSite = variables.siteService.discoverSite();
 		// Place global cb options on scope
-		prc.cbSettings     = variables.settingService.getAllSettings();
+		prc.cbSettings = variables.settingService.getAllSettings();
 		prc.cbSiteSettings = variables.settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
 		// Place the default layout on scope
-		prc.cbTheme        = prc.oCurrentSite.getActiveTheme();
-		prc.cbThemeRecord  = variables.themeService.getThemeRecord( prc.cbTheme );
+		prc.cbTheme = prc.oCurrentSite.getActiveTheme();
+		prc.cbThemeRecord = variables.themeService.getThemeRecord( prc.cbTheme );
 		// Place layout root location
-		prc.cbthemeRoot    = prc.cbThemeRecord.includePath;
+		prc.cbthemeRoot = prc.cbThemeRecord.includePath;
 		// Place widgets root location
-		prc.cbWidgetRoot   = prc.cbRoot & "/widgets";
+		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
 
 		// announce event
 		this.event( "cbui_preRequest" );
 
 		// Do we set a layout for them already?
 		if ( structKeyExists( arguments, "layout" ) ) {
-			event.setLayout( name = "#prc.cbThemeRecord.includePath#/layouts/" & arguments.layout );
+			event.setLayout(
+					name = "#prc.cbThemeRecord.includePath#/layouts/#arguments.layout#"
+				);
 		}
 
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 
-		if ( prc.oCurrentSite.getIsSSL() and !event.isSSL() ) {
+		if ( prc.oCurrentSite.getIsSSL() && !event.isSSL() ) {
 			controller.relocate( event = event.getCurrentRoutedURL(), ssl = true );
 		}
 
@@ -483,54 +507,56 @@ component accessors="true" singleton threadSafe {
 	}
 
 	// Determine if you have a category filter
-	boolean function categoryFilterExists(){
+	boolean function categoryFilterExists() {
 		var rc = getRequestCollection();
-		return ( structKeyExists( rc, "category" ) AND len( rc.category ) );
+		return ( structKeyExists( rc, "category" ) && len( rc.category ) );
 	}
+
 	// Get Category Filter
-	function getCategoryFilter(){
+	function getCategoryFilter() {
 		return getRequestContext().getValue( "category", "" );
 	}
 
 	// Get Year Filter
-	function getYearFilter(){
+	function getYearFilter() {
 		return getRequestContext().getValue( "year", "0" );
 	}
+
 	// Get Month Filter
-	function getMonthFilter(){
+	function getMonthFilter() {
 		return getRequestContext().getValue( "month", "0" );
 	}
+
 	// Get Day Filter
-	function getDayFilter(){
+	function getDayFilter() {
 		return getRequestContext().getValue( "day", "0" );
 	}
 
 	// Determine if you are in the blog
-	boolean function isBlogView(){
-		if ( isIndexView() OR isEntryView() OR isArchivesView() ) {
+	boolean function isBlogView() {
+		if ( isIndexView() || isEntryView() || isArchivesView() ) {
 			return true;
 		}
 		return false;
 	}
+
 	// Determine if you are in the archives view
-	boolean function isArchivesView(){
+	boolean function isArchivesView() {
 		var event = getRequestContext();
-		return ( event.getCurrentEvent() eq "contentbox-ui:blog.archives" );
+		return ( event.getCurrentEvent() EQ "contentbox-ui:blog.archives" );
 	}
+
 	// Determine if you are in the index view
-	boolean function isIndexView(){
+	boolean function isIndexView() {
 		var event = getRequestContext();
-		return ( event.getCurrentEvent() eq "contentbox-ui:blog.index" );
+		return ( event.getCurrentEvent() EQ "contentbox-ui:blog.index" );
 	}
+
 	// Determine if you are in the entry view
-	boolean function isEntryView(){
+	boolean function isEntryView() {
 		var event = getRequestContext();
 		return (
-			// If in static export, then mark as yes
-			event.getPrivateValue( "staticExport", false )
-			OR
-			// In executing view
-			event.getCurrentEvent() eq "contentbox-ui:blog.entry"
+			event.getPrivateValue( "staticExport", false ) || event.getCurrentEvent() EQ "contentbox-ui:blog.entry"
 		);
 	}
 
@@ -539,20 +565,18 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @page Optional page slug to determine if you are in that page or not.
 	 */
-	boolean function isPageView( page = "" ){
+	boolean function isPageView( page = "" ) {
 		var event = getRequestContext();
 		if (
-			// If in static export, then mark as yes
-			event.getPrivateValue( "staticExport", false ) OR
-			(
-				// Check if in page event
-				findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND
-				// And page Exists
-				event.valueExists( "page", true )
-			)
+			event.getPrivateValue( "staticExport", false ) ||
+				(
+					findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) &&
+						event// And page Exists
+							.valueExists( "page", true )
+				)
 		) {
 			// slug check
-			if ( len( arguments.page ) AND getCurrentPage().getSlug() eq arguments.page ) {
+			if ( len( arguments.page ) && getCurrentPage().getSlug() EQ arguments.page ) {
 				return true;
 			} else if ( !len( arguments.page ) ) {
 				return true;
@@ -565,7 +589,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Determine if you're in a "preview" mode or not
 	 */
-	boolean function isPreview(){
+	boolean function isPreview() {
 		return reFindNoCase( "contentbox-ui:.*preview", getRequestContext().getCurrentEvent() ) ? true : false;
 	}
 
@@ -576,7 +600,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws ContentBox.CBHelper.InvalidEntriesContext
 	 */
-	any function getCurrentEntries(){
+	any function getCurrentEntries() {
 		var prc = getRequestCollection( private = true );
 		if ( structKeyExists( prc, "entries" ) ) {
 			return prc.entries;
@@ -593,7 +617,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws ContentBox.CBHelper.InvalidEntriesContext
 	 */
-	numeric function getCurrentEntriesCount(){
+	numeric function getCurrentEntriesCount() {
 		var prc = getRequestCollection( private = true );
 		if ( structKeyExists( prc, "entriesCount" ) ) {
 			return prc.entriesCount;
@@ -612,11 +636,11 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return array of category
 	 */
-	any function getCurrentCategories( isPublic = true ){
+	any function getCurrentCategories( isPublic = true ) {
 		return variables.categoryService.search(
-			isPublic: ( isNull( arguments.isPublic ) ? javacast( "null", "" ) : arguments.isPublic ),
-			siteId  : site().getSiteId()
-		).categories;
+				isPublic = ( isNull( arguments.isPublic ) ? javacast( "null", "" ) : arguments.isPublic ),
+				siteId   = site().getSiteId()
+			).categories;
 	}
 
 	/**
@@ -626,7 +650,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws ContentBox.CBHelper.InvalidEntryContext
 	 */
-	any function getCurrentEntry(){
+	any function getCurrentEntry() {
 		var prc = getRequestCollection( private = true );
 		if ( structKeyExists( prc, "entry" ) ) {
 			return prc.entry;
@@ -645,7 +669,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws ContentBox.CBHelper.InvalidPageContext
 	 */
-	any function getCurrentPage(){
+	any function getCurrentPage() {
 		var prc = getRequestCollection( private = true );
 		if ( structKeyExists( prc, "page" ) ) {
 			return prc.page;
@@ -664,7 +688,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws ContentBox.CBHelper.InvalidCommentContext
 	 */
-	any function getCurrentComments(){
+	any function getCurrentComments() {
 		var prc = getRequestCollection( private = true );
 		if ( structKeyExists( prc, "comments" ) ) {
 			return prc.comments;
@@ -685,7 +709,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @throws ContentBox.CBHelper.InvalidCommentContext
 	 */
-	numeric function getCurrentCommentsCount(){
+	numeric function getCurrentCommentsCount() {
 		var prc = getRequestCollection( private = true );
 		if ( structKeyExists( prc, "commentsCount" ) ) {
 			return prc.commentsCount;
@@ -700,12 +724,12 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the missing page, if any, usually used in a page not found context
 	 */
-	any function getMissingPage(){
+	any function getMissingPage() {
 		return getRequestContext().getValue(
-			name         = "missingPage",
-			private      = "true",
-			defaultValue = ""
-		);
+				name         = "missingPage",
+				private      = "true",
+				defaultValue = ""
+			);
 	}
 
 	/**
@@ -713,14 +737,14 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @siteID The site id to get it from
 	 */
-	any function getHomePage( string siteID = "" ){
+	any function getHomePage( string siteID = "" ) {
 		return site( arguments.siteID ).getHomepage();
 	}
 
 	/**
 	 * Checks if the currently viewed page is the homepage.
 	 */
-	boolean function isHomePage(){
+	boolean function isHomePage() {
 		var prc = getPrivateRequestCollection();
 		// Check if page exists
 		if ( !structKeyExists( prc, "page" ) ) {
@@ -734,7 +758,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return array
 	 */
-	any function getCurrentRelatedContent(){
+	any function getCurrentRelatedContent() {
 		var relatedContent = [];
 		if ( isPageView() && getCurrentPage().hasRelatedContent() ) {
 			relatedContent = getCurrentPage().getRelatedContent();
@@ -747,7 +771,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the current page's or blog entries custom fields as a struct
 	 */
-	struct function getCurrentCustomFields(){
+	struct function getCurrentCustomFields() {
 		if ( isPageView() ) {
 			return getCurrentPage().getCustomFieldsAsStruct();
 		} else {
@@ -761,7 +785,7 @@ component accessors="true" singleton threadSafe {
 	 * @key          The custom field key
 	 * @defaultValue The default value to return if not found
 	 */
-	any function getCustomField( required key, defaultValue ){
+	any function getCustomField( required key, defaultValue ) {
 		var fields = getCurrentCustomFields();
 		if ( structKeyExists( fields, arguments.key ) ) {
 			return fields[ arguments.key ];
@@ -781,7 +805,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Check the Meta struct exists in the PRC
 	 */
-	function checkMetaStruct(){
+	function checkMetaStruct() {
 		var prc = getPrivateRequestCollection();
 		if ( !structKeyExists( prc, "meta" ) ) {
 			prc.meta = {};
@@ -793,7 +817,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @title - The new title
 	 */
-	function setMetaTitle( required string title ){
+	function setMetaTitle( required string title ) {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.title = arguments.title;
@@ -802,7 +826,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Meta Title for the request
 	 */
-	function getMetaTitle(){
+	function getMetaTitle() {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if ( structKeyExists( prc.meta, "title" ) ) {
@@ -817,7 +841,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @description - The new Description
 	 */
-	function setMetaDescription( required string description ){
+	function setMetaDescription( required string description ) {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.description = arguments.description;
@@ -826,7 +850,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Meta description for the request
 	 */
-	function getMetaDescription(){
+	function getMetaDescription() {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if ( structKeyExists( prc.meta, "description" ) ) {
@@ -841,7 +865,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @keywords - The new Keywords
 	 */
-	function setMetaKeywords( required string keywords ){
+	function setMetaKeywords( required string keywords ) {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.keywords = arguments.keywords;
@@ -850,7 +874,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Meta keywords for the request
 	 */
-	function getMetaKeywords(){
+	function getMetaKeywords() {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if ( structKeyExists( prc.meta, "keywords" ) ) {
@@ -863,9 +887,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the current content metadata title according to SEO Discovery Rules
 	 */
-	function getContentTitle(){
+	function getContentTitle() {
 		var oCurrentContent = "";
-		var metaTitle       = getMetaTitle();
+		var metaTitle = getMetaTitle();
 
 		// If Meta Title is set Manually, return it
 		if ( len( metaTitle ) ) {
@@ -896,7 +920,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the current content metadata description according to SEO discovery rules
 	 */
-	function getContentDescription(){
+	function getContentDescription() {
 		var oCurrentContent = "";
 		var metaDescription = getMetaDescription();
 
@@ -917,9 +941,9 @@ component accessors="true" singleton threadSafe {
 		// - Site Description
 		if ( isHomePage() ) {
 			metaDescription = oCurrentContent.getHTMLDescription();
-			return len( metaDescription ) ? encodeForHTMLAttribute( metaDescription ) : encodeForHTMLAttribute(
-				siteDescription()
-			);
+			return len( metaDescription )
+				? encodeForHTMLAttribute( metaDescription )
+				: encodeForHTMLAttribute( siteDescription() );
 		}
 
 		// Page/Blog Rules
@@ -947,9 +971,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the current content metadata keywords according to SEO discovery rules
 	 */
-	function getContentKeywords(){
+	function getContentKeywords() {
 		var oCurrentContent = "";
-		var metaKeywords    = getMetaKeywords();
+		var metaKeywords = getMetaKeywords();
 
 		// If Meta Keywords is set Manually, return it
 		if ( len( metaKeywords ) ) {
@@ -968,13 +992,13 @@ component accessors="true" singleton threadSafe {
 		// - Site
 		if ( isHomePage() ) {
 			metaKeywords = stripWhitespace( oCurrentContent.getHTMLKeywords() );
-			return len( metaKeywords ) ? encodeForHTMLAttribute( metaKeywords ) : encodeForHTMLAttribute(
-				siteKeywords()
-			);
+			return len( metaKeywords )
+				? encodeForHTMLAttribute( metaKeywords )
+				: encodeForHTMLAttribute( siteKeywords() );
 		}
 
 		// in context view or global
-		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getHTMLKeywords() ) ) {
+		if ( isObject( oCurrentContent ) && len( oCurrentContent.getHTMLKeywords() ) ) {
 			return encodeForHTMLAttribute( stripWhitespace( oCurrentContent.getHTMLKeywords() ) );
 		}
 
@@ -982,13 +1006,12 @@ component accessors="true" singleton threadSafe {
 		return encodeForHTMLAttribute( siteKeywords() );
 	}
 
-
 	/**
 	 * Set the Meta Canonical URL for the request
 	 *
 	 * @url - The new url
 	 */
-	function setMetaURL( required string url ){
+	function setMetaURL( required string url ) {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.url = arguments.url;
@@ -997,7 +1020,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Meta Canonical URL for the request
 	 */
-	function getMetaURL(){
+	function getMetaURL() {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if ( structKeyExists( prc.meta, "url" ) ) {
@@ -1007,14 +1030,13 @@ component accessors="true" singleton threadSafe {
 		}
 	}
 
-
 	/**
 	 * Get the Canonical URL based on content type
 	 */
-	function getContentURL(){
-		var oCurrentContent    = "";
+	function getContentURL() {
+		var oCurrentContent = "";
 		var oCurrentEntryPoint = "";
-		var metaURL            = getMetaURL();
+		var metaURL = getMetaURL();
 
 		if ( len( metaURL ) ) {
 			return metaURL;
@@ -1022,15 +1044,15 @@ component accessors="true" singleton threadSafe {
 
 		// Check if in page view or entry view
 		if ( isPageView() ) {
-			oCurrentContent    = getCurrentPage();
+			oCurrentContent = getCurrentPage();
 			oCurrentEntryPoint = "";
 		} else if ( isEntryView() ) {
-			oCurrentContent    = getCurrentEntry();
+			oCurrentContent = getCurrentEntry();
 			oCurrentEntryPoint = setting( "cb_site_blog_entrypoint" ) & "/";
 		}
 
 		// in context view or global
-		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getslug() ) ) {
+		if ( isObject( oCurrentContent ) && len( oCurrentContent.getslug() ) ) {
 			return siteBaseURL() & oCurrentEntryPoint & oCurrentContent.getslug();
 		}
 
@@ -1042,7 +1064,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @imageURL - The new imageURL
 	 */
-	function setMetaImageURL( required string imageURL ){
+	function setMetaImageURL( required string imageURL ) {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.imageURL = arguments.imageURL;
@@ -1051,7 +1073,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Meta ImageURL for the request
 	 */
-	function getMetaImageURL(){
+	function getMetaImageURL() {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if ( structKeyExists( prc.meta, "imageURL" ) ) {
@@ -1064,9 +1086,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Content Image URL based on content type
 	 */
-	function getContentImageURL(){
+	function getContentImageURL() {
 		var oCurrentContent = "";
-		var metaImageUrl    = getMetaImageURL();
+		var metaImageUrl = getMetaImageURL();
 
 		if ( len( metaImageURL ) ) {
 			return metaImageURL;
@@ -1080,7 +1102,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// in context view or global
-		if ( isObject( oCurrentContent ) AND len( oCurrentContent.getFeaturedImageURL() ) ) {
+		if ( isObject( oCurrentContent ) && len( oCurrentContent.getFeaturedImageURL() ) ) {
 			return siteBaseURL() & oCurrentContent.getFeaturedImageURL();
 		}
 
@@ -1092,7 +1114,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @OGType - The new OGType
 	 */
-	function setMetaOGType( required string OGType ){
+	function setMetaOGType( required string OGType ) {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.OGType = arguments.OGType;
@@ -1101,7 +1123,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Meta OGType for the request
 	 */
-	function getMetaOGType(){
+	function getMetaOGType() {
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if ( structKeyExists( prc.meta, "OGType" ) ) {
@@ -1114,7 +1136,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the Content Open Graph Type based on content type
 	 */
-	function getContentOGType(){
+	function getContentOGType() {
 		var metaOGType = getMetaOGType();
 
 		if ( len( metaOGType ) ) {
@@ -1136,49 +1158,58 @@ component accessors="true" singleton threadSafe {
 	 * More information: https://developers.facebook.com/docs/reference/opengraph
 	 * Best Practices: https://developers.facebook.com/docs/sharing/best-practices
 	 */
-	function getOpenGraphMeta(){
-		var content         = "";
+	function getOpenGraphMeta() {
+		var content = "";
 		// cfformat-ignore-start
 		savecontent variable="content" {
-			writeOutput( "<meta property=""og:title"" content=""#getContentTitle()#"" />#chr( 10 )#" );
-			writeOutput( "<meta property=""og:type"" content=""#getContentOGType()#"" />#chr( 10 )#" );
-			writeOutput( "<meta property=""og:description"" content=""#getContentDescription()#"" />#chr( 10 )#" );
+writeOutput(
+"<meta property=""og:title"" content=""#getContentTitle()#"" />#chr( 10 )#"
+);
+writeOutput(
+"<meta property=""og:type"" content=""#getContentOGType()#"" />#chr( 10 )#"
+);
+writeOutput(
+"<meta property=""og:description"" content=""#getContentDescription()#"" />#chr( 10 )#"
+);
 
-			if ( len( getContentURL() ) ) {
-				writeOutput( "<meta property=""og:url"" content=""#getContentURL()#"" />#chr( 10 )#" );
-			}
+if ( len( getContentURL() ) ) {
+writeOutput(
+"<meta property=""og:url"" content=""#getContentURL()#"" />#chr( 10 )#"
+);
+}
 
-			if ( len( getContentImageURL() ) ) {
-				writeOutput( "<meta property=""og:image"" content=""#getContentImageURL()#"" />#chr( 10 )#" );
-			}
-		}
+if ( len( getContentImageURL() ) ) {
+writeOutput(
+"<meta property=""og:image"" content=""#getContentImageURL()#"" />#chr( 10 )#"
+);
+}
+}
 		// cfformat-ignore-end
 
 		return content;
 	}
 
-
 	/************************************** search *********************************************/
 
 	// Determine if you are in the search view
-	boolean function isSearchView(){
+	boolean function isSearchView() {
 		var event = getRequestContext();
-		return ( event.getCurrentEvent() eq "contentbox-ui:page.search" );
+		return ( event.getCurrentEvent() EQ "contentbox-ui:page.search" );
 	}
 
 	/**
 	 * quickSearchForm will build a standard ContentBox Content Search Form according to the SearchForm widget
 	 */
-	function quickSearchForm(){
-		return widget( "SearchForm", { type : "content" } );
+	function quickSearchForm() {
+		return widget( "SearchForm", { type: "content" } );
 	}
 
 	/**
 	 * Render out paging for search content
 	 */
-	function quickSearchPaging(){
+	function quickSearchPaging() {
 		var prc = getRequestCollection( private = true );
-		if ( NOT structKeyExists( prc, "oPaging" ) ) {
+		if ( !structKeyExists( prc, "oPaging" ) ) {
 			throw(
 				message = "Paging object is not in the collection",
 				detail  = "This probably means you are trying to use the paging outside of the search results page and that is a No No",
@@ -1186,10 +1217,10 @@ component accessors="true" singleton threadSafe {
 			);
 		}
 		return prc.oPaging.renderit(
-			foundRows     = getSearchResults().getTotal(),
-			link          = prc.pagingLink,
-			pagingMaxRows = setting( "cb_search_maxResults" )
-		);
+				foundRows     = getSearchResults().getTotal(),
+				link          = prc.pagingLink,
+				pagingMaxRows = setting( "cb_search_maxResults" )
+			);
 	}
 
 	/**
@@ -1197,46 +1228,46 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return contentbox.models.search.SearchResults
 	 */
-	function getSearchResults(){
+	function getSearchResults() {
 		var event = getRequestContext();
 		return event.getValue(
-			name    = "searchResults",
-			private = "true",
-			default = ""
-		);
+				name    = "searchResults",
+				private = "true",
+				default = ""
+			);
 	}
 
 	/**
 	 * get the curent search results HTML content
 	 */
-	any function getSearchResultsContent(){
+	any function getSearchResultsContent() {
 		var event = getRequestContext();
 		return event.getValue(
-			name    = "searchResultsContent",
-			private = "true",
-			default = ""
-		);
+				name    = "searchResultsContent",
+				private = "true",
+				default = ""
+			);
 	}
 
 	/**
 	 * Determine if you have a search term
 	 */
-	boolean function searchTermExists(){
+	boolean function searchTermExists() {
 		var rc = getRequestCollection();
-		return ( structKeyExists( rc, "q" ) AND len( rc.q ) );
+		return ( structKeyExists( rc, "q" ) && len( rc.q ) );
 	}
 
 	/**
 	 * Get Search Term used
 	 */
-	function getSearchTerm(){
+	function getSearchTerm() {
 		return getRequestContext().getValue( "q", "" );
 	}
 
 	/************************************** events *********************************************/
 
 	// event announcements, funky for whitespace reasons
-	function event( required state, struct data = structNew() ) output="true"{
+	function event( required state, struct data = structNew() ) output="true" {
 		controller.getInterceptorService().announce( arguments.state, arguments.data );
 	}
 
@@ -1255,16 +1286,16 @@ component accessors="true" singleton threadSafe {
 		required string to,
 		queryString = "",
 		boolean ssl = getRequestContext().isSSL()
-	){
+	) {
 		// Remove by 6.x
 		if ( !isNull( arguments.linkTo ) ) {
 			arguments.to = arguments.linkTo;
 		}
 		return getRequestContext().buildLink(
-			to         : adminRoot() & ".module.#arguments.module#.#arguments.to#",
-			queryString: arguments.queryString,
-			ssl        : arguments.ssl
-		);
+				to          = adminRoot() & ".module.#arguments.module#.#arguments.to#",
+				queryString = arguments.queryString,
+				ssl         = arguments.ssl
+			);
 	}
 
 	/**
@@ -1277,13 +1308,12 @@ component accessors="true" singleton threadSafe {
 		string URI,
 		string queryString = "",
 		persist,
-		struct persistStruct
-		boolean addToken,
+		struct persistStruct boolean addToken,
 		boolean ssl,
 		baseURL,
 		boolean postProcessExempt,
 		numeric statusCode
-	){
+	) {
 		return moduleRelocate( argumentCollection = arguments );
 	}
 
@@ -1310,13 +1340,12 @@ component accessors="true" singleton threadSafe {
 		string URI,
 		string queryString = "",
 		persist,
-		struct persistStruct
-		boolean addToken,
+		struct persistStruct boolean addToken,
 		boolean ssl,
 		baseURL,
 		boolean postProcessExempt,
 		numeric statusCode
-	){
+	) {
 		arguments.event = adminRoot() & ".module.#arguments.module#.#arguments.event#";
 		return controller.relocate( argumentCollection = arguments );
 	}
@@ -1327,7 +1356,7 @@ component accessors="true" singleton threadSafe {
 	 * @event An optional event to link to
 	 * @ssl   Use SSL or not, defaults to event context.
 	 */
-	function linkAdmin( event = "", boolean ssl = getRequestContext().isSSL() ){
+	function linkAdmin( event = "", boolean ssl = getRequestContext().isSSL() ) {
 		return getRequestContext().buildLink( to = adminRoot() & ".#arguments.event#", ssl = arguments.ssl );
 	}
 
@@ -1336,7 +1365,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @ssl Use SSL or not, defaults to event context.
 	 */
-	function linkAdminLogout( boolean ssl = getRequestContext().isSSL() ){
+	function linkAdminLogout( boolean ssl = getRequestContext().isSSL() ) {
 		return getRequestContext().buildLink( to = adminRoot() & "/security/doLogout", ssl = arguments.ssl );
 	}
 
@@ -1345,7 +1374,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @ssl Use SSL or not, defaults to event context.
 	 */
-	function linkAdminLogin( boolean ssl = getRequestContext().isSSL() ){
+	function linkAdminLogin( boolean ssl = getRequestContext().isSSL() ) {
 		return getRequestContext().buildLink( to = adminRoot() & "/security/login", ssl = arguments.ssl );
 	}
 
@@ -1354,7 +1383,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @siteID The site id to link to or use the default
 	 */
-	function linkHome( string siteID = "" ){
+	function linkHome( string siteID = "" ) {
 		return siteRoot( arguments.siteID );
 	}
 
@@ -1363,22 +1392,15 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @siteID The site id to link to or use the default
 	 */
-	function linkBlog( string siteID = "" ){
+	function linkBlog( string siteID = "" ) {
 		return "#siteRoot( arguments.siteID )#/#getBlogEntryPoint()#";
 	}
 
 	/**
 	 * Create a link to the current page/entry you are on
 	 */
-	function linkSelf(){
+	function linkSelf() {
 		return "#siteRoot()##sep()##cgi.script_name##cgi.path_info#";
-	}
-
-	/**
-	 * Get the site URL separator depending if you have an entry point or not
-	 */
-	private function sep(){
-		return "/";
 	}
 
 	/**
@@ -1391,10 +1413,10 @@ component accessors="true" singleton threadSafe {
 	 */
 	function linkRSS(
 		category,
-		comments = false,
+		comments    = false,
 		entry,
 		boolean ssl = getRequestContext().isSSL()
-	){
+	) {
 		var xehRSS = linkBlog() & "/rss";
 
 		// do we have a category?
@@ -1428,8 +1450,8 @@ component accessors="true" singleton threadSafe {
 		any category,
 		boolean comments = false,
 		string slug,
-		boolean ssl = getRequestContext().isSSL()
-	){
+		boolean ssl      = getRequestContext().isSSL()
+	) {
 		var xehRSS = siteRoot() & sep() & "__rss";
 
 		// do we have a category?
@@ -1466,8 +1488,8 @@ component accessors="true" singleton threadSafe {
 		any category,
 		boolean comments = false,
 		page,
-		boolean ssl = getRequestContext().isSSL()
-	){
+		boolean ssl      = getRequestContext().isSSL()
+	) {
 		var xehRSS = siteRoot() & sep() & "__rss/pages";
 
 		// do we have a category?
@@ -1498,7 +1520,7 @@ component accessors="true" singleton threadSafe {
 	 * @category The category object or slug to link to
 	 * @ssl      Use SSL or not, defaults to false.
 	 */
-	function linkCategory( required any category, boolean ssl = getRequestContext().isSSL() ){
+	function linkCategory( required any category, boolean ssl = getRequestContext().isSSL() ) {
 		var categorySlug = "";
 		if ( isSimpleValue( arguments.category ) ) {
 			categorySlug = arguments.category;
@@ -1515,7 +1537,10 @@ component accessors="true" singleton threadSafe {
 	 * @categorySlug The category slug as a string to link to
 	 * @ssl          Use SSL or not, defaults to false.
 	 */
-	function linkCategoryWithSlug( required string categorySlug, boolean ssl = getRequestContext().isSSL() ){
+	function linkCategoryWithSlug(
+		required string categorySlug,
+		boolean ssl = getRequestContext().isSSL()
+	) {
 		return linkBlog() & "/category/#arguments.categorySlug#";
 	}
 
@@ -1527,12 +1552,7 @@ component accessors="true" singleton threadSafe {
 	 * @day   The day of the archive
 	 * @ssl   Use SSL or not, defaults to false.
 	 */
-	function linkArchive(
-		year,
-		month,
-		day,
-		boolean ssl = getRequestContext().isSSL()
-	){
+	function linkArchive( year, month, day, boolean ssl = getRequestContext().isSSL() ) {
 		var xeh = linkBlog() & "/archives";
 
 		if ( structKeyExists( arguments, "year" ) ) {
@@ -1553,7 +1573,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @ssl Use SSL or not, defaults to false.
 	 */
-	function linkSearch( boolean ssl = getRequestContext().isSSL() ){
+	function linkSearch( boolean ssl = getRequestContext().isSSL() ) {
 		return linkBlog() & "/search";
 	}
 
@@ -1562,7 +1582,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @ssl Use SSL or not, defaults to false.
 	 */
-	function linkContentSearch( boolean ssl = getRequestContext().isSSL() ){
+	function linkContentSearch( boolean ssl = getRequestContext().isSSL() ) {
 		return siteRoot() & sep() & "__search";
 	}
 
@@ -1571,7 +1591,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @ssl Use SSL or not, defaults to false.
 	 */
-	function linkContentSubscription( boolean ssl = getRequestContext().isSSL() ){
+	function linkContentSubscription( boolean ssl = getRequestContext().isSSL() ) {
 		return siteRoot() & sep() & "__subscribe";
 	}
 
@@ -1580,7 +1600,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @token The token to use for unsubscribing
 	 */
-	function linkContentUnsubscribe( required string token, boolean ssl = getRequestContext().isSSL() ){
+	function linkContentUnsubscribe( required string token, boolean ssl = getRequestContext().isSSL() ) {
 		return siteRoot() & sep() & "__unsubscribe/#arguments.token#";
 	}
 
@@ -1595,9 +1615,9 @@ component accessors="true" singleton threadSafe {
 		required entry,
 		boolean ssl = getRequestContext().isSSL(),
 		format      = "html"
-	){
+	) {
 		// format?
-		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		var outputFormat = ( arguments.format NEQ "html" ? ".#arguments.format#" : "" );
 
 		if ( isSimpleValue( arguments.entry ) ) {
 			return linkEntrywithslug(
@@ -1621,11 +1641,15 @@ component accessors="true" singleton threadSafe {
 		required slug,
 		boolean ssl = getRequestContext().isSSL(),
 		format      = "html"
-	){
+	) {
 		// format?
-		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		var outputFormat = ( arguments.format NEQ "html" ? ".#arguments.format#" : "" );
 		// Cleanup
-		arguments.slug   = reReplace( arguments.slug, "^/", "" );
+		arguments.slug = reReplace(
+			arguments.slug,
+			"^/",
+			""
+		);
 		// link
 		return linkBlog() & sep() & arguments.slug & outputFormat;
 	}
@@ -1641,15 +1665,15 @@ component accessors="true" singleton threadSafe {
 		required content,
 		boolean ssl = getRequestContext().isSSL(),
 		format      = "html"
-	){
-		if ( arguments.content.getContentType() eq "entry" ) {
+	) {
+		if ( arguments.content.getContentType() EQ "entry" ) {
 			return linkEntry(
 				arguments.content,
 				arguments.ssl,
 				arguments.format
 			);
 		}
-		if ( arguments.content.getContentType() eq "page" ) {
+		if ( arguments.content.getContentType() EQ "page" ) {
 			return linkPage(
 				arguments.content,
 				arguments.ssl,
@@ -1671,9 +1695,9 @@ component accessors="true" singleton threadSafe {
 		required page,
 		boolean ssl = getRequestContext().isSSL(),
 		format      = "html"
-	){
+	) {
 		// format extension?
-		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		var outputFormat = ( arguments.format NEQ "html" ? ".#arguments.format#" : "" );
 
 		// link directly or with slug
 		if ( isSimpleValue( arguments.page ) ) {
@@ -1699,11 +1723,15 @@ component accessors="true" singleton threadSafe {
 		required slug,
 		boolean ssl = getRequestContext().isSSL(),
 		format      = "html"
-	){
+	) {
 		// format?
-		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		var outputFormat = ( arguments.format NEQ "html" ? ".#arguments.format#" : "" );
 		// cleanup
-		arguments.slug   = reReplace( arguments.slug, "^/", "" );
+		arguments.slug = reReplace(
+			arguments.slug,
+			"^/",
+			""
+		);
 		// Return the formed link
 		return siteRoot() & sep() & arguments.slug & outputFormat;
 	}
@@ -1714,9 +1742,15 @@ component accessors="true" singleton threadSafe {
 	 * @comment The comment to link to
 	 * @ssl     Use SSL or not, defaults to false.
 	 */
-	function linkComment( required comment, boolean ssl = getRequestContext().isSSL() ){
+	function linkComment( required comment, boolean ssl = getRequestContext().isSSL() ) {
 		var xeh = "";
-		if ( arguments.comment.getRelatedContent().getContentType() eq "page" ) {
+		if (
+			arguments
+					.comment
+					.getRelatedContent()
+					.getContentType() EQ
+				"page"
+		) {
 			xeh = linkPage( arguments.comment.getRelatedContent(), arguments.ssl );
 		} else {
 			xeh = linkEntry( arguments.comment.getRelatedContent(), arguments.ssl );
@@ -1732,9 +1766,9 @@ component accessors="true" singleton threadSafe {
 	 * @content The entry or page to link to its comments
 	 * @ssl     Use SSL or not, defaults to false.
 	 */
-	function linkComments( required content, boolean ssl = getRequestContext().isSSL() ){
+	function linkComments( required content, boolean ssl = getRequestContext().isSSL() ) {
 		var xeh = "";
-		if ( arguments.content.getContentType() eq "page" ) {
+		if ( arguments.content.getContentType() EQ "page" ) {
 			xeh = linkPage( arguments.content, arguments.ssl );
 		} else {
 			xeh = linkEntry( arguments.content, arguments.ssl );
@@ -1751,8 +1785,8 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return The URL to submit to.
 	 */
-	function linkCommentPost( required content, boolean ssl = getRequestContext().isSSL() ){
-		if ( arguments.content.getContentType() eq "page" ) {
+	function linkCommentPost( required content, boolean ssl = getRequestContext().isSSL() ) {
+		if ( arguments.content.getContentType() EQ "page" ) {
 			return siteRoot() & sep() & "__pageCommentPost";
 		}
 
@@ -1764,7 +1798,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @lang The iso language code
 	 */
-	function linkLanguageChange( string lang = "en_US" ){
+	function linkLanguageChange( string lang = "en_US" ) {
 		return getRequestContext().buildLink( "__changeLang/" & arguments.lang );
 	}
 
@@ -1776,7 +1810,7 @@ component accessors="true" singleton threadSafe {
 	 * @name The name of the installed widget to execute
 	 * @args The argument collection to pass to the widget's renderIt() method
 	 */
-	function widget( required name, struct args = structNew() ){
+	function widget( required name, struct args = structNew() ) {
 		return getWidget( arguments.name ).renderit( argumentCollection = arguments.args );
 	}
 
@@ -1788,7 +1822,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @name The name of the installed widget to return
 	 */
-	function getWidget( required name ){
+	function getWidget( required name ) {
 		return widgetService.getWidgetByDiscovery( arguments.name );
 	}
 
@@ -1798,33 +1832,38 @@ component accessors="true" singleton threadSafe {
 	 * Create entry category links to be display usually on an entry or entry list.
 	 * @entry The entry to use to build its category links list.
 	 */
-	function quickCategoryLinks( required entry ){
+	function quickCategoryLinks( required entry ) {
 		var e = arguments.entry;
 
 		// check if it has categories
-		if ( NOT e.hasCategories() ) {
+		if ( !e.hasCategories() ) {
 			return "";
 		}
 
-		var cats    = e.getCategories();
+		var cats = e.getCategories();
 		var catList = [];
 
 		// iterate and create links
-		for ( var x = 1; x lte arrayLen( cats ); x++ ) {
+		for ( var x = 1; x LTE arrayLen( cats ); x++ ) {
 			var link = "<a href=""#linkCategory( cats[ x ] )#"" title=""Filter entries by '#cats[ x ].getCategory()#'"">#cats[ x ].getCategory()#</a>";
 			arrayAppend( catList, link );
 		}
 
 		// return list of links
-		return replace( arrayToList( catList ), ",", ", ", "all" );
+		return replace(
+			arrayToList( catList ),
+			",",
+			", ",
+			"all"
+		);
 	}
 
 	/**
 	 * Render out paging for blog entries only
 	 */
-	function quickPaging(){
+	function quickPaging() {
 		var prc = getRequestCollection( private = true );
-		if ( NOT structKeyExists( prc, "oPaging" ) ) {
+		if ( !structKeyExists( prc, "oPaging" ) ) {
 			throw(
 				message = "Paging object is not in the collection",
 				detail  = "This probably means you are trying to use the paging outside of the main entries index page and that is a No No",
@@ -1832,11 +1871,11 @@ component accessors="true" singleton threadSafe {
 			);
 		}
 		return prc.oPaging.renderit(
-			foundRows     = prc.entriesCount,
-			link          = prc.pagingLink,
-			aslist        = true,
-			pagingMaxRows = setting( "cb_paging_maxentries" )
-		);
+				foundRows     = prc.entriesCount,
+				link          = prc.pagingLink,
+				aslist        = true,
+				pagingMaxRows = setting( "cb_paging_maxentries" )
+			);
 	}
 
 	/**
@@ -1850,11 +1889,9 @@ component accessors="true" singleton threadSafe {
 		string template     = "entry",
 		string collectionAs = "entry",
 		struct args         = structNew()
-	){
+	) {
 		var entries = getCurrentEntries();
-		return controller
-			.getRenderer()
-			.view(
+		return controller.getRenderer().view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = entries,
 				collectionAs = arguments.collectionAs,
@@ -1873,11 +1910,9 @@ component accessors="true" singleton threadSafe {
 		string template     = "entry",
 		string collectionAs = "entry",
 		struct args         = structNew()
-	){
-		var entries = [ getCurrentEntry() ];
-		return controller
-			.getRenderer()
-			.view(
+	) {
+		var entries = [ getCurrentEntry()];
+		return controller.getRenderer().view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = entries,
 				collectionAs = arguments.collectionAs,
@@ -1898,11 +1933,9 @@ component accessors="true" singleton threadSafe {
 		string collectionAs = "category",
 		struct args         = structNew(),
 		isPublic            = true
-	){
+	) {
 		var categories = getCurrentCategories( argumentCollection = arguments );
-		return controller
-			.getRenderer()
-			.view(
+		return controller.getRenderer().view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = categories,
 				collectionAs = arguments.collectionAs,
@@ -1921,11 +1954,9 @@ component accessors="true" singleton threadSafe {
 		string template     = "relatedContent",
 		string collectionAs = "relatedContent",
 		struct args         = structNew()
-	){
+	) {
 		var relatedContent = getCurrentRelatedContent();
-		return controller
-			.getRenderer()
-			.view(
+		return controller.getRenderer().view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = relatedContent,
 				collectionAs = arguments.collectionAs,
@@ -1936,14 +1967,16 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Render out custom fields for the current content
 	 */
-	function quickCustomFields(){
+	function quickCustomFields() {
 		var customFields = getCurrentCustomFields();
-		var content      = "";
+		var content = "";
 
 		savecontent variable="content" {
 			writeOutput( "<ul class='customFields'>" );
 			for ( var thisField in customFields ) {
-				writeOutput( "<li><span class='customField-key'>#thisField#:</span> #customFields[ thisField ]#</li>" );
+				writeOutput(
+					"<li><span class='customField-key'>#thisField#:</span> #customFields[ thisField ]#</li>"
+				);
 			}
 			writeOutput( "</ul>" );
 		}
@@ -1962,11 +1995,9 @@ component accessors="true" singleton threadSafe {
 		string template     = "comment",
 		string collectionAs = "comment",
 		struct args         = structNew()
-	){
+	) {
 		var comments = getCurrentComments();
-		return controller
-			.getRenderer()
-			.view(
+		return controller.getRenderer().view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = comments,
 				collectionAs = arguments.collectionAs,
@@ -1984,16 +2015,14 @@ component accessors="true" singleton threadSafe {
 		required author,
 		numeric size = 25,
 		string class = "gravatar"
-	){
+	) {
 		var targetEmail = arguments.author;
 		// check if simple or not
-		if ( NOT isSimpleValue( arguments.author ) ) {
+		if ( !isSimpleValue( arguments.author ) ) {
 			targetEmail = arguments.author.getEmail();
 		}
 
-		return wirebox
-			.getInstance( "Avatar@contentbox" )
-			.renderAvatar(
+		return wirebox.getInstance( "Avatar@contentbox" ).renderAvatar(
 				email = targetEmail,
 				size  = arguments.size,
 				class = arguments.class
@@ -2021,12 +2050,12 @@ component accessors="true" singleton threadSafe {
 	 */
 	function quickView(
 		required view,
-		cache = false,
+		cache                      = false,
 		cacheTimeout,
 		cacheLastAccessTimeout,
 		cacheSuffix,
-		cacheProvider = "template",
-		module        = "contentbox",
+		cacheProvider              = "template",
+		module                     = "contentbox",
 		struct args,
 		collection,
 		collectionAs               = "",
@@ -2034,8 +2063,8 @@ component accessors="true" singleton threadSafe {
 		numeric collectionMaxRows  = 0,
 		collectionDelim            = "",
 		boolean prepostExempt      = false
-	){
-		arguments.view   = "#themeName()#/views/#arguments.view#";
+	) {
+		arguments.view = "#themeName()#/views/#arguments.view#";
 		arguments.module = themeRecord().module;
 		return controller.getRenderer().view( argumentCollection = arguments );
 	}
@@ -2058,7 +2087,7 @@ component accessors="true" singleton threadSafe {
 		args                  = structNew(),
 		viewModule            = "",
 		boolean prePostExempt = false
-	){
+	) {
 		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
 		return controller.getRenderer().layout( argumentCollection = arguments );
 	}
@@ -2068,8 +2097,8 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @content The content this comment form will be linked to, page or entry
 	 */
-	function quickCommentForm( required content ){
-		return widget( "CommentForm", { content : arguments.content } );
+	function quickCommentForm( required content ) {
+		return widget( "CommentForm", { content: arguments.content } );
 	}
 
 	/**
@@ -2077,7 +2106,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @args
 	 */
-	function mainView( struct args = structNew() ){
+	function mainView( struct args = structNew() ) {
 		return controller.getRenderer().view( view = "", args = arguments.args );
 	}
 
@@ -2096,7 +2125,7 @@ component accessors="true" singleton threadSafe {
 		required string slug,
 		required type            = "html",
 		required array slugCache = []
-	){
+	) {
 		var menu = variables.menuService.findBySlug( arguments.slug, site().getsiteID() );
 
 		if ( menu.isLoaded() ) {
@@ -2117,13 +2146,16 @@ component accessors="true" singleton threadSafe {
 	 * @menu.doc_generic contentbox.models.menu.Menu
 	 * @slugCache        The cache of menu slugs already used in this request
 	 */
-	public string function buildProviderMenu( required any menu, required array slugCache = [] ){
-		var listType   = arguments.menu.getListType();
+	public string function buildProviderMenu(
+		required any menu,
+		required array slugCache = []
+	) {
+		var listType = arguments.menu.getListType();
 		// arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
 		// set start
 		var menuString = "<#listType# class='#arguments.menu.getMenuClass()#'>";
 		// now get root items
-		var items      = arguments.menu.getRootMenuItems();
+		var items = arguments.menu.getRootMenuItems();
 		// create cache of slugs to prevent infinite recursions
 		arrayAppend( arguments.slugCache, menu.getSlug() );
 		// build out this top level
@@ -2135,49 +2167,6 @@ component accessors="true" singleton threadSafe {
 		);
 		// set end
 		menuString &= "</#listType#>";
-		return menuString;
-	}
-
-	/**
-	 * Builds out a level of a custom menu
-	 *
-	 * @items     An array of menu items for this level
-	 * @listType  The type of list to create (derived from owning menu)
-	 * @slugCache The cache of menu slugs already used in this request
-	 */
-	private string function buildProviderMenuLevel(
-		required array items,
-		required string listType = "ul",
-		required array slugCache = [],
-		string listClass         = ""
-	){
-		var menuString = "";
-		// loop over items to build out level
-		for ( var item in arguments.items ) {
-			var extras = {
-				slugCache : arguments.slugCache,
-				listType  : arguments.listType
-			};
-			// check that item can be added
-			if ( item.canDisplay( options = extras ) ) {
-				// get template from provider
-				menuString &= "<li class=""#item.getItemClass()#"">" & item
-					.getProvider()
-					.getDisplayTemplate( item, extras );
-				// if this menu item has children...
-				if ( item.hasChild() ) {
-					// recurse, recurse, recurse!
-					menuString &= "<#arguments.listType# class='#arguments.listClass#'>" &
-					buildProviderMenuLevel(
-						items     = item.getChildren(),
-						listType  = arguments.listType,
-						slugCache = arguments.slugCache
-					) &
-					"</#arguments.listType#>";
-				}
-				menuString &= "</li>";
-			}
-		}
 		return menuString;
 	}
 
@@ -2202,16 +2191,16 @@ component accessors="true" singleton threadSafe {
 		elementClass = "",
 		parentClass  = "parent",
 		activeClass  = "active"
-	){
-		arguments.showNone    = false;
+	) {
+		arguments.showNone = false;
 		// get root pages
 		arguments.pageRecords = pageService.findPublishedContent(
-			parent    : "",
-			showInMenu: true,
-			siteID    : site().getsiteID(),
-			properties: "contentID,slug,title,numberOfChildren",
-			sortOrder : "order ASC, publishedDate ASC"
-		);
+				parent     = "",
+				showInMenu = true,
+				siteID     = site().getsiteID(),
+				properties = "contentID,slug,title",
+				sortOrder  = "order ASC, publishedDate ASC"
+			);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
 	}
@@ -2243,7 +2232,7 @@ component accessors="true" singleton threadSafe {
 		parentClass        = "parent",
 		activeClass        = "active",
 		activeShowChildren = false
-	){
+	) {
 		// If page not passed, or empty, then use the current page
 		if ( isNull( arguments.page ) || ( isSimpleValue( arguments.page ) && !len( arguments.page ) ) ) {
 			arguments.page = getCurrentPage();
@@ -2257,12 +2246,12 @@ component accessors="true" singleton threadSafe {
 
 		// get child pages
 		arguments.pageRecords = pageService.findPublishedContent(
-			parent    : page.getContentID(),
-			showInMenu: true,
-			siteID    : site().getsiteID(),
-			properties: "contentID,slug,title,numberOfChildren",
-			sortOrder : "order ASC, publishedDate ASC"
-		);
+				parent     = page.getContentID(),
+				showInMenu = true,
+				siteID     = site().getsiteID(),
+				properties = "contentID,slug,title",
+				sortOrder  = "order ASC, publishedDate ASC"
+			);
 
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2274,7 +2263,7 @@ component accessors="true" singleton threadSafe {
 	 * @page Optional page to create link for, else look for current page
 	 * @text The optional text to use for the link, else it uses the page's title
 	 */
-	function linkToParentPage( page, text = "" ){
+	function linkToParentPage( page, text = "" ) {
 		// verify incoming page
 		if ( !structKeyExists( arguments, "page" ) ) {
 			arguments.page = getCurrentPage();
@@ -2282,7 +2271,10 @@ component accessors="true" singleton threadSafe {
 		// link if parent found.
 		if ( arguments.page.hasParent() ) {
 			if ( !len( arguments.text ) ) {
-				arguments.text = arguments.page.getParent().getTitle();
+				arguments.text = arguments
+					.page
+					.getParent()
+					.getTitle();
 			}
 			// build link
 			return "<a href=""#linkPage( arguments.page.getParent() )#"">#arguments.text#</a>";
@@ -2296,12 +2288,13 @@ component accessors="true" singleton threadSafe {
 	 * @page      Optional page to create link for, else look for current page
 	 * @separator Breadcrumb separator, defaults to '>'
 	 */
-	function breadCrumbs( any page, string separator = ">" ){
+	function breadCrumbs( any page, string separator = ">" ) {
 		// verify incoming page
 		if ( !structKeyExists( arguments, "page" ) ) {
 			arguments.page = getCurrentPage();
 		}
-		return wirebox.getInstance( "PageBreadcrumbVisitor@contentbox-ui" ).visit( arguments.page, arguments.separator );
+		return wirebox.getInstance( "PageBreadcrumbVisitor@contentbox-ui" ).visit( arguments.page,
+				arguments.separator );
 	}
 
 	/************************************** UTILITIES *********************************************/
@@ -2309,14 +2302,14 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Detects if the incoming request is from a mobile device or NOT.
 	 */
-	boolean function isMobile(){
+	boolean function isMobile() {
 		return mobileDetector.isMobile();
 	}
 
 	/**
 	 * Return the current system flash scope
 	 */
-	any function getFlash(){
+	any function getFlash() {
 		return controller.getRequestService().getFlashScope();
 	}
 
@@ -2335,10 +2328,10 @@ component accessors="true" singleton threadSafe {
 		string locale,
 		any values,
 		string bundle
-	){
+	) {
 		// check for resource@bundle convention:
 		if ( find( "@", arguments.resource ) ) {
-			arguments.bundle   = listLast( arguments.resource, "@" );
+			arguments.bundle = listLast( arguments.resource, "@" );
 			arguments.resource = listFirst( arguments.resource, "@" );
 		}
 		return variables.cbResourceService.getResource( argumentCollection = arguments );
@@ -2347,16 +2340,82 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * utility to strip HTML
 	 */
-	function stripHTML( required stringTarget ){
-		return encodeForHTML( reReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
+	function stripHTML( required stringTarget ) {
+		return encodeForHTML(
+			reReplaceNoCase(
+				arguments.stringTarget,
+				"<[^>]*>",
+				"",
+				"ALL"
+			)
+		);
 	}
 
 	/**
 	 * removes CR LF TAB double spaces from string
 	 */
-	function stripWhitespace( required stringTarget ){
-		arguments.stringTarget = reReplace( arguments.stringTarget, "\s", " ", "ALL" );
-		return trim( reReplace( arguments.stringTarget, "\s{2,}", " ", "ALL" ) );
+	function stripWhitespace( required stringTarget ) {
+		arguments.stringTarget = reReplace(
+			arguments.stringTarget,
+			"\s",
+			" ",
+			"ALL"
+		);
+		return trim(
+			reReplace(
+				arguments.stringTarget,
+				"\s{2,}",
+				" ",
+				"ALL"
+			)
+		);
+	}
+
+	/**
+	 * Get the site URL separator depending if you have an entry point or not
+	 */
+	private function sep() {
+		return "/";
+	}
+
+	/**
+	 * Builds out a level of a custom menu
+	 *
+	 * @items     An array of menu items for this level
+	 * @listType  The type of list to create (derived from owning menu)
+	 * @slugCache The cache of menu slugs already used in this request
+	 */
+	private string function buildProviderMenuLevel(
+		required array items,
+		required string listType = "ul",
+		required array slugCache = [],
+		string listClass         = ""
+	) {
+		var menuString = "";
+		// loop over items to build out level
+		for ( var item in arguments.items ) {
+			var extras = {
+				slugCache: arguments.slugCache,
+				listType : arguments.listType
+			};
+			// check that item can be added
+			if ( item.canDisplay( options = extras ) ) {
+				// get template from provider
+				menuString &= "<li class=""#item.getItemClass()#"">#item.getProvider().getDisplayTemplate( item,
+						extras )#";
+				// if this menu item has children...
+				if ( item.hasChild() ) {
+					// recurse, recurse, recurse!
+					menuString &= "<#arguments.listType# class='#arguments.listClass#'>#buildProviderMenuLevel(
+						items     = item.getChildren(),
+						listType  = arguments.listType,
+						slugCache = arguments.slugCache
+					)##"</#arguments.listType#>"#";
+				}
+				menuString &= "</li>";
+			}
+		}
+		return menuString;
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -2374,34 +2433,34 @@ component accessors="true" singleton threadSafe {
 		parentClass          = "parent",
 		activeClass          = "active",
 		activeShowChildren   = false
-	){
+	) {
 		// Levels = *, then create big enough integer
-		if ( arguments.levels eq "*" ) {
+		if ( arguments.levels EQ "*" ) {
 			arguments.levels = "999999";
 		}
 		// check type?
 		if ( !reFindNoCase( "^(ul|ol|li|data|none)$", arguments.type ) ) {
 			arguments.type = "ul";
 		}
-		var pageResults            = arguments.pageRecords;
+		var pageResults = arguments.pageRecords;
 		// buffer
-		var b                      = createObject( "java", "java.lang.StringBuilder" ).init( "" );
+		var b = createObject( "java", "java.lang.StringBuilder" ).init( "" );
 		// current page?
-		var prc                    = getRequestCollection( private = true );
+		var prc = getRequestCollection( private = true );
 		var pageAncestorContentIDs = "";
-		var locPage                = "";
+		var locPage = "";
 		// class text
-		var classtext              = [];
-		var currentPageID          = 0;
+		var classtext = [];
+		var currentPageID = 0;
 
 		// Get contentID
-		if ( structKeyExists( prc, "page" ) and prc.page.isLoaded() ) {
-			locPage                = getCurrentPage();
-			currentPageID          = locPage.getContentID();
+		if ( structKeyExists( prc, "page" ) && prc.page.isLoaded() ) {
+			locPage = getCurrentPage();
+			currentPageID = locPage.getContentID();
 			pageAncestorContentIDs = locPage.getContentID();
 			// If this is subnav, add ancestry trail
 			while ( locPage.hasParent() ) {
-				locPage                = locPage.getParent();
+				locPage = locPage.getParent();
 				pageAncestorContentIDs = listAppend( pageAncestorContentIDs, locPage.getContentID() );
 			}
 		}
@@ -2411,25 +2470,28 @@ component accessors="true" singleton threadSafe {
 			b.append( "<#arguments.type# class=""#arguments.typeClass#"">" );
 		}
 		// data setup
-		if ( arguments.type eq "data" ) {
+		if ( arguments.type EQ "data" ) {
 			var dataMenu = [];
 		}
 
 		// Iterate through pages and create sub menus
-		for ( var x = 1; x lte pageResults.count; x++ ) {
+		for ( var x = 1; x LTE pageResults.count; x++ ) {
 			// Build up the element class into the current classText array list
 			if ( isSimpleValue( arguments.elementClass ) ) {
 				arguments.elementClass = listToArray( arguments.elementClass );
 			}
 			classText = duplicate( arguments.elementClass );
 
-			if ( !len( arguments.excludes ) OR !listFindNoCase( arguments.excludes, pageResults.content[ x ][ "title" ] ) ) {
-				// Do we need to nest?
+			if (
+				!len( arguments.excludes ) || !listFindNoCase( arguments.excludes, pageResults.content[ x ][ "title" ] )
+			) {
+				// Do we need to nest? Check if page has children by fetching the entity
+				var thisPage = pageService.get( pageResults.content[ x ][ "contentID" ] );
 				var doNesting = (
-					arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][ "numberOfChildren" ] > 0
+					arguments.currentLevel LT arguments.levels && !isNull( thisPage ) && thisPage.hasChild()
 				);
 				// Is element active (or one of its decendants)
-				var isElementActive         = currentPageID eq pageResults.content[ x ][ "contentID" ];
+				var isElementActive = currentPageID EQ pageResults.content[ x ][ "contentID" ];
 				var isElementActiveAncestor = (
 					listFindNoCase( pageAncestorContentIDs, pageResults.content[ x ][ "contentID" ] )
 				);
@@ -2439,89 +2501,91 @@ component accessors="true" singleton threadSafe {
 				}
 
 				// list
-				if ( arguments.type neq "none" and arguments.type neq "data" ) {
+				if ( arguments.type NEQ "none" && arguments.type NEQ "data" ) {
 					// Nested Levels?
 					if ( doNesting ) {
 						// Setup Parent class, we are going down the wormhole
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
-						);
+								"<li class=""#arrayToList( classText,
+									" " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
+							);
 						// If type is "li" then guess to do a nested ul list
 						b.append(
-							buildMenu(
-								pageRecords = pageService.findPublishedContent(
-									parent    : pageResults.content[ x ][ "contentID" ],
-									showInMenu: true,
-									siteID    : site().getsiteID(),
-									properties: "contentID,slug,title,numberOfChildren",
-									sortOrder : "order ASC, publishedDate ASC"
-								),
-								excludes           = arguments.excludes,
-								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
-								typeClass          = arguments.typeClass,
-								elementClass       = arguments.elementClass,
-								showNone           = arguments.showNone,
-								levels             = arguments.levels,
-								currentLevel       = arguments.currentLevel + 1,
-								activeShowChildren = arguments.activeShowChildren
-							)
-						);
-					}
-					// Do we nest active and activeShowChildren flag is activated?
-					else if (
-						activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.content[ x ].hasChild()
+								buildMenu(
+									pageRecords        = pageService.findPublishedContent(
+											parent     = pageResults.content[ x ][ "contentID" ],
+											showInMenu = true,
+											siteID     = site().getsiteID(),
+											properties = "contentID,slug,title",
+											sortOrder  = "order ASC, publishedDate ASC"
+										),
+									excludes           = arguments.excludes,
+									type               = ( arguments.type EQ "li" ? "ul" : arguments.type ),
+									typeClass          = arguments.typeClass,
+									elementClass       = arguments.elementClass,
+									showNone           = arguments.showNone,
+									levels             = arguments.levels,
+									currentLevel       = arguments.currentLevel + 1,
+									activeShowChildren = arguments.activeShowChildren
+								)
+							);
+					} else if (
+						activeShowChildren && ( isElementActive || isElementActiveAncestor ) &&
+							pageResults.content[ x ].hasChild()
 					) {
 						// Setup Parent class, we are going down the wormhole
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
-						);
+								"<li class=""#arrayToList( classText,
+									" " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
+							);
 						// If type is "li" then guess to do a nested ul list
 						b.append(
-							buildMenu(
-								pageRecords = pageService.findPublishedContent(
-									parent    : pageResults.content[ x ][ "contentID" ],
-									showInMenu: true,
-									siteID    : site().getsiteID(),
-									properties: "contentID,slug,title,numberOfChildren",
-									sortOrder : "order ASC, publishedDate ASC"
-								),
-								excludes           = arguments.excludes,
-								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
-								typeClass          = arguments.typeClass,
-								showNone           = arguments.showNone,
-								levels             = 1,
-								elementClass       = arguments.elementClass,
-								currentLevel       = arguments.currentLevel + 1,
-								activeShowChildren = activeShowChildren
-							)
-						);
+								buildMenu(
+									pageRecords        = pageService.findPublishedContent(
+											parent     = pageResults.content[ x ][ "contentID" ],
+											showInMenu = true,
+											siteID     = site().getsiteID(),
+											properties = "contentID,slug,title",
+											sortOrder  = "order ASC, publishedDate ASC"
+										),
+									excludes           = arguments.excludes,
+									type               = ( arguments.type EQ "li" ? "ul" : arguments.type ),
+									typeClass          = arguments.typeClass,
+									showNone           = arguments.showNone,
+									levels             = 1,
+									elementClass       = arguments.elementClass,
+									currentLevel       = arguments.currentLevel + 1,
+									activeShowChildren = activeShowChildren
+								)
+							);
 					} else {
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
-						);
+								"<li class=""#arrayToList( classText,
+									" " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
+							);
 					}
 
 					// Close it
 					b.append( "</li>" );
-				} else if ( arguments.type eq "data" ) {
+				} else if ( arguments.type EQ "data" ) {
 					var pageData = {
-						title : pageResults.content[ x ][ "title" ],
-						link  : linkPageWithSlug( pageResults.content[ x ][ "slug" ] )
+						title: pageResults.content[ x ][ "title" ],
+						link : linkPageWithSlug( pageResults.content[ x ][ "slug" ] )
 					};
 					if ( doNesting ) {
 						pageData.subPageMenu = buildMenu(
-							pageRecords = pageService.findPublishedContent(
-								parent    : pageResults.content[ x ][ "contentID" ],
-								showInMenu: true,
-								siteID    : site().getsiteID(),
-								properties: "contentID,slug,title,numberOfChildren",
-								sortOrder : "order ASC, publishedDate ASC"
-							),
+							pageRecords        = pageService.findPublishedContent(
+									parent     = pageResults.content[ x ][ "contentID" ],
+									showInMenu = true,
+									siteID     = site().getsiteID(),
+									properties = "contentID,slug,title",
+									sortOrder  = "order ASC, publishedDate ASC"
+								),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
 							typeClass          = arguments.typeClass,
@@ -2531,19 +2595,15 @@ component accessors="true" singleton threadSafe {
 							currentLevel       = arguments.currentLevel + 1,
 							activeShowChildren = arguments.activeShowChildren
 						);
-					}
-					// Do we nest active and activeShowChildren flag is activated?
-					else if (
-						activeShowChildren AND isElementActive AND pageResults.content[ x ][ "numberOfChildren" ] > 0
-					) {
+					} else if ( activeShowChildren && isElementActive && !isNull( thisPage ) && thisPage.hasChild() ) {
 						pageData.subPageMenu = buildMenu(
-							pageRecords = pageService.findPublishedContent(
-								parent    : pageResults.content[ x ][ "contentID" ],
-								showInMenu: true,
-								siteID    : site().getsiteID(),
-								properties: "contentID,slug,title,numberOfChildren",
-								sortOrder : "order ASC, publishedDate ASC"
-							),
+							pageRecords        = pageService.findPublishedContent(
+									parent     = pageResults.content[ x ][ "contentID" ],
+									showInMenu = true,
+									siteID     = site().getsiteID(),
+									properties = "contentID,slug,title",
+									sortOrder  = "order ASC, publishedDate ASC"
+								),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
 							typeClass          = arguments.typeClass,
@@ -2557,18 +2617,19 @@ component accessors="true" singleton threadSafe {
 					arrayAppend( dataMenu, pageData );
 				} else {
 					b.append(
-						"<a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"" class=""#arrayToList( classText, " " )#"">#pageResults.content[ x ][ "title" ]#</a>#arguments.separator#"
-					);
+							"<a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"" class=""#arrayToList( classText,
+								" " )#"">#pageResults.content[ x ][ "title" ]#</a>#arguments.separator#"
+						);
 				}
 			}
 		}
 
-		if ( arguments.type eq "data" ) {
+		if ( arguments.type EQ "data" ) {
 			return dataMenu;
 		}
 
 		// None?
-		if ( pageResults.count eq 0 and arguments.showNone ) {
+		if ( pageResults.count EQ 0 && arguments.showNone ) {
 			b.append( "<li>No Sub Pages</li>" );
 		}
 

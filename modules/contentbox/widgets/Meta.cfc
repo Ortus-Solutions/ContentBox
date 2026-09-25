@@ -1,13 +1,15 @@
-﻿/**
+/**
  * A cool basic widget that shows some ContentBox meta links
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	Meta function init(){
+	Meta function init() {
 		// Widget Properties
 		setName( "Meta" );
 		setVersion( "1.0" );
-		setDescription( "A cool basic widget that shows some ContentBox meta links anywhere you like." );
+		setDescription(
+			"A cool basic widget that shows some ContentBox meta links anywhere you like."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "info" );
@@ -25,31 +27,31 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		boolean dropdown  = false,
 		string title      = "ContentBox",
 		string titleLevel = "2"
-	){
+	) {
 		var rString = "";
 
 		// build links accordingly to authentication
 		if ( securityService.getAuthorSession().isLoggedIn() ) {
 			var links = [
-				{ link : cb.linkAdmin(), title : "Site Admin" },
-				{ link : cb.linkAdminLogout(), title : "Logout" }
+				{ link: cb.linkAdmin(), title: "Site Admin" },
+				{ link: cb.linkAdminLogout(), title: "Logout" }
 			];
 		} else {
-			var links = [ { link : cb.linkAdminLogin(), title : "Login" } ];
+			var links = [ { link: cb.linkAdminLogin(), title: "Login" }];
 		}
-		arrayAppend( links, { link : cb.linkRSS(), title : "Entries RSS" } );
+		arrayAppend( links, { link: cb.linkRSS(), title: "Entries RSS" } );
 		arrayAppend(
 			links,
 			{
-				link  : cb.linkRSS( comments = true ),
-				title : "Comments RSS"
+				link : cb.linkRSS( comments = true ),
+				title: "Comments RSS"
 			}
 		);
 		arrayAppend(
 			links,
 			{
-				link  : "https://www.ortussolutions.com/products/contentbox",
-				title : "ContentBox"
+				link : "https://www.ortussolutions.com/products/contentbox",
+				title: "ContentBox"
 			}
 		);
 
@@ -72,7 +74,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		return rString;
 	}
 
-	private function buildDropDown( links ){
+	private function buildDropDown( links ) {
 		var rString = "";
 
 		saveContent variable="rString" {
@@ -82,40 +84,40 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	"
 			);
 			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.links ); x++ ) {
+			for ( var x = 1; x LTE arrayLen( arguments.links ); x++ ) {
 				writeOutput(
 					"<option value=""#links[ x ].link#"">#links[ x ].title#</option>
 	"
 				);
 			}
 			// close ul
-			writeOutput(
-				"
+			writeOutput( "
 </select>
-"
-			);
+" );
 		}
 		return rString;
 	}
 
-	private function buildList( links ){
-		var rString         = "";
+	private function buildList( links ) {
+		var rString = "";
 		// cfformat-ignore-start
-		saveContent variable="rString"{
-			writeOutput( '<ul id="meta">' );
-			// iterate and create
-			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<li class="archives">
-					<a href="#links[ x ].link#">#links[ x ].title#</a>
-					</li>
-				');
-			}
-			// close ul
-			writeOutput( "</ul>" );
-		}
+		saveContent variable="rString" {
+writeOutput( "<ul id=""meta"">" );
+// iterate and create
+for ( var x = 1; x LTE arrayLen( arguments.links ); x++ ) {
+writeOutput(
+"<li class=""archives"">
+<a href=""#links[ x ].link#"">#links[ x ].title#</a>
+</li>
+"
+);
+}
+// close ul
+writeOutput( "</ul>" );
+}
 
 		// cfformat-ignore-end
-return rString;
+		return rString;
 	}
 
 }

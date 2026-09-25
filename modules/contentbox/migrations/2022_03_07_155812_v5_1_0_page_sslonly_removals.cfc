@@ -7,24 +7,29 @@
  * @author  Davis Vega
  */
 component {
-
 	// DI
 	property name="migrationService" inject="MigrationService@cfmigrations";
-
 	// Include Utils
 	include template="./util/MigrationUtils.cfm";
 
-	function up( schema, qb ){
+	function up( schema, qb ) {
 		if ( hasColumn( "cb_page", "SSLOnly" ) ) {
-			schema.alter( "cb_page", ( table ) => {
-				table.dropColumn( "SSLOnly" );
-			} );
+			schema.alter(
+					"cb_page",
+					( table ) => {
+						table.dropColumn( "SSLOnly" );
+					}
+				);
 		} else {
-			systemOutput( "- skipping 'sslonly' removal, cb_page doesn't have the column", true );
+			systemOutput(
+				"- skipping 'sslonly' removal, cb_page doesn't have the column",
+				true
+			);
 		}
 	}
 
-	function down( schema, qb ){
+	function down( schema, qb ) {
+
 	}
 
 }

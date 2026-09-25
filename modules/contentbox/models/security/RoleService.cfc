@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,15 +6,15 @@
  * Roles service for contentbox
  */
 component extends="cborm.models.VirtualEntityService" singleton {
-
 	// DI
 	property name="permissionService" inject="permissionService@contentbox";
+
 	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	RoleService function init(){
+	RoleService function init() {
 		// init it
 		super.init( entityName = "cbRole" );
 
@@ -24,10 +24,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get all data prepared for export
 	 */
-	array function getAllForExport(){
-		return getAll().map( function( thisItem ){
-			return thisItem.getMemento( includes = "permissions" );
-		} );
+	array function getAllForExport() {
+		return getAll().map(
+				function( thisItem ) {
+					return thisItem.getMemento( includes = "permissions" );
+				}
+			);
 	}
 
 	/**
@@ -40,14 +42,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws InvalidImportFormat
 	 */
-	string function importFromFile( required importFile, boolean override = false ){
-		var data      = fileRead( arguments.importFile );
+	string function importFromFile( required importFile, boolean override = false ) {
+		var data = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
-			"Starting import with override = #arguments.override#...<br>"
-		);
+				"Starting import with override = #arguments.override#...<br>"
+			);
 
 		if ( !isJSON( data ) ) {
-			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
+			throw(
+				message = "Cannot import file as the contents is not JSON",
+				type    = "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -73,12 +78,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required importData,
 		boolean override = false,
 		importLog
-	){
+	) {
 		var allRoles = [];
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
-			arguments.importData = [ arguments.importData ];
+			arguments.importData = [ arguments.importData];
 		}
 
 		transaction {
@@ -86,15 +91,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisRole in arguments.importData ) {
 				// Get new or persisted
 				var oRole = this.findByRole( thisRole.role );
-				oRole     = ( isNull( oRole ) ? new () : oRole );
+				oRole = ( isNull( oRole ) ? new() : oRole );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
-					target               = oRole,
-					memento              = thisRole,
-					exclude              = "roleID,permissions",
-					composeRelationships = false
-				);
+						target               = oRole,
+						memento              = thisRole,
+						exclude              = "roleID,permissions",
+						composeRelationships = false
+					);
 
 				// PERMISSIONS
 				if ( arrayLen( thisRole.permissions ) ) {
@@ -102,12 +107,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					var allPermissions = [];
 					for ( var thisPermission in thisRole.permissions ) {
 						var oPerm = variables.permissionService.findByPermission( thisPermission.permission );
-						oPerm     = (
-							isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
-								target  = variables.permissionService.new(),
-								memento = thisPermission,
-								exclude = "permissionID"
-							) : oPerm
+						oPerm = (
+							isNull( oPerm )
+								? getBeanPopulator().populateFromStruct(
+										target  = variables.permissionService.new(),
+										memento = thisPermission,
+										exclude = "permissionID"
+									)
+								: oPerm
 						);
 						// save oPerm if new only
 						if ( !oPerm.isLoaded() ) {
@@ -124,7 +131,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				if ( !oRole.isLoaded() ) {
 					arguments.importLog.append( "New role imported: #thisRole.role#<br>" );
 					arrayAppend( allRoles, oRole );
-				} else if ( oRole.isLoaded() and arguments.override ) {
+				} else if ( oRole.isLoaded() && arguments.override ) {
 					arguments.importLog.append( "Persisted role overriden: #thisRole.role#<br>" );
 					arrayAppend( allRoles, oRole );
 				} else {
@@ -139,8 +146,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				arguments.importLog.append( "Saved all imported and overriden roles!" );
 			} else {
 				arguments.importLog.append(
-					"No roles imported as none where found or able to be overriden from the import file."
-				);
+						"No roles imported as none where found or able to be overriden from the import file."
+					);
 			}
 		}
 		// end transaction

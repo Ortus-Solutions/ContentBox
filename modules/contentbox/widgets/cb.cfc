@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,7 +10,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Constructor
 	 */
-	cb function init(){
+	cb function init() {
 		// Widget Properties
 		setName( "CBHelper" );
 		setVersion( "1.0" );
@@ -25,14 +25,14 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Shows the CB Helper Motto
 	 */
-	any function renderIt(){
+	any function renderIt() {
 		return "CBHelper Rocks!";
 	}
 
 	/**
 	 * Proxy into the CB Helper
 	 */
-	any function onMissingMethod( missingMethodName, missingMethodArguments ){
+	any function onMissingMethod( missingMethodName, missingMethodArguments ) {
 		return invoke(
 			variables.cb,
 			missingMethodName,

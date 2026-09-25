@@ -9,16 +9,16 @@
  *
  * You can escape this notation by surrounding them with our <escape></escape> tags
  */
-component accessors="true" extends="BaseRenderer" {
-
+component accessors="true" extends  ="BaseRenderer" {
 	// DI
 	property name="settingService" inject="settingService@contentbox";
+
 	property name="cbResourceService" inject="resourceService@cbi18n";
 
 	/**
 	 * Execute on content translations for pages and blog entries
 	 */
-	void function cb_onContentRendering( required event, struct data = {} ){
+	void function cb_onContentRendering( required event, struct data = {} ) {
 		translateContent(
 			builder = arguments.data.builder,
 			content = arguments.data.content,
@@ -37,7 +37,7 @@ component accessors="true" extends="BaseRenderer" {
 		required builder,
 		required content,
 		required event
-	){
+	) {
 		// Escape values for non-rendering
 		multiStringReplace(
 			builder     = arguments.builder,
@@ -46,45 +46,47 @@ component accessors="true" extends="BaseRenderer" {
 		);
 
 		// our mustaches pattern
-		var regex       = "(?!\<escape\>)\$\{([^\}])+\}(?!\<\/escape\>)";
+		var regex = "(?!\<escape\>)\$\{([^\}])+\}(?!\<\/escape\>)";
 		// match contentbox settings: ${setting} except surrounded by escape tags
-		var targets     = reMatchNoCase( regex, builder.toString() );
-		var targetLen   = arrayLen( targets );
+		var targets = reMatchNoCase( regex, builder.toString() );
+		var targetLen = arrayLen( targets );
 		var thisSetting = "";
-		var thisValue   = "";
+		var thisValue = "";
 
 		// Loop over found variables to build target + settings
-		for ( var x = 1; x lte targetLen; x++ ) {
+		for ( var x = 1; x LTE targetLen; x++ ) {
 			try {
 				// get the setting defined in ${}
-				thisSetting = mid( targets[ x ], 3, len( targets[ x ] ) - 3 );
+				thisSetting = mid(
+					targets[ x ],
+					3,
+					len( targets[ x ] ) - 3
+				);
 
 				// Do we have rc or prc prefix?
 				if ( reFindNoCase( "^p?rc\:", thisSetting ) ) {
 					thisValue = event.getValue(
-						name    = listLast( thisSetting, ":" ),
-						private = ( listFirst( thisSetting, ":" ) eq "rc" ? false : true )
-					);
-				}
-				// Do we have i18n?
-				else if ( reFindNoCase( "^i18n\:", thisSetting ) ) {
+							name    = listLast( thisSetting, ":" ),
+							private = ( listFirst( thisSetting, ":" ) EQ "rc" ? false : true )
+						);
+				} else if ( reFindNoCase( "^i18n\:", thisSetting ) ) {
+					// Do we have i18n?
 					var resource = listLast( thisSetting, ":" );
-					var bundle   = "default";
+					var bundle = "default";
 					// check for resource@bundle convention:
 					if ( find( "@", resource ) ) {
-						bundle   = listLast( resource, "@" );
+						bundle = listLast( resource, "@" );
 						resource = listFirst( resource, "@" );
 					}
 					thisValue = variables.cbResourceService.getResource( resource = resource, bundle = bundle );
-				}
-				// Normal Setting
-				else {
+				} else {
+					// Normal Setting
 					thisValue = settingService.getSetting(
-						name         = thisSetting,
-						defaultValue = "${Setting: #thisSetting# not found}"
-					);
+							name         = thisSetting,
+							defaultValue = "${Setting: #thisSetting# not found}"
+						);
 				}
-			} catch ( Any e ) {
+			} catch (Any e) {
 				thisValue = "Error translating setting on target #thisSetting#: #e.message# #e.detail#";
 				log.error( "Error translating setting on target: #thisSetting#", e );
 			}

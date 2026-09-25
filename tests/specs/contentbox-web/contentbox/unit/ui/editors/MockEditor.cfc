@@ -1,23 +1,27 @@
 component implements="contentbox.models.ui.editors.IEditor" {
 
-	function init(){
+	function init() {
 		return this;
 	}
 
-	function getName(){
+	function getName() {
 		return "mock-editor";
 	}
-	function getDisplayName(){
+
+	function getDisplayName() {
 		return "Mock Editor";
 	}
 
-	function startup(){
+	function startup() {
+
 	}
 
-	function shutdown(){
+	function shutdown() {
+
 	}
 
-	function loadAssets(){
+	function loadAssets() {
+
 	}
 
 }

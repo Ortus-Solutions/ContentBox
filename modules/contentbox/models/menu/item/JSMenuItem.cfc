@@ -12,49 +12,47 @@ component
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="JS"
 {
-
-	/* *********************************************************************
-	 **                          DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          DI
+	 **********************************************************************/
 
 	property
-		name      ="provider"
+		name="provider"
 		persistent="false"
-		inject    ="provider:contentbox.models.menu.providers.JSProvider";
+		inject="provider:contentbox.models.menu.providers.JSProvider";
 
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name   ="js"
-		column ="js"
+		name="js"
+		column="js"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="urlClass"
-		column ="urlClass"
+		name="urlClass"
+		column="urlClass"
 		notnull="false"
 		ormtype="string"
 		default="";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+	this.constraints[ "js" ] = { required: false, size: "1..255" };
+	this.constraints[ "urlClass" ] = { required: false, size: "1..255" };
 
-	this.constraints[ "js" ]       = { required : false, size : "1..255" };
-	this.constraints[ "urlClass" ] = { required : false, size : "1..255" };
+	/**********************************************************************
+	 * **                          PUBLIC FUNCTIONS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
-	function init(){
+	function init() {
 		super.init();
 
-		appendToMemento( [ "js", "urlClass" ], "defaultIncludes" );
+		appendToMemento( [ "js", "urlClass"], "defaultIncludes" );
 
 		return this;
 	}

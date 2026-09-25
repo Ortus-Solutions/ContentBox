@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ********************************************************************************
  * Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
  * www.ortussolutions.com
@@ -6,7 +6,6 @@
  * The Base handler for ALL ContentBox admin handlers.
  */
 component extends="coldbox.system.RestHandler" {
-
 	/**
 	 * --------------------------------------------------------------------------
 	 * Global Dependencies
@@ -14,8 +13,11 @@ component extends="coldbox.system.RestHandler" {
 	 */
 
 	property name="siteService" inject="siteService@contentbox";
+
 	property name="settingService" inject="settingService@contentbox";
+
 	property name="CBHelper" inject="CBHelper@contentbox";
+
 	property name="paginator" inject="Paging@contentbox";
 
 	/**
@@ -24,8 +26,10 @@ component extends="coldbox.system.RestHandler" {
 	 *
 	 * @return The max rows to return for pagination
 	 */
-	private numeric function getMaxRows( maxRows ){
-		var results = isNull( arguments.maxRows ) ? variables.settingService.getSetting( "cb_paging_maxrows" ) : arguments.maxRows;
+	private numeric function getMaxRows( maxRows ) {
+		var results = isNull( arguments.maxRows )
+			? variables.settingService.getSetting( "cb_paging_maxrows" )
+			: arguments.maxRows;
 		return val( results );
 	}
 
@@ -37,7 +41,7 @@ component extends="coldbox.system.RestHandler" {
 	 *
 	 * @return The page start offset
 	 */
-	private numeric function getPageOffset( page = 1, maxRows ){
+	private numeric function getPageOffset( page = 1, maxRows ) {
 		var thisMaxRows = getMaxRows( argumentCollection = arguments );
 		return ( arguments.page * thisMaxRows - thisMaxRows );
 	}

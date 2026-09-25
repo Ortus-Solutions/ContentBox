@@ -3,16 +3,16 @@
  * Only tokens with the `AUTHOR_ADMIN` can interact with this endpoint
  */
 component extends="baseHandler" secured="AUTHOR_ADMIN" {
-
 	// DI
 	property name="ormService" inject="AuthorService@contentbox";
-	property name="roleService" inject="roleService@contentbox";
-	property name="permissionService" inject="permissionService@contentbox";
 
+	property name="roleService" inject="roleService@contentbox";
+
+	property name="permissionService" inject="permissionService@contentbox";
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "lastName";
+	variables.sortOrder = "lastName";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity       = "Author";
+	variables.entity = "Author";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = true;
 
@@ -23,12 +23,12 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * @responses contentbox/apidocs/authors/index/responses.json
 	 * @x         -contentbox-permissions AUTHOR_ADMIN
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Criterias and Filters
 		param rc.sortOrder = "lastName";
-		param rc.search    = "";
-		param rc.isActive  = true;
-		param rc.page      = 1;
+		param rc.search = "";
+		param rc.isActive = true;
+		param rc.page = 1;
 
 		// Make sure isActive is boolean
 		if ( !isBoolean( rc.isActive ) ) {
@@ -37,12 +37,12 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.search(
-			searchTerm = rc.search,
-			isActive   = rc.isActive,
-			offset     = getPageOffset( rc.page ),
-			max        = getMaxRows(),
-			sortOrder  = rc.sortOrder
-		);
+				searchTerm = rc.search,
+				isActive   = rc.isActive,
+				offset     = getPageOffset( rc.page ),
+				max        = getMaxRows(),
+				sortOrder  = rc.sortOrder
+			);
 
 		// Build to match interface
 		arguments.results.records = arguments.results.authors;
@@ -58,11 +58,11 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * @responses contentbox/apidocs/authors/show/responses.json
 	 * @x         -contentbox-permissions AUTHOR_ADMIN
 	 */
-	function show( event, rc, prc ){
-		param rc.includes       = "permissions,permissionGroups,role.permissions";
-		param rc.excludes       = "role.permissions.createdDate,role.permissions.modifiedDate";
+	function show( event, rc, prc ) {
+		param rc.includes = "permissions,permissionGroups,role.permissions";
+		param rc.excludes = "role.permissions.createdDate,role.permissions.modifiedDate";
 		param rc.ignoreDefaults = false;
-		param rc.id             = 0;
+		param rc.id = 0;
 
 		super.show( argumentCollection = arguments );
 	}
@@ -75,11 +75,11 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * @responses   contentbox/apidocs/authors/create/responses.json
 	 * @x           -contentbox-permissions AUTHOR_ADMIN
 	 */
-	function create( event, rc, prc ){
+	function create( event, rc, prc ) {
 		// Default set variables for the author
 		rc.isPasswordRest = true;
-		rc.password       = hash( createUUID() & now() );
-		rc.isActive       = true;
+		rc.password = hash( createUUID() & now() );
+		rc.isActive = true;
 
 		// Super size me!
 		arguments.saveMethod = "createNewAuthor";
@@ -93,12 +93,12 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * @responses contentbox/apidocs/authors/update/responses.json
 	 * @x         -contentbox-permissions AUTHOR_ADMIN
 	 */
-	function update( event, rc, prc ){
+	function update( event, rc, prc ) {
 		// Memento output
 		param rc.includes = "permissions,permissionGroups,role.permissions";
 
 		// Can't update everything via the API.
-		arguments.populate.exclude          = "username,password,pages,entries,is2FactorAuth,isPasswordReset,lastLogin";
+		arguments.populate.exclude = "username,password,pages,entries,is2FactorAuth,isPasswordReset,lastLogin";
 		arguments.populate.nullEmptyInclude = "";
 
 		// Super size it!
@@ -112,7 +112,7 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * @responses contentbox/apidocs/authors/delete/responses.json
 	 * @x         -contentbox-permissions AUTHOR_ADMIN
 	 */
-	function delete( event, rc, prc ){
+	function delete( event, rc, prc ) {
 		super.delete( argumentCollection = arguments );
 	}
 

@@ -1,22 +1,25 @@
 component {
 
-	function seed( schema, query ){
+	function seed( schema, query ) {
+		var falseBinding = query.getGrammar().convertToBooleanType( false )
+		var trueBinding = query.getGrammar().convertToBooleanType( true )
+
 		var admin = {
-			"roleID"       : createUUID(),
-			"isDeleted"    : 0,
-			"createdDate"  : now(),
-			"modifiedDate" : now(),
-			"role"         : "Administrator",
-			"description"  : "A ContentBox Administrator"
-		};
+			"roleID"      : createUUID(),
+			"isDeleted"   : falseBinding,
+			"createdDate" : now(),
+			"modifiedDate": now(),
+			"role"        : "Administrator",
+			"description" : "A ContentBox Administrator"
+		}
 		var editor = {
-			"roleID"       : createUUID(),
-			"isDeleted"    : 0,
-			"createdDate"  : now(),
-			"modifiedDate" : now(),
-			"role"         : "Editor",
-			"description"  : "A ContentBox Editor"
-		};
+			"roleID"      : createUUID(),
+			"isDeleted"   : falseBinding,
+			"createdDate" : now(),
+			"modifiedDate": now(),
+			"role"        : "Editor",
+			"description" : "A ContentBox Editor"
+		}
 
 		// ADMIN ROLE
 
@@ -30,15 +33,19 @@ component {
 			.from( "cb_permission" )
 			.get();
 
-		allPerms.each( ( record ) => {
-			query
-				.newQuery()
-				.from( "cb_rolePermissions" )
-				.insert( {
-					"FK_permissionID" : record.permissionID,
-					"FK_roleID"       : admin.roleID
-				} );
-		} );
+		allPerms.each(
+				( record ) => {
+					query
+						.newQuery()
+						.from( "cb_rolePermissions" )
+						.insert(
+							{
+								"FK_permissionID": record.permissionID,
+								"FK_roleID"      : admin.roleID
+							}
+						);
+				}
+			);
 
 		systemOutput( "√ Admin role and permissions created", true );
 
@@ -77,19 +84,23 @@ component {
 			"VERSIONS_ROLLBACK"
 		];
 
-		allPerms
-			.filter( ( record ) => {
-				return editorPerms.contains( record.permission );
-			} )
-			.each( ( record ) => {
-				query
-					.newQuery()
-					.from( "cb_rolePermissions" )
-					.insert( {
-						"FK_permissionID" : record.permissionID,
-						"FK_roleID"       : editor.roleID
-					} );
-			} );
+		allPerms.filter(
+				( record ) => {
+					return editorPerms.contains( record.permission );
+				}
+			).each(
+				( record ) => {
+					query
+						.newQuery()
+						.from( "cb_rolePermissions" )
+						.insert(
+							{
+								"FK_permissionID": record.permissionID,
+								"FK_roleID"      : editor.roleID
+							}
+						);
+				}
+			);
 
 		systemOutput( "√ Editor role created", true );
 		systemOutput( "√ Roles seeded", true );

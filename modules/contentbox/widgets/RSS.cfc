@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,11 +10,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Constructor
 	 */
-	RSS function init(){
+	RSS function init() {
 		// Widget Properties
 		setName( "RSS" );
 		setVersion( "1.0" );
-		setDescription( "A widget that reads an RSS feed and displays the items as you see fit." );
+		setDescription(
+			"A widget that reads an RSS feed and displays the items as you see fit."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "Content" );
@@ -39,18 +41,18 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		string linkTarget = "_blank",
 		string title      = "",
 		string titleLevel = "2"
-	){
+	) {
 		// Detect Feed URL
 		if ( !len( arguments.feedURL ) ) {
 			return "Please enter a valid RSS Feed URL";
 		}
 
 		var rString = "";
-		var feed    = getInstance( "FeedReader@cbfeeds" ).readFeed(
-			feedURL   = arguments.feedURL,
-			maxItems  = arguments.maxItems,
-			itemsType = "query"
-		);
+		var feed = getInstance( "FeedReader@cbfeeds" ).readFeed(
+				feedURL   = arguments.feedURL,
+				maxItems  = arguments.maxItems,
+				itemsType = "query"
+			);
 
 		// generate recent comments
 		saveContent variable="rString" {
@@ -85,30 +87,31 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		required entries,
 		required boolean showBody,
 		required linkTarget
-	){
+	) {
 		var rString = "";
-
 		// cfformat-ignore-start
 		// generate Items
-		saveContent variable="rString"{
-			writeOutput( '<ul class="rssItems">
-	' );
-			// iterate and create
-			for( var x=1; x lte arguments.entries.recordcount; x++ ){
-				writeOutput( '<li class="rssItem">
-		<a href="#arguments.entries.URL[ x ]#" target="#arguments.linkTarget#">#arguments.entries.title[ x ]#' );
-				if( arguments.showBody ){
-					writeOutput( '<br/>#arguments.entries.body[ x ]#' );
-				}
-				writeOutput( '
-	</li>
-	' );
-			}
-			// close ul
-			writeOutput( '
+		saveContent variable="rString" {
+writeOutput( "<ul class=""rssItems"">
+" );
+// iterate and create
+for ( var x = 1; x LTE arguments.entries.recordcount; x++ ) {
+writeOutput(
+"<li class=""rssItem"">
+<a href=""#arguments.entries.URL[ x ]#"" target=""#arguments.linkTarget#"">#arguments.entries.title[ x ]#"
+);
+if ( arguments.showBody ) {
+writeOutput( "<br/>#arguments.entries.body[ x ]#" );
+}
+writeOutput( "
+</li>
+" );
+}
+// close ul
+writeOutput( "
 </ul>
-' );
-		}
+" );
+}
 
 		// cfformat-ignore-end
 

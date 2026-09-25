@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,11 +6,13 @@
  * Manage Generic content actions
  */
 component extends="baseHandler" {
-
 	// Dependencies
 	property name="contentService" inject="contentService@contentbox";
+
 	property name="statsService" inject="statsService@contentbox";
+
 	property name="contentStoreService" inject="contentStoreService@contentbox";
+
 	property name="authorService" inject="authorService@contentbox";
 
 	/**
@@ -18,7 +20,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function preview( event, rc, prc ){
+	function preview( event, rc, prc ) {
 		// param incoming data
 		event
 			.paramValue( "layout", "pages" )
@@ -37,12 +39,12 @@ component extends="baseHandler" {
 			}
 			case "Entry": {
 				prc.xehPreview = variables.CBHelper.linkPage( "__entry_preview" );
-				rc.layout      = "blog";
+				rc.layout = "blog";
 				break;
 			}
 			case "ContentStore": {
 				var oContent = contentStoreService.new();
-				prc.preview  = oContent.renderContentSilent( rc.content );
+				prc.preview = oContent.renderContentSilent( rc.content );
 				event.setView( view = "content/simplePreview", layout = "ajax" );
 				return;
 			}
@@ -58,46 +60,50 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function search( event, rc, prc ){
+	function search( event, rc, prc ) {
 		// Params
 		event.paramValue( "search", "" );
 
 		// Determine Context via `:` Search string
-		prc.context      = "";
+		prc.context = "";
 		prc.contentTypes = "page,entry,contentstore";
 		if ( find( ":", rc.search ) ) {
 			prc.context = listFirst( rc.search, ":" );
-			rc.search   = listLast( rc.search, ":" );
+			rc.search = listLast( rc.search, ":" );
 		}
 
 		// Determine search via context or none at all
 		if ( !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context ) ) {
 			// Search for content
 			prc.results = variables.contentService.searchContent(
-				searchTerm         : rc.search,
-				max                : prc.cbSettings.cb_admin_quicksearch_max,
-				sortOrder          : "title",
-				isPublished        : "all",
-				searchActiveContent: false,
-				contentTypes       : prc.context,
-				siteID             : prc.oCurrentSite.getsiteID()
-			);
+					searchTerm          = rc.search,
+					max                 = prc.cbSettings.cb_admin_quicksearch_max,
+					sortOrder           = "title",
+					isPublished         = "all",
+					searchActiveContent = false,
+					contentTypes        = prc.context,
+					siteID              = prc.oCurrentSite.getsiteID()
+				);
 			prc.minContentCount = (
-				prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max
+				prc.results.count LT prc.cbSettings.cb_admin_quicksearch_max
+					? prc.results.count
+					: prc.cbSettings.cb_admin_quicksearch_max
 			);
 		} else {
-			prc.results         = { "count" : 0, "content" : [] };
+			prc.results = { "count": 0, "content": [] };
 			prc.minContentCount = 0;
 		}
 
 		// Search for Authors
 		if ( !len( prc.context ) || listFindNoCase( "author", prc.context ) ) {
-			prc.authors        = authorService.search( searchTerm: rc.search, max: prc.cbSettings.cb_admin_quicksearch_max );
+			prc.authors = authorService.search( searchTerm = rc.search, max = prc.cbSettings.cb_admin_quicksearch_max );
 			prc.minAuthorCount = (
-				prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max
+				prc.authors.count LT prc.cbSettings.cb_admin_quicksearch_max
+					? prc.authors.count
+					: prc.cbSettings.cb_admin_quicksearch_max
 			);
 		} else {
-			prc.authors        = { "count" : 0, "authors" : [] };
+			prc.authors = { "count": 0, "authors": [] };
 			prc.minAuthorCount = 0;
 		}
 
@@ -114,21 +120,21 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function slugUnique( event, rc, prc ){
+	function slugUnique( event, rc, prc ) {
 		// Params
-		param rc.slug        = "";
-		param rc.contentID   = "";
+		param rc.slug = "";
+		param rc.contentID = "";
 		param rc.contentType = "";
 
-		var data = { "UNIQUE" : false };
+		var data = { "UNIQUE": false };
 
 		if ( len( rc.slug ) ) {
 			data[ "UNIQUE" ] = variables.contentService.isSlugUnique(
-				slug       : rc.slug,
-				contentID  : rc.contentID,
-				siteID     : prc.oCurrentSite.getsiteID(),
-				contentType: rc.contentType
-			);
+					slug        = rc.slug,
+					contentID   = rc.contentID,
+					siteID      = prc.oCurrentSite.getsiteID(),
+					contentType = rc.contentType
+				);
 		}
 
 		event.renderData( data = data, type = "json" );
@@ -139,7 +145,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function relatedContentSelector( event, rc, prc ){
+	function relatedContentSelector( event, rc, prc ) {
 		// paging default
 		event
 			.paramValue( "page", 1 )
@@ -152,29 +158,32 @@ component extends="baseHandler" {
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
+		prc.oPaging = getInstance( "Paging@contentbox" );
+		prc.paging = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:pagerLink( @page@, '#rc.contentType#' )";
 
 		// search entries with filters and all
 		var contentResults = variables.contentService.searchContent(
-			searchTerm         : rc.search,
-			offset             : prc.paging.startRow - 1,
-			max                : prc.cbSettings.cb_paging_maxrows,
-			sortOrder          : ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
-			searchActiveContent: false,
-			contentTypes       : rc.contentType,
-			excludeIDs         : rc.excludeIDs,
-			siteID             : prc.oCurrentSite.getsiteID()
-		);
+				searchTerm          = rc.search,
+				offset              = prc.paging.startRow - 1,
+				max                 = prc.cbSettings.cb_paging_maxrows,
+				sortOrder           = ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
+				searchActiveContent = false,
+				contentTypes        = rc.contentType,
+				excludeIDs          = rc.excludeIDs,
+				siteID              = prc.oCurrentSite.getsiteID()
+			);
 
 		// setup data for display
-		prc.content      = contentResults.content;
+		prc.content = contentResults.content;
 		prc.contentCount = contentResults.count;
-		prc.CBHelper     = variables.CBHelper;
+		prc.CBHelper = variables.CBHelper;
 
 		// if ajax and searching, just return tables
-		return view( view = "content/relatedContentResults", module = "contentbox-admin" );
+		return view(
+			view   = "content/relatedContentResults",
+			module = "contentbox-admin"
+		);
 	}
 
 	/**
@@ -182,7 +191,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function showRelatedContentSelector( event, rc, prc ){
+	function showRelatedContentSelector( event, rc, prc ) {
 		event
 			.paramValue( "search", "" )
 			.paramValue( "clear", false )
@@ -191,7 +200,7 @@ component extends="baseHandler" {
 
 		// exit handlers
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
-		prc.CBHelper                  = variables.CBHelper;
+		prc.CBHelper = variables.CBHelper;
 
 		event.setView( view = "content/relatedContentSelector", layout = "ajax" );
 	}
@@ -201,13 +210,13 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function breakContentLink( event, rc, prc ){
+	function breakContentLink( event, rc, prc ) {
 		event.paramValue( "contentID", "" ).paramValue( "linkedID", "" );
 
 		var data = {};
 		if ( len( rc.contentID ) && len( rc.linkedID ) ) {
 			var currentContent = variables.contentService.get( rc.contentID );
-			var linkedContent  = variables.contentService.get( rc.linkedID );
+			var linkedContent = variables.contentService.get( rc.linkedID );
 
 			linkedContent.removeRelatedContent( currentContent );
 			variables.contentService.save( linkedContent );
@@ -222,23 +231,38 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	any function resetHits( event, rc, prc ){
+	any function resetHits( event, rc, prc ) {
 		event.paramValue( "contentID", "" );
 		// build to array and iterate
 		listToArray( rc.contentID )
-			// Build out each content object
-			.map( function( thisId ){
-				return variables.contentService.get( arguments.thisId );
-			} )
-			// Filter only loaded and content objects that have stats already
-			.filter( function( thisContent ){
-				return ( !isNull( arguments.thisContent ) && arguments.thisContent.hasStats() );
-			} )
+			.map(
+				function( thisId ) {
+					return variables.contentService.get( arguments.thisId );
+				}
+			)
+			.filter(
+				function( thisContent ) {
+					return (
+						!isNull( arguments.thisContent ) &&
+							variables.statsService.getTotalHitsByContent( arguments.thisContent.getContentID() ) > 0
+					);
+				}
+			)
+			// Filter only loaded content objects that have stats
 			// Reset Hits
-			.each( function( thisContent ){
-				variables.contentService.save( arguments.thisContent.getStats().setHits( 0 ) );
-				event.getResponse().addMessage( "Hits reset for (#arguments.thisContent.getTitle()#)" );
-			} );
+			.each(
+				function( thisContent ) {
+					var oStat = variables
+						.statsService
+						.newCriteria()
+						.isEq( "relatedContent.contentID", arguments.thisContent.getContentID() )
+						.get();
+					if ( !isNull( oStat ) ) {
+						variables.statsService.save( oStat.setHits( 0 ) );
+					}
+					event.getResponse().addMessage( "Hits reset for (#arguments.thisContent.getTitle()#)" );
+				}
+			);
 	}
 
 	/**
@@ -266,11 +290,11 @@ component extends="baseHandler" {
 		boolean colorCodings        = true,
 		boolean showPublishedStatus = true,
 		boolean showAuthor          = true
-	){
+	) {
 		// Setup args so we can use them in the viewlet
 		var args = {
-			max    : arguments.max,
-			siteID : prc.oCurrentSite.getsiteID()
+			max   : arguments.max,
+			siteID: prc.oCurrentSite.getsiteID()
 		};
 		if ( structKeyExists( arguments, "author" ) ) {
 			args.author = arguments.author;
@@ -292,12 +316,12 @@ component extends="baseHandler" {
 			view   = "content/contentViewlet",
 			module = "contentbox-admin",
 			args   = {
-				viewletID           : createUUID(),
-				aContent            : aLatestEdits,
-				showHits            : arguments.showHits,
-				colorCodings        : arguments.colorCodings,
-				showPublishedStatus : arguments.showPublishedStatus,
-				showAuthor          : arguments.showAuthor
+				viewletID          : createUUID(),
+				aContent           : aLatestEdits,
+				showHits           : arguments.showHits,
+				colorCodings       : arguments.colorCodings,
+				showPublishedStatus: arguments.showPublishedStatus,
+				showAuthor         : arguments.showAuthor
 			}
 		);
 	}
@@ -321,7 +345,7 @@ component extends="baseHandler" {
 		event,
 		rc,
 		prc,
-		boolean showExpired = false,
+		boolean showExpired         = false,
 		any author,
 		boolean offset              = 0,
 		numeric max                 = 25,
@@ -329,12 +353,12 @@ component extends="baseHandler" {
 		boolean colorCodings        = true,
 		boolean showPublishedStatus = true,
 		boolean showAuthor          = true
-	){
+	) {
 		// Setup args so we can use them in the viewlet
 		var args = {
-			max    : arguments.max,
-			offset : arguments.offset,
-			siteID : prc.oCurrentSite.getsiteID()
+			max   : arguments.max,
+			offset: arguments.offset,
+			siteID: prc.oCurrentSite.getsiteID()
 		};
 		if ( structKeyExists( arguments, "author" ) ) {
 			args.author = arguments.author;
@@ -344,9 +368,8 @@ component extends="baseHandler" {
 		var aContent = "";
 		if ( arguments.showExpired ) {
 			aContent = variables.contentService.findExpiredContent( argumentCollection = args );
-		}
-		// Future Published Content
-		else {
+		} else {
+			// Future Published Content
 			aContent = variables.contentService.findFuturePublishedContent( argumentCollection = args );
 		}
 
@@ -355,12 +378,12 @@ component extends="baseHandler" {
 			view   = "content/contentViewlet",
 			module = "contentbox-admin",
 			args   = {
-				viewletID           : createUUID(),
-				aContent            : aContent,
-				showHits            : arguments.showHits,
-				colorCodings        : arguments.colorCodings,
-				showPublishedStatus : arguments.showPublishedStatus,
-				showAuthor          : arguments.showAuthor
+				viewletID          : createUUID(),
+				aContent           : aContent,
+				showHits           : arguments.showHits,
+				colorCodings       : arguments.colorCodings,
+				showPublishedStatus: arguments.showPublishedStatus,
+				showAuthor         : arguments.showAuthor
 			}
 		);
 	}

@@ -13,101 +13,99 @@ component
 	cachename ="cbModule"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="moduleID"
-		column   ="moduleID"
+		name="moduleID"
+		column="moduleID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	property
-		name   ="name"
-		column ="name"
+		name="name"
+		column="name"
 		notnull="true"
-		length ="255"
-		index  ="idx_moduleName";
+		length="255"
+		index="idx_moduleName";
 
 	property
-		name   ="title"
-		column ="title"
+		name="title"
+		column="title"
 		notnull="false"
-		length ="255"
+		length="255"
 		default="";
 
 	property
-		name   ="version"
-		column ="version"
+		name="version"
+		column="version"
 		notnull="false"
-		length ="255"
+		length="255"
 		default="0";
 
 	property
-		name   ="entryPoint"
-		column ="entryPoint"
+		name="entryPoint"
+		column="entryPoint"
 		notnull="false"
-		length ="255"
+		length="255"
 		default=""
-		index  ="idx_entryPoint";
+		index="idx_entryPoint";
 
 	property
-		name   ="author"
-		column ="author"
+		name="author"
+		column="author"
 		notnull="false"
-		length ="255"
+		length="255"
 		default="";
 
 	property
-		name   ="webURL"
-		column ="webURL"
+		name="webURL"
+		column="webURL"
 		notnull="false"
-		length ="500"
+		length="500"
 		default="";
 
 	property
-		name   ="forgeBoxSlug"
-		column ="forgeBoxSlug"
+		name="forgeBoxSlug"
+		column="forgeBoxSlug"
 		notnull="false"
-		length ="255"
+		length="255"
 		default="";
 
 	property
-		name   ="description"
-		column ="description"
+		name="description"
+		column="description"
 		notnull="false"
 		ormtype="text"
-		length ="8000"
+		length="8000"
 		default="";
 
 	property
-		name   ="isActive"
-		column ="isActive"
+		name="isActive"
+		column="isActive"
 		notnull="true"
 		ormtype="boolean"
 		default="false"
-		index  ="idx_activeModule";
+		index="idx_activeModule";
 
 	property
-		name     ="moduleType"
-		column   ="moduleType"
-		default  ="core"
+		name="moduleType"
+		column="moduleType"
+		default="core"
 		dbdefault="'unknown'"
-		index    ="idx_moduleType";
-
-	/* *********************************************************************
-	 **							PK + CONSTRAINTS
-	 ********************************************************************* */
+		index="idx_moduleType";
+	/**********************************************************************
+	 * **							PK + CONSTRAINTS
+	 **********************************************************************/
 
 	this.pk = "moduleID";
 
 	this.memento = {
-		defaultIncludes : [
+		defaultIncludes: [
 			"author",
 			"description",
 			"entryPoint",
@@ -119,21 +117,21 @@ component
 			"version",
 			"webURL"
 		],
-		defaultExcludes : [ "" ]
+		defaultExcludes: [ ""]
 	};
 
 	this.constraints = {
-		"name"         : { required : true, size : "1..255" },
-		"title"        : { required : true, size : "1..255" },
-		"version"      : { required : false, size : "1..255" },
-		"entryPoint"   : { required : false, size : "1..255" },
-		"author"       : { required : false, size : "1..255" },
-		"webURL"       : { required : false, size : "1..500" },
-		"forgeBoxSlug" : { required : false, size : "1..255" }
+		"name"        : { required: true, size: "1..255" },
+		"title"       : { required: true, size: "1..255" },
+		"version"     : { required: false, size: "1..255" },
+		"entryPoint"  : { required: false, size: "1..255" },
+		"author"      : { required: false, size: "1..255" },
+		"webURL"      : { required: false, size: "1..500" },
+		"forgeBoxSlug": { required: false, size: "1..255" }
 	};
 
-	function init(){
-		variables.isActive   = false;
+	function init() {
+		variables.isActive = false;
 		variables.moduleType = "core";
 
 		super.init();

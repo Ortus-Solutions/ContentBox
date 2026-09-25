@@ -6,23 +6,41 @@
  * Manage ContentBox users
  */
 component extends="baseHandler" {
-
 	// Dependencies
 	property name="authorService" inject="authorService@contentbox";
+
 	property name="securityService" inject="securityService@contentbox";
+
 	property name="entryService" inject="entryService@contentbox";
+
 	property name="permissionService" inject="permissionService@contentbox";
-	property name="permissionGroupService" inject="permissionGroupService@contentbox";
+
+	property
+		name="permissionGroupService"
+		inject="permissionGroupService@contentbox";
+
 	property name="roleService" inject="roleService@contentbox";
+
 	property name="editorService" inject="editorService@contentbox";
+
 	property name="paging" inject="paging@contentbox";
+
 	property name="twoFactorService" inject="twoFactorService@contentbox";
-	property name="markdownEditor" inject="markdownEditor@contentbox-markdowneditor";
+
+	property
+		name="markdownEditor"
+		inject="markdownEditor@contentbox-markdowneditor";
 
 	/**
 	 * Pre handler
 	 */
-	function preHandler( event, rc, prc, action, eventArguments ){
+	function preHandler(
+		event,
+		rc,
+		prc,
+		action,
+		eventArguments
+	) {
 		var protectedActions = [
 			"save",
 			"editor",
@@ -40,9 +58,8 @@ component extends="baseHandler" {
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
 			if (
-				!prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )
-				AND
-				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
+				!prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) &&
+					oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
 			) {
 				// relocate
 				cbMessagebox().error( "You do not have permissions to do this!" );
@@ -57,23 +74,23 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// View all tab
 		prc.tabUsers_manage = true;
 
 		// exit handlers
-		prc.xehAuthorTable         = "#prc.cbAdminEntryPoint#.authors.indexTable";
-		prc.xehImportAll           = "#prc.cbAdminEntryPoint#.authors.importAll";
-		prc.xehExportAll           = "#prc.cbAdminEntryPoint#.authors.exportAll";
-		prc.xehAuthorRemove        = "#prc.cbAdminEntryPoint#.authors.remove";
-		prc.xehAuthorCreate        = "#prc.cbAdminEntryPoint#.authors.new";
-		prc.xehAuthorsearch        = "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorTable = "#prc.cbAdminEntryPoint#.authors.indexTable";
+		prc.xehImportAll = "#prc.cbAdminEntryPoint#.authors.importAll";
+		prc.xehExportAll = "#prc.cbAdminEntryPoint#.authors.exportAll";
+		prc.xehAuthorRemove = "#prc.cbAdminEntryPoint#.authors.remove";
+		prc.xehAuthorCreate = "#prc.cbAdminEntryPoint#.authors.new";
+		prc.xehAuthorsearch = "#prc.cbAdminEntryPoint#.authors";
 		prc.xehGlobalPasswordReset = "#prc.cbAdminEntryPoint#.authors.doGlobalPasswordReset";
 
 		// Get Roles
-		prc.aRoles            = roleService.getAll( sortOrder = "role" );
+		prc.aRoles = roleService.getAll( sortOrder = "role" );
 		prc.aPermissionGroups = permissionGroupService.getAll( sortOrder = "name" );
-		prc.statusReport      = authorService.getStatusReport();
+		prc.statusReport = authorService.getStatusReport();
 
 		// View
 		event.setView( "authors/index" );
@@ -82,7 +99,7 @@ component extends="baseHandler" {
 	/**
 	 * Issue a global password reset for all users in the system.
 	 */
-	function doGlobalPasswordReset( event, rc, prc ){
+	function doGlobalPasswordReset( event, rc, prc ) {
 		// announce event
 		announce( "cbadmin_onGlobalPasswordReset" );
 		// Get All Authors and reset the heck out of all of them.
@@ -92,12 +109,12 @@ component extends="baseHandler" {
 			// Issue a password reset for a user
 			thisAuthor.setIsPasswordReset( true );
 			securityService.sendPasswordReminder(
-				author      = thisAuthor,
-				adminIssued = true,
-				issuer      = prc.oCurrentAuthor
-			);
+					author      = thisAuthor,
+					adminIssued = true,
+					issuer      = prc.oCurrentAuthor
+				);
 			// announce individual event
-			announce( "cbadmin_onPasswordReset", { author : thisAuthor } );
+			announce( "cbadmin_onPasswordReset", { author: thisAuthor } );
 		}
 
 		// Bulk Save
@@ -113,13 +130,17 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function indexTable( event, rc, prc ){
+	function indexTable( event, rc, prc ) {
 		// paging
 		event
 			.paramValue( "page", 1 )
 			.paramValue( "showAll", false )
 			.paramValue( "searchAuthors", "" )
-			.paramValue( "isFiltering", false, true )
+			.paramValue(
+				"isFiltering",
+				false,
+				true
+			)
 			.paramValue( "fStatus", "true" )
 			.paramValue( "f2FactorAuth", "true" )
 			.paramValue( "fRole", "any" )
@@ -127,22 +148,19 @@ component extends="baseHandler" {
 			.paramValue( "sortOrder", "lastname_asc" );
 
 		// prepare paging object
-		prc.oPaging    = variables.paging;
-		prc.paging     = prc.oPaging.getBoundaries();
+		prc.oPaging = variables.paging;
+		prc.paging = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:contentPaginate( @page@ )";
 
 		// exit Handlers
-		prc.xehAuthorRemove  = "#prc.cbAdminEntryPoint#.authors.remove";
-		prc.xehExport        = "#prc.cbAdminEntryPoint#.authors.export";
+		prc.xehAuthorRemove = "#prc.cbAdminEntryPoint#.authors.remove";
+		prc.xehExport = "#prc.cbAdminEntryPoint#.authors.export";
 		prc.xehPasswordReset = "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
 		if (
-			rc.fRole neq "any"
-			OR rc.fStatus neq "any"
-			OR rc.f2FactorAuth neq "any"
-			OR rc.fGroups neq "any"
-			OR rc.showAll
+			rc.fRole NEQ "any" || rc.fStatus NEQ "any" || rc.f2FactorAuth NEQ "any" || rc.fGroups NEQ "any" ||
+				rc.showAll
 		) {
 			prc.isFiltering = true;
 		}
@@ -182,16 +200,16 @@ component extends="baseHandler" {
 
 		// Get all authors or search
 		var results = authorService.search(
-			searchTerm       = rc.searchAuthors,
-			offset           = ( rc.showAll ? 0 : prc.paging.startRow - 1 ),
-			max              = ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-			sortOrder        = sortOrder,
-			isActive         = rc.fStatus,
-			role             = rc.fRole,
-			permissionGroups = rc.fGroups,
-			twoFactorAuth    = rc.f2FactorAuth
-		);
-		prc.authors     = results.authors;
+				searchTerm       = rc.searchAuthors,
+				offset           = ( rc.showAll ? 0 : prc.paging.startRow - 1 ),
+				max              = ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+				sortOrder        = sortOrder,
+				isActive         = rc.fStatus,
+				role             = rc.fRole,
+				permissionGroups = rc.fGroups,
+				twoFactorAuth    = rc.f2FactorAuth
+			);
+		prc.authors = results.authors;
 		prc.authorCount = results.count;
 
 		// View
@@ -203,7 +221,7 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function usernameCheck( event, rc, prc ){
+	function usernameCheck( event, rc, prc ) {
 		var found = true;
 
 		event.paramValue( "username", "" );
@@ -221,7 +239,7 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function emailCheck( event, rc, prc ){
+	function emailCheck( event, rc, prc ) {
 		var found = true;
 
 		event.paramValue( "email", "" );
@@ -237,7 +255,7 @@ component extends="baseHandler" {
 	/**
 	 * Issue a password reset for the user
 	 */
-	function doPasswordReset( event, rc, prc ){
+	function doPasswordReset( event, rc, prc ) {
 		event.paramValue( "editing", false );
 
 		// get new or persisted author
@@ -248,13 +266,15 @@ component extends="baseHandler" {
 			oAuthor.setIsPasswordReset( true );
 			variables.authorService.save( oAuthor );
 			securityService.sendPasswordReminder(
-				author      = oAuthor,
-				adminIssued = true,
-				issuer      = prc.oCurrentAuthor
-			);
+					author      = oAuthor,
+					adminIssued = true,
+					issuer      = prc.oCurrentAuthor
+				);
 			// announce event
-			announce( "cbadmin_onPasswordReset", { author : oAuthor } );
-			cbMessagebox().info( "Author marked for password reset upon login and email notification sent!" );
+			announce( "cbadmin_onPasswordReset", { author: oAuthor } );
+			cbMessagebox().info(
+					"Author marked for password reset upon login and email notification sent!"
+				);
 		} else {
 			cbMessagebox().error( "Invalid Author Sent!" );
 		}
@@ -270,22 +290,22 @@ component extends="baseHandler" {
 	 * New author wizard
 	 * You must have the AUTHOR_ADMIN permission to execute
 	 */
-	function new( event, rc, prc ){
+	function new( event, rc, prc ) {
 		// exit handlers
-		prc.xehAuthorsave    = "#prc.cbAdminEntryPoint#.authors.doNew";
+		prc.xehAuthorsave = "#prc.cbAdminEntryPoint#.authors.doNew";
 		prc.xehUsernameCheck = "#prc.cbAdminEntryPoint#.authors.usernameCheck";
-		prc.xehEmailCheck    = "#prc.cbAdminEntryPoint#.authors.emailCheck";
+		prc.xehEmailCheck = "#prc.cbAdminEntryPoint#.authors.emailCheck";
 
 		// get new author for form
-		prc.author            = authorService.new();
+		prc.author = authorService.new();
 		// get all roles
-		prc.roles             = roleService.list( sortOrder = "role", asQuery = false );
+		prc.roles = roleService.list( sortOrder = "role", asQuery = false );
 		// Get all permission groups
 		prc.aPermissionGroups = permissionGroupService.list( sortOrder = "name", asQuery = false );
 		// get editors for preferences
-		prc.editors           = editorService.getRegisteredEditors();
+		prc.editors = editorService.getRegisteredEditors();
 		// Get All registered markups so we can display them
-		prc.markups           = editorService.getRegisteredMarkups();
+		prc.markups = editorService.getRegisteredMarkups();
 
 		// view
 		event.setView( "authors/new" );
@@ -295,13 +315,15 @@ component extends="baseHandler" {
 	 * Create a new user in the system
 	 * You must have the AUTHOR_ADMIN permission to execute
 	 */
-	function doNew( event, rc, prc ){
+	function doNew( event, rc, prc ) {
 		// Get new author with defaults
-		var oAuthor = authorService.new( {
-			isActive        : true,
-			isPasswordReset : true,
-			password        : hash( createUUID() & now() )
-		} );
+		var oAuthor = authorService.new(
+				{
+					isActive       : true,
+					isPasswordReset: true,
+					password       : hash( createUUID() & now() )
+				}
+			);
 
 		// get and populate author
 		populate(
@@ -324,18 +346,18 @@ component extends="baseHandler" {
 		var vResults = validate( target = oAuthor, excludes = "password" );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preNewAuthorSave", { author : oAuthor } );
+			announce( "cbadmin_preNewAuthorSave", { author: oAuthor } );
 			// save author
 			authorService.createNewAuthor( oAuthor );
 			// announce event
-			announce( "cbadmin_postNewAuthorSave", { author : oAuthor } );
+			announce( "cbadmin_postNewAuthorSave", { author: oAuthor } );
 			// message
 			cbMessagebox().setMessage( "info", "New Author Created and Notified!" );
 			// relocate
 			relocate( prc.xehAuthors );
 		} else {
 			cbMessagebox().warn( vResults.getAllErrors() );
-			return new ( argumentCollection = arguments );
+			return new( argumentCollection = arguments );
 		}
 	}
 
@@ -344,32 +366,32 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function editor( event, rc, prc ){
+	function editor( event, rc, prc ) {
 		event.paramValue( "authorID", 0 );
 
 		// HTML Title
-		prc.htmlTitle               = "Author Editor";
+		prc.htmlTitle = "Author Editor";
 		// exit handlers
-		prc.xehAuthorsave           = "#prc.cbAdminEntryPoint#/authors/save";
-		prc.xehAuthorPreferences    = "#prc.cbAdminEntryPoint#/authors/savePreferences";
+		prc.xehAuthorsave = "#prc.cbAdminEntryPoint#/authors/save";
+		prc.xehAuthorPreferences = "#prc.cbAdminEntryPoint#/authors/savePreferences";
 		prc.xehAuthorRawPreferences = "#prc.cbAdminEntryPoint#/authors/saveRawPreferences";
 		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#/authors/passwordChange";
-		prc.xehAuthorPermissions    = "#prc.cbAdminEntryPoint#/authors/permissions";
-		prc.xehUsernameCheck        = "#prc.cbAdminEntryPoint#/authors/usernameCheck";
-		prc.xehEmailCheck           = "#prc.cbAdminEntryPoint#/authors/emailCheck";
-		prc.xehEntriesManager       = "#prc.cbAdminEntryPoint#.entries/index";
-		prc.xehPagesManager         = "#prc.cbAdminEntryPoint#/pages/index";
-		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#/contentStore/index";
-		prc.xehExport               = "#prc.cbAdminEntryPoint#/authors/export";
-		prc.xehPasswordReset        = "#prc.cbAdminEntryPoint#/authors/doPasswordReset";
-		prc.xehEnrollTwoFactor      = "#prc.cbAdminEntryPoint#/security/twofactorEnrollment/process";
-		prc.xehUnenrollTwoFactor    = "#prc.cbAdminEntryPoint#/security/twofactorEnrollment/unenroll";
-		prc.xehTwoFactorRelocation  = "#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor";
+		prc.xehAuthorPermissions = "#prc.cbAdminEntryPoint#/authors/permissions";
+		prc.xehUsernameCheck = "#prc.cbAdminEntryPoint#/authors/usernameCheck";
+		prc.xehEmailCheck = "#prc.cbAdminEntryPoint#/authors/emailCheck";
+		prc.xehEntriesManager = "#prc.cbAdminEntryPoint#.entries/index";
+		prc.xehPagesManager = "#prc.cbAdminEntryPoint#/pages/index";
+		prc.xehContentStoreManager = "#prc.cbAdminEntryPoint#/contentStore/index";
+		prc.xehExport = "#prc.cbAdminEntryPoint#/authors/export";
+		prc.xehPasswordReset = "#prc.cbAdminEntryPoint#/authors/doPasswordReset";
+		prc.xehEnrollTwoFactor = "#prc.cbAdminEntryPoint#/security/twofactorEnrollment/process";
+		prc.xehUnenrollTwoFactor = "#prc.cbAdminEntryPoint#/security/twofactorEnrollment/unenroll";
+		prc.xehTwoFactorRelocation = "#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor";
 
 		// get new or persisted author
-		prc.author            = authorService.get( rc.authorID );
+		prc.author = authorService.get( rc.authorID );
 		// get roles
-		prc.roles             = roleService.list( sortOrder = "role", asQuery = false );
+		prc.roles = roleService.list( sortOrder = "role", asQuery = false );
 		// get two factor provider
 		prc.twoFactorProvider = twoFactorService.getDefaultProviderObject();
 		// Markdown Editor Availability
@@ -379,21 +401,25 @@ component extends="baseHandler" {
 		if ( prc.author.isLoaded() ) {
 			// Preferences Viewlet
 			var args = {
-				authorID   : rc.authorID,
-				sorting    : false,
-				max        : 5,
-				pagination : false,
-				latest     : true
+				authorID  : rc.authorID,
+				sorting   : false,
+				max       : 5,
+				pagination: false,
+				latest    : true
 			};
-			prc.preferencesViewlet = listPreferences( event, rc, prc );
+			prc.preferencesViewlet = listPreferences(
+				event,
+				rc,
+				prc
+			);
 
 			// Latest Edits
 			prc.latestEditsViewlet = runEvent(
 				event          = "contentbox-admin:content.latestContentEdits",
 				eventArguments = {
-					author     : prc.author,
-					showHits   : false,
-					showAuthor : false
+					author    : prc.author,
+					showHits  : false,
+					showAuthor: false
 				}
 			);
 
@@ -401,12 +427,12 @@ component extends="baseHandler" {
 			prc.latestDraftsViewlet = runEvent(
 				event          = "contentbox-admin:content.latestContentEdits",
 				eventArguments = {
-					author              : prc.author,
-					isPublished         : false,
-					showHits            : false,
-					colorCodings        : false,
-					showPublishedStatus : false,
-					showAuthor          : false
+					author             : prc.author,
+					isPublished        : false,
+					showHits           : false,
+					colorCodings       : false,
+					showPublishedStatus: false,
+					showAuthor         : false
 				}
 			);
 		}
@@ -419,7 +445,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function myprofile( event, rc, prc ){
+	function myprofile( event, rc, prc ) {
 		rc.authorID = prc.oCurrentAuthor.getAuthorID();
 		editor( argumentCollection = arguments );
 	}
@@ -427,17 +453,17 @@ component extends="baseHandler" {
 	/**
 	 * change user editor preferences
 	 */
-	function changeEditor( event, rc, prc ){
-		var results = { "ERROR" : false, "MESSAGES" : "" };
+	function changeEditor( event, rc, prc ) {
+		var results = { "ERROR": false, "MESSAGES": "" };
 		try {
 			// store the new author preference
 			prc.oCurrentAuthor.setPreference( name = "editor", value = rc.editor );
 			// save Author preference
 			variables.authorService.save( prc.oCurrentAuthor );
 			results[ "MESSAGES" ] = "Editor changed to #rc.editor#";
-		} catch ( Any e ) {
+		} catch (Any e) {
 			log.error( "Error saving preferences.", e );
-			results[ "ERROR" ]    = true;
+			results[ "ERROR" ] = true;
 			results[ "MESSAGES" ] = e.detail & e.message;
 		}
 		// return preference saved
@@ -447,7 +473,7 @@ component extends="baseHandler" {
 	/**
 	 * Save a user preference usually called asynchronously
 	 */
-	function saveSinglePreference( event, rc, prc ){
+	function saveSinglePreference( event, rc, prc ) {
 		// params
 		event.paramvalue( "preference", "" ).paramValue( "value", "" );
 		var response = event.getResponse();
@@ -459,84 +485,111 @@ component extends="baseHandler" {
 			// save Author preference
 			variables.authorService.save( prc.oCurrentAuthor );
 			// response
-			response.setData( { "preference" : rc.preference, "value" : rc.value } ).addMessage( "Preference saved!" );
+			response.setData( { "preference": rc.preference, "value": rc.value } ).addMessage( "Preference saved!" );
 		} else {
 			response.setErrorMessage(
-				"No preference sent",
-				event.STATUS.BAD_REQUEST,
-				response.400
-			);
+					"No preference sent",
+					event.STATUS.BAD_REQUEST,
+					response.400
+				);
 		}
 	}
 
 	/**
 	 * Save user preferences from the built UI from them
 	 */
-	function savePreferences( event, rc, prc ){
-		var oAuthor        = variables.authorService.get( id = rc.authorID );
+	function savePreferences( event, rc, prc ) {
+		var oAuthor = variables.authorService.get( id = rc.authorID );
 		// Get only the UI form preferences that are prefixed to be saved
-		var newPreferences = rc
-			.filter( function( key, value ){
-				return reFindNoCase( "^preference\.", arguments.key );
-			} )
-			// Clean them up
-			.reduce( function( result, key, value ){
-				result[ listLast( arguments.key, "." ) ] = arguments.value;
-				return result;
-			}, {} );
+		var newPreferences = rc.filter(
+				function( key, value ) {
+					return reFindNoCase( "^preference\.", arguments.key );
+				}
+			)// Clean them up
+			.reduce(
+				function( result, key, value ) {
+					result[ listLast( arguments.key, "." ) ] = arguments.value;
+					return result;
+				},
+				{}
+			);
 
 		// Store Preferences
 		oAuthor.setPreferences( oAuthor.getAllPreferences().append( newPreferences, true ) );
 		// announce event
-		announce( "cbadmin_preAuthorPreferencesSave", { author : oAuthor, preferences : newPreferences } );
+		announce(
+			"cbadmin_preAuthorPreferencesSave",
+			{ author: oAuthor, preferences: newPreferences }
+		);
 		// save Author
 		variables.authorService.save( oAuthor );
 		// announce event
-		announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : newPreferences } );
+		announce(
+			"cbadmin_postAuthorPreferencesSave",
+			{ author: oAuthor, preferences: newPreferences }
+		);
 		// message
 		cbMessagebox().setMessage( "info", "Author Preferences Saved!" );
 		// relocate
-		relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
+		relocate(
+			event       = prc.xehAuthorEditor,
+			queryString = "authorID=#oAuthor.getAuthorID()###preferences"
+		);
 	}
 
 	/**
 	 * Save raw preferences
 	 */
-	function saveRawPreferences( event, rc, prc ){
+	function saveRawPreferences( event, rc, prc ) {
 		var oAuthor = authorService.get( id = rc.authorID );
 		// Validate raw preferences
-		var vResult = validate( target = rc, constraints = { preferences : { required : true, type : "json" } } );
+		var vResult = validate(
+			target      = rc,
+			constraints = { preferences: { required: true, type: "json" } }
+		);
 		if ( !vResult.hasErrors() ) {
 			// store preferences
 			oAuthor.setPreferences( rc.preferences );
 			// announce event
-			announce( "cbadmin_preAuthorPreferencesSave", { author : oAuthor, preferences : rc.preferences } );
+			announce(
+				"cbadmin_preAuthorPreferencesSave",
+				{ author: oAuthor, preferences: rc.preferences }
+			);
 			// save Author
 			variables.authorService.save( oAuthor );
 			// announce event
-			announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : rc.preferences } );
+			announce(
+				"cbadmin_postAuthorPreferencesSave",
+				{ author: oAuthor, preferences: rc.preferences }
+			);
 			// message
 			cbMessagebox().setMessage( "info", "Author Preferences Saved!" );
 			// relocate
-			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
+			relocate(
+				event       = prc.xehAuthorEditor,
+				queryString = "authorID=#oAuthor.getAuthorID()###preferences"
+			);
 		} else {
 			// message
 			cbMessagebox().error( vResult.getAllErrors() );
 			// relocate
-			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
+			relocate(
+				event       = prc.xehAuthorEditor,
+				queryString = "authorID=#oAuthor.getAuthorID()###preferences"
+			);
 		}
 	}
 
 	/**
 	 * Save user
 	 */
-	function save( event, rc, prc ){
+	function save( event, rc, prc ) {
 		// Get new or persisted user
 		var oAuthor = authorService.get( id = rc.authorID );
 		// get and populate author
-		populate( model: oAuthor, exclude: "authorID" );
+		populate( model = oAuthor, exclude = "authorID" );
 		// Tag new or updated user
-		var newAuthor = ( NOT oAuthor.isLoaded() );
+		var newAuthor = ( !oAuthor.isLoaded() );
 
 		// role assignment if permission allows it
 		if ( prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) ) {
@@ -544,40 +597,52 @@ component extends="baseHandler" {
 		}
 
 		// validate it
-		var vResults = validate( target = oAuthor, excludes = ( structKeyExists( rc, "password" ) ? "" : "password" ) );
+		var vResults = validate(
+			target   = oAuthor,
+			excludes = ( structKeyExists( rc, "password" ) ? "" : "password" )
+		);
 		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce(
 				"cbadmin_preAuthorSave",
 				{
-					author   : oAuthor,
-					authorID : rc.authorID,
-					isNew    : newAuthor
+					author  : oAuthor,
+					authorID: rc.authorID,
+					isNew   : newAuthor
 				}
 			);
 			// save Author
 			variables.authorService.save( oAuthor );
 			// announce event
-			announce( "cbadmin_postAuthorSave", { author : oAuthor, isNew : newAuthor } );
+			announce(
+				"cbadmin_postAuthorSave",
+				{ author: oAuthor, isNew: newAuthor }
+			);
 			// message
 			cbMessagebox().setMessage( "info", "Author saved!" );
 			// relocate
 			relocate( prc.xehAuthors );
 		} else {
 			cbMessagebox().warn( vResults.getAllErrors() );
-			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()#" );
+			relocate(
+				event       = prc.xehAuthorEditor,
+				queryString = "authorID=#oAuthor.getAuthorID()#"
+			);
 		}
 	}
 
 	/**
 	 * Change user password
 	 */
-	function passwordChange( event, rc, prc ){
+	function passwordChange( event, rc, prc ) {
 		if ( prc.oCurrentAuthor.getAuthorID() != rc.authorID ) {
 			cbMessagebox().error(
-				"You cannot change passwords for other users. Please start a password reset instead."
+					"You cannot change passwords for other users. Please start a password reset instead."
+				);
+			return relocate(
+				event       = prc.xehAuthorEditor,
+				queryString = "authorID=#rc.authorID#"
 			);
-			return relocate( event = prc.xehAuthorEditor, queryString = "authorID=#rc.authorID#" );
 		}
 		var oAuthor = authorService.get( id = rc.authorID );
 
@@ -587,7 +652,10 @@ component extends="baseHandler" {
 			oAuthor.setPassword( rc.password );
 			variables.authorService.save( author = oAuthor, passwordChange = true );
 			// announce event
-			announce( "cbadmin_onAuthorPasswordChange", { author : oAuthor, password : rc.password } );
+			announce(
+				"cbadmin_onAuthorPasswordChange",
+				{ author: oAuthor, password: rc.password }
+			);
 			// message
 			cbMessagebox().info( "Password Updated!" );
 		} else {
@@ -596,13 +664,16 @@ component extends="baseHandler" {
 		}
 
 		// relocate
-		relocate( event = prc.xehAuthorEditor, queryString = "authorID=#rc.authorID#" );
+		relocate(
+			event       = prc.xehAuthorEditor,
+			queryString = "authorID=#rc.authorID#"
+		);
 	}
 
 	/**
 	 * Remove a user
 	 */
-	function remove( event, rc, prc ){
+	function remove( event, rc, prc ) {
 		event.paramValue( "targetAuthorID", 0 );
 
 		var oAuthor = variables.authorService.get( rc.targetAuthorID );
@@ -612,11 +683,17 @@ component extends="baseHandler" {
 			relocate( prc.xehAuthors );
 		}
 		// announce event
-		announce( "cbadmin_preAuthorRemove", { author : oAuthor, authorID : rc.targetAuthorID } );
+		announce(
+			"cbadmin_preAuthorRemove",
+			{ author: oAuthor, authorID: rc.targetAuthorID }
+		);
 		// remove
 		variables.authorService.delete( oAuthor );
 		// announce event
-		announce( "cbadmin_postAuthorRemove", { authorID : rc.targetAuthorID } );
+		announce(
+			"cbadmin_postAuthorRemove",
+			{ authorID: rc.targetAuthorID }
+		);
 		// message
 		cbMessagebox().setMessage( "info", "Author Removed!" );
 		// redirect
@@ -626,16 +703,16 @@ component extends="baseHandler" {
 	/**
 	 * Display permissions tab
 	 */
-	function permissions( event, rc, prc ){
+	function permissions( event, rc, prc ) {
 		// exit Handlers
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.authors.removePermission";
-		prc.xehPermissionSave   = "#prc.cbAdminEntryPoint#.authors.savePermission";
-		prc.xehRolePermissions  = "#prc.cbAdminEntryPoint#.authors.permissions";
-		prc.xehGroupRemove      = "#prc.cbAdminEntryPoint#.authors.removePermissionGroup";
-		prc.xehGroupSave        = "#prc.cbAdminEntryPoint#.authors.savePermissionGroup";
+		prc.xehPermissionSave = "#prc.cbAdminEntryPoint#.authors.savePermission";
+		prc.xehRolePermissions = "#prc.cbAdminEntryPoint#.authors.permissions";
+		prc.xehGroupRemove = "#prc.cbAdminEntryPoint#.authors.removePermissionGroup";
+		prc.xehGroupSave = "#prc.cbAdminEntryPoint#.authors.savePermissionGroup";
 
 		// Get all permissions
-		prc.aPermissions      = permissionService.list( sortOrder = "permission", asQuery = false );
+		prc.aPermissions = permissionService.list( sortOrder = "permission", asQuery = false );
 		prc.aPermissionGroups = permissionGroupService.list( sortOrder = "name", asQuery = false );
 
 		// Get author
@@ -648,8 +725,8 @@ component extends="baseHandler" {
 	/**
 	 * Save permission to the author and gracefully end.
 	 */
-	function savePermission( event, rc, prc ){
-		var oAuthor     = authorService.get( rc.authorID );
+	function savePermission( event, rc, prc ) {
+		var oAuthor = authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
 
 		// Assign it
@@ -667,8 +744,8 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function removePermission( event, rc, prc ){
-		var oAuthor     = authorService.get( rc.authorID );
+	function removePermission( event, rc, prc ) {
+		var oAuthor = authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
 
 		// Remove it
@@ -684,9 +761,9 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function savePermissionGroup( event, rc, prc ){
+	function savePermissionGroup( event, rc, prc ) {
 		var oAuthor = authorService.get( rc.authorID );
-		var oGroup  = permissionGroupService.get( rc.permissionGroupID );
+		var oGroup = permissionGroupService.get( rc.permissionGroupID );
 
 		// Assign it
 		if ( !oAuthor.hasPermissionGroup( oGroup ) ) {
@@ -704,9 +781,9 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function removePermissionGroup( event, rc, prc ){
+	function removePermissionGroup( event, rc, prc ) {
 		var oAuthor = authorService.get( rc.authorID );
-		var oGroup  = permissionGroupService.get( rc.permissionGroupID );
+		var oGroup = permissionGroupService.get( rc.permissionGroupID );
 
 		if ( oAuthor.hasPermissionGroup( oGroup ) ) {
 			// Remove it
@@ -722,28 +799,37 @@ component extends="baseHandler" {
 	/**
 	 * Export a user
 	 */
-	function export( event, rc, prc ){
-		return variables.authorService
+	function export( event, rc, prc ) {
+		return variables
+			.authorService
 			.get( event.getValue( "authorID", 0 ) )
-			.getMemento( includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth" );
+			.getMemento(
+				includes = "permissions,permissionGroups,isPasswordReset,is2FactorAuth"
+			);
 	}
 
 	/**
 	 * Export multiple users
 	 */
-	function exportAll( event, rc, prc ){
+	function exportAll( event, rc, prc ) {
 		// Set a high timeout for long exports
 		setting requestTimeout="9999";
-		param rc.authorID     = "";
+		param rc.authorID = "";
 		// Export all or some
 		if ( len( rc.authorID ) ) {
-			return rc.authorID
+			return rc
+				.authorID
 				.listToArray()
-				.map( function( id ){
-					return variables.authorService
-						.get( arguments.id )
-						.getMemento( includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth" );
-				} );
+				.map(
+					function( id ) {
+						return variables
+							.authorService
+							.get( arguments.id )
+							.getMemento(
+								includes = "permissions,permissionGroups,isPasswordReset,is2FactorAuth"
+							);
+					}
+				);
 		} else {
 			return variables.authorService.getAllForExport();
 		}
@@ -752,21 +838,21 @@ component extends="baseHandler" {
 	/**
 	 * Import all users
 	 */
-	function importAll( event, rc, prc ){
+	function importAll( event, rc, prc ) {
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try {
-			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = authorService.importFromFile(
-					importFile = rc.importFile,
-					override   = rc.overrideContent
-				);
+			if ( len( rc.importFile ) && fileExists( rc.importFile ) ) {
+				var importLog = authorService.importFromFile( importFile = rc.importFile,
+						override = rc.overrideContent );
 				cbMessagebox().info( "Users imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox().error(
+						"The import file is invalid: #rc.importFile# cannot continue with import"
+					);
 			}
-		} catch ( any e ) {
+		} catch (any e) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			cbMessagebox().error( errorMessage );
@@ -781,13 +867,16 @@ component extends="baseHandler" {
 	 *
 	 * @return view
 	 */
-	private function listPreferences( event, rc, prc ){
+	private function listPreferences( event, rc, prc ) {
 		// get editors for preferences
 		prc.editors = editorService.getRegisteredEditors();
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// render out view
-		return view( view = "authors/listPreferences", module = "contentbox-admin" );
+		return view(
+			view   = "authors/listPreferences",
+			module = "contentbox-admin"
+		);
 	}
 
 }

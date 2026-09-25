@@ -3,7 +3,7 @@ component {
 	/**
 	 * Configure the ColdBox Scheduler
 	 */
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * Configuration Methods
@@ -12,8 +12,6 @@ component {
 		 * - setTimezone( ) : change the timezone for ALL tasks
 		 * - setExecutor( executorObject ) : change the executor if needed
 		 */
-
-
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -25,58 +23,61 @@ component {
 
 		// Rotates the login audit logs
 		task( "login-tracker-rotation" )
-			.call( () => {
-				getInstance( "LoginTrackerService@contentbox" ).rotate();
-			} )
+			.call(
+				() => {
+					getInstance( "LoginTrackerService@contentbox" ).rotate();
+				}
+			)
 			.everyHour()
 			.delay( 1, "hours" )
 			.onOneServer();
-		;
 
 		// Deletes all moderated comments that have expired in the inbox
 		task( "comment-expirations" )
-			.call( () => {
-				getInstance( "siteService@contentbox" )
-					.getAll()
-					.each( function( thisSite ){
-						var commentExpirationDays = getInstance( "settingService@contentbox" ).getSiteSetting(
-							arguments.thisSite.getSlug(),
-							"cb_comments_moderation_expiration"
+			.call(
+				() => {
+					getInstance( "siteService@contentbox" ).getAll().each(
+							function( thisSite ) {
+								var commentExpirationDays = getInstance( "settingService@contentbox" ).getSiteSetting( arguments.thisSite.getSlug(),
+										"cb_comments_moderation_expiration" );
+
+								if ( commentExpirationDays > 0 ) {
+									log.info(
+											"Starting to expire comments on site: #arguments.thisSite.getSlug()#..."
+										);
+
+									getInstance( "commentService@contentbox" ).deleteUnApproved( expirationDays = commentExpirationDays );
+
+									log.info(
+											"Moderated comments expired for site (#arguments.thisSite.getSlug()#) using (#commentExpirationDays#) days for expiration!"
+										);
+								} else {
+									log.info(
+											"Comment expiration not enabled for site (#arguments.thisSite.getSlug()#), skipping."
+										);
+								}
+							}
 						);
-
-						if ( commentExpirationDays > 0 ) {
-							log.info( "Starting to expire comments on site: #arguments.thisSite.getSlug()#..." );
-
-							// now we have the green light to find and kill any old, moderated comments
-							getInstance( "commentService@contentbox" ).deleteUnApproved(
-								expirationDays = commentExpirationDays
-							);
-
-							log.info(
-								"Moderated comments expired for site (#arguments.thisSite.getSlug()#) using (#commentExpirationDays#) days for expiration!"
-							);
-						} else {
-							log.info(
-								"Comment expiration not enabled for site (#arguments.thisSite.getSlug()#), skipping."
-							);
-						}
-					} );
-			} )
+				}
+			)
 			.everyHour()
 			.delay( 1, "hours" )
+			// now we have the green light to find and kill any old, moderated comments
+
 			.onOneServer();
 	}
 
 	/**
 	 * Called before the scheduler is going to be shutdown
 	 */
-	function onShutdown(){
+	function onShutdown() {
+
 	}
 
 	/**
 	 * Called after the scheduler has registered all schedules
 	 */
-	function onStartup(){
+	function onStartup() {
 		log.info( "√ ContentBox Core Scheduler started successfully!" );
 	}
 
@@ -86,11 +87,11 @@ component {
 	 * @task      The task that got executed
 	 * @exception The ColdFusion exception object
 	 */
-	function onAnyTaskError( required task, required exception ){
+	function onAnyTaskError( required task, required exception ) {
 		log.error(
-			"The task (#arguments.task.getname()#) failed to executed. Caused by: #exception.message & exception.detail#",
-			exception.stacktrace
-		);
+				"The task (#arguments.task.getname()#) failed to executed. Caused by: #exception.message & exception.detail#",
+				exception.stacktrace
+			);
 	}
 
 	/**
@@ -99,11 +100,11 @@ component {
 	 * @task   The task that got executed
 	 * @result The result (if any) that the task produced
 	 */
-	function onAnyTaskSuccess( required task, result ){
+	function onAnyTaskSuccess( required task, result ) {
 		log.info(
-			"Task (#arguments.task.getName()#) completed succesfully in #arguments.task.getStats().lastExecutionTime# ms",
-			arguments.task.getStats()
-		);
+				"Task (#arguments.task.getName()#) completed succesfully in #arguments.task.getStats().lastExecutionTime# ms",
+				arguments.task.getStats()
+			);
 	}
 
 	/**
@@ -111,8 +112,10 @@ component {
 	 *
 	 * @task The task about to be executed
 	 */
-	function beforeAnyTask( required task ){
-		log.info( "Starting to execute task (#arguments.task.getName()#)..." );
+	function beforeAnyTask( required task ) {
+		log.info(
+				"Starting to execute task (#arguments.task.getName()#)..."
+			);
 	}
 
 	/**
@@ -121,7 +124,8 @@ component {
 	 * @task   The task that got executed
 	 * @result The result (if any) that the task produced
 	 */
-	function afterAnyTask( required task, result ){
+	function afterAnyTask( required task, result ) {
+
 	}
 
 }

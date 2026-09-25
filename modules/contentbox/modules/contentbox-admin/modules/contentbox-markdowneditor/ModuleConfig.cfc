@@ -6,29 +6,28 @@
  * ContentBox Admin Markdown Editor Module
  */
 component {
-
 	// Module Properties
-	this.title              = "ContentBox Markdown Editor";
-	this.author             = "Ortus Solutions, Corp";
-	this.webURL             = "https://www.ortussolutions.com";
-	this.version            = "@version.number@+@build.number@";
-	this.description        = "ContentBox Markdown Module";
-	this.viewParentLookup   = true;
+	this.title = "ContentBox Markdown Editor";
+	this.author = "Ortus Solutions, Corp";
+	this.webURL = "https://www.ortussolutions.com";
+	this.version = "@version.number@+@build.number@";
+	this.description = "ContentBox Markdown Module";
+	this.viewParentLookup = true;
 	this.layoutParentLookup = true;
-	this.entryPoint         = "cbadmin/markdown";
-	this.dependencies       = [ "contentbox-admin" ];
+	this.entryPoint = "cbadmin/markdown";
+	this.dependencies = [ "contentbox-admin"];
 
 	/**
 	 * Configure
 	 */
-	function configure(){
+	function configure() {
 		// SES Routes
-		routes = [ { pattern : "/:handler/:action?" } ];
+		routes = [ { pattern: "/:handler/:action?" }];
 
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints : []
+			customInterceptionPoints: []
 		};
 
 		// interceptors
@@ -38,15 +37,17 @@ component {
 	/**
 	 * Fired when the module is registered and activated.
 	 */
-	function onLoad(){
+	function onLoad() {
 		var editorService = wirebox.getInstance( "EditorService@contentbox" );
-		editorService.registerEditor( wirebox.getInstance( "MarkdownEditor@contentbox-markdowneditor" ) );
+		editorService.registerEditor(
+				wirebox.getInstance( "MarkdownEditor@contentbox-markdowneditor" )
+			);
 	}
 
 	/**
 	 * Fired when the module is unregistered and unloaded
 	 */
-	function onUnload(){
+	function onUnload() {
 		var editorService = wirebox.getInstance( "EditorService@contentbox" );
 		editorService.unregisterEditor( "simplemde" );
 	}

@@ -4,64 +4,71 @@
  * An incoming site identifier is required
  */
 component extends="baseContentHandler" {
-
 	// DI
 	property name="ormService" inject="ContentStoreService@contentbox";
-
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "publishedDate DESC";
+	variables.sortOrder = "publishedDate DESC";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity       = "ContentStore";
+	variables.entity = "ContentStore";
+	// The permission prefix used to check for full (admin/editor) content access
+	variables.contentType = "CONTENTSTORE";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 
 	/**
 	 * Display all content store items using different filters
 	 *
+	 * Publicly accessible: only published items are returned, so no authentication is required.
+	 *
 	 * @tags      ContentStore
 	 * @responses contentbox/apidocs/contentStore/index/responses.json
-	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+	function index( event, rc, prc ) {
 		// Paging + Mementifier
-		param rc.page       = 1;
-		param rc.excludes   = "HTMLTitle,HTMLKeywords,HTMLDescription";
+		param rc.page = 1;
+		param rc.excludes = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
-		param rc.sortOrder  = "publishedDate DESC";
+		param rc.sortOrder = "publishedDate DESC";
 		// Search terms
-		param rc.search     = "";
+		param rc.search = "";
 		// One or a list of categories to filter on
-		param rc.category   = "";
+		param rc.category = "";
 		// Author ID to filter on
-		param rc.author     = "";
+		param rc.author = "";
 		// The parent to filter on, default is root pages
-		param rc.parent     = "";
+		param rc.parent = "";
 		// If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 		param rc.slugPrefix = "";
 		// If passed, we can do a slug wildcard search
 		param rc.slugSearch = "";
 		// If passed, it's a slug operation
-		param rc.slug       = "";
+		param rc.slug = "";
 
 		// If we have a `slug` then we treat it as a /:slug route, due to hierarchical paths
-		if ( rc.slug.trim().length() > 0 ) {
+		if (
+			rc
+					.slug
+					.trim()
+					.length() >
+				0
+		) {
 			rc.id = rc.slug;
 			return show( argumentCollection = arguments );
 		}
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.findPublishedContent(
-			searchTerm = rc.search,
-			category   = rc.category,
-			offset     = getPageOffset( rc.page ),
-			max        = getMaxRows(),
-			sortOrder  = rc.sortOrder,
-			siteId     = prc.oCurrentSite.getSiteID(),
-			authorID   = rc.author,
-			parent     = rc.parent,
-			slugPrefix = rc.slugPrefix,
-			slugSearch = rc.slugSearch
-		);
+				searchTerm = rc.search,
+				category   = rc.category,
+				offset     = getPageOffset( rc.page ),
+				max        = getMaxRows(),
+				sortOrder  = rc.sortOrder,
+				siteId     = prc.oCurrentSite.getSiteID(),
+				authorID   = rc.author,
+				parent     = rc.parent,
+				slugPrefix = rc.slugPrefix,
+				slugSearch = rc.slugSearch
+			);
 
 		// Build to match interface
 		arguments.results.records = arguments.results.content;
@@ -73,19 +80,23 @@ component extends="baseContentHandler" {
 	/**
 	 * Show a content store item using the id
 	 *
+	 * Publicly accessible: anonymous requests only resolve items that are published,
+	 * not expired, and not password protected. See baseContentHandler.show().
+	 *
 	 * @tags      ContentStore
 	 * @responses contentbox/apidocs/contentStore/show/responses.json
-	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
-		param rc.includes = arrayToList( [
-			"activeContent",
-			"childrenSnapshot:children",
-			"customFieldsAsStruct:customFields",
-			"linkedContentSnapshot:linkedContent",
-			"relatedContentSnapshot:relatedContent",
-			"renderedContent"
-		] );
+	function show( event, rc, prc ) {
+		param rc.includes = arrayToList(
+			[
+				"activeContent",
+				"childrenSnapshot:children",
+				"customFieldsAsStruct:customFields",
+				"linkedContentSnapshot:linkedContent",
+				"relatedContentSnapshot:relatedContent",
+				"renderedContent"
+			]
+		);
 		param rc.excludes = "";
 
 		super.show( argumentCollection = arguments );
@@ -99,9 +110,9 @@ component extends="baseContentHandler" {
 	 * @responses   contentbox/apidocs/contentStore/create/responses.json
 	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
 		// Supersize it
-		arguments.contentType = "CONTENTSTORE";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 
@@ -112,8 +123,8 @@ component extends="baseContentHandler" {
 	 * @responses contentbox/apidocs/contentStore/update/responses.json
 	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
-		arguments.contentType = "CONTENTSTORE";
+	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 
@@ -124,7 +135,7 @@ component extends="baseContentHandler" {
 	 * @responses contentbox/apidocs/contentStore/delete/responses.json
 	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN
 	 */
-	function delete( event, rc, prc ) secured="CONTENTSTORE_ADMIN"{
+	function delete( event, rc, prc ) secured="CONTENTSTORE_ADMIN" {
 		super.delete( argumentCollection = arguments );
 	}
 

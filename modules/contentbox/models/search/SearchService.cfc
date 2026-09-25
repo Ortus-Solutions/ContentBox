@@ -6,15 +6,15 @@
  * The official ContentBox Search Service
  */
 component accessors="true" {
-
 	// DI
 	property name="wirebox" inject="wirebox";
+
 	property name="settingService" inject="settingService@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	SearchService function init(){
+	SearchService function init() {
 		return this;
 	}
 
@@ -22,7 +22,7 @@ component accessors="true" {
 	 * Return the actual ContentBox configured search adapter that should meet
 	 * the following interface: contentbox.models.search.ISearchAdapter
 	 */
-	any function getSearchAdapter(){
+	any function getSearchAdapter() {
 		return variables.wirebox.getInstance( variables.settingService.getSetting( "cb_search_adapter" ) );
 	}
 

@@ -3,23 +3,27 @@
  * An incoming site identifier is required
  */
 component extends="baseHandler" {
-
 	// DI
 	property name="ormService" inject="CategoryService@contentbox";
-
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "slug";
+	variables.sortOrder = "slug";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity       = "Category";
+	variables.entity = "Category";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 
 	/**
 	 * Executes before all handler actions
 	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
+	any function preHandler(
+		event,
+		rc,
+		prc,
+		action,
+		eventArguments
+	) {
 		// Verify incoming site
-		param rc.site    = "";
+		param rc.site = "";
 		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
 	}
 
@@ -29,7 +33,7 @@ component extends="baseHandler" {
 	 * @tags      Categories
 	 * @responses contentbox/apidocs/categories/index/responses.json
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Criterias and Filters
 		param rc.sortOrder = "slug";
 
@@ -46,7 +50,7 @@ component extends="baseHandler" {
 	 * @tags      Categories
 	 * @responses contentbox/apidocs/categories/show/responses.json
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) {
 		param rc.includes = "NumberOfPublishedPages,numberOfPublishedContentStore,numberOfPublishedEntries";
 		param rc.excludes = "";
 
@@ -61,7 +65,7 @@ component extends="baseHandler" {
 	 * @responses   contentbox/apidocs/categories/create/responses.json
 	 * @x           -contentbox-permissions CATEGORIES_ADMIN
 	 */
-	function create( event, rc, prc ) secured="CATEGORIES_ADMIN"{
+	function create( event, rc, prc ) secured="CATEGORIES_ADMIN" {
 		super.create( argumentCollection = arguments );
 	}
 
@@ -72,7 +76,7 @@ component extends="baseHandler" {
 	 * @responses contentbox/apidocs/categories/update/responses.json
 	 * @x         -contentbox-permissions CATEGORIES_ADMIN
 	 */
-	function update( event, rc, prc ) secured="CATEGORIES_ADMIN"{
+	function update( event, rc, prc ) secured="CATEGORIES_ADMIN" {
 		super.update( argumentCollection = arguments );
 	}
 
@@ -83,7 +87,7 @@ component extends="baseHandler" {
 	 * @responses contentbox/apidocs/categories/delete/responses.json
 	 * @x         -contentbox-permissions CATEGORIES_ADMIN
 	 */
-	function delete( event, rc, prc ) secured="CATEGORIES_ADMIN"{
+	function delete( event, rc, prc ) secured="CATEGORIES_ADMIN" {
 		super.delete( argumentCollection = arguments );
 	}
 

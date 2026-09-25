@@ -6,19 +6,21 @@
  * Manages Two Factor Authenticators
  */
 component accessors="true" threadSafe singleton {
-
 	// DI
 	property name="settingService" inject="settingService@contentbox";
+
 	property name="securityService" inject="securityService@contentbox";
+
 	property name="authorService" inject="authorService@contentbox";
+
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
+
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
 	 * Providers registry
 	 */
 	property name="providers" type="struct";
-
 	// Static Properties
 
 	variables.TRUSTED_DEVICE_COOKIE = "contentbox_2factor_device";
@@ -28,7 +30,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @wirebox.inject wirebox
 	 */
-	TwoFactorService function init( required wirebox ){
+	TwoFactorService function init( required wirebox ) {
 		// init providers
 		variables.providers = {};
 
@@ -41,7 +43,7 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Are we forcing global two factor authentication
 	 */
-	boolean function isForceTwoFactorAuth(){
+	boolean function isForceTwoFactorAuth() {
 		// Doing !! to force a boolean
 		return !!settingService.getSetting( "cb_security_2factorAuth_force" );
 	}
@@ -49,21 +51,21 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Get the default system provider name
 	 */
-	string function getDefaultProvider(){
+	string function getDefaultProvider() {
 		return settingService.getSetting( "cb_security_2factorAuth_provider" );
 	}
 
 	/**
 	 * Get the default system provider object
 	 */
-	contentbox.models.security.twofactor.ITwoFactorProvider function getDefaultProviderObject(){
+	contentbox.models.security.twofactor.ITwoFactorProvider function getDefaultProviderObject() {
 		return getProvider( getDefaultProvider() );
 	}
 
 	/**
 	 * Get the default system trusted device timespan
 	 */
-	numeric function getTrustedDeviceTimespan(){
+	numeric function getTrustedDeviceTimespan() {
 		return settingService.getSetting( "cb_security_2factorAuth_trusted_days" );
 	}
 
@@ -74,7 +76,7 @@ component accessors="true" threadSafe singleton {
 	 */
 	TwoFactorService function registerProvider(
 		required contentbox.models.security.twofactor.ITwoFactorProvider provider
-	){
+	) {
 		variables.providers[ arguments.provider.getName() ] = arguments.provider;
 		return this;
 	}
@@ -84,7 +86,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @name The name of the provider to unregister
 	 */
-	TwoFactorService function unRegisterProvider( required name ){
+	TwoFactorService function unRegisterProvider( required name ) {
 		structDelete( variables.providers, arguments.name );
 		return this;
 	}
@@ -92,22 +94,24 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Get an array of registered provider names in alphabetical order
 	 */
-	array function getRegisteredProviders(){
-		return listToArray( listSort( structKeyList( variables.providers ), "textnocase" ) );
+	array function getRegisteredProviders() {
+		return listToArray(
+			listSort( structKeyList( variables.providers ), "textnocase" )
+		);
 	}
 
 	/**
 	 * Get an array of registered provider names in alphabetical order with their display names
 	 */
-	array function getRegisteredProvidersMap(){
+	array function getRegisteredProvidersMap() {
 		var aProviders = getRegisteredProviders();
-		var result     = [];
+		var result = [];
 		for ( var thisProvider in aProviders ) {
 			arrayAppend(
 				result,
 				{
-					name        : thisProvider,
-					displayName : variables.providers[ thisProvider ].getDisplayName()
+					name       : thisProvider,
+					displayName: variables.providers[ thisProvider ].getDisplayName()
 				}
 			);
 		}
@@ -119,7 +123,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @name The name of the provider
 	 */
-	contentbox.models.security.twofactor.ITwoFactorProvider function getProvider( required name ){
+	contentbox.models.security.twofactor.ITwoFactorProvider function getProvider( required name ) {
 		return variables.providers[ arguments.name ];
 	}
 
@@ -128,7 +132,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @name The name of the provider
 	 */
-	boolean function hasProvider( required name ){
+	boolean function hasProvider( required name ) {
 		return structKeyExists( variables.providers, arguments.name );
 	}
 
@@ -137,12 +141,12 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @trustedID The trusted ID to track in the tracking cookie
 	 */
-	TwoFactorService function setTrustedDevice( required trustedID ){
+	TwoFactorService function setTrustedDevice( required trustedID ) {
 		cookieStorage.set(
-			name    = variables.TRUSTED_DEVICE_COOKIE,
-			value   = securityService.encryptIt( arguments.trustedID ),
-			expires = getTrustedDeviceTimespan()
-		);
+				name    = variables.TRUSTED_DEVICE_COOKIE,
+				value   = securityService.encryptIt( arguments.trustedID ),
+				expires = getTrustedDeviceTimespan()
+			);
 		return this;
 	}
 
@@ -151,21 +155,24 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @trustedID The trusted ID to verify
 	 */
-	boolean function isTrustedDevice( required trustedID ){
+	boolean function isTrustedDevice( required trustedID ) {
 		var cookieValue = cookieStorage.get( name = variables.TRUSTED_DEVICE_COOKIE, defaultValue = "" );
 
 		try {
 			// decrypt the target id
 			var targetTrustedID = securityService.decryptIt( cookieValue );
 			// Verify they are the same
-			if ( targetTrustedID neq arguments.trustedID ) {
+			if ( targetTrustedID NEQ arguments.trustedID ) {
 				cookieStorage.delete( variables.TRUSTED_DEVICE_COOKIE );
 				return false;
 			}
 			return true;
-		} catch ( Any e ) {
+		} catch (Any e) {
 			// Errors on decryption
-			log.error( "Error decrypting trusted id cookie: #e.message# #e.detail#", cookieValue );
+			log.error(
+					"Error decrypting trusted id cookie: #e.message# #e.detail#",
+					cookieValue
+				);
 			cookieStorage.delete( variables.TRUSTED_DEVICE_COOKIE );
 			return false;
 		}
@@ -176,18 +183,16 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @author The author to challenge or not
 	 */
-	boolean function canChallenge( required author ){
+	boolean function canChallenge( required author ) {
 		var oProvider = getProvider( getDefaultProvider() );
-		var results   = false;
+		var results = false;
 		if (
-			// Verify if global force is enabled
-			isForceTwoFactorAuth()
-			OR
-			// Verify if user has two factor auth enabled
-			arguments.author.getIs2FactorAuth()
+			isForceTwoFactorAuth() ||
+				arguments.author// Verify if user has two factor auth enabled
+					.getIs2FactorAuth()
 		) {
 			// Verify if using trusted device options and if device is trusted
-			if ( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ) {
+			if ( oProvider.allowTrustedDevice() && isTrustedDevice( arguments.author.getAuthorID() ) ) {
 				results = false;
 			} else {
 				results = true;
@@ -206,7 +211,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @return struct:{ error:boolean, messages:string }
 	 */
-	struct function sendChallenge( required author ){
+	struct function sendChallenge( required author ) {
 		return getProvider( getDefaultProvider() ).sendChallenge( arguments.author );
 	}
 
@@ -219,7 +224,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @return struct:{ error:boolean, messages:string }
 	 */
-	struct function verifyChallenge( required string code, required author ){
+	struct function verifyChallenge( required string code, required author ) {
 		return getProvider( getDefaultProvider() ).verifyChallenge( arguments.code, arguments.author );
 	}
 

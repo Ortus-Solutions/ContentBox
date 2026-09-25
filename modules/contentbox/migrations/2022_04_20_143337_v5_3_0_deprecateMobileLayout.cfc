@@ -6,25 +6,30 @@
  * @author  Daniel Garcia
  */
 component {
-
 	// DI
 	property name="migrationService" inject="MigrationService@cfmigrations";
-
 	// Include Utils
 	include template="./util/MigrationUtils.cfm";
 
-	function up( schema, qb ){
+	function up( schema, qb ) {
 		if ( hasColumn( "cb_page", "mobileLayout" ) ) {
 			// Remove the mobileLayout column from the `cb_page` table
-			schema.alter( "cb_page", ( table ) => {
-				table.dropColumn( "mobileLayout" );
-			} );
+			schema.alter(
+					"cb_page",
+					( table ) => {
+						table.dropColumn( "mobileLayout" );
+					}
+				);
 		} else {
-			systemOutput( "- skipping 'mobileLayout' removal, cb_page doesn't have the column", true );
+			systemOutput(
+				"- skipping 'mobileLayout' removal, cb_page doesn't have the column",
+				true
+			);
 		}
 	}
 
-	function down( schema, qb ){
+	function down( schema, qb ) {
+
 	}
 
 }

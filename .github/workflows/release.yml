@@ -40,29 +40,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: "21"
 
       - name: Setup CommandBox
-        uses: Ortus-Solutions/setup-commandbox@v2.0.1
+        uses: ortus-boxlang/setup-boxlang@main
         with:
+          with-commandbox: true
           forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
-      - name: Install CFML Dependencies
+      - name: Install Dependencies
         run: |
           box install --production
           box install commandbox-docbox
           cd modules/contentbox && box install --production
 
-      - name:  Install Node 18
-        uses: actions/setup-node@v4
+      - name:  Install Node 25
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 25
 
       - name: Compile Release Assets
         run: |
@@ -101,7 +102,7 @@ jobs:
           printf "DB_CONNECTIONSTRING=jdbc:mysql://127.0.0.1:3306/contentbox?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useLegacyDatetimeCode=true\n" >> .env
 
       - name: Download Test Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         if: env.SNAPSHOT == 'true'
         with:
           path: tests/results
@@ -109,21 +110,21 @@ jobs:
       - name: Start Docs Server
         if: env.SNAPSHOT == 'false'
         run: |
-          box server start serverConfigFile="server-lucee@5.json" openBrowser=false saveSettings=false
+          box server start serverConfigFile="server-boxlang-cfml@1.json" openBrowser=false saveSettings=false
 
       - name: Build API Docs
         run: |
           # Normalize swagger doc results if they exist
-          if test -f tests/results/contentbox-test-results-lucee@5-coldbox^7-experimental-false/contentbox-swagger.json; then
-            cp -v tests/results/contentbox-test-results-lucee@5-coldbox^7-experimental-false/contentbox-swagger.json tests/results/
+          if test -f tests/results/contentbox-test-results-boxlang-cfml@1-coldbox^8-experimental-true/contentbox-swagger.json; then
+            cp -v tests/results/contentbox-test-results-boxlang-cfml@1-coldbox^8-experimental-true/contentbox-swagger.json tests/results/
           else
-            echo "File tests/results/contentbox-test-results-lucee@5-coldbox^7-experimental-false/contentbox-swagger.json does not exist"
+            echo "File tests/results/contentbox-test-results-boxlang-cfml@1-coldbox^8-experimental-true/contentbox-swagger.json does not exist"
           fi
           # Run Docs Build
-          box run-script build:allDocs
+          box run-script build:apiDocs
 
       - name: Update changelog [unreleased] with latest version
-        uses: thomaseizinger/keep-a-changelog-new-release@1.3.0
+        uses: thomaseizinger/keep-a-changelog-new-release@3.1.0
         if: env.SNAPSHOT == 'false'
         with:
           changelogPath: ./changelog.md
@@ -139,7 +140,7 @@ jobs:
         working-directory: build/build-contentbox
 
       - name: Commit Changelog [unreleased] with latest version
-        uses: EndBug/add-and-commit@v9.1.4
+        uses: EndBug/add-and-commit@v10
         if: env.SNAPSHOT == 'false'
         with:
           author_name: Github Actions
@@ -157,7 +158,7 @@ jobs:
 
       - name: Upload Build Artifacts
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: contentbox-variants
           path: |
@@ -195,7 +196,7 @@ jobs:
           cd $ROOT_DIR/build/build-contentbox/installer-module && box forgebox publish
 
       - name: Create Github Release
-        uses: taiki-e/create-gh-release-action@v1.8.0
+        uses: taiki-e/create-gh-release-action@v1.9.3
         continue-on-error: true
         if: env.SNAPSHOT == 'false'
         with:
@@ -226,13 +227,13 @@ jobs:
     needs: [ build ]
     steps:
       - name: Checkout Development Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: env.LTS == 'false'
         with:
           ref: development
 
       - name: Checkout LTS Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: env.LTS == 'true'
 
       - name: Setup CommandBox
@@ -241,7 +242,7 @@ jobs:
           forgeboxAPIKey: ${{ secrets.FORGEBOX_TOKEN }}
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: contentbox-variants
           path: .tmp
@@ -261,7 +262,7 @@ jobs:
           git pull
 
       - name: Commit Version Bump
-        uses: EndBug/add-and-commit@v9.1.4
+        uses: EndBug/add-and-commit@v10
         with:
           author_name: Github Actions
           author_email: info@ortussolutions.com

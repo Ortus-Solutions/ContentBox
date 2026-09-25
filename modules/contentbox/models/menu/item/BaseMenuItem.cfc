@@ -14,139 +14,133 @@ component
 	cacheuse           ="read-write"
 	discriminatorColumn="menuType"
 {
-
-	/* *********************************************************************
-	 **                          DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          DI
+	 **********************************************************************/
 
 	property
-		name      ="menuItemService"
-		inject    ="provider:menuItemService@contentbox"
+		name="menuItemService"
+		inject="provider:menuItemService@contentbox"
 		persistent="false";
 
-	/* *********************************************************************
-	 **							PROPERTIES due to ACF Bug
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES due to ACF Bug
+	 **********************************************************************/
 
 	property
-		name   ="createdDate"
-		column ="createdDate"
-		type   ="date"
+		name="createdDate"
+		column="createdDate"
+		type="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false";
+		update="false";
 
 	property
-		name   ="modifiedDate"
-		column ="modifiedDate"
-		type   ="date"
+		name="modifiedDate"
+		column="modifiedDate"
+		type="date"
 		ormtype="timestamp"
 		notnull="true";
 
 	property
-		name   ="isDeleted"
-		column ="isDeleted"
+		name="isDeleted"
+		column="isDeleted"
 		ormtype="boolean"
 		notnull="true"
 		default="false";
 
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="menuItemID"
-		column   ="menuItemID"
+		name="menuItemID"
+		column="menuItemID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	property
-		name   ="title"
-		column ="title"
+		name="title"
+		column="title"
 		notnull="true"
 		ormtype="string"
-		length ="200"
+		length="200"
 		default="";
 
 	property
-		name   ="label"
-		column ="label"
+		name="label"
+		column="label"
 		notnull="false"
 		ormtype="string"
-		length ="200"
+		length="200"
 		default="";
 
 	property
-		name   ="itemClass"
-		column ="itemClass"
+		name="itemClass"
+		column="itemClass"
 		notnull="false"
 		ormtype="string"
-		length ="200"
+		length="200"
 		default="";
 
 	property
-		name   ="data"
-		column ="data"
+		name="data"
+		column="data"
 		notnull="false"
 		ormtype="string"
 		default="";
 
-	property
-		name   ="active"
-		column ="active"
-		ormtype="boolean"
-		default="true";
+	property name="active" column="active" ormtype="boolean" default="true";
 
 	property
-		name  ="menuType"
+		name="menuType"
 		column="menuType"
 		insert="false"
 		update="false";
 
-	/* *********************************************************************
-	 **                          RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          RELATIONSHIPS
+	 **********************************************************************/
 
 	// M20 - Owning menu
 	property
-		name     ="menu"
-		cfc      ="contentbox.models.menu.Menu"
+		name="menu"
+		cfc="contentbox.models.menu.Menu"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_menuID"
-		lazy     ="true"
-		notnull  ="true";
+		fkcolumn="FK_menuID"
+		lazy="true"
+		notnull="true";
 
 	// M20 - Parent Menu item
 	property
-		name     ="parent"
-		cfc      ="BaseMenuItem"
+		name="parent"
+		cfc="BaseMenuItem"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_parentID"
-		lazy     ="true";
+		fkcolumn="FK_parentID"
+		lazy="true";
 
 	// O2M - Child Menu Item
 	property
-		name        ="children"
+		name="children"
 		singularName="child"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="extra"
-		cfc         ="BaseMenuItem"
-		fkcolumn    ="FK_parentID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
-
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+		fieldtype="one-to-many"
+		type="array"
+		lazy="extra"
+		cfc="BaseMenuItem"
+		fkcolumn="FK_parentID"
+		inverse="true"
+		cascade="all-delete-orphan";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
 	this.pk = "menuItemID";
 
 	this.memento = {
-		defaultIncludes : [
+		defaultIncludes: [
 			"active",
 			"data",
 			"itemClass",
@@ -155,22 +149,22 @@ component
 			"children",
 			"parentSnapshot:parent"
 		],
-		defaultExcludes : [ "menu", "parent" ]
+		defaultExcludes: [ "menu", "parent"]
 	};
 
 	this.constraints = {
-		"title"     : { required : true, size : "1..200" },
-		"label"     : { required : false, size : "1..200" },
-		"itemClass" : { required : false, size : "1..200" },
-		"data"      : { required : false, size : "1..255" }
+		"title"    : { required: true, size: "1..200" },
+		"label"    : { required: false, size: "1..200" },
+		"itemClass": { required: false, size: "1..200" },
+		"data"     : { required: false, size: "1..255" }
 	};
 
-	/* *********************************************************************
-	 **                          CONSTRUCTOR
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          CONSTRUCTOR
+	 **********************************************************************/
 
-	BaseMenuItem function init(){
-		variables.active   = true;
+	BaseMenuItem function init() {
+		variables.active = true;
 		variables.children = [];
 
 		super.init();
@@ -181,37 +175,37 @@ component
 	/**
 	 * Build a parent snapshot
 	 */
-	struct function getParentSnapshot(){
+	struct function getParentSnapshot() {
 		return ( hasParent() ? getParent().getInfoSnapshot() : {} );
 	}
 
 	/**
 	 * Utility method to get a snapshot of this menu item
 	 */
-	struct function getInfoSnapshot(){
+	struct function getInfoSnapshot() {
 		if ( isLoaded() ) {
 			return {
-				"menuItemID" : getId(),
-				"title"      : getTitle(),
-				"active"     : getActive(),
-				"menuType"   : getMenuType()
+				"menuItemID": getId(),
+				"title"     : getTitle(),
+				"active"    : getActive(),
+				"menuType"  : getMenuType()
 			};
 		}
 		return {};
 	}
 
-	/* *********************************************************************
-	 **                          PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Get a handy, formatted string of attributes that are applicable for the current menu item
 	 */
-	public string function getAttributesAsString(){
-		var str   = "";
+	public string function getAttributesAsString() {
+		var str = "";
 		var title = !isNull( getTitle() ) ? getTitle() : "";
-		var cls   = !isNull( getItemClass() ) ? getItemClass() : "";
-		var data  = !isNull( getData() ) ? getData() : "";
+		var cls = !isNull( getItemClass() ) ? getItemClass() : "";
+		var data = !isNull( getData() ) ? getData() : "";
 		// handle title
 		if ( len( title ) ) {
 			str &= " title=""#htmlEditFormat( title )#""";
@@ -255,7 +249,7 @@ component
 	 *
 	 * @options.hint Additional arguments to be used in the method
 	 */
-	public boolean function canDisplay( required struct options = {} ){
+	public boolean function canDisplay( required struct options = {} ) {
 		return getActive();
 	}
 

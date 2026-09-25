@@ -6,21 +6,27 @@
  * Manage roles
  */
 component extends="baseHandler" {
-
 	// Dependencies
 	property name="roleService" inject="roleService@contentbox";
+
 	property name="permissionService" inject="permissionService@contentbox";
 
 	/**
 	 * Pre handler
 	 *
-	 * @event         
-	 * @action        
+	 * @event
+	 * @action
 	 * @eventArguments
-	 * @rc            
-	 * @prc           
+	 * @rc
+	 * @prc
 	 */
-	function preHandler( event, action, eventArguments, rc, prc ){
+	function preHandler(
+		event,
+		action,
+		eventArguments,
+		rc,
+		prc
+	) {
 		// Tab control
 		prc.tabUsers = true;
 	}
@@ -29,21 +35,21 @@ component extends="baseHandler" {
 	 * Manage roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// exit Handlers
-		prc.xehRoleRemove      = "#prc.cbAdminEntryPoint#.roles.remove";
-		prc.xehRoleEditor      = "#prc.cbAdminEntryPoint#.roles.editor";
-		prc.xehRoleSave        = "#prc.cbAdminEntryPoint#.roles.save";
+		prc.xehRoleRemove = "#prc.cbAdminEntryPoint#.roles.remove";
+		prc.xehRoleEditor = "#prc.cbAdminEntryPoint#.roles.editor";
+		prc.xehRoleSave = "#prc.cbAdminEntryPoint#.roles.save";
 		prc.xehRolePermissions = "#prc.cbAdminEntryPoint#.roles.permissions";
-		prc.xehExport          = "#prc.cbAdminEntryPoint#.roles.export";
-		prc.xehExportAll       = "#prc.cbAdminEntryPoint#.roles.exportAll";
-		prc.xehImportAll       = "#prc.cbAdminEntryPoint#.roles.importAll";
+		prc.xehExport = "#prc.cbAdminEntryPoint#.roles.export";
+		prc.xehExportAll = "#prc.cbAdminEntryPoint#.roles.exportAll";
+		prc.xehImportAll = "#prc.cbAdminEntryPoint#.roles.importAll";
 
 		// Get all roles
-		prc.roles          = roleService.list( sortOrder = "role", asQuery = false );
+		prc.roles = roleService.list( sortOrder = "role", asQuery = false );
 		// Tab
 		prc.tabUsers_roles = true;
 		// view
@@ -54,36 +60,46 @@ component extends="baseHandler" {
 	 * Save Roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
-	function save( event, rc, prc ){
+	function save( event, rc, prc ) {
 		// Inflate the right Permissions according to toggle pattern: permissions_id_toggle
-		rc.permissions = rc
-			.filter( function( key, value ){
-				return key.findNoCase( "permissions_" );
-			} )
-			.reduce( function( results, key, value ){
-				results.append( getToken( key, "2", "_" ) );
-				return results;
-			}, [] );
+		rc.permissions = rc.filter(
+				function( key, value ) {
+					return key.findNoCase( "permissions_" );
+				}
+			).reduce(
+				function( results, key, value ) {
+					results.append( getToken(
+								key,
+								"2",
+								"_"
+							) );
+					return results;
+				},
+				[]
+			);
 
 		// populate and get
 		prc.oRole = populate(
-			model               : roleService.get( rc.roleID ),
-			composeRelationships: true,
-			exclude             : "roleID"
+			model                = roleService.get( rc.roleID ),
+			composeRelationships = true,
+			exclude              = "roleID"
 		);
 
 		// Validate
 		var vResults = validate( prc.oRole );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preRoleSave", { role : prc.oRole, roleID : rc.roleID } );
+			announce(
+				"cbadmin_preRoleSave",
+				{ role: prc.oRole, roleID: rc.roleID }
+			);
 			// save role
 			roleService.save( prc.oRole );
 			// announce event
-			announce( "cbadmin_postRoleSave", { role : prc.oRole } );
+			announce( "cbadmin_postRoleSave", { role: prc.oRole } );
 			// messagebox
 			cbMessageBox().setMessage( "info", "Role saved!" );
 			// relocate
@@ -99,12 +115,12 @@ component extends="baseHandler" {
 	 * Remove Roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
-	function remove( event, rc, prc ){
+	function remove( event, rc, prc ) {
 		// announce event
-		announce( "cbadmin_preRoleRemove", { roleID : rc.roleID } );
+		announce( "cbadmin_preRoleRemove", { roleID: rc.roleID } );
 
 		var allRoles = roleService.getAll( rc.roleID );
 
@@ -117,7 +133,7 @@ component extends="baseHandler" {
 		}
 
 		// announce event
-		announce( "cbadmin_postRoleRemove", { roleID : rc.roleID } );
+		announce( "cbadmin_postRoleRemove", { roleID: rc.roleID } );
 		// Message
 		cbMessageBox().setMessage( "info", "Role Removed!" );
 		// relocate
@@ -127,7 +143,7 @@ component extends="baseHandler" {
 	/**
 	 * Create or Edit Roles
 	 */
-	function editor( event, rc, prc ){
+	function editor( event, rc, prc ) {
 		param rc.roleId = 0;
 		// Get or fail
 		if ( isNull( prc.oRole ) ) {
@@ -136,7 +152,7 @@ component extends="baseHandler" {
 		// Load permissions
 		prc.aPermissions = variables.permissionService.list( sortOrder = "permission", asQuery = false );
 		// Exit handlers
-		prc.xehRoleSave  = "#prc.cbAdminEntryPoint#.roles.save";
+		prc.xehRoleSave = "#prc.cbAdminEntryPoint#.roles.save";
 		// View
 		event.setView( "roles/editor" );
 	}
@@ -145,29 +161,38 @@ component extends="baseHandler" {
 	 * Export a role
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
-	function export( event, rc, prc ){
-		return variables.roleService.get( event.getValue( "roleID", 0 ) ).getMemento( includes = "permissions" );
+	function export( event, rc, prc ) {
+		return variables
+			.roleService
+			.get( event.getValue( "roleID", 0 ) )
+			.getMemento( includes = "permissions" );
 	}
 
 	/**
 	 * Export all roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
-	function exportAll( event, rc, prc ){
+	function exportAll( event, rc, prc ) {
 		param rc.roleID = "";
 		// Export all or some
 		if ( len( rc.roleID ) ) {
-			return rc.roleID
+			return rc
+				.roleID
 				.listToArray()
-				.map( function( id ){
-					return variables.roleService.get( arguments.id ).getMemento( profile: "export" );
-				} );
+				.map(
+					function( id ) {
+						return variables
+							.roleService
+							.get( arguments.id )
+							.getMemento( profile = "export" );
+					}
+				);
 		} else {
 			return variables.roleService.getAllForExport();
 		}
@@ -177,23 +202,23 @@ component extends="baseHandler" {
 	 * Import roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
-	function importAll( event, rc, prc ){
+	function importAll( event, rc, prc ) {
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try {
-			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
+			if ( len( rc.importFile ) && fileExists( rc.importFile ) ) {
 				var importLog = roleService.importFromFile( importFile = rc.importFile, override = rc.overrideContent );
 				cbMessageBox().info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
 				cbMessageBox().error(
-					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
-				);
+						"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
+					);
 			}
-		} catch ( any e ) {
+		} catch (any e) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			cbMessageBox().error( errorMessage );

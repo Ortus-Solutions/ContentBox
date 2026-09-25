@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -41,23 +41,24 @@
  * @author Luis Majano
  */
 component accessors="true" singleton threadsafe {
-
 	// DI
 	property name="controller" inject="coldbox";
+
 	property name="settingService" inject="settingService@contentbox";
 
 	// Properties
 	property name="pagingMaxRows";
+
 	property name="PagingBandGap";
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		return this;
 	}
 
-	function onDIComplete(){
+	function onDIComplete() {
 		// Setup Paging Properties
 		setPagingMaxRows( variables.settingService.getSetting( "cb_paging_maxrows" ) );
 		setPagingBandGap( variables.settingService.getSetting( "cb_paging_bandgap" ) );
@@ -71,15 +72,15 @@ component accessors="true" singleton threadsafe {
 	 *
 	 * @return struct of { startrow:numeric, maxrow:numeric }
 	 */
-	struct function getBoundaries( numeric pagingMaxRows, numeric page ){
-		var boundaries = { "startrow" : 1, "maxrow" : 0 };
-		var event      = getController().getRequestService().getContext();
-		var maxRows    = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
+	struct function getBoundaries( numeric pagingMaxRows, numeric page ) {
+		var boundaries = { "startrow": 1, "maxrow": 0 };
+		var event = getController().getRequestService().getContext();
+		var maxRows = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
 
 		arguments.page = isNull( arguments.page ) ? event.getValue( "page", 1 ) : arguments.page;
 
 		boundaries.startrow = ( arguments.page * maxrows - maxRows ) + 1;
-		boundaries.maxrow   = boundaries.startrow + maxRows - 1;
+		boundaries.maxrow = boundaries.startrow + maxRows - 1;
 
 		return boundaries;
 	}
@@ -99,24 +100,33 @@ component accessors="true" singleton threadsafe {
 		numeric pagingMaxRows,
 		boolean asList = false,
 		numeric page
-	){
-		var event        = variables.controller.getRequestService().getContext();
-		var currentPage  = isNull( arguments.page ) ? event.getValue( "page", 1 ) : arguments.page;
+	) {
+		var event = variables
+			.controller
+			.getRequestService()
+			.getContext();
+		var currentPage = isNull( arguments.page ) ? event.getValue( "page", 1 ) : arguments.page;
 		var pagingTabsUI = "";
-		var maxRows      = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
-		var bandGap      = getPagingBandGap();
-		var theLink      = arguments.link;
-		var pageFrom     = 0;
-		var pageTo       = 0;
-		var pageIndex    = 0;
+		var maxRows = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
+		var bandGap = getPagingBandGap();
+		var theLink = arguments.link;
+		var pageFrom = 0;
+		var pageTo = 0;
+		var pageIndex = 0;
 
 		// Only page if records found
 		if ( arguments.foundRows > 0 ) {
 			// Calculate Total Pages
 			var totalPages = ceiling( arguments.foundRows / maxRows );
 
-			if ( currentPage gt totalPages ) {
-				variables.controller.relocate( url: replace( theLink, "@page@", totalPages ) );
+			if ( currentPage GT totalPages ) {
+				variables.controller.relocate(
+						url = replace(
+							theLink,
+							"@page@",
+							totalPages
+						)
+					);
 			}
 
 			savecontent variable="pagingTabsUI" {

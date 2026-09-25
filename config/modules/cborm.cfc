@@ -1,6 +1,6 @@
 component {
 
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox ORM
@@ -8,23 +8,23 @@ component {
 		 * ColdBox cborm configurations https://forgebox.io/view/cborm
 		 */
 		return {
-			injection : {
+			injection: {
 				// enable entity injection via WireBox
-				enabled : true,
+				enabled: true,
 				// Which entities to include in DI ONLY, if empty include all entities
-				include : "",
+				include: "",
 				// Which entities to exclude from DI, if empty, none are excluded
-				exclude : ""
+				exclude: ""
 			},
-			resources : {
+			resources: {
 				// Enable the ORM Resource Event Loader
-				eventLoader  : true,
+				eventLoader : true,
 				// Prefix to use on all the registered pre/post{Entity}{Action} events
-				eventPrefix  : "cb_",
+				eventPrefix : "cb_",
 				// Pagination max rows
-				maxRows      : 25,
+				maxRows     : 25,
 				// Pagination max row limit: 0 = no limit
-				maxRowsLimit : 500
+				maxRowsLimit: 500
 			}
 		};
 	}
