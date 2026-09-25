@@ -92,6 +92,41 @@ component extends="tests.resources.BaseApiTest" {
 								);
 							}
 						);
+						given(
+							"a draft (unpublished) entry and an authenticated admin",
+							() => {
+								then(
+									"then I should still be able to view it, unlike an anonymous caller",
+									() => {
+										// Not wrapped in withRollback(): the simulated this.get() request
+										// runs its own ORM session/transaction and cannot see an
+										// uncommitted row. Commit for real and clean up afterwards.
+										var oDraft = variables.entryService.new( {
+												title      : "authed-draft-entry",
+												slug       : "authed-draft-entry",
+												isPublished: false,
+												site       : variables.siteService.getDefaultSite(),
+												creator    : variables.loggedInData.user
+											} );
+										oDraft.addNewContentVersion(
+												content   = "visible only to a privileged caller",
+												changelog = "draft fixture for authenticated ENTRIES_ADMIN visibility test",
+												author    = variables.loggedInData.user
+											);
+										oDraft = variables.entryService.save( oDraft );
+
+										try {
+											var event = this.get( "/cbapi/v1/sites/default/entries/#oDraft.getContentID()#" );
+											expect( event.getResponse() ).toHaveStatus( 200,
+													event.getResponse().getMessagesString() );
+											expect( event.getResponse().getData().slug ).toBe( "authed-draft-entry" );
+										} finally {
+											variables.entryService.delete( oDraft );
+										}
+									}
+								);
+							}
+						);
 					}
 				); // end story view site by id or slug
 
@@ -260,21 +295,41 @@ component extends="tests.resources.BaseApiTest" {
 									"then it should update a content item",
 									() => {
 										getCache( "template" ).clearAll();
-										withRollback(
-											() => {
-												var event = this.put(
-														"/cbapi/v1/sites/default/entries/disk-queues-77caf",
-														{
-															content  : "I am a new piece of content for the disk-queues-77caf!",
-															changelog: "Update from a bdd test!"
-														}
-													);
-												expect( event.getResponse() ).toHaveStatus( 200,
-														event.getResponse().getMessagesString() );
-												expect( event.getResponse().getData().renderedContent ).toInclude( "I am a new piece of content for the disk-queues-77caf!" );
-												expect( event.getResponse().getData().activeContent.changelog ).toInclude( "bdd test" );
-											}
-										);
+										// Not wrapped in withRollback(): editing the shared "disk-queues-77caf"
+										// fixture (used across the whole suite, including
+										// PublicContentAccessSpec's anonymous-visibility assertions) risks the
+										// same cross-engine withRollback()-doesn't-reliably-undo-an-UPDATE
+										// issue already found for Site.cfc/SitesSpec. Edit a disposable entry
+										// instead so this test can't leak a broken fixture into other specs.
+										var oEntry = variables.entryService.new( {
+												title        : "editable-entry",
+												slug         : "editable-entry",
+												isPublished  : true,
+												publishedDate: dateAdd( "d", -1, now() ),
+												site         : variables.siteService.getDefaultSite(),
+												creator      : variables.loggedInData.user
+											} );
+										oEntry.addNewContentVersion(
+												content   = "original content",
+												changelog = "fixture for edit test",
+												author    = variables.loggedInData.user
+											);
+										oEntry = variables.entryService.save( oEntry );
+										try {
+											var event = this.put(
+													"/cbapi/v1/sites/default/entries/#oEntry.getContentID()#",
+													{
+														content  : "I am a new piece of content for the editable-entry!",
+														changelog: "Update from a bdd test!"
+													}
+												);
+											expect( event.getResponse() ).toHaveStatus( 200,
+													event.getResponse().getMessagesString() );
+											expect( event.getResponse().getData().renderedContent ).toInclude( "I am a new piece of content for the editable-entry!" );
+											expect( event.getResponse().getData().activeContent.changelog ).toInclude( "bdd test" );
+										} finally {
+											this.delete( "/cbapi/v1/sites/default/entries/#oEntry.getContentID()#" );
+										}
 									}
 								);
 							}

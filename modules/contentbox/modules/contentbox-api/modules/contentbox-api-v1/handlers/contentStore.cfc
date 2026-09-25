@@ -10,17 +10,20 @@ component extends="baseContentHandler" {
 	variables.sortOrder = "publishedDate DESC";
 	// The name of the entity this resource handler controls. Singular name please.
 	variables.entity = "ContentStore";
+	// The permission prefix used to check for full (admin/editor) content access
+	variables.contentType = "CONTENTSTORE";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 
 	/**
 	 * Display all content store items using different filters
 	 *
+	 * Publicly accessible: only published items are returned, so no authentication is required.
+	 *
 	 * @tags      ContentStore
 	 * @responses contentbox/apidocs/contentStore/index/responses.json
-	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
+	function index( event, rc, prc ) {
 		// Paging + Mementifier
 		param rc.page = 1;
 		param rc.excludes = "HTMLTitle,HTMLKeywords,HTMLDescription";
@@ -77,11 +80,13 @@ component extends="baseContentHandler" {
 	/**
 	 * Show a content store item using the id
 	 *
+	 * Publicly accessible: anonymous requests only resolve items that are published,
+	 * not expired, and not password protected. See baseContentHandler.show().
+	 *
 	 * @tags      ContentStore
 	 * @responses contentbox/apidocs/contentStore/show/responses.json
-	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
+	function show( event, rc, prc ) {
 		param rc.includes = arrayToList(
 			[
 				"activeContent",
@@ -107,7 +112,7 @@ component extends="baseContentHandler" {
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
 		// Supersize it
-		arguments.contentType = "CONTENTSTORE";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 
@@ -119,7 +124,7 @@ component extends="baseContentHandler" {
 	 * @x         -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" {
-		arguments.contentType = "CONTENTSTORE";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 

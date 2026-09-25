@@ -239,18 +239,45 @@ component extends="tests.resources.BaseApiTest" {
 								then(
 									"then it should update a site",
 									() => {
-										withRollback(
-											() => {
-												var event = this.put(
-														"/cbapi/v1/sites/default",
-														{ description: "bdd test baby!", isActive: false }
-													);
-												expect( event.getResponse() ).toHaveStatus( 200,
-														event.getResponse().getMessagesString() );
-												expect( event.getResponse().getData().description ).toInclude( "bdd test baby!" );
-												expect( event.getResponse().getData().isActive ).toBeFalse();
-											}
-										);
+										// Not wrapped in withRollback(): the "default" site is a shared
+										// fixture nearly every other spec relies on, and withRollback()
+										// isn't reliable for undoing an UPDATE across every engine. Edit
+										// a disposable site instead so this test can't leak an inactive
+										// "default" site into the rest of the suite.
+										var siteId = createUUID();
+										var testSite = variables.siteService.save(
+												variables.siteService.new(
+														{
+															name         : "bddtest-#siteId#",
+															slug         : "bddtest-#siteId#",
+															description  : "my bdd test site",
+															domain       : "bddtest.com",
+															domainRegex  : "bddtest\.com",
+															domainAliases: "[]",
+															activeTheme  : "default",
+															homepage     : "cbBlog"
+														}
+													)
+											);
+										try {
+											var event = this.put(
+													"/cbapi/v1/sites/#testSite.getSiteId()#",
+													{ description: "bdd test baby!", isActive: false }
+												);
+											expect( event.getResponse() ).toHaveStatus( 200,
+													event.getResponse().getMessagesString() );
+											expect( event.getResponse().getData().description ).toInclude( "bdd test baby!" );
+											expect( event.getResponse().getData().isActive ).toBeFalse();
+										} finally {
+											// Clean up through the API, not the ORM service directly: the
+											// PUT above ran in a separate simulated request with its own
+											// ORM session, so `testSite` is stale here. Calling
+											// siteService.delete() on it triggers "An exception occurred
+											// when committing the transaction" on Adobe CF, same as the
+											// Hibernate cascade quirk SiteService.delete() already comments
+											// on. The delete-site test below avoids it the same way.
+											this.delete( "/cbapi/v1/sites/#testSite.getSiteId()#" );
+										}
 									}
 								);
 							}
