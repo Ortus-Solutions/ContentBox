@@ -35,7 +35,7 @@ component extends="baseHandler" {
 		param rc.site = "";
 		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
 
-		if ( !hasFullContentAccess( prc ) && !prc.oCurrentSite.getIsActive() ) {
+		if ( !hasFullContentAccess() && !prc.oCurrentSite.getIsActive() ) {
 			throw(
 				message      = "No site found for ID/Slug #prc.oCurrentSite.getSlug()#",
 				type         = "EntityNotFound",
@@ -64,7 +64,7 @@ component extends="baseHandler" {
 			]
 		);
 
-		if ( !hasFullContentAccess( prc ) ) {
+		if ( !hasFullContentAccess() ) {
 			param rc.id = 0;
 			var oContent = (
 				variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
@@ -88,31 +88,19 @@ component extends="baseHandler" {
 	 * anonymous callers and authenticated callers without that permission alike.
 	 *
 	 * These actions are whitelisted out of the JWT firewall entirely (see ModuleConfig.cfc),
-	 * so the firewall never parses an incoming token or populates prc.oCurrentAuthor for them.
-	 * We therefore parse it ourselves: a missing/invalid/expired token throws and is treated
-	 * as anonymous. Author.hasPermission() matches its argument as a single permission name,
-	 * so each candidate permission must be checked individually rather than as a comma list.
+	 * so the firewall never parses an incoming token for them. We therefore parse it ourselves:
+	 * a missing/invalid/expired token throws and is treated as anonymous. jwtAuth().parseToken()
+	 * logs the resolved author into cbSecurity's own SecurityService as a side effect, so
+	 * cbSecure().has() (an "any of these permissions" check, same as cbSecurity's own
+	 * AuthValidator) correctly reflects that authentication afterwards.
 	 */
-	private boolean function hasFullContentAccess( required prc ) {
+	private boolean function hasFullContentAccess() {
 		try {
 			jwtAuth().parseToken();
 		} catch (any e) {
 			return false;
 		}
-
-		for ( var thisPermission in listToArray(
-			"#variables.contentType#_ADMIN,#variables.contentType#_EDITOR"
-		) ) {
-			if (
-				arguments
-					.prc
-					.oCurrentAuthor
-					.hasPermission( thisPermission )
-			) {
-				return true;
-			}
-		}
-		return false;
+		return cbSecure().has( "#variables.contentType#_ADMIN,#variables.contentType#_EDITOR" );
 	}
 
 	/***************************************************************************/
