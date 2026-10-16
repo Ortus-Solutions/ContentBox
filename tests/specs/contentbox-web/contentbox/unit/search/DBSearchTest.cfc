@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -8,56 +8,73 @@ component extends="tests.resources.BaseTest" {
 
 	/*********************************** BDD SUITES ***********************************/
 
-	function run( testResults, testBox ){
-		describe( "DB Search Adapter", function(){
-			beforeEach( function( currentSpec ){
-				setup();
-				model = getInstance( "DBSearch@contentbox" );
-			} );
+	function run( testResults, testBox ) {
+		describe(
+			"DB Search Adapter",
+			() => {
+				beforeEach(
+					( currentSpec ) => {
+						setup();
+						model = getInstance( "DBSearch@contentbox" );
+					}
+				);
 
-			it( "can do search with no results", function(){
-				var r = model.search( searchTerm = "bogus pocus" );
+				it(
+					"can do search with no results",
+					() => {
+						var r = model.search( searchTerm = "bogus pocus" );
 
-				expect( r.getTotal() ).toBe( 0 );
-				expect( r.getSearchTerm() ).toBe( "bogus pocus" );
-				expect( r.getResults() ).toBeArray();
-				expect( r.getError() ).toBeFalse();
-			} );
+						expect( r.getTotal() ).toBe( 0 );
+						expect( r.getSearchTerm() ).toBe( "bogus pocus" );
+						expect( r.getResults() ).toBeArray();
+						expect( r.getError() ).toBeFalse();
+					}
+				);
 
-			it( "can do search with results", function(){
-				var r = model.search( searchTerm = "Support" );
+				it(
+					"can do search with results",
+					() => {
+						var r = model.search( searchTerm = "Support" );
 
-				expect( r.getTotal() ).toBeGT( 0 );
-				expect( r.getSearchTerm() ).toBe( "Support" );
-				expect( r.getResults() ).toBeArray();
-				expect( r.getResults().size() ).toBeGT( 0 );
-				expect( r.getError() ).toBeFalse();
-			} );
+						expect( r.getTotal() ).toBeGT( 0 );
+						expect( r.getSearchTerm() ).toBe( "Support" );
+						expect( r.getResults() ).toBeArray();
+						expect( r.getResults().size() ).toBeGT( 0 );
+						expect( r.getError() ).toBeFalse();
+					}
+				);
 
-			it( "can render search results", function(){
-				// setup
-				var r            = model.search( searchTerm = "Support" );
-				var prc          = getRequestContext().getPrivateCollection();
-				prc.cbEntryPoint = "/";
-				prc.cbSettings   = {};
+				it(
+					"can render search results",
+					() => {
+						// setup
+						var r = model.search( searchTerm = "Support" );
+						var prc = getRequestContext().getPrivateCollection();
+						prc.cbEntryPoint = "/";
+						prc.cbSettings = {};
 
-				var rendering = model.renderSearchWithResults( r );
-				// debug( rendering );
-				expect( rendering ).toInclude( "Support" ).toInclude( "searchResults" );
-			} );
+						var rendering = model.renderSearchWithResults( r );
+						// debug( rendering );
+						expect( rendering ).toInclude( "Support" ).toInclude( "searchResults" );
+					}
+				);
 
-			it( "can render search with no results", function(){
-				// setup
-				var r            = model.search( searchTerm = "bogus pocus" );
-				var prc          = getRequestContext().getPrivateCollection();
-				prc.cbEntryPoint = "/";
-				prc.cbSettings   = {};
+				it(
+					"can render search with no results",
+					() => {
+						// setup
+						var r = model.search( searchTerm = "bogus pocus" );
+						var prc = getRequestContext().getPrivateCollection();
+						prc.cbEntryPoint = "/";
+						prc.cbSettings = {};
 
-				var rendering = model.renderSearchWithResults( r );
-				// debug( rendering );
-				expect( rendering ).toInclude( "searchResults" ).toInclude( "<strong>0</strong>" );
-			} );
-		} );
+						var rendering = model.renderSearchWithResults( r );
+						// debug( rendering );
+						expect( rendering ).toInclude( "searchResults" ).toInclude( "<strong>0</strong>" );
+					}
+				);
+			}
+		);
 	}
 
 }

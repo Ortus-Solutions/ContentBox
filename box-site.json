@@ -27,7 +27,7 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^7.0.0+7",
+        "coldbox":"^8",
 		"contentbox":"~@version.number@+@build.number@",
 		"commandbox-boxlang":"*",
 		"commandbox-migrations":"*"
@@ -35,6 +35,10 @@
 	"devDependencies":{
     },
     "installPaths":{
+		"coldbox":"lib/coldbox/"
+    },
+	"installPathConventions":{
+        "modules":"lib/modules"
     },
     "ignores":[
 	],
@@ -42,9 +46,6 @@
 		"contentbox:install":"install --force && cd modules/contentbox && install --force",
 		"contentbox:migrate" : "migrate up manager=contentbox",
 		"contentbox:migrate:up" : "run-script contentbox:migrate",
-		"contentbox:migrate:down" : "migrate down manager=contentbox",
-		"format":"cfformat run config/,handlers/,models/,modules_app/**/*.cfc,Application.cfc --overwrite",
-        "format:watch":"cfformat watch config/,handlers/,models/,modules_app/**/*.cfc,Application.cfc ./.cfformat.json",
-        "format:check":"cfformat check config/**/*.cfc,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc,Application.cfc"
+		"contentbox:migrate:down" : "migrate down manager=contentbox"
 	}
 }

@@ -6,31 +6,35 @@
  * Manage blog entries
  */
 component extends="baseContentHandler" {
-
 	// Dependencies
 	property name="ormService" inject="entryService@contentbox";
-
 	// Properties
-	variables.handler         = "entries";
+	variables.handler = "entries";
 	variables.defaultOrdering = "createdDate desc";
-	variables.entity          = "Entry";
-	variables.entityPlural    = "entries";
-	variables.securityPrefix  = "ENTRIES";
+	variables.entity = "Entry";
+	variables.entityPlural = "entries";
+	variables.securityPrefix = "ENTRIES";
 
 	/**
 	 * Pre Handler interceptions
 	 */
-	function preHandler( event, action, eventArguments, rc, prc ){
+	function preHandler(
+		event,
+		action,
+		eventArguments,
+		rc,
+		prc
+	) {
 		super.preHandler( argumentCollection = arguments );
 		// exit Handlers
-		prc.xehEntries     = "#prc.cbAdminEntryPoint#.entries.index";
+		prc.xehEntries = "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehEntryEditor = "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehEntryRemove = "#prc.cbAdminEntryPoint#.entries.remove";
 		// Verify if blog is disabled?
 		if ( !prc.oCurrentSite.getIsBlogEnabled() ) {
 			cbMessageBox().warn(
-				"The blog has been currently disabled. You can activate it again in your ContentBox settings panel"
-			);
+					"The blog has been currently disabled. You can activate it again in your ContentBox settings panel"
+				);
 			relocate( prc.xehDashboard );
 		}
 	}
@@ -38,14 +42,14 @@ component extends="baseContentHandler" {
 	/**
 	 * Show Content
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// exit handlers
-		prc.xehEntrySearch     = "#prc.cbAdminEntryPoint#.entries.index";
-		prc.xehEntryTable      = "#prc.cbAdminEntryPoint#.entries.contentTable";
+		prc.xehEntrySearch = "#prc.cbAdminEntryPoint#.entries.index";
+		prc.xehEntryTable = "#prc.cbAdminEntryPoint#.entries.contentTable";
 		prc.xehEntryBulkStatus = "#prc.cbAdminEntryPoint#.entries.bulkstatus";
-		prc.xehEntryExportAll  = "#prc.cbAdminEntryPoint#.entries.exportAll";
-		prc.xehEntryImport     = "#prc.cbAdminEntryPoint#.entries.importAll";
-		prc.xehEntryClone      = "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehEntryExportAll = "#prc.cbAdminEntryPoint#.entries.exportAll";
+		prc.xehEntryImport = "#prc.cbAdminEntryPoint#.entries.importAll";
+		prc.xehEntryClone = "#prc.cbAdminEntryPoint#.entries.clone";
 
 		// Light up
 		prc.tabContent_blog = true;
@@ -57,12 +61,12 @@ component extends="baseContentHandler" {
 	/**
 	 * Content table brought via ajax
 	 */
-	function contentTable( event, rc, prc ){
+	function contentTable( event, rc, prc ) {
 		// exit handlers
-		prc.xehEntrySearch    = "#prc.cbAdminEntryPoint#.entries.index";
+		prc.xehEntrySearch = "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehEntryQuickLook = "#prc.cbAdminEntryPoint#.entries.quickLook";
-		prc.xehEntryExport    = "#prc.cbAdminEntryPoint#.entries.export";
-		prc.xehEntryClone     = "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehEntryExport = "#prc.cbAdminEntryPoint#.entries.export";
+		prc.xehEntryClone = "#prc.cbAdminEntryPoint#.entries.clone";
 		// Super size it
 		super.contentTable( argumentCollection = arguments );
 	}
@@ -70,7 +74,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Change the status of many content objects
 	 */
-	function bulkStatus( event, rc, prc ){
+	function bulkStatus( event, rc, prc ) {
 		arguments.relocateTo = prc.xehEntries;
 		super.bulkStatus( argumentCollection = arguments );
 	}
@@ -78,7 +82,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Show the editor
 	 */
-	function editor( event, rc, prc ){
+	function editor( event, rc, prc ) {
 		// Super size it
 		super.editor( argumentCollection = arguments );
 	}
@@ -86,16 +90,16 @@ component extends="baseContentHandler" {
 	/**
 	 * Save an entry
 	 */
-	function save( event, rc, prc ){
+	function save( event, rc, prc ) {
 		arguments.adminPermission = "ENTRIES_ADMIN,ENTRIES_EDITOR";
-		arguments.relocateTo      = prc.xehEntries;
+		arguments.relocateTo = prc.xehEntries;
 		super.save( argumentCollection = arguments );
 	}
 
 	/**
 	 * Clone an entry
 	 */
-	function clone( event, rc, prc ){
+	function clone( event, rc, prc ) {
 		arguments.relocateTo = prc.xehEntries;
 		super.clone( argumentCollection = arguments );
 	}
@@ -103,7 +107,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Remove an entry
 	 */
-	function remove( event, rc, prc ){
+	function remove( event, rc, prc ) {
 		arguments.relocateTo = prc.xehEntries;
 		super.remove( argumentCollection = arguments );
 	}
@@ -111,7 +115,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Editor selector for entries UI
 	 */
-	function editorSelector( event, rc, prc ){
+	function editorSelector( event, rc, prc ) {
 		// Sorting
 		arguments.sortOrder = "publishedDate asc";
 		// Supersize me
@@ -121,7 +125,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Import entries
 	 */
-	function importAll( event, rc, prc ){
+	function importAll( event, rc, prc ) {
 		arguments.relocateTo = prc.xehEntries;
 		super.importAll( argumentCollection = arguments );
 	}

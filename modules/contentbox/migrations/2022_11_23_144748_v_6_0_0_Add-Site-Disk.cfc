@@ -3,19 +3,22 @@
  * https://ortussolutions.atlassian.net/browse/CONTENTBOX-1452
  */
 component {
-
 	// Include Utils
 	include template="./util/MigrationUtils.cfm";
 
-	function up( schema, qb ){
+	function up( schema, qb ) {
 		if ( !hasColumn( "cb_site", "mediaDisk" ) ) {
-			schema.alter( "cb_site", function( table ){
-				table.addColumn( table.string( "mediaDisk", 50 ).nullable() );
-			} );
+			schema.alter(
+					"cb_site",
+					function( table ) {
+						table.addColumn( table.string( "mediaDisk", 50 ).nullable() );
+					}
+				);
 		}
 	}
 
-	function down( schema, qb ){
+	function down( schema, qb ) {
+
 	}
 
 }

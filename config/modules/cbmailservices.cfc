@@ -1,6 +1,6 @@
 component {
 
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox MailServices
@@ -9,23 +9,21 @@ component {
 		 */
 		return {
 			// The default token Marker Symbol
-			tokenMarker     : "@",
+			tokenMarker    : "@",
 			// Default protocol to use, it must be defined in the mailers configuration
-			defaultProtocol : "files",
+			defaultProtocol: "files",
 			// Here you can register one or many mailers by name
-			mailers         : {
-				"default" : { class : "CFMail" },
-				"files"   : {
-					class      : "File",
-					properties : { filePath : "config/logs/mail" }
+			mailers        : {
+				"default": { class: "CFMail" },
+				"files"  : {
+					class     : "File",
+					properties: { filePath: "config/logs/mail" }
 				}
 			},
 			// The defaults for all mail config payloads and protocols
-			defaults : {
-				 // from : "",
-			},
+			defaults    : {},
 			// Whether the scheduled task is running or not
-			runQueueTask : true
+			runQueueTask: true
 		};
 	}
 

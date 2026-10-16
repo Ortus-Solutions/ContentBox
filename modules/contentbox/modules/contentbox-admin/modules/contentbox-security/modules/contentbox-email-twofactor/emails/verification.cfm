@@ -1,6 +1,7 @@
 <cfoutput>
-    <cfset ETH = getInstance( "EmailTemplateHelper@contentbox" )>
-    #ETH.text( "
+	<cfset ETH = getInstance( "EmailTemplateHelper@contentbox" )>
+	#ETH.text(
+		"
         <p>Dear @name@,</p>
 
         <p>
@@ -19,5 +20,6 @@
         <p style='text-align: center'>
             <strong>Please note that this code is only valid for the next @tokenTimeout@ minutes</strong>
         </p>
-    " )#
+    "
+	)#
 </cfoutput>

@@ -8,7 +8,7 @@
 component {
 
 	// Configure Application
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox Directives
@@ -18,44 +18,44 @@ component {
 		 * you create the appropriate functions and define the environment in your .env or
 		 * in the `environments` struct.
 		 */
-		coldbox = {
+		variables.coldbox = {
 			// Application Setup
-			appName                  : getSystemSetting( "APPNAME", "ContentBox Modular CMS" ),
-			eventName                : "event",
+			appName                 : getSystemSetting( "APPNAME", "ContentBox Modular CMS" ),
+			eventName               : "event",
 			// Development Settings
-			reinitPassword           : getSystemSetting( "COLDBOX_REINITPASSWORD", "@fwPassword@" ),
-			reinitKey                : "fwreinit",
-			handlersIndexAutoReload  : false,
+			reinitPassword          : getSystemSetting( "COLDBOX_REINITPASSWORD", "@fwPassword@" ),
+			reinitKey               : "fwreinit",
+			handlersIndexAutoReload : false,
 			// Implicit Events
-			defaultEvent             : "Main.index",
-			requestStartHandler      : "",
-			requestEndHandler        : "",
-			applicationStartHandler  : "",
-			applicationEndHandler    : "",
-			sessionStartHandler      : "",
-			sessionEndHandler        : "",
-			missingTemplateHandler   : "",
+			defaultEvent            : "Main.index",
+			requestStartHandler     : "",
+			requestEndHandler       : "",
+			applicationStartHandler : "",
+			applicationEndHandler   : "",
+			sessionStartHandler     : "",
+			sessionEndHandler       : "",
+			missingTemplateHandler  : "",
 			// Extension Points
-			applicationHelper        : "",
-			viewsHelper              : "",
-			modulesExternalLocation  : [],
-			viewsExternalLocation    : "",
-			layoutsExternalLocation  : "",
-			handlersExternalLocation : "",
-			requestContextDecorator  : "",
-			controllerDecorator      : "",
+			applicationHelper       : "",
+			viewsHelper             : "",
+			modulesExternalLocation : [ "/lib/modules" ],
+			viewsExternalLocation   : "",
+			layoutsExternalLocation : "",
+			handlersExternalLocation: "",
+			requestContextDecorator : "",
+			controllerDecorator     : "",
 			// Error/Exception Handling
-			exceptionHandler         : "",
-			invalidEventHandler      : "",
-			customErrorTemplate      : "",
+			exceptionHandler        : "",
+			invalidEventHandler     : "",
+			customErrorTemplate     : "",
 			// Application Aspects
-			handlerCaching           : true,
-			eventCaching             : true,
-			viewCaching              : true,
+			handlerCaching          : true,
+			eventCaching            : true,
+			viewCaching             : true,
 			// Will automatically do a mapDirectory() on your `models` for you.
-			autoMapModels            : true,
+			autoMapModels           : true,
 			// Auto converts a json body payload into the RC
-			jsonPayloadToRC          : true
+			jsonPayloadToRC         : true
 		};
 
 		/**
@@ -63,7 +63,7 @@ component {
 		 * Custom Settings
 		 * --------------------------------------------------------------------------
 		 */
-		settings = {};
+		variables.settings = {};
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -76,20 +76,20 @@ component {
 		 *
 		 * Uncomment to use, but make sure your .env ENVIRONMENT key is also removed.
 		 */
-		environments = { development : "localhost" };
+		variables.environments = { development: "localhost" };
 
 		/**
 		 * --------------------------------------------------------------------------
 		 * Logging Directives
 		 * --------------------------------------------------------------------------
 		 */
-		logBox = {
+		variables.logBox = {
 			// Define Appenders
-			appenders : { coldboxTracer : { class : "coldbox.system.logging.appenders.ConsoleAppender" } },
+			appenders: { coldboxTracer: { class: "coldbox.system.logging.appenders.ConsoleAppender" } },
 			// Root Logger
-			root      : { levelmax : "INFO", appenders : "*" },
+			root     : { levelmax: "INFO", appenders: "*" },
 			// Implicit Level Categories
-			info      : [ "coldbox.system", "contentbox" ]
+			info     : [ "coldbox.system", "contentbox"]
 		};
 
 		/**
@@ -97,14 +97,14 @@ component {
 		 * Layout Settings
 		 * --------------------------------------------------------------------------
 		 */
-		layoutSettings = { defaultLayout : "", defaultView : "" };
+		variables.layoutSettings = { defaultLayout: "", defaultView: "" };
 
 		/**
 		 * --------------------------------------------------------------------------
 		 * Custom Interception Points
 		 * --------------------------------------------------------------------------
 		 */
-		interceptorSettings = { customInterceptionPoints : [] };
+		variables.interceptorSettings = { customInterceptionPoints: [] };
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -112,7 +112,7 @@ component {
 		 * --------------------------------------------------------------------------
 		 * Remember that the order of declaration is the order they will be registered and fired
 		 */
-		interceptors = [];
+		variables.interceptors = [];
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -120,13 +120,13 @@ component {
 		 * --------------------------------------------------------------------------
 		 * The available scopes are : session, client, cluster, cache, or a full instantiation CFC path
 		 */
-		flash = {
-			scope        : "cache",
-			properties   : { cacheName : "template" },
-			inflateToRC  : true, // automatically inflate flash data into the RC scope
-			inflateToPRC : false, // automatically inflate flash data into the PRC scope
-			autoPurge    : true, // automatically purge flash data for you
-			autoSave     : true // automatically save flash scopes at end of a request and on relocations.
+		variables.flash = {
+			scope       : "cache",
+			properties  : { cacheName: "template" },
+			inflateToRC : true, // automatically inflate flash data into the RC scope
+			inflateToPRC: false, // automatically inflate flash data into the PRC scope
+			autoPurge   : true, // automatically purge flash data for you
+			autoSave    : true // automatically save flash scopes at end of a request and on relocations.
 		};
 
 		/**
@@ -142,13 +142,13 @@ component {
 		 *
 		 * }
 		 */
-		moduleSettings = {};
+		variables.moduleSettings = {};
 	}
 
 	/**
 	 * Testing Mode.
 	 */
-	function testing(){
+	function testing() {
 		development();
 	}
 
@@ -156,26 +156,28 @@ component {
 	 * Development environment
 	 * ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	 */
-	function development(){
-		coldbox.handlersIndexAutoReload = true;
-		coldbox.handlerCaching          = false;
-		coldbox.debugMode               = true;
-		coldbox.reinitpassword          = "";
-		coldbox.customErrorTemplate     = "/coldbox/system/exceptions/Whoops.cfm";
+	function development() {
+		variables.coldbox.handlersIndexAutoReload = true;
+		variables.coldbox.handlerCaching = false;
+		variables.coldbox.debugMode = true;
+		variables.coldbox.reinitpassword = "";
+		variables.coldbox.customErrorTemplate = "/coldbox/system/exceptions/Whoops.cfm";
 
 		// No Singletons for easy testing
-		wirebox = {
-			 // singletonReload : true
-		};
+		// variables.wirebox = {// singletonReload : true};
 
 		// debugging file
-		logbox.appenders.files = {
-			class      : "coldbox.system.logging.appenders.RollingFileAppender",
-			properties : {
-				filename : "contentbox",
-				filePath : "/cbapp/config/logs/app"
+		variables
+			.logbox
+			.appenders
+			.files = {
+			class     : "coldbox.system.logging.appenders.RollingFileAppender",
+			properties: {
+				filename: "contentbox",
+				filePath: "/cbapp/config/logs/app"
 			}
 		};
+
 
 		// Specific Debugging + Logging
 		// logbox.debug 	= [ "cbsecurity" ];

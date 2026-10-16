@@ -6,18 +6,17 @@
  * ContentBox two factor authenticator handler
  */
 component extends="baseHandler" {
-
 	// Method Security
 	this.allowedMethods = {
-		"index"        : "GET",
-		"doValidation" : "POST",
-		"resendCode"   : "GET"
+		"index"       : "GET",
+		"doValidation": "POST",
+		"resendCode"  : "GET"
 	};
 
 	/**
 	 * Pre handler
 	 */
-	function preHandler( event, currentAction, rc, prc ){
+	function preHandler( event, currentAction, rc, prc ) {
 		super.preHandler( argumentCollection = arguments );
 		// Keep Flash data
 		flash.keep( "authorData" );
@@ -31,7 +30,7 @@ component extends="baseHandler" {
 		// Inflate author for requested events
 		prc.oAuthor = authorService.get( flash.get( "authorData" ).authorID );
 		// Verify author, just in case
-		if ( isNull( prc.oAuthor ) OR !prc.oAuthor.isLoaded() ) {
+		if ( isNull( prc.oAuthor ) || !prc.oAuthor.isLoaded() ) {
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
@@ -48,10 +47,10 @@ component extends="baseHandler" {
 	 * - rememberMe : Do we remember the device, defaults to false
 	 * - securedURL : Where to go next as relocation, defaults to ""
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		prc.xehValidate = "#prc.cbAdminEntryPoint#.security.twofactor.doValidation";
-		prc.xehResend   = "#prc.cbAdminEntryPoint#.security.twofactor.resendCode";
-		prc.provider    = variables.twoFactorService.getDefaultProviderObject();
+		prc.xehResend = "#prc.cbAdminEntryPoint#.security.twofactor.resendCode";
+		prc.provider = variables.twoFactorService.getDefaultProviderObject();
 
 		event.setView( "twofactor/index" );
 	}
@@ -59,7 +58,7 @@ component extends="baseHandler" {
 	/**
 	 * Validate the two factor code against a provider
 	 */
-	function doValidation( event, rc, prc ){
+	function doValidation( event, rc, prc ) {
 		event.paramValue( "twofactorCode", "" ).paramValue( "trustDevice", false );
 
 		// Get author data
@@ -70,7 +69,7 @@ component extends="baseHandler" {
 
 		// Check for errors
 		if ( results.error ) {
-			announce( "cbadmin_onInvalidTwoFactor", { author : prc.oAuthor } );
+			announce( "cbadmin_onInvalidTwoFactor", { author: prc.oAuthor } );
 			// message and redirect
 			variables.messagebox.error( results.messages );
 			flash.keep( "authorData" );
@@ -78,18 +77,18 @@ component extends="baseHandler" {
 		} else {
 			var oTwoFactorProvider = variables.twoFactorService.getDefaultProviderObject();
 			// Are we trusting devices? If so, trust this device if passed
-			if ( oTwoFactorProvider.allowTrustedDevice() AND rc.trustDevice ) {
+			if ( oTwoFactorProvider.allowTrustedDevice() && rc.trustDevice ) {
 				variables.twoFactorService.setTrustedDevice( prc.oAuthor.getAuthorID() );
 			}
 			// Call Provider finalize callback, in case something is needed for teardowns
 			oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );
 			// Set keep me log in remember cookie, if set.
 			variables.securityService.setRememberMe(
-				username: prc.oAuthor.getUsername(),
-				days    : val( authorData.rememberMe )
-			);
+					username = prc.oAuthor.getUsername(),
+					days     = val( authorData.rememberMe )
+				);
 			// announce valid two factor
-			announce( "cbadmin_onValidTwoFactor", { author : prc.oAuthor } );
+			announce( "cbadmin_onValidTwoFactor", { author: prc.oAuthor } );
 
 			// Are we in enrollment or loging in mode.
 			if ( authorData.isEnrollment ) {
@@ -103,7 +102,10 @@ component extends="baseHandler" {
 				// Set in session, validations are now complete
 				variables.securityService.login( prc.oAuthor );
 				// announce event
-				announce( "cbadmin_onLogin", { author : prc.oAuthor, securedURL : authorData.securedURL } );
+				announce(
+					"cbadmin_onLogin",
+					{ author: prc.oAuthor, securedURL: authorData.securedURL }
+				);
 			}
 
 			// check if securedURL came in?
@@ -118,7 +120,7 @@ component extends="baseHandler" {
 	/**
 	 * Resend a two-factor validation code
 	 */
-	function resendCode( event, rc, prc ){
+	function resendCode( event, rc, prc ) {
 		// Send challenge
 		var twoFactorResults = variables.twoFactorService.sendChallenge( prc.oAuthor );
 		// Verify error, if so, log it and setup a messagebox

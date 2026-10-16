@@ -3,23 +3,27 @@
  * An incoming site identifier is required
  */
 component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
-
 	// DI
 	property name="ormService" inject="RelocationService@contentbox";
-
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "slug";
+	variables.sortOrder = "slug";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity       = "Relocation";
+	variables.entity = "Relocation";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 
 	/**
 	 * Executes before all handler actions
 	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
+	any function preHandler(
+		event,
+		rc,
+		prc,
+		action,
+		eventArguments
+	) {
 		// Verify incoming site
-		param rc.site    = "";
+		param rc.site = "";
 		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
 	}
 
@@ -29,22 +33,29 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @tags      relocations
 	 * @responses contentbox/apidocs/relocations/index/responses.json
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Criterias and Filters
 		param rc.sortOrder = "slug";
-		param rc.search    = "";
+		param rc.search = "";
 
 		// Build up a search criteria and let the base execute it
 		arguments.criteria = newCriteria().isEq( "site", prc.oCurrentSite );
 		// Search Criteria
-		arguments.criteria
-			.when( len( rc.search ), function( c ){
-				c.like( "slug", "%#search#%" );
-			} )
+		arguments
+			.criteria
+			.when(
+				len( rc.search ),
+				function( c ) {
+					c.like( "slug", "%#search#%" );
+				}
+			)
 			// Content ID filter
-			.when( !isNull( rc.contentID ), function( c ){
-				c.isEq( "relatedContent.contentID", rc.contentID );
-			} );
+			.when(
+				!isNull( rc.contentID ),
+				function( c ) {
+					c.isEq( "relatedContent.contentID", rc.contentID );
+				}
+			);
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
@@ -56,7 +67,7 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @tags      relocations
 	 * @responses contentbox/apidocs/relocations/show/responses.json
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) {
 		param rc.includes = "";
 		param rc.excludes = "";
 
@@ -71,7 +82,7 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @responses   contentbox/apidocs/relocations/create/responses.json
 	 * @x           -contentbox-permissions relocations_ADMIN
 	 */
-	function create( event, rc, prc ){
+	function create( event, rc, prc ) {
 		super.create( argumentCollection = arguments );
 	}
 
@@ -82,7 +93,7 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @responses contentbox/apidocs/relocations/update/responses.json
 	 * @x         -contentbox-permissions relocations_ADMIN
 	 */
-	function update( event, rc, prc ){
+	function update( event, rc, prc ) {
 		super.update( argumentCollection = arguments );
 	}
 
@@ -93,7 +104,7 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 	 * @responses contentbox/apidocs/relocations/delete/responses.json
 	 * @x         -contentbox-permissions relocations_ADMIN
 	 */
-	function delete( event, rc, prc ){
+	function delete( event, rc, prc ) {
 		super.delete( argumentCollection = arguments );
 	}
 

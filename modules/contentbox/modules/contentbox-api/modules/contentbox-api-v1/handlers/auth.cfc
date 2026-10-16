@@ -2,7 +2,6 @@
  * ContentBox API Authentication handler
  */
 component extends="baseHandler" {
-
 	// DI
 	property name="securityService" inject="securityService@contentbox";
 
@@ -13,11 +12,11 @@ component extends="baseHandler" {
 	 * @requestBody contentbox/apidocs/auth/login/requestBody.json
 	 * @responses   contentbox/apidocs/auth/login/responses.json
 	 */
-	function login( event, rc, prc ){
-		param rc.username       = "";
-		param rc.password       = "";
-		param rc.includes       = "permissions,permissionGroups,role.permissions";
-		param rc.excludes       = "";
+	function login( event, rc, prc ) {
+		param rc.username = "";
+		param rc.password = "";
+		param rc.includes = "permissions,permissionGroups,role.permissions";
+		param rc.excludes = "";
 		param rc.ignoreDefaults = false;
 
 		// Let's try to get log them in
@@ -28,9 +27,12 @@ component extends="baseHandler" {
 		// Verify if user needs to reset their password?
 		if ( prc.oCurrentAuthor.getIsPasswordReset() ) {
 			var errorMessage = "Your user needs to reset their password before using the API Services";
-			prc.response
+			prc
+				.response
 				.setErrorMessage( errorMessage, event.STATUS.NOT_ALLOWED )
-				.addMessage( "Please visit #variables.cb.linkAdminLogin()# in order to reset your password." );
+				.addMessage(
+					"Please visit #variables.cb.linkAdminLogin()# in order to reset your password."
+				);
 			return;
 		}
 
@@ -38,16 +40,21 @@ component extends="baseHandler" {
 		variables.securityService.login( prc.oCurrentAuthor );
 
 		// Build out the response
-		prc.response
-			.setData( {
-				"tokens" : prc.tokens,
-				"author" : prc.oCurrentAuthor.getMemento(
-					includes       = rc.includes,
-					excludes       = rc.excludes,
-					ignoreDefaults = rc.ignoreDefaults
-				)
-			} )
-			.addMessage( "Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes" )
+		prc
+			.response
+			.setData(
+				{
+					"tokens": prc.tokens,
+					"author": prc.oCurrentAuthor.getMemento(
+							includes       = rc.includes,
+							excludes       = rc.excludes,
+							ignoreDefaults = rc.ignoreDefaults
+						)
+				}
+			)
+			.addMessage(
+				"Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes"
+			)
 			.addMessage(
 				"Refresh token created and it expires in #jwtAuth().getSettings().jwt.refreshExpiration# minutes"
 			);
@@ -59,11 +66,10 @@ component extends="baseHandler" {
 	 * @tags      Authentication
 	 * @responses contentbox/apidocs/auth/logout/responses.json
 	 */
-	function logout( event, rc, prc ){
+	function logout( event, rc, prc ) {
 		jwtAuth().logout();
 		prc.response.addMessage( "Bye bye!" );
 	}
-
 
 	/**
 	 * Refresh your access token, you must pass in your JWT Refresh token
@@ -71,7 +77,7 @@ component extends="baseHandler" {
 	 * @tags      Authentication
 	 * @responses contentbox/apidocs/auth/refreshToken/responses.json
 	 */
-	function refreshToken( event, rc, prc ){
+	function refreshToken( event, rc, prc ) {
 		try {
 			// Do cool refreshments via header/rc discovery
 			prc.newTokens = jwtAuth().refreshToken();
@@ -79,13 +85,17 @@ component extends="baseHandler" {
 			event
 				.getResponse()
 				.setData( prc.newTokens )
-				.addMessage( "Tokens refreshed! The passed in refresh token has been invalidated" );
-		} catch ( RefreshTokensNotActive e ) {
-			return event.getResponse().setErrorMessage( "Refresh Tokens Not Active", 404, "Disabled" );
-		} catch ( TokenNotFoundException e ) {
-			return event
-				.getResponse()
-				.setErrorMessage(
+				.addMessage(
+					"Tokens refreshed! The passed in refresh token has been invalidated"
+				);
+		} catch (RefreshTokensNotActive e) {
+			return event.getResponse().setErrorMessage(
+					"Refresh Tokens Not Active",
+					404,
+					"Disabled"
+				);
+		} catch (TokenNotFoundException e) {
+			return event.getResponse().setErrorMessage(
 					"The refresh token was not passed via the header or the rc. Cannot refresh the unrefreshable!",
 					400,
 					"Missing refresh token"
@@ -93,27 +103,24 @@ component extends="baseHandler" {
 		}
 	}
 
-
 	/**
 	 * If logged in, you will be able to see your user information.
 	 *
 	 * @tags      Authentication
 	 * @responses contentbox/apidocs/echo/whoami/responses.json
 	 */
-	function whoami( event, rc, prc ) secured{
-		param rc.includes       = "permissions,permissionGroups,role.permissions";
-		param rc.excludes       = "";
+	function whoami( event, rc, prc ) secured {
+		param rc.includes = "permissions,permissionGroups,role.permissions";
+		param rc.excludes = "";
 		param rc.ignoreDefaults = false;
 
 		prc.response.setData(
-			jwtAuth()
-				.getUser()
-				.getMemento(
-					includes       = rc.includes,
-					excludes       = rc.excludes,
-					ignoreDefaults = rc.ignoreDefaults
-				)
-		);
+				jwtAuth().getUser().getMemento(
+						includes       = rc.includes,
+						excludes       = rc.excludes,
+						ignoreDefaults = rc.ignoreDefaults
+					)
+			);
 	}
 
 }

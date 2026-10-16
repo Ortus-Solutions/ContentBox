@@ -6,11 +6,10 @@
  * Checks for two factor enforcement
  */
 component extends="coldbox.system.Interceptor" {
-
 	// DI
 	property name="twoFactorService" inject="id:TwoFactorService@contentbox";
-	property name="securityService" inject="id:securityService@contentbox";
 
+	property name="securityService" inject="id:securityService@contentbox";
 	// static ecluded event patterns
 	variables.EXCLUDED_EVENT_PATTERNS = [
 		"contentbox-security:security.changeLang",
@@ -23,11 +22,11 @@ component extends="coldbox.system.Interceptor" {
 		"contentbox-security:security.doPasswordChange"
 	];
 
-
 	/**
 	 * Configure
 	 */
-	function configure(){
+	function configure() {
+
 	}
 
 	/**
@@ -39,7 +38,7 @@ component extends="coldbox.system.Interceptor" {
 		buffer,
 		rc,
 		prc
-	){
+	) {
 		// Do not execute on the security module
 		if ( reFindNoCase( "^contentbox\-security\:", event.getCurrentEvent() ) ) {
 			return;
@@ -57,7 +56,6 @@ component extends="coldbox.system.Interceptor" {
 		if ( !prc.oCurrentAuthor.getLoggedIn() ) {
 			return;
 		}
-
 
 		// User already enrolled
 		if ( prc.oCurrentAuthor.getIs2FactorAuth() ) {

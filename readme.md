@@ -1,8 +1,19 @@
-﻿[![Build Status](https://travis-ci.com/Ortus-Solutions/ContentBox.svg?branch=development)](https://travis-ci.com/Ortus-Solutions/ContentBox)
+﻿<p align="center">
+	<img src="https://www.contentboxcms.org/__media/ContentBox_300.png" class="img-thumbnail" alt="contentbox"/>
+	<br>
+	<a href="https://forgebox.io/view/contentbox"><img src="https://forgebox.io/api/v1/entry/contentbox/badges/downloads" alt="Total Downloads" /></a>
+	<a href="https://forgebox.io/view/contentbox"><img src="https://forgebox.io/api/v1/entry/contentbox/badges/version" alt="Latest Stable Version" /></a>
+	<a href="https://forgebox.io/view/contentbox"><img src="https://img.shields.io/badge/License-Apache2-brightgreen" alt="Apache2 License" /></a>
+</p>
 
-<img src="https://www.contentboxcms.org/__media/ContentBox_300.png" class="img-thumbnail"/>
+<p align="center">
+	Copyright Since 2012 by Luis Majano and Ortus Solutions, Corp
+	<br>
+	<a href="https://www.contentboxcms.org">www.contentboxcms.org</a> |
+	<a href="https://www.ortussolutions.com">www.ortussolutions.com</a>
+</p>
 
->Copyright Since 2012 by Ortus Solutions, Corp - https://www.ortussolutions.com/products/contentbox
+----
 
 Because of God's grace, this project exists. If you don't like this, then don't read it, its not for you.
 
@@ -22,6 +33,12 @@ ContentBox is FREE Professional Open Source modular content management engine ba
 ## License
 
 Apache License, Version 2.0.
+
+## 🏆 Proven & Professional
+
+**Professional Open Source** - Backed by [Ortus Solutions](https://www.ortussolutions.com), ContentBox provides the reliability and support that businesses demand. With dedicated full-time development, comprehensive documentation, and professional services, enterprises can confidently build mission-critical applications on ContentBox.
+
+**Enterprise Ready** - Trusted by Fortune 500 companies and organizations globally, ContentBox delivers the stability, performance, and long-term support that enterprise applications require. Learn more at [www.contentboxcms.org](https://www.contentboxcms.org).
 
 ## Versioning
 
@@ -48,8 +65,8 @@ And constructed with the following guidelines:
 
 ## System Requirements
 
-* Lucee 5+
-* Adobe ColdFusion 2018+
+* BoxLang 1+
+* Adobe ColdFusion 2023+
 
 # ContentBox Installation
 
@@ -78,18 +95,6 @@ install contentbox
 
 If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.
 
-You can then go ahead and start an embedded server according to which engine you would like to hack in. Please note that the default CFML engine is a Lucee 5 engine.  You can start any of the following engines:
-
-* `run-script start:2018` - ACF 2018
-* `run-script start:2021` - ACF 2021
-* `run-script start:lucee` - Lucee 5
-
-You can also tail the logs for each server:
-
-* `run-script log:2018` - ACF 2018
-* `run-script log:2021` - ACF 2021
-* `run-script log:lucee` - Lucee 5
-
 ### Environment Variables
 
 Be sure to setup your environment variables by copying the file .env.template to .env.
@@ -110,9 +115,48 @@ For running our test suites you will need 2 more steps, so please refer to the [
 
 If developing CSS and Javascript assets, please refer to the [UI Developer Guide](workbench/Developer.md) in the `workbench/Developer.md` folder.
 
-## Ortus Community
+## 🔗 Important Links
 
-Join us in our Ortus Community and become a valuable member of this project https://community.ortussolutions.com/c/communities/contentbox/15. We are looking forward to hearing from you!
+### Source Code
+
+- **GitHub Repository**: https://github.com/Ortus-Solutions/ContentBox
+- **ContentBox CLI**: https://github.com/Ortus-Solutions/ContentBox-CLI
+- **ContentBox Modules**: https://github.com/contentbox-modules
+- **ContentBox Themes**: https://github.com/contentbox-themes
+
+### Documentation Books
+
+- **ContentBox Platform**: https://contentbox.ortusbooks.com
+- **ColdBox Platform**: https://coldbox.ortusbooks.com
+- **WireBox DI**: https://wirebox.ortusbooks.com
+- **CacheBox**: https://cachebox.ortusbooks.com
+- **LogBox**: https://logbox.ortusbooks.com
+- **TestBox**: https://testbox.ortusbooks.com
+- **CommandBox**: https://commandbox.ortusbooks.com
+
+### Documentation MCP Servers
+
+Here are the links to the MCP (Machine Comprehension Protocol) servers for our documentation, which can be used with AI tools for enhanced assistance:
+
+- **BoxLang Docs MCP**: https://boxlang.ortusbooks.com/~gitbook/mcp
+- **ContentBox Platform**: https://contentbox.ortusbooks.com/~gitbook/mcp
+- **ColdBox Platform**: https://coldbox.ortusbooks.com/~gitbook/mcp
+- **WireBox DI**: https://wirebox.ortusbooks.com/~gitbook/mcp
+- **CacheBox**: https://cachebox.ortusbooks.com/~gitbook/mcp
+- **LogBox**: https://logbox.ortusbooks.com/~gitbook/mcp
+
+### Issue Tracking
+
+- **ContentBox Issues**: https://ortussolutions.atlassian.net/browse/CONTENTBOX
+- **ColdBox Issues**: https://ortussolutions.atlassian.net/browse/COLDBOX
+- **WireBox Issues**: https://ortussolutions.atlassian.net/browse/WIREBOX
+- **CacheBox Issues**: https://ortussolutions.atlassian.net/browse/CACHEBOX
+- **LogBox Issues**: https://ortussolutions.atlassian.net/browse/LOGBOX
+
+### Official Sites
+
+- **ContentBox CMS**: https://www.contentboxcms.org
+- **Ortus Solutions**: https://www.ortussolutions.com/products/contentbox
 
 ----
 

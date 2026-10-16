@@ -7,19 +7,19 @@
 	 *
 	 * @return The rendered component
 	 */
-	function cbAdminComponent( required component, struct args = {} ){
+	function cbAdminComponent( required component, struct args = {} ) {
 		return view(
-			view 			 : "_components/#arguments.component#",
-			args 			 : arguments.args,
-			prePostExempt   : true,
-			module 		    : "contentbox-admin"
+			view          = "_components/#arguments.component#",
+			args          = arguments.args,
+			prePostExempt = true,
+			module        = "contentbox-admin"
 		);
 	}
 
 	/**
 	 * Shortcut to cbAdminComponent()
 	 */
-	function $cbc(){
+	function $cbc() {
 		return cbAdminComponent( argumentCollection = arguments );
 	}
 
@@ -28,15 +28,17 @@
 	 *
 	 * @param fileName The name of the file to get the path for within the admin module
 	 */
-	function cbAdminElixirPath( required fileName ){
-		var moduleRoot 	= event.getModuleRoot( "contentbox-admin" );
-		var manifest 	= getCache( "template" ).getOrSet(
-			"cbAdminElixirManifest",
-			() => deserializeJSON( fileRead( expandPath( moduleRoot & "/includes/rev-manifest.json"  ) ) )
-		);
+	function cbAdminElixirPath( required fileName ) {
+		var moduleRoot = event.getModuleRoot( "contentbox-admin" );
+		var manifest = getCache( "template" ).getOrSet(
+				"cbAdminElixirManifest",
+				() => deserializeJSON(
+					fileRead( expandPath( moduleRoot & "/includes/rev-manifest.json" ) )
+				)
+			);
 
 		var qualifiedPath = right( moduleRoot, len( moduleRoot ) - 1 ) & "/includes/" & fileName;
 
-		return manifest.keyExists( qualifiedPath ) ? manifest[ qualifiedPath ] : '/' & qualifiedPath;
+		return manifest.keyExists( qualifiedPath ) ? manifest[ qualifiedPath ] : "/" & qualifiedPath;
 	}
 </cfscript>

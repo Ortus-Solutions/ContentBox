@@ -6,15 +6,16 @@
  * Our base content renderer
  */
 component accessors="true" {
-
 	// DI
 	property name="cb" inject="id:CBHelper@contentbox";
+
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
 	 * Base Configure
 	 */
-	void function configure(){
+	void function configure() {
+
 	}
 
 	/**
@@ -30,18 +31,18 @@ component accessors="true" {
 		required builder,
 		required indexOf,
 		required replaceWith
-	){
+	) {
 		var rLocation = arguments.builder.indexOf( arguments.indexOf );
-		var rLen      = len( arguments.indexOf );
+		var rLen = len( arguments.indexOf );
 
 		// Loop findings of same instances to replace
-		while ( rLocation gt -1 ) {
+		while ( rLocation GT -1 ) {
 			// Replace it
 			arguments.builder.replace(
-				javacast( "int", rLocation ),
-				javacast( "int", rLocation + rLen ),
-				arguments.replaceWith
-			);
+					javacast( "int", rLocation ),
+					javacast( "int", rLocation + rLen ),
+					arguments.replaceWith
+				);
 			// look again
 			rLocation = arguments.builder.indexOf( arguments.indexOf, javacast( "int", rLocation ) );
 		}

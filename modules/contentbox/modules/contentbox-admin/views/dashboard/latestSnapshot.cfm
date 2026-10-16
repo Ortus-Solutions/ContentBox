@@ -31,9 +31,9 @@
                             <cfloop array="#prc.topContent#" index="topContent">
                                 <tr>
                                     <td>
-                                        <a href="#prc.CBHelper.linkContent( topContent )#">#topContent.getTitle()#</a>
+                                        <a href="#prc.CBHelper.linkContent( topContent.content )#">#topContent.label#</a>
                                     </td>
-                                    <td class="text-center">#topContent.getNumberOfHits()#</td>
+                                    <td class="text-center">#topContent.hits#</td>
                                 </tr>
                             </cfloop>
                         </tbody>

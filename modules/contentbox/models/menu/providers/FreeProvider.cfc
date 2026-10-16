@@ -8,17 +8,17 @@
 component
 	implements="contentbox.models.menu.providers.IMenuItemProvider"
 	extends   ="contentbox.models.menu.providers.BaseProvider"
-	accessors =true
+	accessors ="#true#"
 {
 
-	/* *********************************************************************
-	 **                      PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	public FreeProvider function init(){
+	public FreeProvider function init() {
 		setName( "Free" );
 		setType( "Free" );
 		setIconClass( "fa fa-eye" );
@@ -33,7 +33,10 @@ component
 	 * @menuItem.hint The menu item object
 	 * @options.hint  Additional arguments to be used in the method
 	 */
-	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
+	public string function getAdminTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
 		return "";
 	}
 
@@ -43,16 +46,19 @@ component
 	 * @menuItem.hint The menu item object
 	 * @options.hint  Additional arguments to be used in the method
 	 */
-	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
+	public string function getDisplayTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
 		var viewArgs = {
-			menuItem : arguments.menuItem,
-			data     : arguments.menuItem.getMemento()
+			menuItem: arguments.menuItem,
+			data    : arguments.menuItem.getMemento()
 		};
 		return variables.renderer.externalView(
-			view   = "/contentbox/models/menu/views/free/display",
-			module = "contentbox",
-			args   = viewArgs
-		);
+				view   = "/contentbox/models/menu/views/free/display",
+				module = "contentbox",
+				args   = viewArgs
+			);
 	}
 
 }

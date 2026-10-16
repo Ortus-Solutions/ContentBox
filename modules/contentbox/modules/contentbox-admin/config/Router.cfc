@@ -1,6 +1,6 @@
 component {
 
-	function configure(){
+	function configure() {
 		route( "/" ).to( "dashboard" );
 
 		route( "/cbsecurity" ).toModuleRouting( "contentbox-security" );
@@ -17,7 +17,9 @@ component {
 
 		route( "/mediamanager/library/:library" ).to( "mediamanager" );
 
-		route( "/module/:moduleEntryPoint/:moduleHandler?/:moduleAction?" ).to( "modules.execute" );
+		route(
+			"/module/:moduleEntryPoint/:moduleHandler?/:moduleAction?"
+		).to( "modules.execute" );
 
 		// Convetion based routing
 		route( "/:handler/:action" ).end();

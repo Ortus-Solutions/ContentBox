@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	RelatedContent function init(){
+	RelatedContent function init() {
 		// Widget Properties
 		setName( "Related Content" );
 		setVersion( "1.0" );
-		setDescription( "A nice widget to display your content's related content." );
+		setDescription(
+			"A nice widget to display your content's related content."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "sitemap" );
@@ -32,15 +34,17 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		string emptyMessage = "Sorry, no related content was found.",
 		string title        = "",
 		string titleLevel   = "2"
-	){
+	) {
 		var relatedContent = cb.getCurrentRelatedContent();
-		var content        = "";
+		var content = "";
 
 		// handle related content
 		saveContent variable="content" {
 			// title
 			if ( len( arguments.title ) ) {
-				writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" );
+				writeOutput(
+					"<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"
+				);
 			}
 			if ( arrayLen( relatedContent ) ) {
 				// build type
@@ -52,22 +56,24 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			} else {
 				writeOutput( "<p>#arguments.emptyMessage#</p>" );
 				if ( cb.isPreview() ) {
-					writeOutput( "<small>NOTE: Related content may not appear in preview mode!</small>" );
+					writeOutput(
+						"<small>NOTE: Related content may not appear in preview mode!</small>"
+					);
 				}
 			}
 		}
 		return content;
 	}
 
-	private function buildDropDown( required array relatedContent ){
-		var content         = "";
+	private function buildDropDown( required array relatedContent ) {
+		var content = "";
 		// generate related content
 		saveContent variable="content" {
 			writeOutput(
 				"<select name=""relatedcontent"" id=""relatedcontent"" onchange=""window.location=this.value""><option value=""##"">Select Content</option>"
 			);
 			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.relatedContent ); x++ ) {
+			for ( var x = 1; x LTE arrayLen( arguments.relatedContent ); x++ ) {
 				// only show links for published content!
 				if ( relatedContent[ x ].isContentPublished() ) {
 					writeOutput(
@@ -82,13 +88,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		return content;
 	}
 
-	private function buildList( required array relatedContent ){
-		var content         = "";
+	private function buildList( required array relatedContent ) {
+		var content = "";
 		// generate related content
 		saveContent variable="content" {
 			writeOutput( "<ul id=""relatedcontent"">" );
 			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.relatedContent ); x++ ) {
+			for ( var x = 1; x LTE arrayLen( arguments.relatedContent ); x++ ) {
 				// only show links for published content!
 				if ( relatedContent[ x ].isContentPublished() ) {
 					writeOutput(

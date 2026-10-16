@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" {
 
-	function init(){
+	function init() {
 		// Widget Properties
 		setName( "Renderview" );
 		setVersion( "1.0" );
-		setDescription( "Renders any view within the deployed ColdBox application." );
+		setDescription(
+			"Renders any view within the deployed ColdBox application."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
@@ -33,26 +35,34 @@ component extends="contentbox.models.ui.BaseWidget" {
 	 */
 	any function renderIt(
 		required string view,
-		boolean cache = false,
+		boolean cache         = false,
 		cacheTimeout,
 		cacheLastAccessTimeout,
 		string cacheSuffix,
 		string module,
 		string args           = "",
 		boolean prePostExempt = false
-	){
+	) {
 		// If the view is empty, then return a message.
 		if ( !len( arguments.view ) ) {
 			return "Please pass in a view to render";
 		}
 
 		// Inflate args string to struct
-		var viewArgs = arguments.args
+		var viewArgs = arguments
+			.args
 			.listToArray()
-			.reduce( function( results, item ){
-				results[ listFirst( arguments.item, "=" ) ] = getToken( arguments.item, 2, "=" );
-				return results;
-			}, {} );
+			.reduce(
+				function( results, item ) {
+					results[ listFirst( arguments.item, "=" ) ] = getToken(
+						arguments.item,
+						2,
+						"="
+					);
+					return results;
+				},
+				{}
+			);
 
 		// Replace with inflated data
 		arguments.args = viewArgs;

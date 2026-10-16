@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,7 +10,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Constructor
 	 */
-	CustomFieldService function init(){
+	CustomFieldService function init() {
 		// init it
 		super.init( entityName = "cbCustomField" );
 

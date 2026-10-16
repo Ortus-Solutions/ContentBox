@@ -9,24 +9,30 @@ component extends="tests.resources.BaseTest" {
 	/*********************************** LIFE CYCLE Methods ***********************************/
 
 	// executes before all suites+specs in the run() method
-	function beforeAll(){
+	function beforeAll() {
 		super.beforeAll();
 		provider = getInstance( "BaseTwoFactorProvider@contentbox" );
 	}
 
 	// executes after all suites+specs in the run() method
-	function afterAll(){
+	function afterAll() {
 		super.afterAll();
 	}
 
 	/*********************************** BDD SUITES ***********************************/
 
-	function run( testResults, testBox ){
-		describe( "Base Two Factor Provider", function(){
-			it( "can get all settings", function(){
-				expect( provider.getAllSettings() ).toBeStruct();
-			} );
-		} );
+	function run( testResults, testBox ) {
+		describe(
+			"Base Two Factor Provider",
+			() => {
+				it(
+					"can get all settings",
+					() => {
+						expect( provider.getAllSettings() ).toBeStruct();
+					}
+				);
+			}
+		);
 	}
 
 }

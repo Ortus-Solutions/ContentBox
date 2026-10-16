@@ -1,0 +1,66 @@
+{
+    "include": [],
+    "exclude": [
+        "**/boxlang_modules/**",
+        "**/build/**",
+        "**/.gradle/**",
+		"**/node_modules/**",
+		"modules/contentbox/modules/contentbox-deps/**",
+		"coldbox/**",
+		"testbox/**"
+    ],
+    "diagnostics": {
+        "unusedVariable": {
+            "enabled": true,
+            "severity": "hint"
+        },
+        "unscopedVariable": {
+            "enabled": true,
+            "severity": "warning"
+        },
+        "duplicateMethod": {
+            "enabled": true,
+            "severity": "error"
+        },
+        "duplicateProperty": {
+            "enabled": true,
+            "severity": "error"
+        },
+        "emptyCatchBlock": {
+            "enabled": true,
+            "severity": "warning"
+        },
+        "invalidExtends": {
+            "enabled": false,
+            "severity": "error"
+        },
+        "invalidImplements": {
+            "enabled": false,
+            "severity": "error"
+        },
+        "missingReturnStatement": {
+            "enabled": true,
+            "severity": "warning"
+        },
+        "shadowedVariable": {
+            "enabled": true,
+            "severity": "warning"
+        },
+        "unreachableCode": {
+            "enabled": true,
+            "severity": "warning"
+        },
+        "unusedImport": {
+            "enabled": true,
+            "severity": "warning"
+        },
+        "unusedPrivateMethod": {
+            "enabled": false,
+            "severity": "warning"
+        },
+		"possibleTypo": {
+            "enabled": false,
+            "severity": "warning"
+        }
+    }
+}

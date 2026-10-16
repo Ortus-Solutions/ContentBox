@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,11 +10,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Constructor
 	 */
-	Archives function init(){
+	Archives function init() {
 		// Widget Properties
 		setName( "Archives" );
 		setVersion( "1.0" );
-		setDescription( "A cool widget that renders your blog archives summary information." );
+		setDescription(
+			"A cool widget that renders your blog archives summary information."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "calendar" );
@@ -35,9 +37,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		boolean showPostCount = true,
 		string title          = "",
 		string titleLevel     = "2"
-	){
+	) {
 		var archives = variables.entryService.getArchiveReport();
-		var rString  = "";
+		var rString = "";
 
 		saveContent variable="rString" {
 			// title
@@ -58,7 +60,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		return rString;
 	}
 
-	private function buildDropDown( archives, showPostCount ){
+	private function buildDropDown( archives, showPostCount ) {
 		var rString = "";
 
 		saveContent variable="rString" {
@@ -72,69 +74,53 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	"
 			);
 			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.archives ); x++ ) {
+			for ( var x = 1; x LTE arrayLen( arguments.archives ); x++ ) {
 				var thisDate = arguments.archives[ x ][ "year" ] & "-" & arguments.archives[ x ][ "month" ] & "-1";
 				writeOutput(
 					"<option
-		value=""#cb.linkArchive(
-						year = arguments.archives[ x ][ "year" ],
-						month = arguments.archives[ x ][ "month" ]
-					)#""
+		value=""#cb.linkArchive( year = arguments.archives[ x ][ "year" ], month = arguments.archives[ x ][ "month" ] )#""
 	>#dateFormat( thisDate, "mmmm yyyy" )#"
 				);
 				if ( arguments.showPostCount ) {
 					writeOutput( " (#arguments.archives[ x ][ "count" ]#)" );
 				}
-				writeOutput(
-					"</option>
-	"
-				);
+				writeOutput( "</option>
+	" );
 			}
 			// close ul
-			writeOutput(
-				"
+			writeOutput( "
 </select>
-"
-			);
+" );
 		}
 		return rString;
 	}
 
-	private function buildList( archives, showPostCount ){
+	private function buildList( archives, showPostCount ) {
 		var rString = "";
 
 		saveContent variable="rString" {
-			writeOutput(
-				"<ul id=""archives"">
-	"
-			);
+			writeOutput( "<ul id=""archives"">
+	" );
 			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.archives ); x++ ) {
+			for ( var x = 1; x LTE arrayLen( arguments.archives ); x++ ) {
 				var thisDate = arguments.archives[ x ][ "year" ] & "-" & arguments.archives[ x ][ "month" ] & "-1";
 				writeOutput(
 					"<li class=""archives"">
 		<a
-			href=""#cb.linkArchive(
-						year = arguments.archives[ x ][ "year" ],
-						month = arguments.archives[ x ][ "month" ]
-					)#""
+			href=""#cb.linkArchive( year = arguments.archives[ x ][ "year" ], month = arguments.archives[ x ][ "month" ] )#""
 		>#dateFormat( thisDate, "mmmm yyyy" )#"
 				);
 				if ( arguments.showPostCount ) {
 					writeOutput( " (#arguments.archives[ x ][ "count" ]#)" );
 				}
-				writeOutput(
-					"</a>
+				writeOutput( "</a>
 	</li>
-	"
-				);
+	" );
 			}
 			// close ul
-			writeOutput(
-				"
+			writeOutput( "
 </ul>
-"
-			);
+" );
 		}
 		return rString;
 	}

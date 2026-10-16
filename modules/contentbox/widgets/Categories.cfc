@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -7,10 +7,12 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	Categories function init(){
+	Categories function init() {
 		// Widget Properties
 		setName( "Categories" );
-		setDescription( "A cool widget that renders your blog categories summary." );
+		setDescription(
+			"A cool widget that renders your blog categories summary."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "tags" );
@@ -33,97 +35,103 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		string title          = "",
 		string titleLevel     = "2",
 		boolean isPublic      = true
-	){
+	) {
 		var categories = variables.categoryService.search(
-			isPublic: (
-				isNull( arguments.isPublic ) || !len( arguments.isPublic ) ? javacast( "null", "" ) : arguments.isPublic
-			),
-			siteId: getSite().getSiteId()
-		).categories;
+				isPublic = (
+					isNull( arguments.isPublic ) || !len( arguments.isPublic )
+						? javacast( "null", "" )
+						: arguments.isPublic
+				),
+				siteId   = getSite().getSiteId()
+			).categories;
 
 		var rString = "";
-
 		// cfformat-ignore-start
 		// generate recent comments
 		saveContent variable="rString" {
-			// title
-			if ( len( arguments.title ) ) {
-				writeOutput(
-					"<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>"
-				);
-			}
-			// Build Type
-			if ( arguments.dropdown ) {
-				writeOutput( buildDropDown( categories, arguments.showPostCount ) );
-			} else {
-				writeOutput( buildList( categories, arguments.showPostCount ) );
-			}
-		}
+// title
+if ( len( arguments.title ) ) {
+writeOutput(
+"<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>"
+);
+}
+// Build Type
+if ( arguments.dropdown ) {
+writeOutput( buildDropDown( categories, arguments.showPostCount ) );
+} else {
+writeOutput( buildList( categories, arguments.showPostCount ) );
+}
+}
 		// cfformat-ignore-end
 
 		return rString;
 	}
 
-	private function buildDropDown( categories, showPostCount ){
+	private function buildDropDown( categories, showPostCount ) {
 		var rString = "";
-
 		// generate recent comments
 		// cfformat-ignore-start
 		saveContent variable="rString" {
-			writeOutput("
-				<select name=""categories"" id=""categories"" onchange=""window.location=this.value"">
-					<option value=""##"">Select Category</option>
-			");
+writeOutput(
+"
+<select name=""categories"" id=""categories"" onchange=""window.location=this.value"">
+<option value=""##"">Select Category</option>
+"
+);
 
-			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.categories ); x++ ) {
-				if ( arguments.categories[ x ].getNumberOfEntries() gt 0 ) {
-					writeOutput(
-						"<option value=""#cb.linkCategory( arguments.categories[ x ] )#"">#arguments.categories[ x ].getCategory()#"
-					);
+// iterate and create
+for ( var x = 1; x LTE arrayLen( arguments.categories ); x++ ) {
+if ( arguments.categories[ x ].getNumberOfEntries() GT 0 ) {
+writeOutput(
+"<option value=""#cb.linkCategory( arguments.categories[ x ] )#"">#arguments.categories[ x ].getCategory()#"
+);
 
-					if ( arguments.showPostCount ) {
-						writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
-					}
+if ( arguments.showPostCount ) {
+writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
+}
 
-					writeOutput( "</option>" );
-				}
-			}
+writeOutput( "</option>" );
+}
+}
 
-			// close
-			writeOutput( "</select>" );
-		}
+// close
+writeOutput( "</select>" );
+}
 		return rString;
+
+
 		// cfformat-ignore-end
 	}
 
-	private function buildList( categories, showPostCount ){
+	private function buildList( categories, showPostCount ) {
 		var rString = "";
-
 		// generate recent comments
 		// cfformat-ignore-start
 		saveContent variable="rString" {
-			writeOutput( "<ul id=""categories""> " );
+writeOutput( "<ul id=""categories""> " );
 
-			for ( var x = 1; x lte arrayLen( arguments.categories ); x++ ) {
-				if ( arguments.categories[ x ].getNumberOfEntries() gt 0 ) {
-					writeOutput( "
-						<li class=""categories"">
-							<a href=""#cb.linkCategory( arguments.categories[ x ] )#"">#arguments.categories[ x ].getCategory()#"
-					);
+for ( var x = 1; x LTE arrayLen( arguments.categories ); x++ ) {
+if ( arguments.categories[ x ].getNumberOfEntries() GT 0 ) {
+writeOutput(
+"
+<li class=""categories"">
+<a href=""#cb.linkCategory( arguments.categories[ x ] )#"">#arguments.categories[ x ].getCategory()#"
+);
 
-					if ( arguments.showPostCount ) {
-						writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
-					}
+if ( arguments.showPostCount ) {
+writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
+}
 
-					writeOutput( "</a></li>" );
-				}
-			}
+writeOutput( "</a></li>" );
+}
+}
 
-			// close ul
-			writeOutput( "</ul>" );
-		}
+// close ul
+writeOutput( "</ul>" );
+}
 		return rString;
+
+
 		// cfformat-ignore-end
 	}
 

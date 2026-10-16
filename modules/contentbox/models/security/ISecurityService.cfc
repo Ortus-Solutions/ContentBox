@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -81,5 +81,4 @@ interface {
 	 * Checks Whether a content entry or page is protected and user has credentials for it
 	 */
 	boolean function isContentViewable( required content );
-
 }

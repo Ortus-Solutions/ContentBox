@@ -12,56 +12,54 @@ component
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="Media"
 {
-
-	/* *********************************************************************
-	 **                          DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          DI
+	 **********************************************************************/
 	property
-		name      ="provider"
+		name="provider"
 		persistent="false"
-		inject    ="provider:contentbox.models.menu.providers.MediaProvider";
+		inject="provider:contentbox.models.menu.providers.MediaProvider";
 
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name   ="mediaPath"
-		column ="mediaPath"
+		name="mediaPath"
+		column="mediaPath"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="target"
-		column ="target"
+		name="target"
+		column="target"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="urlClass"
-		column ="urlClass"
+		name="urlClass"
+		column="urlClass"
 		notnull="false"
 		ormtype="string"
 		default="";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+	this.constraints[ "mediaPath" ] = { required: false, size: "1..255" };
+	this.constraints[ "target" ] = { required: false, size: "1..255" };
+	this.constraints[ "urlClass" ] = { required: false, size: "1..255" };
 
-	this.constraints[ "mediaPath" ] = { required : false, size : "1..255" };
-	this.constraints[ "target" ]    = { required : false, size : "1..255" };
-	this.constraints[ "urlClass" ]  = { required : false, size : "1..255" };
+	/**********************************************************************
+	 * **                          PUBLIC FUNCTIONS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
-	function init(){
+	function init() {
 		super.init();
 
-		appendToMemento( [ "mediaPath", "target", "urlClass" ], "defaultIncludes" );
+		appendToMemento( [ "mediaPath", "target", "urlClass"], "defaultIncludes" );
 
 		return this;
 	}

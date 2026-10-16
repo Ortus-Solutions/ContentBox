@@ -13,76 +13,70 @@ component
 	cachename ="cbSubscriber"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="subscriberID"
-		column   ="subscriberID"
+		name="subscriberID"
+		column="subscriberID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
-
-	property
-		name   ="subscriberEmail"
-		column ="subscriberEmail"
-		notnull="true"
-		length ="255"
-		index  ="idx_subscriberEmail";
-
-	property
-		name   ="subscriberToken"
-		column ="subscriberToken"
+		length="36"
 		ormtype="string"
-		length ="255"
+		update="false";
+
+	property
+		name="subscriberEmail"
+		column="subscriberEmail"
+		notnull="true"
+		length="255"
+		index="idx_subscriberEmail";
+
+	property
+		name="subscriberToken"
+		column="subscriberToken"
+		ormtype="string"
+		length="255"
 		notnull="true";
 
-	/* *********************************************************************
-	 **                          RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          RELATIONSHIPS
+	 **********************************************************************/
 
 	property
-		name        ="subscriptions"
+		name="subscriptions"
 		singularName="subscription"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="true"
-		batchsize   ="25"
-		orderby     ="createdDate"
-		cfc         ="contentbox.models.subscriptions.BaseSubscription"
-		fkcolumn    ="FK_subscriberID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
-
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+		fieldtype="one-to-many"
+		type="array"
+		lazy="true"
+		batchsize="25"
+		orderby="createdDate"
+		cfc="contentbox.models.subscriptions.BaseSubscription"
+		fkcolumn="FK_subscriberID"
+		inverse="true"
+		cascade="all-delete-orphan";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
 	this.pk = "subscriberID";
 
 	this.memento = {
-		defaultIncludes : [
-			"subscriberEmail",
-			"subscriptionToken",
-			"subscriptionsSnapshot:subscriptions"
-		],
-		defaultExcludes : []
+		defaultIncludes: [ "subscriberEmail", "subscriptionToken", "subscriptionsSnapshot:subscriptions"],
+		defaultExcludes: []
 	};
 
 	this.constraints = {
-		"subscriptionToken" : { required : true, size : "1..255" },
-		"subscriberEmail"   : { required : true, size : "1..255", type : "email" }
+		"subscriptionToken": { required: true, size: "1..255" },
+		"subscriberEmail"  : { required: true, size: "1..255", type: "email" }
 	};
 
-	/* *********************************************************************
-	 **                          METHODS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          METHODS
+	 **********************************************************************/
 
-	function init(){
+	function init() {
 		super.init();
 		return this;
 	}
@@ -90,12 +84,12 @@ component
 	/**
 	 * Utility method to get a snapshot of this object
 	 */
-	struct function getInfoSnapshot(){
+	struct function getInfoSnapshot() {
 		if ( isLoaded() ) {
 			return {
-				"subscriberID"    : getSubscriberID(),
-				"subscriberEmail" : getSubscriberEmail(),
-				"subscriberToken" : getSubscriberToken()
+				"subscriberID"   : getSubscriberID(),
+				"subscriberEmail": getSubscriberEmail(),
+				"subscriberToken": getSubscriberToken()
 			};
 		}
 		return {};
@@ -104,11 +98,13 @@ component
 	/**
 	 * Build a snapshot of subscriptions this subscriber has
 	 */
-	array function getSubscriptionsSnapshot(){
+	array function getSubscriptionsSnapshot() {
 		if ( hasSubscriptions() ) {
-			return getSubscriptions().map( function( thisItem ){
-				return arguments.thisItem.getMemento( excludes = "subscriber" );
-			} );
+			return getSubscriptions().map(
+					function( thisItem ) {
+						return arguments.thisItem.getMemento( excludes = "subscriber" );
+					}
+				);
 		}
 		return {};
 	}
@@ -116,7 +112,7 @@ component
 	/**
 	 * Before insert create the user subscription token
 	 */
-	public void function preInsert(){
+	public void function preInsert() {
 		super.preInsert();
 		if ( isNull( getSubscriberToken() ) ) {
 			var tkn = getSubscriberEmail() & getCreatedDate();
@@ -127,14 +123,14 @@ component
 	/**
 	 * Returns a slim representation of subscriptions by type
 	 */
-	public struct function getSubscriptionsByContentType(){
+	public struct function getSubscriptionsByContentType() {
 		var subs = {};
 		for ( var subscription in getSubscriptions() ) {
 			var contentType = subscription.getType();
 			if ( !structKeyExists( subs, contentType ) ) {
 				subs[ "#contentType#" ] = [];
 			}
-			var memento = { "subscriptionToken" : subscription.getSubscriptionToken() };
+			var memento = { "subscriptionToken": subscription.getSubscriptionToken() };
 			switch ( contentType ) {
 				case "Comment":
 					memento[ "title" ] = subscription.getRelatedContent().getTitle();

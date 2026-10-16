@@ -5,21 +5,19 @@
  * ---
  * Exporter for file-based content
  */
-component
-	extends   ="BaseExporter"
-	implements="contentbox.models.exporters.ICBExporter"
-	accessors =true
-{
-
+component extends   ="BaseExporter" implements="contentbox.models.exporters.ICBExporter" accessors ="#true#" {
 	property name="directory" type="string";
+
 	property name="includeFiles" type="string";
+
 	property name="type" type="string";
+
 	property name="extension" type="string";
 
 	/**
 	 * Constructor
 	 */
-	public FileExporter function init(){
+	public FileExporter function init() {
 		super.init();
 
 		setFormat( "zip" );
@@ -27,7 +25,7 @@ component
 		setType( "component" );
 		setExtension( "" );
 
-		variables.name           = "FileExporter";
+		variables.name = "FileExporter";
 		variables.allowedFormats = "zip";
 
 		return this;
@@ -36,10 +34,16 @@ component
 	/**
 	 * Gets "total" based on content type
 	 */
-	public numeric function getTotal(){
+	public numeric function getTotal() {
 		var total = 0;
 		if ( getIncludeFiles() == "*" ) {
-			total = arrayLen( directoryList( getDirectory(), true, "name" ) );
+			total = arrayLen(
+				directoryList(
+					getDirectory(),
+					true,
+					"name"
+				)
+			);
 		} else {
 			total = listLen( getIncludeFiles() );
 		}
@@ -49,10 +53,13 @@ component
 	/**
 	 * Custom validator for this exporter...any rules can be applied
 	 */
-	public array function validate(){
+	public array function validate() {
 		var errors = [];
 		if ( isNull( getDirectory() ) ) {
-			arrayAppend( errors, "The files exporter does not have a configured directory!" );
+			arrayAppend(
+				errors,
+				"The files exporter does not have a configured directory!"
+			);
 		}
 		if ( !listFindNoCase( variables.allowedFormats, getFormat() ) ) {
 			arrayAppend(
@@ -61,7 +68,10 @@ component
 			);
 		}
 		if ( isNull( getFileName() ) || !len( getFileName() ) ) {
-			arrayAppend( errors, "A valid file name for the export must be specified!" );
+			arrayAppend(
+				errors,
+				"A valid file name for the export must be specified!"
+			);
 		}
 		return errors;
 	}
@@ -69,13 +79,17 @@ component
 	/**
 	 * Gets list of files (absolute paths) when not "all" options are chosen for export
 	 */
-	public string function getFileList(){
-		var files     = "";
+	public string function getFileList() {
+		var files = "";
 		var delimiter = type == "folder" ? "," : chr( 124 );
 		for ( var i = 1; i <= listLen( getIncludeFiles() ); i++ ) {
 			var includeFile = listGetAt( getIncludeFiles(), i );
-			var fileName    = getDirectory() & "/" & includeFile & getExtension();
-			files           = listAppend( files, fileName, delimiter );
+			var fileName = getDirectory() & "/" & includeFile & getExtension();
+			files = listAppend(
+				files,
+				fileName,
+				delimiter
+			);
 		}
 		return files;
 	}

@@ -5,39 +5,34 @@
  * ---
  * This is the base class for all persistent entities
  */
-component
-	mappedsuperclass="true"
-	accessors       ="true"
-	extends         ="BaseEntityMethods"
-{
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+component mappedsuperclass="true" accessors       ="true" extends         ="BaseEntityMethods" {
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name      ="createdDate"
-		column    ="createdDate"
-		type      ="date"
-		ormtype   ="timestamp"
-		notnull   ="true"
-		update    ="false"
+		name="createdDate"
+		column="createdDate"
+		type="date"
+		ormtype="timestamp"
+		notnull="true"
+		update="false"
 		persistent="true";
 
 	property
-		name      ="modifiedDate"
-		column    ="modifiedDate"
-		type      ="date"
-		ormtype   ="timestamp"
-		notnull   ="true"
+		name="modifiedDate"
+		column="modifiedDate"
+		type="date"
+		ormtype="timestamp"
+		notnull="true"
 		persistent=true;
 
 	property
-		name      ="isDeleted"
-		column    ="isDeleted"
-		ormtype   ="boolean"
-		notnull   ="true"
-		default   ="false"
+		name="isDeleted"
+		column="isDeleted"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
 		persistent="true";
 
 }

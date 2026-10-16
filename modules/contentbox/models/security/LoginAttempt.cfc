@@ -13,87 +13,83 @@ component
 	cachename ="loginAttempt"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	/**
 	 * Primary key
 	 */
 	property
-		name     ="loginAttemptsID"
-		column   ="loginAttemptsID"
+		name="loginAttemptsID"
+		column="loginAttemptsID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	/**
 	 * The username attempt value
 	 */
 	property
-		name   ="value"
-		column ="value"
+		name="value"
+		column="value"
 		notnull="true"
 		default=""
-		length ="255"
-		index  ="idx_values";
+		length="255"
+		index="idx_values";
+
 	/**
 	 * How many attempts in the system
 	 */
 	property
-		name   ="attempts"
-		column ="attempts"
+		name="attempts"
+		column="attempts"
 		ormtype="integer"
 		notnull="true"
 		default="0";
+
 	/**
 	 * Tracks the last successful login IP address
 	 */
 	property
-		name   ="lastLoginSuccessIP"
-		column ="lastLoginSuccessIP"
+		name="lastLoginSuccessIP"
+		column="lastLoginSuccessIP"
 		notnull="false"
-		length ="100";
+		length="100";
+
 	/**
 	 * Verifies if tracking is blocked or not
 	 */
 	property
-		name      ="isBlocked"
-		column    ="isBlocked"
+		name="isBlocked"
+		column="isBlocked"
 		persistent="false"
-		default   ="false"
-		type      ="boolean";
-
-	/* *********************************************************************
-	 **							PK+CONSTRAINTS
-	 ********************************************************************* */
+		default="false"
+		type="boolean";
+	/**********************************************************************
+	 * **							PK+CONSTRAINTS
+	 **********************************************************************/
 
 	this.pk = "loginAttemptsID";
 
 	this.memento = {
-		defaultIncludes : [
-			"value",
-			"attempts",
-			"lastLoginSuccessIP",
-			"isBlocked"
-		],
-		defaultExcludes : [ "" ]
+		defaultIncludes: [ "value", "attempts", "lastLoginSuccessIP", "isBlocked"],
+		defaultExcludes: [ ""]
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		variables.createdDate = now();
-		variables.attempts    = 0;
-		variables.isBlocked   = false;
+		variables.attempts = 0;
+		variables.isBlocked = false;
 
 		super.init();
 

@@ -5,8 +5,7 @@
  * ---
  * Base exporter class
  */
-component accessors=true {
-
+component accessors="#true#" {
 	// DI
 	property name="log" inject="logbox:logger:{this}";
 
@@ -40,16 +39,15 @@ component accessors=true {
 	 */
 	property name="allowedFormats";
 
-
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		setFileName( createUUID() );
 		setFormat( "json" );
 		setPriority( 1 );
 
-		variables.name           = "";
+		variables.name = "";
 		variables.allowedFormats = "";
 
 		return this;
@@ -58,7 +56,7 @@ component accessors=true {
 	/**
 	 * Determines if exporter is valid based on validation criteria
 	 */
-	boolean function isValid(){
+	boolean function isValid() {
 		return !arrayLen( validate() );
 	}
 

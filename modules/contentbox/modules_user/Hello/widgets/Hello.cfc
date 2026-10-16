@@ -3,7 +3,7 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	function init(){
+	function init() {
 		// Widget Properties
 		setName( "Hello" );
 		setVersion( "1.0.0" );
@@ -20,11 +20,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 *
 	 * @titleLevel The H{level} to use, by default we use H2
 	 */
-	any function renderIt( string titleLevel = "2" ){
+	any function renderIt( string titleLevel = "2" ) {
 		var rString = "";
 
 		saveContent variable="rString" {
-			writeOutput( "<h#arguments.titleLevel#>Hello my friend!</h#arguments.titleLevel#>" );
+			writeOutput(
+				"<h#arguments.titleLevel#>Hello my friend!</h#arguments.titleLevel#>"
+			);
 		}
 
 		return rString;

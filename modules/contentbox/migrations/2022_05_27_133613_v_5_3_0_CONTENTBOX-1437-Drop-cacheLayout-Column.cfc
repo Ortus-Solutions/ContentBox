@@ -6,24 +6,29 @@
  * @author  Jon Clausen
  */
 component {
-
 	// DI
 	property name="migrationService" inject="MigrationService@cfmigrations";
-
 	// Include Utils
 	include template="./util/MigrationUtils.cfm";
 
-	function up( schema, qb ){
+	function up( schema, qb ) {
 		if ( hasColumn( "cb_content", "cacheLayout" ) ) {
-			schema.alter( "cb_content", ( table ) => {
-				table.dropColumn( "cacheLayout" );
-			} );
+			schema.alter(
+					"cb_content",
+					( table ) => {
+						table.dropColumn( "cacheLayout" );
+					}
+				);
 		} else {
-			systemOutput( "- skipping 'cacheLayout' removal, cb_content doesn't have the column", true );
+			systemOutput(
+				"- skipping 'cacheLayout' removal, cb_content doesn't have the column",
+				true
+			);
 		}
 	}
 
-	function down( schema, qb ){
+	function down( schema, qb ) {
+
 	}
 
 }

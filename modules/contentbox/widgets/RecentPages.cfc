@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,7 +10,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Constructor
 	 */
-	RecentPages function init(){
+	RecentPages function init() {
 		// Widget Properties
 		setName( "RecentPages" );
 		setVersion( "1.0" );
@@ -44,8 +44,8 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		string category   = "",
 		string searchTerm = "",
 		string sortOrder  = "Most Recent"
-	){
-		var event      = getRequestContext();
+	) {
+		var event = getRequestContext();
 		var cbSettings = event.getValue( name = "cbSettings", private = true );
 
 		// Determine Sort Order
@@ -64,16 +64,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		}
 
 		var pageResults = variables.pageService.findPublishedContent(
-			max       : arguments.max,
-			category  : arguments.category,
-			searchTerm: arguments.searchTerm,
-			sortOrder : arguments.sortOrder,
-			siteID    : getSite().getsiteID()
-		);
+				max        = arguments.max,
+				category   = arguments.category,
+				searchTerm = arguments.searchTerm,
+				sortOrder  = arguments.sortOrder,
+				siteID     = getSite().getsiteID()
+			);
 		var rString = "";
 
 		// iteration cap
-		if ( pageResults.count lt arguments.max ) {
+		if ( pageResults.count LT arguments.max ) {
 			arguments.max = pageResults.count;
 		}
 
@@ -87,12 +87,10 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				);
 			}
 			// UL start
-			writeOutput(
-				"<ul id=""recentPages"">
-	"
-			);
+			writeOutput( "<ul id=""recentPages"">
+	" );
 			// iterate and create
-			for ( var x = 1; x lte arguments.max; x++ ) {
+			for ( var x = 1; x LTE arguments.max; x++ ) {
 				writeOutput(
 					"<li class=""recentPages"">
 		<a href=""#cb.linkPage( pageResults.content[ x ] )#"">#pageResults.content[ x ].getTitle()#</a>
@@ -101,11 +99,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				);
 			}
 			// close ul
-			writeOutput(
-				"
+			writeOutput( "
 </ul>
-"
-			);
+" );
 		}
 
 		return rString;
@@ -114,7 +110,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Get all the categories
 	 */
-	array function getAllCategories() cbIgnore{
+	array function getAllCategories() cbIgnore {
 		return variables.categoryService.getAllSlugs( siteID = getSite().getsiteID() );
 	}
 

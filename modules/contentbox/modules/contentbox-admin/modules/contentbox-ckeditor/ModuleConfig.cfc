@@ -6,29 +6,28 @@
  * ContentBox Admin CKEditor Module
  */
 component {
-
 	// Module Properties
-	this.title              = "ContentBox CKEditor";
-	this.author             = "Ortus Solutions, Corp";
-	this.webURL             = "https://www.ortussolutions.com";
-	this.version            = "@version.number@+@build.number@";
-	this.description        = "ContentBox CKEditor Module";
-	this.viewParentLookup   = true;
+	this.title = "ContentBox CKEditor";
+	this.author = "Ortus Solutions, Corp";
+	this.webURL = "https://www.ortussolutions.com";
+	this.version = "@version.number@+@build.number@";
+	this.description = "ContentBox CKEditor Module";
+	this.viewParentLookup = true;
 	this.layoutParentLookup = true;
-	this.entryPoint         = "cbadmin/ckeditor";
-	this.dependencies       = [ "contentbox-admin" ];
+	this.entryPoint = "cbadmin/ckeditor";
+	this.dependencies = [ "contentbox-admin"];
 
 	/**
 	 * Configure
 	 */
-	function configure(){
+	function configure() {
 		// SES Routes
-		routes = [ { pattern : "/:handler/:action?" } ];
+		routes = [ { pattern: "/:handler/:action?" }];
 
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints : [
+			customInterceptionPoints: [
 				"cbadmin_ckeditorToolbar",
 				"cbadmin_ckeditorExtraPlugins",
 				"cbadmin_ckeditorExtraConfig",
@@ -43,7 +42,7 @@ component {
 	/**
 	 * Fired when the module is registered and activated.
 	 */
-	function onLoad(){
+	function onLoad() {
 		var editorService = wirebox.getInstance( "EditorService@contentbox" );
 		editorService.registerEditor( wirebox.getInstance( "CKEditor@contentbox-ckeditor" ) );
 	}
@@ -51,7 +50,7 @@ component {
 	/**
 	 * Fired when the module is unregistered and unloaded
 	 */
-	function onUnload(){
+	function onUnload() {
 		var editorService = wirebox.getInstance( "EditorService@contentbox" );
 		editorService.unregisterEditor( "ckeditor" );
 	}

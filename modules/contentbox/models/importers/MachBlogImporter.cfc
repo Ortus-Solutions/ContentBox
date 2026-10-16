@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,24 +6,31 @@
  * Import a MachBlog database into contentbox
  */
 component implements="ICBImporter" {
-
 	// DI
 	property name="categoryService" inject="id:categoryService@contentbox";
-	property name="entryService" inject="id:entryService@contentbox";
-	property name="pageService" inject="id:pageService@contentbox";
-	property name="authorService" inject="id:authorService@contentbox";
-	property name="roleService" inject="id:roleService@contentbox";
-	property name="commentService" inject="id:commentService@contentbox";
-	property name="customFieldService" inject="id:customFieldService@contentbox";
-	property name="log" inject="logbox:logger:{this}";
-	property name="htmlHelper" inject="HTMLHelper@coldbox";
-	property name="bCrypt" inject="BCrypt@BCrypt";
 
+	property name="entryService" inject="id:entryService@contentbox";
+
+	property name="pageService" inject="id:pageService@contentbox";
+
+	property name="authorService" inject="id:authorService@contentbox";
+
+	property name="roleService" inject="id:roleService@contentbox";
+
+	property name="commentService" inject="id:commentService@contentbox";
+
+	property name="customFieldService" inject="id:customFieldService@contentbox";
+
+	property name="log" inject="logbox:logger:{this}";
+
+	property name="htmlHelper" inject="HTMLHelper@coldbox";
+
+	property name="bCrypt" inject="BCrypt@BCrypt";
 
 	/**
 	 * Constructor
 	 */
-	MachBlogImporter function init(){
+	MachBlogImporter function init() {
 		return this;
 	}
 
@@ -36,15 +43,19 @@ component implements="ICBImporter" {
 		dsnPassword     = "",
 		defaultPassword = "",
 		required roleID,
-		tableprefix = ""
-	){
-		var authorMap   = {};
-		var catMap      = {};
-		var entryMap    = {};
-		var pageMap     = {};
-		var slugMap     = {};
+		tableprefix     = ""
+	) {
+		var authorMap = {};
+		var catMap = {};
+		var entryMap = {};
+		var pageMap = {};
+		var slugMap = {};
 		var pageSlugMap = {};
-		var baseDate    = createDate( 1970, 1, 1 );
+		var baseDate = createDate(
+			1970,
+			1,
+			1
+		);
 
 		log.info( "Starting import process: #arguments.toString()#" );
 
@@ -57,10 +68,10 @@ component implements="ICBImporter" {
 				password   = arguments.dsnPassword,
 				sql        = "select * from #arguments.tablePrefix#machblog_category"
 			).execute().getResult();
-			for ( var x = 1; x lte q.recordcount; x++ ) {
+			for ( var x = 1; x LTE q.recordcount; x++ ) {
 				var props = {
-					category : q.category_name[ x ],
-					slug     : htmlHelper.slugify( q.category_name[ x ] )
+					category: q.category_name[ x ],
+					slug    : htmlHelper.slugify( q.category_name[ x ] )
 				};
 				var cat = categoryService.new( properties = props );
 				entitySave( cat );
@@ -75,20 +86,20 @@ component implements="ICBImporter" {
 			// Get the default role
 			var defaultRole = roleService.get( arguments.roleID );
 			// Import Authors
-			var q           = new Query(
+			var q = new Query(
 				datasource = arguments.dsn,
 				username   = arguments.dsnUsername,
 				password   = arguments.dsnPassword,
 				sql        = "select * from #arguments.tablePrefix#machblog_user"
 			).execute().getResult();
-			for ( var x = 1; x lte q.recordcount; x++ ) {
+			for ( var x = 1; x LTE q.recordcount; x++ ) {
 				var props = {
-					email     : q.email[ x ],
-					username  : q.email[ x ],
-					password  : bcrypt.hashPassword( defaultPassword ),
-					isActive  : q.is_active[ x ],
-					firstName : q.first_name[ x ],
-					lastName  : q.last_name[ x ]
+					email    : q.email[ x ],
+					username : q.email[ x ],
+					password : bcrypt.hashPassword( defaultPassword ),
+					isActive : q.is_active[ x ],
+					firstName: q.first_name[ x ],
+					lastName : q.last_name[ x ]
 				};
 				var author = authorService.new( properties = props );
 				author.setRole( defaultRole );
@@ -117,20 +128,28 @@ component implements="ICBImporter" {
 				sql        = "select * from #arguments.tablePrefix#machblog_entry order by dt_modified asc"
 			).execute().getResult();
 
-			for ( var x = 1; x lte q.recordcount; x++ ) {
+			for ( var x = 1; x LTE q.recordcount; x++ ) {
 				var published = true;
 				if ( !q.is_active[ x ] ) {
 					published = false;
 				}
 				var props = {
-					title         : q.title[ x ],
-					slug          : htmlHelper.slugify( q.title[ x ] ),
-					content       : q.body[ x ] & q.more_body[ x ],
-					excerpt       : q.body[ x ],
-					publishedDate : dateAdd( "s", q.dt_posted[ x ] / 1000, baseDate ),
-					createdDate   : dateAdd( "s", q.dt_created[ x ] / 1000, baseDate ),
-					isPublished   : published,
-					allowComments : q.allow_comments[ x ]
+					title        : q.title[ x ],
+					slug         : htmlHelper.slugify( q.title[ x ] ),
+					content      : q.body[ x ] & q.more_body[ x ],
+					excerpt      : q.body[ x ],
+					publishedDate: dateAdd(
+						"s",
+						q.dt_posted[ x ] / 1000,
+						baseDate
+					),
+					createdDate: dateAdd(
+						"s",
+						q.dt_created[ x ] / 1000,
+						baseDate
+					),
+					isPublished  : published,
+					allowComments: q.allow_comments[ x ]
 				};
 
 				// slug checks
@@ -147,10 +166,10 @@ component implements="ICBImporter" {
 				var entry = entryService.new( properties = props );
 				// Add content versionized!
 				entry.addNewContentVersion(
-					content   = props.content,
-					changelog = "Imported content",
-					author    = authorService.get( authorMap[ q.created_by_id[ x ] ] )
-				);
+						content   = props.content,
+						changelog = "Imported content",
+						author    = authorService.get( authorMap[ q.created_by_id[ x ] ] )
+					);
 				entry.setCreator( authorService.get( authorMap[ q.created_by_id[ x ] ] ) );
 				// entry categories
 				var qCategories = new Query(
@@ -160,8 +179,11 @@ component implements="ICBImporter" {
 					sql        = "select * from #arguments.tablePrefix#machblog_entry_category as category where category.entry_id = '#q.entry_id[ x ]#'"
 				).execute().getResult();
 				var aCategories = [];
-				for ( var y = 1; y lte qCategories.recordcount; y++ ) {
-					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[ y ] ] ) );
+				for ( var y = 1; y LTE qCategories.recordcount; y++ ) {
+					arrayAppend(
+						aCategories,
+						categoryService.get( catMap[ qCategories.category_id[ y ] ] )
+					);
 				}
 				entry.setCategories( aCategories );
 
@@ -179,19 +201,19 @@ component implements="ICBImporter" {
 					password   = arguments.dsnPassword,
 					sql        = "select * from #arguments.tablePrefix#machblog_comment as comment where comment.entry_id = '#q.entry_id[ x ]#' order by dt_created asc"
 				).execute().getResult();
-				for ( var y = 1; y lte qComments.recordcount; y++ ) {
+				for ( var y = 1; y LTE qComments.recordcount; y++ ) {
 					var props = {
-						content     : qComments.comment[ y ],
-						author      : qComments.name[ y ],
-						authorIP    : qComments.ip_created[ y ],
-						authorEmail : qComments.email[ y ],
-						authorURL   : qComments.url[ y ],
-						createdDate : dateAdd(
+						content    : qComments.comment[ y ],
+						author     : qComments.name[ y ],
+						authorIP   : qComments.ip_created[ y ],
+						authorEmail: qComments.email[ y ],
+						authorURL  : qComments.url[ y ],
+						createdDate: dateAdd(
 							"s",
 							qComments.dt_created[ y ] / 1000,
 							baseDate
 						),
-						isApproved : qComments.is_active[ y ]
+						isApproved: qComments.is_active[ y ]
 					};
 					var comment = commentService.new( properties = props );
 					comment.setRelatedContent( entry );
@@ -203,16 +225,14 @@ component implements="ICBImporter" {
 				log.info( "Entry imported: #entry.getTitle()#" );
 			}
 			log.info( "Entries imported successfully!" );
-		}
-		// end of try
-		catch ( any e ) {
+		}// end of try
+		 catch (any e) {
 			log.error( "Error importing blog: #e.message# #e.detail#", e );
 			rethrow;
 		}
 
 		// Commit All entities
-		transaction action="commit" {
-		}
+		transaction action="commit";
 	}
 
 }

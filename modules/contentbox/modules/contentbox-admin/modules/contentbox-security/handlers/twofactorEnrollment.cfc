@@ -6,7 +6,13 @@ component extends="baseHandler" {
 	/**
 	 * Executes before all handler actions
 	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
+	any function preHandler(
+		event,
+		rc,
+		prc,
+		action,
+		eventArguments
+	) {
 		super.preHandler( argumentCollection = arguments );
 
 		// Param In Arguments
@@ -16,7 +22,7 @@ component extends="baseHandler" {
 			.paramValue( "rememberMe", false );
 
 		// Detect In arguments from eventarguments incorporation
-		var inArgs = [ "authorID", "relocationURL", "rememberMe" ];
+		var inArgs = [ "authorID", "relocationURL", "rememberMe"];
 		for ( var thisArg in inArgs ) {
 			if ( eventArguments.keyExists( thisArg ) ) {
 				rc[ thisArg ] = eventArguments[ thisArg ];
@@ -37,28 +43,24 @@ component extends="baseHandler" {
 	/**
 	 * Force Enrollment Form
 	 */
-	function forceEnrollment( event, rc, prc ){
+	function forceEnrollment( event, rc, prc ) {
 		// If not relocation URL set, default to editor
 		if ( !rc.relocationURL.len() ) {
 			rc.relocationURL = event.buildLink(
-				"#prc.cbAdminEntryPoint#/authors/editor/authorID/#prc.oCurrentAuthor.getAuthorID()###twofactor"
-			);
+					"#prc.cbAdminEntryPoint#/authors/editor/authorID/#prc.oCurrentAuthor.getAuthorID()###twofactor"
+				);
 		}
-		prc.xehEnroll         = "#prc.cbAdminEntryPoint#.security.twofactorEnrollment.process";
+		prc.xehEnroll = "#prc.cbAdminEntryPoint#.security.twofactorEnrollment.process";
 		prc.twoFactorProvider = twoFactorService.getDefaultProviderObject();
 		event.setView( "twofactor/forceEnrollment" );
 	}
 
-
 	/**
 	 * Process an enrollment for a user.
 	 */
-	any function process( event, rc, prc ){
+	any function process( event, rc, prc ) {
 		// Given a logged in user, make sure they are the same
-		if (
-			prc.oCurrentAuthor.isLoaded() &&
-			prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID()
-		) {
+		if ( prc.oCurrentAuthor.isLoaded() && prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID() ) {
 			messagebox.warn( cb.r( "twofactor.illegalAuthorEnrollment@security" ) );
 			relocate( "#prc.cbAdminEntryPoint#.dashboard" );
 			return;
@@ -76,14 +78,14 @@ component extends="baseHandler" {
 
 		// Flash data needed for two factor checks
 		flash.put(
-			"authorData",
-			{
-				authorID     : prc.oAuthor.getAuthorID(),
-				rememberMe   : rc.rememberMe,
-				securedURL   : rc.relocationURL,
-				isEnrollment : true
-			}
-		);
+				"authorData",
+				{
+					authorID    : prc.oAuthor.getAuthorID(),
+					rememberMe  : rc.rememberMe,
+					securedURL  : rc.relocationURL,
+					isEnrollment: true
+				}
+			);
 
 		// Send challenge
 		var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
@@ -97,15 +99,16 @@ component extends="baseHandler" {
 		relocate( event = "#prc.cbAdminEntryPoint#.security.twofactor" );
 	}
 
-
 	/**
 	 * Un-enroll an author from two factor authentication
 	 */
-	function unenroll( event, rc, prc ){
+	function unenroll( event, rc, prc ) {
 		prc.oAuthor.setIs2FactorAuth( false );
 		variables.authorService.save( prc.oAuthor );
 		messagebox.info( cb.r( "twofactor.unenrollment@security" ) );
-		relocate( "#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor" );
+		relocate(
+			"#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor"
+		);
 	}
 
 }

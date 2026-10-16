@@ -5,33 +5,32 @@
  * ---
  */
 component {
-
 	// Module Properties
-	this.title              = "ContentBox Sitemap Generator";
-	this.author             = "Ortus Solutions, Corp";
-	this.webURL             = "https://www.ortussolutions.com";
-	this.description        = "Generates XML, TXT, JSON and HTML Sitemaps for your website";
+	this.title = "ContentBox Sitemap Generator";
+	this.author = "Ortus Solutions, Corp";
+	this.webURL = "https://www.ortussolutions.com";
+	this.description = "Generates XML, TXT, JSON and HTML Sitemaps for your website";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
-	this.viewParentLookup   = true;
+	this.viewParentLookup = true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// Module Entry Point: /sitemap.(json,html,txt)
-	this.entryPoint         = "sitemap";
+	this.entryPoint = "sitemap";
 
-	function configure(){
+	function configure() {
 		// module settings - stored in modules.name.settings
 		settings = {};
 
 		// SES Routes
 		routes = [
 			// Module Entry Point
-			{ pattern : "/", handler : "main", action : "index" },
+			{ pattern: "/", handler: "main", action: "index" },
 			// Convention Route
-			{ pattern : "/:handler/:action?" }
+			{ pattern: "/:handler/:action?" }
 		];
 
 		// Custom Declared Points
-		interceptorSettings = { customInterceptionPoints : "" };
+		interceptorSettings = { customInterceptionPoints: "" };
 
 		// Custom Declared Interceptors
 		interceptors = [];
@@ -40,13 +39,15 @@ component {
 	/**
 	 * Fired when the module is registered and activated.
 	 */
-	function onLoad(){
+	function onLoad() {
+
 	}
 
 	/**
 	 * Fired when the module is unregistered and unloaded
 	 */
-	function onUnload(){
+	function onUnload() {
+
 	}
 
 }

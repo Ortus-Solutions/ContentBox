@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" {
 
-	function init(){
+	function init() {
 		// Widget Properties
 		setName( "Relocate" );
 		setVersion( "1.0" );
-		setDescription( "Issues 302 relocations once it is executed on any content page." );
+		setDescription(
+			"Issues 302 relocations once it is executed on any content page."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "Utilities" );
@@ -32,7 +34,7 @@ component extends="contentbox.models.ui.BaseWidget" {
 		string url,
 		boolean ssl        = getRequestContext().isSSL(),
 		numeric statusCode = "302"
-	){
+	) {
 		var to = "";
 
 		if ( !isNull( arguments.page ) && len( arguments.page ) ) {
@@ -45,9 +47,9 @@ component extends="contentbox.models.ui.BaseWidget" {
 		// relocate only if rendering a page on the front end.
 		if ( variables.cb.isEntryView() || variables.cb.isPageView() ) {
 			relocate(
-				url       : to,
-				ssl       : arguments.ssl,
-				statusCode: arguments.statusCode
+				url        = to,
+				ssl        = arguments.ssl,
+				statusCode = arguments.statusCode
 			);
 		}
 		// Return empty content

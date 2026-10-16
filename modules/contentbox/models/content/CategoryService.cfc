@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,16 +6,17 @@
  * Category service for contentbox
  */
 component extends="cborm.models.VirtualEntityService" singleton {
-
 	// Dependencies
 	property name="htmlHelper" inject="HTMLHelper@coldbox";
+
 	property name="contentService" inject="contentService@contentbox";
+
 	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	CategoryService function init(){
+	CategoryService function init() {
 		// init it
 		super.init( entityName = "cbCategory", useQueryCaching = true );
 
@@ -35,35 +36,46 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @return struct of { count, categories }
 	 */
 	struct function search(
-		search = "",
-		siteID = "",
+		search    = "",
+		siteID    = "",
 		boolean isPublic,
 		max       = 0,
 		offset    = 0,
 		sortOrder = "category asc"
-	){
-		var results = { "count" : 0, "categories" : [] };
-		var c       = newCriteria()
+	) {
+		var results = { "count": 0, "categories": [] };
+		var c = newCriteria()
+			.when(
+				len( arguments.search ),
+				function( c ) {
+					c.like( "category", "%#search#%" );
+				}
+			)
+			.when(
+				len( arguments.siteID ),
+				function( c ) {
+					c.isEq( "site.siteID", siteID );
+				}
+			)
 			// Search Criteria
-			.when( len( arguments.search ), function( c ){
-				c.like( "category", "%#search#%" );
-			} )
+
 			// Site Filter
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
+
 			// IsPublic Filter
-			.when( !isNull( arguments.isPublic ), function( c ){
-				c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
-			} );
+			.when(
+				!isNull( arguments.isPublic ),
+				function( c ) {
+					c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
+				}
+			);
 
 		// run criteria query and projections count
-		results.count      = c.count( "categoryID" );
+		results.count = c.count( "categoryID" );
 		results.categories = c.list(
-			offset   : arguments.offset,
-			max      : arguments.max,
-			sortOrder: arguments.sortOrder
-		);
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder
+			);
 
 		return results;
 	}
@@ -78,7 +90,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return The target site category
 	 */
-	Category function getOrCreate( required category, required site ){
+	Category function getOrCreate( required category, required site ) {
 		// Verify the incoming category exists in the target site or not
 		var oTargetCategory = newCriteria()
 			.isEq( "slug", arguments.category.getSlug() )
@@ -89,11 +101,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Return or Create
 		if ( isNull( oTargetCategory ) ) {
 			oTargetCategory = save(
-				new ( {
-					category : arguments.category.getCategory(),
-					slug     : arguments.category.getSlug(),
-					site     : arguments.site
-				} )
+				new(
+					{
+						category: arguments.category.getCategory(),
+						slug    : arguments.category.getSlug(),
+						site    : arguments.site
+					}
+				)
 			);
 		}
 
@@ -110,7 +124,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return The target site category object
 	 */
-	Category function getOrCreateBySlug( required string category, required site ){
+	Category function getOrCreateBySlug( required string category, required site ) {
 		// Verify the incoming category exists in the target site or not
 		if ( arguments.site.isLoaded() ) {
 			var oTargetCategory = newCriteria()
@@ -122,11 +136,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Return or Create
 		if ( isNull( oTargetCategory ) ) {
 			var oTargetCategory = save(
-				new ( {
-					category : arguments.category,
-					slug     : arguments.category,
-					site     : arguments.site
-				} )
+				new(
+					{
+						category: arguments.category,
+						slug    : arguments.category,
+						site    : arguments.site
+					}
+				)
 			);
 		}
 
@@ -138,12 +154,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @siteID The site to filter on
 	 */
-	numeric function getTotalCategoryCount( string siteID = "" ){
-		return newCriteria()
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
-			.count();
+	numeric function getTotalCategoryCount( string siteID = "" ) {
+		return newCriteria().when(
+				len( arguments.siteID ),
+				function( c ) {
+					c.isEq( "site.siteID", siteID );
+				}
+			).count();
 	}
 
 	/**
@@ -155,7 +172,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws UniqueCategoryException
 	 */
-	function save( required category ){
+	function save( required category ) {
 		return super.save( arguments.category );
 	}
 
@@ -172,16 +189,25 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required any slug,
 		any categoryID = "",
 		string siteID  = ""
-	){
+	) {
 		return newCriteria()
-			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
-			.when( len( arguments.categoryID ), function( c ){
-				c.ne( "categoryID", categoryID );
-			} )
-			.count() > 0 ? false : true;
+					.isEq( "slug", arguments.slug )
+					.when(
+						len( arguments.siteID ),
+						function( c ) {
+							c.isEq( "site.siteID", siteID );
+						}
+					)
+					.when(
+						len( arguments.categoryID ),
+						function( c ) {
+							c.ne( "categoryID", categoryID );
+						}
+					)
+					.count() >
+				0
+			? false
+			: true;
 	}
 
 	/**
@@ -195,28 +221,37 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required categories,
 		required site,
 		boolean isPublic = true
-	){
+	) {
 		// convert to array
 		if ( isSimpleValue( arguments.categories ) ) {
 			arguments.categories = listToArray( arguments.categories );
 		}
 
-		var allCats = arguments.categories
+		var allCats = arguments
+			.categories
+			.filter(
+				function( thisCategory ) {
+					return newCriteria()
+							.isEq( "category", arguments.thisCategory )
+							.isEq( "site.siteID", site.getsiteID() )
+							.count() ==
+						0;
+				}
+			)
 			// Only create categories that do not exist already
-			.filter( function( thisCategory ){
-				return newCriteria()
-					.isEq( "category", arguments.thisCategory )
-					.isEq( "site.siteID", site.getsiteID() )
-					.count() == 0;
-			} )
-			.map( function( thisCategory ){
-				return new ( {
-					"category" : thisCategory,
-					"slug"     : variables.htmlHelper.slugify( thisCategory ),
-					"site"     : site,
-					"isPublic" : isPublic
-				} );
-			} );
+
+			.map(
+				function( thisCategory ) {
+					return new(
+						{
+							"category": thisCategory,
+							"slug"    : variables.htmlHelper.slugify( thisCategory ),
+							"site"    : site,
+							"isPublic": isPublic
+						}
+					);
+				}
+			);
 
 		// Save all cats
 		if ( arrayLen( allCats ) ) {
@@ -233,7 +268,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return array of categories
 	 */
-	array function inflateCategories( struct memento ){
+	array function inflateCategories( struct memento ) {
 		var categories = [];
 		// iterate all memento keys
 		for ( var key in arguments.memento ) {
@@ -255,7 +290,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @category The category object to remove from the system
 	 */
-	boolean function delete( required category ){
+	boolean function delete( required category ) {
 		transaction {
 			// Remove content relationships
 			var aRelatedContent = removeAllRelatedContent( arguments.category );
@@ -277,7 +312,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Remove all content associations from a category and returns all the content objects it was removed from
 	 * @category.hint The category object
 	 */
-	array function removeAllRelatedContent( required category ){
+	array function removeAllRelatedContent( required category ) {
 		var aRelatedContent = contentService
 			.newCriteria()
 			.createAlias( "categories", "c" )
@@ -297,10 +332,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @site The site to export from
 	 */
-	array function getAllForExport( required site ){
-		return findAllWhere( { site : arguments.site } ).map( function( thisItem ){
-			return thisItem.getMemento( profile: "export" );
-		} );
+	array function getAllForExport( required site ) {
+		return findAllWhere( { site: arguments.site } ).map(
+				function( thisItem ) {
+					return thisItem.getMemento( profile = "export" );
+				}
+			);
 	}
 
 	/**
@@ -309,16 +346,22 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @siteId   The site to filter the names from
 	 * @isPublic If passed, show by this filter, else all categories
 	 */
-	array function getAllNames( string siteID = "", boolean isPublic ){
+	array function getAllNames( string siteID = "", boolean isPublic ) {
 		return newCriteria()
-			.withProjections( property: "category" )
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
-			.when( !isNull( arguments.isPublic ), function( c ){
-				c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
-			} )
-			.list( sortOrder: "category" );
+			.withProjections( property = "category" )
+			.when(
+				len( arguments.siteID ),
+				function( c ) {
+					c.isEq( "site.siteID", siteID );
+				}
+			)
+			.when(
+				!isNull( arguments.isPublic ),
+				function( c ) {
+					c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
+				}
+			)
+			.list( sortOrder = "category" );
 	}
 
 	/**
@@ -327,16 +370,22 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @siteId   The site to filter the names from
 	 * @isPublic If passed, show by this filter, else all categories
 	 */
-	array function getAllSlugs( string siteID = "", boolean isPublic ){
+	array function getAllSlugs( string siteID = "", boolean isPublic ) {
 		return newCriteria()
-			.withProjections( property: "slug" )
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
-			.when( !isNull( arguments.isPublic ), function( c ){
-				c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
-			} )
-			.list( sortOrder: "slug" );
+			.withProjections( property = "slug" )
+			.when(
+				len( arguments.siteID ),
+				function( c ) {
+					c.isEq( "site.siteID", siteID );
+				}
+			)
+			.when(
+				!isNull( arguments.isPublic ),
+				function( c ) {
+					c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
+				}
+			)
+			.list( sortOrder = "slug" );
 	}
 
 	/**
@@ -349,14 +398,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws InvalidImportFormat
 	 */
-	string function importFromFile( required importFile, boolean override = false ){
-		var data      = fileRead( arguments.importFile );
+	string function importFromFile( required importFile, boolean override = false ) {
+		var data = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
-			"Starting import with override = #arguments.override#...<br>"
-		);
+				"Starting import with override = #arguments.override#...<br>"
+			);
 
 		if ( !isJSON( data ) ) {
-			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
+			throw(
+				message = "Cannot import file as the contents is not JSON",
+				type    = "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -382,29 +434,29 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required importData,
 		boolean override = false,
 		importLog
-	){
+	) {
 		var allCategories = [];
-		var siteService   = getWireBox().getInstance( "siteService@contentbox" );
+		var siteService = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
-			arguments.importData = [ arguments.importData ];
+			arguments.importData = [ arguments.importData];
 		}
 
 		transaction {
 			// iterate and import
 			for ( var thisCategory in arguments.importData ) {
 				// Get new or persisted
-				var oCategory = this.findBySlug( slug: thisCategory.slug );
-				oCategory     = ( isNull( oCategory ) ? new () : oCategory );
+				var oCategory = this.findBySlug( slug = thisCategory.slug );
+				oCategory = ( isNull( oCategory ) ? new() : oCategory );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
-					target              : oCategory,
-					memento             : thisCategory,
-					exclude             : "categoryID",
-					composeRelationships: false
-				);
+						target               = oCategory,
+						memento              = thisCategory,
+						exclude              = "categoryID",
+						composeRelationships = false
+					);
 
 				// Link the site
 				oCategory.setSite( siteService.getBySlugOrFail( thisCategory.site.slug ) );
@@ -413,7 +465,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				if ( !oCategory.isLoaded() ) {
 					arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
 					arrayAppend( allCategories, oCategory );
-				} else if ( oCategory.isLoaded() and arguments.override ) {
+				} else if ( oCategory.isLoaded() && arguments.override ) {
 					arguments.importLog.append( "Persisted category overriden: #thisCategory.slug#<br>" );
 					arrayAppend( allCategories, oCategory );
 				} else {
@@ -428,8 +480,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				arguments.importLog.append( "Saved all imported and overriden categories!" );
 			} else {
 				arguments.importLog.append(
-					"No categories imported as none where found or able to be overriden from the import file."
-				);
+						"No categories imported as none where found or able to be overriden from the import file."
+					);
 			}
 		}
 		// end of transaction
