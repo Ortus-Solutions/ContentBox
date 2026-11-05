@@ -103,15 +103,23 @@ component singleton {
 	/**
 	 * Logs an authenticated author into the system. Required for JWT services
 	 *
-	 * @author The author to log in
+	 * By default the login only lasts for the current request (API/token mode). cbSecurity calls this with
+	 * a single argument on every JWT-authenticated request, so it MUST NOT create a browser session.
+	 * Only the HTML login flow, after all of its gates (password reset, two-factor) have passed,
+	 * may pass `persistSession=true` to store the login in the CFID-backed session.
+	 *
+	 * @author         The author to log in
+	 * @persistSession If true, persist the login to the session-backed cache storage used by the HTML admin. Never set this from an API/token login.
 	 */
-	Author function login( required author ){
+	Author function login( required author, boolean persistSession = false ){
 		// Mark as logged in
 		arguments.author.setLoggedIn( true );
 		// Store for the duration of the request, API mode
 		variables.requestStorage.set( variables.AUTHOR_KEY, arguments.author );
-		// Store on the long-lived cache for HTML mode
-		variables.cacheStorage.set( "loggedInAuthorID", arguments.author.getAuthorID() );
+		// Store on the long-lived cache for HTML mode, only when explicitly requested
+		if ( arguments.persistSession ) {
+			variables.cacheStorage.set( "loggedInAuthorID", arguments.author.getAuthorID() );
+		}
 		return arguments.author;
 	}
 
