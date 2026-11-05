@@ -112,7 +112,7 @@ component extends="baseHandler" {
 			// Set keep me log in remember cookie, if set.
 			variables.securityService.setRememberMe( username: rc.username, days: val( rc.rememberMe ) );
 			// Set in session, validations are now complete
-			variables.securityService.login( prc.oAuthor );
+			variables.securityService.login( prc.oAuthor, true );
 
 			// announce event
 			announce( "cbadmin_onLogin", { author : prc.oAuthor, securedURL : rc._securedURL } );
