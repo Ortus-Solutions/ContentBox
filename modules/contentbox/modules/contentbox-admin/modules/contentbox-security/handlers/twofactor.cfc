@@ -100,7 +100,7 @@ component extends="baseHandler" {
 			// If you are logged in already, then skip this
 			if ( !prc.oCurrentAuthor.isLoggedIn() ) {
 				// Set in session, validations are now complete
-				variables.securityService.login( prc.oAuthor );
+				variables.securityService.login( prc.oAuthor, true );
 				// announce event
 				announce(
 					"cbadmin_onLogin",

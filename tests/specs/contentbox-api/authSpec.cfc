@@ -83,6 +83,75 @@ component extends="tests.resources.BaseApiTest" {
 				);
 
 				story(
+					"API logins must never create an HTML admin session (MFA bypass)",
+					() => {
+						given(
+							"a valid username and password posted to the API login",
+							() => {
+								then(
+									"no HTML session login is persisted",
+									() => {
+										var cacheStorage = getInstance( "cacheStorage@cbStorages" );
+										cacheStorage.clearAll();
+										var event = this.post(
+												"/cbapi/v1/login",
+												{
+													username: variables.testAdminUsername,
+													password: variables.testAdminPassword
+												}
+											);
+										expect( event.getResponse().getError() ).toBeFalse(
+											event.getResponse().getMessagesString()
+										);
+										expect( cacheStorage.get( "loggedInAuthorID", "" ) ).toBeEmpty();
+									}
+								);
+							}
+						);
+						given(
+							"a request authenticated with a valid JWT",
+							() => {
+								then(
+									"no HTML session login is persisted",
+									() => {
+										var cacheStorage = getInstance( "cacheStorage@cbStorages" );
+										var tokens = jwt.attempt( variables.testAdminUsername,
+												variables.testAdminPassword );
+										cacheStorage.clearAll();
+										var event = GET(
+											"/cbapi/v1/whoami",
+											{ "x-auth-token": tokens.access_token }
+										);
+										expect( event.getResponse() ).toHaveStatus( 200 );
+										expect( cacheStorage.get( "loggedInAuthorID", "" ) ).toBeEmpty();
+									}
+								);
+							}
+						);
+						given(
+							"SecurityService.login() is called",
+							() => {
+								then(
+									"it persists to the session only when persistSession=true",
+									() => {
+										var cacheStorage = getInstance( "cacheStorage@cbStorages" );
+										var oAuthor = securityService.authenticate(
+											username: variables.testAdminUsername,
+											password: variables.testAdminPassword
+										);
+										cacheStorage.clearAll();
+										securityService.login( oAuthor );
+										expect( cacheStorage.get( "loggedInAuthorID", "" ) ).toBeEmpty();
+										securityService.login( oAuthor, true );
+										expect( cacheStorage.get( "loggedInAuthorID", "" ) ).toBe( oAuthor.getAuthorID() );
+									}
+								);
+							}
+						);
+					}
+				);
+
+				story(
 					"I want to be able to logout from the system using my JWT token",
 					() => {
 						given(
