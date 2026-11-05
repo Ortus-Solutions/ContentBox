@@ -21,9 +21,10 @@ interface {
 	Author function getAuthorSession();
 
 	/**
-	 * Logs in a user into persistence storages for tracking purposes
+	 * Logs in a user for the current request. Pass `persistSession=true` ONLY from the HTML login flow after
+	 * all gates (password reset, two-factor) have passed, to persist it in the session-backed storage.
 	 */
-	ISecurityService function login( required Author author );
+	ISecurityService function login( required Author author, boolean persistSession = false );
 
 	/**
 	 * Delete author session

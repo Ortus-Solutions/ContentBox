@@ -36,8 +36,8 @@ component extends="baseHandler" {
 			return;
 		}
 
-		// Ok, we can log them in now for the request
-		variables.securityService.login( prc.oCurrentAuthor );
+		// NOTE: Do NOT call securityService.login() here. The response only needs the tokens and prc.oCurrentAuthor.
+		// Persisting an API login into the HTML session would skip the two-factor challenge the HTML login enforces.
 
 		// Build out the response
 		prc
