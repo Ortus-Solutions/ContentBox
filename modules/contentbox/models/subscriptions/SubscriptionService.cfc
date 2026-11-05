@@ -7,7 +7,7 @@
  */
 component extends="cborm.models.VirtualEntityService" singleton {
 
-	SubscriptionService function init( entityName = "cbSubscription" ){
+	SubscriptionService function init( entityName = "cbSubscription" ) {
 		super.init( entityName = arguments.entityName, useQueryCaching = true );
 		return this;
 	}

@@ -1,37 +1,37 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* A generic content service for content objects
-*/
+ * ********************************************************************************
+ * ContentBox - A Modular Content Platform
+ * Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+ * www.ortussolutions.com
+ * ********************************************************************************
+ * Apache License, Version 2.0
+ *
+ * Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License" );
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ********************************************************************************
+ * A generic content service for content objects
+ */
 component extends="cborm.models.VirtualEntityService" singleton {
-
 	// DI
 	property name="log" inject="logbox:logger:{this}";
+
 	property name="CBHelper" inject="CBHelper@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		super.init( entityname = "cbRelocation", queryCaching = true );
 		return this;
 	}
@@ -49,35 +49,46 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @return struct of { count, relocations }
 	 */
 	struct function search(
-		search = "",
-		siteID = "",
+		search    = "",
+		siteID    = "",
 		boolean isPublic,
 		max       = 0,
 		offset    = 0,
 		sortOrder = "slug asc"
-	){
-		var results = { "count" : 0, "relocations" : [] };
-		var c       = newCriteria()
+	) {
+		var results = { "count": 0, "relocations": [] };
+		var c = newCriteria()
+			.when(
+				len( arguments.search ),
+				function( c ) {
+					c.like( "slug", "%#search#%" );
+				}
+			)
+			.when(
+				len( arguments.siteID ),
+				function( c ) {
+					c.isEq( "site.siteID", siteID );
+				}
+			)
 			// Search Criteria
-			.when( len( arguments.search ), function( c ){
-				c.like( "slug", "%#search#%" );
-			} )
+
 			// Site Filter
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
+
 			// Content ID filter
-			.when( !isNull( arguments.contentID ), function( c ){
-				c.isEq( "relatedContent.contentID", arguments.contentID );
-			} );
+			.when(
+				!isNull( arguments.contentID ),
+				function( c ) {
+					c.isEq( "relatedContent.contentID", arguments.contentID );
+				}
+			);
 
 		// run criteria query and projections count
-		results.count       = c.count( "relocationID" );
+		results.count = c.count( "relocationID" );
 		results.relocations = c.list(
-			offset   : arguments.offset,
-			max      : arguments.max,
-			sortOrder: arguments.sortOrder
-		);
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder
+			);
 
 		return results;
 	}
@@ -88,19 +99,25 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @contentItem  the content item to associate to this relocation
 	 * @originalSlug the slug which will be relocated
 	 */
-	Relocation function createContentRelocation( required BaseContent contentItem, required string originalSlug ){
-		var siteId     = arguments.contentItem.getSite().getSiteID();
+	Relocation function createContentRelocation(
+		required BaseContent contentItem,
+		required string originalSlug
+	) {
+		var siteId = arguments
+			.contentItem
+			.getSite()
+			.getSiteID();
 		var relocation = newCriteria()
 			.createAlias( "site", "site" )
 			.isEq( "site.siteID", siteId )
 			.isEq( "slug", arguments.originalSlug )
 			.get();
 		if ( isNull( relocation ) ) {
-			relocation = new (
+			relocation = new(
 				properties = {
-					"slug"           : arguments.originalSlug,
-					"relatedContent" : arguments.contentItem,
-					"site"           : siteId
+					"slug"          : arguments.originalSlug,
+					"relatedContent": arguments.contentItem,
+					"site"          : siteId
 				}
 			);
 		} else {
@@ -116,18 +133,18 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @slug   The URI to be checked
 	 * @target The target to relocate the URI to
 	 */
-	Relocation function createTargetRelocation( required string slug, required string target ){
-		var site       = variables.cbHelper.site();
+	Relocation function createTargetRelocation( required string slug, required string target ) {
+		var site = variables.cbHelper.site();
 		var relocation = newCriteria()
 			.isEq( "site", site )
 			.isEq( "slug", arguments.originalSlug )
 			.get();
 		if ( isNull( relocation ) ) {
-			relocation = new (
+			relocation = new(
 				properties = {
-					"slug"   : arguments.slug,
-					"target" : arguments.target,
-					"site"   : site
+					"slug"  : arguments.slug,
+					"target": arguments.target,
+					"site"  : site
 				}
 			);
 		} else {
@@ -148,7 +165,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required string slug,
 		string contentType = "Page",
 		Site site
-	){
+	) {
 		param arguments.site = variables.CBHelper.site();
 
 		return newCriteria()

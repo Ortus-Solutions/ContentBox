@@ -9,32 +9,31 @@
  * - modules - custom modules
  */
 component {
-
 	// Module Properties
-	this.title              = "ContentBox Custom Module";
-	this.author             = "Ortus Solutions, Corp";
-	this.webURL             = "https://www.ortussolutions.com";
-	this.description        = "This module is where all custom user assets can be placed and version controlled";
-	this.viewParentLookup   = true;
+	this.title = "ContentBox Custom Module";
+	this.author = "Ortus Solutions, Corp";
+	this.webURL = "https://www.ortussolutions.com";
+	this.description = "This module is where all custom user assets can be placed and version controlled";
+	this.viewParentLookup = true;
 	this.layoutParentLookup = true;
 	// URL Entry Point
-	this.entryPoint         = "cbCustom";
+	this.entryPoint = "cbCustom";
 	// Model Namespace
-	this.modelNamespace     = "contentbox-custom";
+	this.modelNamespace = "contentbox-custom";
 	// CF Mapping
-	this.cfmapping          = "contentbox-custom";
+	this.cfmapping = "contentbox-custom";
 	// ContentBox must be loaded first
-	this.dependencies       = [ "contentbox" ];
+	this.dependencies = [ "contentbox"];
 
 	/**
 	 * Configure Module
 	 */
-	function configure(){
+	function configure() {
 		// contentbox settings
 		settings = {};
 
 		// CB Module Conventions
-		conventions = { layoutsLocation : "_themes", viewsLocation : "_themes" };
+		conventions = { layoutsLocation: "_themes", viewsLocation: "_themes" };
 
 		// Parent Affected Settings
 		parentSettings = {};
@@ -42,7 +41,7 @@ component {
 		// interceptor settings
 		interceptorSettings = {
 			// ContentBox Custom Events
-			customInterceptionPoints : []
+			customInterceptionPoints: []
 		};
 
 		// interceptors
@@ -52,21 +51,24 @@ component {
 	/**
 	 * Development tier
 	 */
-	function development(){
+	function development() {
+
 	}
 
 	/**
 	 * Fired when the module is registered and activated.
 	 */
-	function onLoad(){
+	function onLoad() {
+
 	}
 
 	/**
 	 * Fired when the module is unregistered and unloaded
 	 */
-	function onUnload(){
+	function onUnload() {
+
 	}
 
-	/************************************** PRIVATE *********************************************/
 
+	/************************************** PRIVATE *********************************************/
 }

@@ -8,17 +8,17 @@
 component
 	implements="contentbox.models.menu.providers.IMenuItemProvider"
 	extends   ="contentbox.models.menu.providers.BaseProvider"
-	accessors =true
+	accessors ="#true#"
 {
 
-	/* *********************************************************************
-	 **                      PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	public JSProvider function init(){
+	public JSProvider function init() {
 		setName( "JS" );
 		setType( "JS" );
 		setIconClass( "fa fa-code" );
@@ -26,19 +26,23 @@ component
 		setDescription( "A menu item which executes JavaScript code" );
 		return this;
 	}
+
 	/**
 	 * Retrieves template for use in admin screens for this type of menu item provider
 	 *
 	 * @menuItem.hint The menu item object
 	 * @options.hint  Additional arguments to be used in the method
 	 */
-	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
-		var viewArgs = { menuItem : arguments.menuItem };
+	public string function getAdminTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
+		var viewArgs = { menuItem: arguments.menuItem };
 		return variables.renderer.view(
-			view   = "menus/providers/js/admin",
-			module = "contentbox-admin",
-			args   = viewArgs
-		);
+				view   = "menus/providers/js/admin",
+				module = "contentbox-admin",
+				args   = viewArgs
+			);
 	}
 
 	/**
@@ -47,13 +51,16 @@ component
 	 * @menuItem.hint The menu item object
 	 * @options.hint  Additional arguments to be used in the method
 	 */
-	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
-		var viewArgs = { menuItem : arguments.menuItem };
+	public string function getDisplayTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
+		var viewArgs = { menuItem: arguments.menuItem };
 		return variables.renderer.externalView(
-			view   = "/contentbox/models/menu/views/js/display",
-			module = "contentbox",
-			args   = viewArgs
-		);
+				view   = "/contentbox/models/menu/views/js/display",
+				module = "contentbox",
+				args   = viewArgs
+			);
 	}
 
 }

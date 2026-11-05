@@ -53,6 +53,7 @@ interface {
 	 *
 	 * @return The search html
 	 */
-	any function renderSearchWithResults( required contentbox.models.search.SearchResults searchResults );
-
+	any function renderSearchWithResults(
+		required contentbox.models.search.SearchResults searchResults
+	);
 }

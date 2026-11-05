@@ -7,15 +7,15 @@
  */
 component extends="cborm.models.VirtualEntityService" singleton {
 
-	SubscriberService function init(){
+	SubscriberService function init() {
 		// init it
 		super.init( entityName = "cbSubscriber", useQueryCaching = true );
 
 		return this;
 	}
 
-	numeric function getUniqueSubscriberCount(){
-		return newCriteria().withProjections( countDistinct = "email" ).count();
+	numeric function getUniqueSubscriberCount() {
+		return newCriteria().withProjections( countDistinct = "subscriberEmail" ).count();
 	}
 
 }

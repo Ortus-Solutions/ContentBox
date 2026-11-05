@@ -13,123 +13,119 @@ component
 	cachename ="cbPermissionGroup"
 	cacheuse  ="read-write"
 {
+	/**********************************************************************
+	 * **							DI
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							DI
-	 ********************************************************************* */
-
-
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="permissionGroupID"
-		column   ="permissionGroupID"
+		name="permissionGroupID"
+		column="permissionGroupID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		update   ="false";
+		length="36"
+		update="false";
 
 	property
-		name   ="name"
-		column ="name"
+		name="name"
+		column="name"
 		ormtype="string"
 		notnull="true"
-		length ="255"
-		unique ="true"
+		length="255"
+		unique="true"
 		default=""
-		index  ="idx_permissionGroupName";
+		index="idx_permissionGroupName";
 
 	property
-		name   ="description"
-		column ="description"
+		name="description"
+		column="description"
 		ormtype="string"
 		notnull="false"
 		default=""
-		length ="500";
+		length="500";
 
-	/* *********************************************************************
-	 **							RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							RELATIONSHIPS
+	 **********************************************************************/
 
 	// M2M -> Permissions
 	property
-		name             ="permissions"
-		fieldtype        ="many-to-many"
-		type             ="array"
-		lazy             ="true"
-		orderby          ="permission"
-		cascade          ="save-update"
-		cacheuse         ="read-write"
-		cfc              ="contentbox.models.security.Permission"
-		fkcolumn         ="FK_permissionGroupID"
-		linktable        ="cb_groupPermissions"
+		name="permissions"
+		fieldtype="many-to-many"
+		type="array"
+		lazy="true"
+		orderby="permission"
+		cascade="save-update"
+		cacheuse="read-write"
+		cfc="contentbox.models.security.Permission"
+		fkcolumn="FK_permissionGroupID"
+		linktable="cb_groupPermissions"
 		inversejoincolumn="FK_permissionID";
 
 	// M2M -> Authors
 	property
-		name             ="authors"
-		singularName     ="author"
-		fieldtype        ="many-to-many"
-		type             ="array"
-		lazy             ="true"
-		cacheuse         ="read-write"
-		cfc              ="contentbox.models.security.Author"
-		fkcolumn         ="FK_permissionGroupID"
-		linktable        ="cb_authorPermissionGroups"
+		name="authors"
+		singularName="author"
+		fieldtype="many-to-many"
+		type="array"
+		lazy="true"
+		cacheuse="read-write"
+		cfc="contentbox.models.security.Author"
+		fkcolumn="FK_permissionGroupID"
+		linktable="cb_authorPermissionGroups"
 		inversejoincolumn="FK_authorID";
 
-	/* *********************************************************************
-	 **							CALCULATED FIELDS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							CALCULATED FIELDS
+	 **********************************************************************/
 
 	property
-		name   ="numberOfPermissions"
+		name="numberOfPermissions"
 		formula="select count(*) from cb_groupPermissions as groupPermissions
 						 where groupPermissions.FK_permissionGroupID = permissionGroupID";
 
 	property
-		name   ="numberOfAuthors"
+		name="numberOfAuthors"
 		formula="select count(*) from cb_authorPermissionGroups as pg where pg.FK_permissionGroupID = permissionGroupID";
 
-	/* *********************************************************************
-	 **							NON PERSISTED PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							NON PERSISTED PROPERTIES
+	 **********************************************************************/
 
 	property name="permissionList" persistent="false";
-
-	/* *********************************************************************
-	 **							PK + CONSTRAINTS + MEMENTO
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PK + CONSTRAINTS + MEMENTO
+	 **********************************************************************/
 
 	this.pk = "permissionGroupID";
 
 	this.memento = {
-		defaultIncludes : [ "*" ],
-		defaultExcludes : [ "authors" ]
+		defaultIncludes: [ "*"],
+		defaultExcludes: [ "authors"]
 	};
 
 	this.constraints = {
-		"name" : {
-			required  : true,
-			size      : "1..255",
-			validator : "UniqueValidator@cborm"
+		"name": {
+			required : true,
+			size     : "1..255",
+			validator: "UniqueValidator@cborm"
 		},
-		"description" : { required : false, size : "1..500" }
+		"description": { required: false, size: "1..500" }
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	function init(){
-		variables.permissions    = [];
-		variables.authors        = [];
+	function init() {
+		variables.permissions = [];
+		variables.authors = [];
 		variables.permissionList = [];
 		super.init();
 
@@ -141,9 +137,9 @@ component
 	 *
 	 * @permission One or a list of permissions to verify
 	 */
-	boolean function hasPermission( required permission ){
+	boolean function hasPermission( required permission ) {
 		// cache deconstructed permissions in case it's called many times during a request.
-		if ( !arrayLen( variables.permissionList ) AND hasPermissions() ) {
+		if ( !arrayLen( variables.permissionList ) && hasPermissions() ) {
 			variables.permissionList = arrayReduce(
 				getPermissions(),
 				( result, item ) => {
@@ -154,16 +150,16 @@ component
 		}
 
 		// verify
-		return arrayWrap( arguments.permission )
-			.filter( ( item ) => variables.permissionList.findNoCase( arguments.item ) )
-			.len();
+		return arrayWrap( arguments.permission ).filter(
+				( item ) => variables.permissionList.findNoCase( arguments.item )
+			).len();
 	}
 
 	/**
 	 * Clear all permissions
 	 */
-	PermissionGroup function clearPermissions(){
-		variables.permissions    = [];
+	PermissionGroup function clearPermissions() {
+		variables.permissions = [];
 		variables.permissionList = [];
 		return this;
 	}
@@ -171,7 +167,7 @@ component
 	/**
 	 * Clear all authors
 	 */
-	PermissionGroup function clearAuthors(){
+	PermissionGroup function clearAuthors() {
 		variables.authors = [];
 		return this;
 	}
@@ -181,7 +177,7 @@ component
 	 *
 	 * @permissions The permissions array
 	 */
-	PermissionGroup function setPermissions( required array permissions ){
+	PermissionGroup function setPermissions( required array permissions ) {
 		if ( hasPermissions() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
@@ -196,7 +192,7 @@ component
 	 *
 	 * @authors The permissions array
 	 */
-	PermissionGroup function setAuthors( required array authors ){
+	PermissionGroup function setAuthors( required array authors ) {
 		if ( hasAuthor() ) {
 			variables.authors.clear();
 			variables.authors.addAll( arguments.authors );

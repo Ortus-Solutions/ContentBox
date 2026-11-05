@@ -10,7 +10,7 @@ WEB-INF/**
 /*.log
 
 # Build Dependencies
-coldbox/*
+lib/**
 artifacts/**
 build/build.number
 build/apidocs/docbox
@@ -24,6 +24,7 @@ config/logs/**
 
 # Engines + Docker Libraries
 .engines/**
+.boxlang/**
 bin/.db/**
 tests/resources/dbs/.db/**
 
@@ -52,8 +53,6 @@ modules/contentbox/themes/default/includes/js
 modules/contentbox/themes/default/includes/bootswatch
 modules/contentbox/themes/default/includes/rev-manifest.json
 modules/contentbox/themes/default/node_modules
-modules/route-visualizer/**
-modules/cbdebugger
 
 # ContentBox Dependency Modules
 modules/contentbox/modules/contentbox-deps/modules/*
@@ -70,3 +69,7 @@ testbox/*
 /tests/**/logs/**
 /tests/test-results/*
 tests/resources/patches/tmp/
+
+# AI Skills
+.agents/skills/**
+.agents/guidelines/**

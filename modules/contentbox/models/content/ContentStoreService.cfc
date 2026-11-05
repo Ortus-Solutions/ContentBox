@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,14 +6,13 @@
  * Manages content store items
  */
 component extends="ContentService" singleton {
-
 	// DI
 	property name="contentService" inject="id:ContentService@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	ContentStoreService function init(){
+	ContentStoreService function init() {
 		// init it
 		super.init( entityName = "cbContentStore", useQueryCaching = true );
 
@@ -29,22 +28,22 @@ component extends="ContentService" singleton {
 	 *
 	 * @return ContentStoreService
 	 */
-	function save( required any content, string originalSlug = "" ){
+	function save( required any content, string originalSlug = "" ) {
 		transaction {
 			// save entry
 			super.save( arguments.content );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
+			if ( structKeyExists( arguments, "originalSlug" ) && len( arguments.originalSlug ) ) {
 				var entriesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
 				for ( var thisContent in entriesInNeed ) {
 					thisContent.setSlug(
-						replaceNoCase(
-							thisContent.getSlug(),
-							arguments.originalSlug,
-							arguments.content.getSlug()
-						)
-					);
+							replaceNoCase(
+								thisContent.getSlug(),
+								arguments.originalSlug,
+								arguments.content.getSlug()
+							)
+						);
 					super.save( thisContent );
 				}
 			}
@@ -74,10 +73,10 @@ component extends="ContentService" singleton {
 	 * @return struct = { content, count }
 	 */
 	struct function search(
-		string search      = "",
-		string isPublished = "any",
-		string author      = "all",
-		string creator     = "all",
+		string search               = "",
+		string isPublished          = "any",
+		string author               = "all",
+		string creator              = "all",
 		string parent,
 		string category             = "all",
 		numeric max                 = 0,
@@ -88,22 +87,21 @@ component extends="ContentService" singleton {
 		string slugPrefix           = "",
 		string siteID               = "",
 		string propertyList
-	){
-		var results = { "count" : 0, "content" : [] };
+	) {
+		var results = { "count": 0, "content": [] };
 		// criteria queries
-		var c       = newCriteria();
+		var c = newCriteria();
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
 		if (
-			( arguments.author NEQ "all" ) ||
-			( len( arguments.search ) ) ||
-			( findNoCase( "modifiedDate", arguments.sortOrder ) )
+			( arguments.author NEQ "all" ) || ( len( arguments.search ) ) ||
+				( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
 			c.createAlias(
-				associationName: "contentVersions",
-				alias          : "ac",
-				withClause     : getRestrictions().isTrue( "ac.isActive" )
-			);
+					associationName = "contentVersions",
+					alias           = "ac",
+					withClause      = getRestrictions().isTrue( "ac.isActive" )
+				);
 		}
 
 		// only search shownInSearch bits
@@ -113,7 +111,10 @@ component extends="ContentService" singleton {
 
 		// isPublished filter
 		if ( arguments.isPublished NEQ "any" ) {
-			c.isEq( "isPublished", javacast( "boolean", arguments.isPublished ) );
+			c.isEq(
+					"isPublished",
+					javacast( "boolean", arguments.isPublished )
+				);
 		}
 
 		// Author Filter
@@ -137,23 +138,23 @@ component extends="ContentService" singleton {
 			if ( arguments.searchActiveContent ) {
 				// like disjunctions
 				c.$or(
-					c.restrictions.like( "title", "%#arguments.search#%" ),
-					c.restrictions.like( "slug", "%#arguments.search#%" ),
-					c.restrictions.like( "description", "%#arguments.search#%" ),
-					c.restrictions.like( "ac.content", "%#arguments.search#%" )
-				);
+						c.restrictions.like( "title", "%#arguments.search#%" ),
+						c.restrictions.like( "slug", "%#arguments.search#%" ),
+						c.restrictions.like( "description", "%#arguments.search#%" ),
+						c.restrictions.like( "ac.content", "%#arguments.search#%" )
+					);
 			} else {
 				c.$or(
-					c.restrictions.like( "title", "%#arguments.search#%" ),
-					c.restrictions.like( "slug", "%#arguments.search#%" ),
-					c.restrictions.like( "description", "%#arguments.search#%" )
-				);
+						c.restrictions.like( "title", "%#arguments.search#%" ),
+						c.restrictions.like( "slug", "%#arguments.search#%" ),
+						c.restrictions.like( "description", "%#arguments.search#%" )
+					);
 			}
 		}
 
 		// parent filter
 		if ( !isNull( arguments.parent ) ) {
-			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
+			if ( isSimpleValue( arguments.parent ) && len( arguments.parent ) ) {
 				c.isEq( "parent.contentID", arguments.parent );
 			} else if ( isObject( arguments.parent ) ) {
 				c.isEq( "parent", arguments.parent );
@@ -170,13 +171,12 @@ component extends="ContentService" singleton {
 		// Category Filter
 		if ( arguments.category NEQ "all" ) {
 			// Uncategorized?
-			if ( arguments.category eq "none" ) {
+			if ( arguments.category EQ "none" ) {
 				c.isEmpty( "categories" );
-			}
-			// With categories
-			else {
+			} else {
+				// With categories
 				// search the association
-				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category ] );
+				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category] );
 			}
 		}
 
@@ -188,9 +188,8 @@ component extends="ContentService" singleton {
 				"modifiedDate",
 				"ac.createdDate"
 			);
-		}
-		// default to title sorting
-		else if ( !len( arguments.sortOrder ) ) {
+		} else if ( !len( arguments.sortOrder ) ) {
+			// default to title sorting
 			sortOrder = "title asc";
 		}
 
@@ -203,11 +202,11 @@ component extends="ContentService" singleton {
 			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
 		}
 		results.content = c.list(
-			offset   : arguments.offset,
-			max      : arguments.max,
-			sortOrder: arguments.sortOrder,
-			asQuery  : false
-		);
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder,
+				asQuery   = false
+			);
 		return results;
 	}
 
@@ -216,13 +215,11 @@ component extends="ContentService" singleton {
 	 *
 	 * @site The site to get the export from
 	 */
-	array function getAllForExport( required site ){
-		return super.getAllForExport(
-			newCriteria()
-				.isNull( "parent" )
-				.isEq( "site", arguments.site )
-				.list()
-		);
+	array function getAllForExport( required site ) {
+		return super.getAllForExport( newCriteria()
+					.isNull( "parent" )
+					.isEq( "site", arguments.site )
+					.list() );
 	}
 
 }

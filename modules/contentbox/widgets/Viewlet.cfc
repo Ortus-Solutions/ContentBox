@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	Viewlet function init(){
+	Viewlet function init() {
 		// Widget Properties
 		setName( "Viewlet" );
 		setVersion( "1.0" );
-		setDescription( "A widget that executes any internal ColdBox event and return its results" );
+		setDescription(
+			"A widget that executes any internal ColdBox event and return its results"
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
@@ -35,15 +37,19 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		string args       = "",
 		string title      = "",
 		string titleLevel = "2"
-	){
-		var rString        = "";
+	) {
+		var rString = "";
 		var eventArguments = {};
 
 		// Inflate args
 		if ( len( arguments.args ) ) {
 			var aString = listToArray( arguments.args, "," );
 			for ( var key in aString ) {
-				eventArguments[ listFirst( key, "=" ) ] = getToken( key, 2, "=" );
+				eventArguments[ listFirst( key, "=" ) ] = getToken(
+					key,
+					2,
+					"="
+				);
 			}
 		}
 
@@ -65,9 +71,14 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 						private        = arguments.private
 					)
 				);
-			} catch ( Any e ) {
-				writeOutput( "Error executing viewlet: #arguments.event#(#arguments.args.toString()#). #e.message#" );
-				log.error( "Error executing viewlet: #arguments.event#(#arguments.args.toString()#)", e );
+			} catch (Any e) {
+				writeOutput(
+					"Error executing viewlet: #arguments.event#(#arguments.args.toString()#). #e.message#"
+				);
+				log.error(
+						"Error executing viewlet: #arguments.event#(#arguments.args.toString()#)",
+						e
+					);
 			}
 		}
 

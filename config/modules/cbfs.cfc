@@ -1,6 +1,6 @@
 component {
 
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * CBFS Module Settings
@@ -9,21 +9,20 @@ component {
 		 */
 		return {
 			// The default disk
-			"defaultDisk" : "contentbox",
+			"defaultDisk": "contentbox",
 			// Register the disks on the system
-			"disks"       : {
+			"disks"      : {
 				// Your default application storage
-				"contentbox" : {
-					provider   : "Local",
-					properties : {
-						path    : "#controller.getAppRootPath()#modules_app/contentbox-custom/_content",
-						diskUrl : function(){
-							return application.wirebox
+				"contentbox": {
+					provider  : "Local",
+					properties: {
+						path   : "#controller.getAppRootPath()#modules_app/contentbox-custom/_content",
+						diskUrl: function() {
+							return application
+								.wirebox
 								.getInstance( "CBHelper@contentBox" )
 								.site()
-								.getSiteRoot()
-							&
-							"/modules_app/contentbox-custom/_content/"
+								.getSiteRoot() & "/modules_app/contentbox-custom/_content/";
 						}
 					}
 				}

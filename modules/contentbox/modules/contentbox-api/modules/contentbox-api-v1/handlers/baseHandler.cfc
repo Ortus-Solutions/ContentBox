@@ -18,14 +18,14 @@
  * <pre>
  * component extends="BaseOrmResource"{
  *
- * 		// Inject the correct virtual entity service to use
- * 		property name="ormService" inject="RoleService"
- * 		property name="ormService" inject="PermissionService"
+ * // Inject the correct virtual entity service to use
+ * property name="ormService" inject="RoleService"
+ * property name="ormService" inject="PermissionService"
  *
- * 		// The default sorting order string: permission, name, data desc, etc.
- * 		variables.sortOrder = "";
- * 		// The name of the entity this resource handler controls. Singular name please.
- * 		variables.entity 	= "Permission";
+ * // The default sorting order string: permission, name, data desc, etc.
+ * variables.sortOrder = "";
+ * // The name of the entity this resource handler controls. Singular name please.
+ * variables.entity 	= "Permission";
  * }
  * </pre>
  *
@@ -35,12 +35,12 @@
  * @see https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
  */
 component extends="cborm.models.resources.BaseHandler" {
-
 	// DI
 	property name="settings" inject="coldbox:moduleSettings:cborm";
-	property name="siteService" inject="siteService@contentbox";
-	property name="cb" inject="CBHelper@contentbox";
 
+	property name="siteService" inject="siteService@contentbox";
+
+	property name="cb" inject="CBHelper@contentbox";
 	// Use native getOrFail() or getByIdOrSlugOrFail()
 	variables.useGetOrFail = true;
 
@@ -51,8 +51,14 @@ component extends="cborm.models.resources.BaseHandler" {
 	 * @criteria If you pass a criteria object, then we will use that instead of creating a new one
 	 * @results  If you pass in a results struct, it must contain the following: { count:numeric, records: array of objects }
 	 */
-	function index( event, rc, prc, criteria, struct results ){
-		param rc.page      = 1;
+	function index(
+		event,
+		rc,
+		prc,
+		criteria,
+		struct results
+	) {
+		param rc.page = 1;
 		param rc.isDeleted = false;
 
 		// Add to incoming criteria our base default criterias
@@ -67,14 +73,20 @@ component extends="cborm.models.resources.BaseHandler" {
 	/**
 	 * Display a resource by incoming ID or slug
 	 */
-	function show( event, rc, prc ){
-		param rc.includes       = "";
-		param rc.excludes       = "";
+	function show( event, rc, prc ) {
+		param rc.includes = "";
+		param rc.excludes = "";
 		param rc.ignoreDefaults = false;
-		param rc.id             = 0;
+		param rc.id = 0;
 
 		// announce it
-		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
+		announce(
+			"#variables
+				.settings
+				.resources
+				.eventPrefix#pre#variables.entity#Show",
+			{}
+		);
 
 		// Get by id or slug
 		prc.oEntity = (
@@ -82,16 +94,22 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Show", { entity : prc.oEntity } );
+		announce(
+			"#variables
+				.settings
+				.resources
+				.eventPrefix#post#variables.entity#Show",
+			{ entity: prc.oEntity }
+		);
 
 		// Marshall it
 		prc.response.setData(
-			prc.oEntity.getMemento(
-				includes       = rc.includes,
-				excludes       = rc.excludes,
-				ignoreDefaults = rc.ignoreDefaults
-			)
-		);
+				prc.oEntity.getMemento(
+						includes       = rc.includes,
+						excludes       = rc.excludes,
+						ignoreDefaults = rc.ignoreDefaults
+					)
+			);
 	}
 
 	/**
@@ -104,7 +122,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		struct populate   = {},
 		struct validate   = {},
 		string saveMethod = variables.saveMethod
-	){
+	) {
 		super.create( argumentCollection = arguments );
 	}
 
@@ -118,16 +136,16 @@ component extends="cborm.models.resources.BaseHandler" {
 		struct populate   = {},
 		struct validate   = {},
 		string saveMethod = variables.saveMethod
-	){
-		param rc.includes                             = "";
-		param rc.excludes                             = "";
-		param rc.ignoreDefaults                       = false;
-		param rc.id                                   = 0;
+	) {
+		param rc.includes = "";
+		param rc.excludes = "";
+		param rc.ignoreDefaults = false;
+		param rc.id = 0;
 		param arguments.populate.composeRelationships = true;
 
 		// Population arguments
 		arguments.populate.memento = rc;
-		arguments.populate.model   = (
+		arguments.populate.model = (
 			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
@@ -138,26 +156,38 @@ component extends="cborm.models.resources.BaseHandler" {
 		prc.oEntity = validateOrFail( argumentCollection = arguments.validate );
 
 		// announce it
-		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Update", { entity : prc.oEntity } );
+		announce(
+			"#variables
+				.settings
+				.resources
+				.eventPrefix#pre#variables.entity#Update",
+			{ entity: prc.oEntity }
+		);
 
 		// Save it
 		invoke(
 			variables.ormService,
 			arguments.saveMethod,
-			[ prc.oEntity ]
+			[ prc.oEntity]
 		);
 
 		// announce it
-		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Update", { entity : prc.oEntity } );
+		announce(
+			"#variables
+				.settings
+				.resources
+				.eventPrefix#post#variables.entity#Update",
+			{ entity: prc.oEntity }
+		);
 
 		// Marshall it out
 		prc.response.setData(
-			prc.oEntity.getMemento(
-				includes       = rc.includes,
-				excludes       = rc.excludes,
-				ignoreDefaults = rc.ignoreDefaults
-			)
-		);
+				prc.oEntity.getMemento(
+						includes       = rc.includes,
+						excludes       = rc.excludes,
+						ignoreDefaults = rc.ignoreDefaults
+					)
+			);
 	}
 
 	/**
@@ -168,7 +198,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		rc,
 		prc,
 		string deleteMethod = variables.deleteMethod
-	){
+	) {
 		param rc.id = 0;
 
 		prc.oEntity = (
@@ -176,20 +206,80 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Delete", { entity : prc.oEntity } );
+		announce(
+			"#variables
+				.settings
+				.resources
+				.eventPrefix#pre#variables.entity#Delete",
+			{ entity: prc.oEntity }
+		);
 
 		// Delete it
 		invoke(
 			variables.ormService,
 			arguments.deleteMethod,
-			[ prc.oEntity ]
+			[ prc.oEntity]
 		);
 
 		// announce it
-		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
+		announce(
+			"#variables
+				.settings
+				.resources
+				.eventPrefix#post#variables.entity#Delete",
+			{ id: rc.id }
+		);
 
 		// Marshall it out
 		prc.response.addMessage( "#variables.entity# deleted!" );
+	}
+
+	/**
+	 * Workaround for COLDBOX-1453: the ColdBox RestHandler version fails on Adobe 2023
+	 * with a MissingArgumentException when calling setData().
+	 * TODO: Remove once a ColdBox release with COLDBOX-1453 is the minimum version.
+	 *
+	 * @event          The request context
+	 * @rc             The rc reference
+	 * @prc            The prc reference
+	 * @eventArguments The original event arguments
+	 * @exception      The thrown exception
+	 */
+	function onEntityNotFoundException( event, rc, prc, eventArguments, exception = {} ) {
+		// Param Exceptions, just in case
+		param name="arguments.exception.message"      default="";
+		param name="arguments.exception.extendedInfo" default="";
+
+		// Announce exception
+		announce( "onEntityNotFoundException", { "exception" : arguments.exception } );
+		// Log it
+		log.warn(
+			"onEntityNotFoundException of (#arguments.event.getCurrentEvent()#)",
+			arguments.exception.extendedInfo
+		);
+
+		// Resolve the id first, ACF 2023 drops an inline Elvis expression passed to setData()
+		var entityId = structKeyExists( arguments.rc, "id" ) ? arguments.rc.id : "";
+
+		// Setup Response
+		arguments.event
+			.getResponse()
+			.setError( true )
+			.setData( entityId )
+			.addMessage(
+				len( arguments.exception.message ) ? arguments.exception.message : "The record you requested cannot be found in this system"
+			)
+			.setStatusCode( arguments.event.STATUS.NOT_FOUND );
+
+		// Render Error Out
+		arguments.event.renderData(
+			type        = arguments.prc.response.getFormat(),
+			data        = arguments.prc.response.getDataPacket( reset = this.resetDataOnError ),
+			contentType = arguments.prc.response.getContentType(),
+			statusCode  = arguments.prc.response.getStatusCode(),
+			location    = arguments.prc.response.getLocation(),
+			isBinary    = arguments.prc.response.getBinary()
+		);
 	}
 
 	/**
@@ -202,18 +292,23 @@ component extends="cborm.models.resources.BaseHandler" {
 	 *
 	 * @throws EntityNotFound
 	 */
-	private function getByIdOrSlugOrFail( required id, required prc ){
-		var c       = variables.ormService.newCriteria();
+	private function getByIdOrSlugOrFail( required id, required prc ) {
+		var c = variables.ormService.newCriteria();
 		var oEntity = c
 			.$or(
-				// note: id is a shortcut in Hibernate for the Primary Key
 				c.restrictions.isEq( "id", arguments.id ),
 				c.restrictions.isEq( "slug", arguments.id )
 			)
+			.when(
+				!isNull( prc.oCurrentSite ),
+				function( c ) {
+					c.isEq( "site", prc.oCurrentSite );
+				}
+			)
+			// note: id is a shortcut in Hibernate for the Primary Key
+
 			// If the site exists, seed it
-			.when( !isNull( prc.oCurrentSite ), function( c ){
-				c.isEq( "site", prc.oCurrentSite );
-			} )
+
 			.get();
 
 		if ( isNull( oEntity ) ) {
@@ -234,14 +329,13 @@ component extends="cborm.models.resources.BaseHandler" {
 	 *
 	 * @throws EntityNotFound
 	 */
-	private function getSiteByIdOrSlugOrFail( required id ){
-		var c     = variables.siteService.newCriteria();
-		var oSite = c
-			.$or(
-				// note: id is a shortcut in Hibernate for the Primary Key
+	private function getSiteByIdOrSlugOrFail( required id ) {
+		var c = variables.siteService.newCriteria();
+		var oSite = c.$or(
 				c.restrictions.isEq( "id", arguments.id ),
 				c.restrictions.isEq( "slug", arguments.id )
-			)
+			)// note: id is a shortcut in Hibernate for the Primary Key
+
 			.get();
 
 		if ( isNull( oSite ) ) {

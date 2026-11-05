@@ -1,5 +1,4 @@
 component {
-
 	abort;
 
 }

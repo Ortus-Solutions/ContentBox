@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -16,45 +16,43 @@ component
 	joinColumn        ="contentID"
 	discriminatorValue="ContentStore"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	/**
 	 * The internal description of the contentstore item
 	 */
 	property
-		name   ="description"
-		column ="description"
+		name="description"
+		column="description"
 		notnull="false"
-		length ="500"
+		length="500"
 		default="";
 
 	/**
 	 * The ordering numeric sequence
 	 */
 	property
-		name     ="order"
-		column   ="order"
-		notnull  ="false"
-		ormtype  ="integer"
-		default  ="0"
+		name="order"
+		column="order"
+		notnull="false"
+		ormtype="integer"
+		default="0"
 		dbdefault="0";
+	/**********************************************************************
+	 * **							CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							CONSTRAINTS
-	 ********************************************************************* */
+	this.constraints[ "description" ] = { required: false, size: "1..500" };
+	this.constraints[ "order" ] = { required: false, type: "numeric" };
 
-	this.constraints[ "description" ] = { required : false, size : "1..500" };
-	this.constraints[ "order" ]       = { required : false, type : "numeric" };
+	/**********************************************************************
+	 * **							CONSTRUCTOR
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							CONSTRUCTOR
-	 ********************************************************************* */
-
-	function init(){
-		var props = [ "description", "order" ];
+	function init() {
+		var props = [ "description", "order"];
 		appendToMemento( props, "defaultIncludes" );
 		appendToMemento( [], "defaultExcludes" );
 		appendToMementoProfile( props, "export" );
@@ -62,21 +60,21 @@ component
 
 		super.init();
 
-		variables.categories      = [];
-		variables.customFields    = [];
+		variables.categories = [];
+		variables.customFields = [];
 		variables.renderedContent = "";
-		variables.allowComments   = false;
-		variables.description     = "";
-		variables.createdDate     = now();
-		variables.contentType     = "ContentStore";
-		variables.order           = 0;
+		variables.allowComments = false;
+		variables.description = "";
+		variables.createdDate = now();
+		variables.contentType = "ContentStore";
+		variables.order = 0;
 
 		return this;
 	}
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
@@ -95,7 +93,7 @@ component
 		required boolean publish,
 		required any originalSlugRoot,
 		required any newSlugRoot
-	){
+	) {
 		// original cloning!
 		setDescription( arguments.original.getDescription() );
 		setOrder( arguments.original.getOrder() + 1 );

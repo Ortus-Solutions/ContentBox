@@ -2049,6 +2049,10 @@ INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VA
 GO
 INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779ce256-a444-11eb-ab6f-0290cc502ae3')
 GO
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 7, 0x01, N'', 0x00, N'779cd6c6-a444-11eb-ab6f-0290cc502ae3')
+GO
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 1, 0x01, N'', 0x00, N'779cd766-a444-11eb-ab6f-0290cc502ae3')
+GO
 INSERT INTO cb_permission(permission, description, createdDate, modifiedDate, isDeleted, permissionID) VALUES (N'PAGES_ADMIN', N'Ability to manage content pages, default is view only', '2016-05-03 16:23:26', '2016-05-03 16:23:26', 0x00, N'785d71f6-a444-11eb-ab6f-0290cc502ae3')
 GO
 INSERT INTO cb_permission(permission, description, createdDate, modifiedDate, isDeleted, permissionID) VALUES (N'EDITORS_EDITOR_SELECTOR', N'Ability to change the editor to another registered online editor', '2016-05-03 16:23:26', '2016-05-03 16:23:26', 0x00, N'785d734a-a444-11eb-ab6f-0290cc502ae3')

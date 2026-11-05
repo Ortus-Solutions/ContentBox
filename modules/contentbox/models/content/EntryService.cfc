@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,14 +6,13 @@
  * Manages blog entry content
  */
 component extends="ContentService" singleton {
-
 	// Inject generic content service
 	property name="contentService" inject="id:ContentService@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	EntryService function init(){
+	EntryService function init() {
 		// init it
 		super.init( entityName = "cbEntry", useQueryCaching = true );
 
@@ -28,9 +27,9 @@ component extends="ContentService" singleton {
 	 *
 	 * @return Saved entry
 	 */
-	function save( required any entry, string originalSlug = "" ){
+	function save( required any entry, string originalSlug = "" ) {
 		// Only create relocations for slug changes to published entries
-		if ( entry.getIsPublished() && !isNull( arguments.originalSlug ) AND len( arguments.originalSlug ) ) {
+		if ( entry.getIsPublished() && !isNull( arguments.originalSlug ) && len( arguments.originalSlug ) ) {
 			addRelocation( arguments.entry, arguments.originalSlug );
 		}
 		return super.save( arguments.entry );
@@ -67,22 +66,21 @@ component extends="ContentService" singleton {
 		boolean showInSearch        = false,
 		string siteId               = "",
 		string propertyList
-	){
-		var results = { "count" : 0, "entries" : [] };
+	) {
+		var results = { "count": 0, "entries": [] };
 		// criteria queries
-		var c       = newCriteria();
+		var c = newCriteria();
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
 		if (
-			( arguments.author NEQ "all" ) ||
-			( len( arguments.search ) ) ||
-			( findNoCase( "modifiedDate", arguments.sortOrder ) )
+			( arguments.author NEQ "all" ) || ( len( arguments.search ) ) ||
+				( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
 			c.createAlias(
-				associationName: "contentVersions",
-				alias          : "ac",
-				withClause     : getRestrictions().isTrue( "ac.isActive" )
-			);
+					associationName = "contentVersions",
+					alias           = "ac",
+					withClause      = getRestrictions().isTrue( "ac.isActive" )
+				);
 		}
 		// only search shownInSearch bits
 		if ( arguments.showInSearch ) {
@@ -90,7 +88,10 @@ component extends="ContentService" singleton {
 		}
 		// isPublished filter
 		if ( arguments.isPublished NEQ "any" ) {
-			c.isEq( "isPublished", javacast( "boolean", arguments.isPublished ) );
+			c.isEq(
+					"isPublished",
+					javacast( "boolean", arguments.isPublished )
+				);
 		}
 		// Author Filter
 		if ( arguments.author NEQ "all" ) {
@@ -106,9 +107,9 @@ component extends="ContentService" singleton {
 			if ( arguments.searchActiveContent ) {
 				// like disjunctions
 				c.$or(
-					c.restrictions.like( "title", "%#arguments.search#%" ),
-					c.restrictions.like( "ac.content", "%#arguments.search#%" )
-				);
+						c.restrictions.like( "title", "%#arguments.search#%" ),
+						c.restrictions.like( "ac.content", "%#arguments.search#%" )
+					);
 			} else {
 				c.like( "title", "%#arguments.search#%" );
 			}
@@ -116,13 +117,12 @@ component extends="ContentService" singleton {
 		// Category Filter
 		if ( arguments.category NEQ "all" ) {
 			// Uncategorized?
-			if ( arguments.category eq "none" ) {
+			if ( arguments.category EQ "none" ) {
 				c.isEmpty( "categories" );
-			}
-			// With categories
-			else {
+			} else {
+				// With categories
 				// search the association
-				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category ] );
+				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category] );
 			}
 		}
 		// Site Filter
@@ -138,9 +138,8 @@ component extends="ContentService" singleton {
 				"modifiedDate",
 				"ac.createdDate"
 			);
-		}
-		// default to title sorting
-		else if ( !len( arguments.sortOrder ) ) {
+		} else if ( !len( arguments.sortOrder ) ) {
+			// default to title sorting
 			sortOrder = "publishedDate DESC";
 		}
 
@@ -153,11 +152,11 @@ component extends="ContentService" singleton {
 			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
 		}
 		results.entries = c.list(
-			offset    = arguments.offset,
-			max       = arguments.max,
-			sortOrder = arguments.sortOrder,
-			asQuery   = false
-		);
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder,
+				asQuery   = false
+			);
 
 		return results;
 	}
@@ -165,7 +164,7 @@ component extends="ContentService" singleton {
 	/**
 	 * Get a query report of entries archive
 	 */
-	function getArchiveReport(){
+	function getArchiveReport() {
 		// we use HQL so we can be DB independent using the map() hql function thanks to John Wish, you rock!
 		var hql = "SELECT new map( count(*) as count, YEAR(publishedDate) as year, MONTH(publishedDate) as month )
 				   FROM cbEntry
@@ -175,7 +174,10 @@ component extends="ContentService" singleton {
 				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
 				  ORDER BY 2 DESC, 3 DESC";
 		// run report
-		return executeQuery( query = hql, params = { "isPublished" : true, "now" : now() } );
+		return executeQuery(
+			query  = hql,
+			params = { "isPublished": true, "now": now() }
+		);
 	}
 
 	/**
@@ -199,13 +201,13 @@ component extends="ContentService" singleton {
 		numeric offset  = 0,
 		boolean asQuery = false,
 		string siteId   = ""
-	){
+	) {
 		var results = {};
-		var hql     = "FROM cbEntry
+		var hql = "FROM cbEntry
 				  WHERE isPublished = :isPublished
 				    AND passwordProtection = ''
 				    AND publishedDate <= :now";
-		var params      = { "isPublished" : true };
+		var params = { "isPublished": true };
 		params[ "now" ] = now();
 
 		// Site
@@ -260,8 +262,8 @@ component extends="ContentService" singleton {
 	 *
 	 * @site The site to get the export from
 	 */
-	array function getAllForExport( required site ){
-		return super.getAllForExport( findAllWhere( { site : arguments.site } ) );
+	array function getAllForExport( required site ) {
+		return super.getAllForExport( findAllWhere( { site: arguments.site } ) );
 	}
 
 }

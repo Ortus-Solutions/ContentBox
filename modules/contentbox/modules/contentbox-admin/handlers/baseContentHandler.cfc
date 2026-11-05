@@ -6,7 +6,6 @@
  * The base content handler which is used by the entries, contentstore and pages handlers to provide uniformity
  */
 component extends="baseHandler" {
-
 	/**
 	 * --------------------------------------------------------------------------
 	 * Core Dependencies
@@ -14,14 +13,20 @@ component extends="baseHandler" {
 	 */
 
 	property name="authorService" inject="authorService@contentbox";
-	property name="themeService" inject="themeService@contentbox";
-	property name="HTMLHelper" inject="HTMLHelper@coldbox";
-	property name="categoryService" inject="categoryService@contentbox";
-	property name="customFieldService" inject="customFieldService@contentbox";
-	property name="editorService" inject="editorService@contentbox";
-	property name="contentService" inject="contentService@contentbox";
-	property name="templateService" inject="ContentTemplateService@contentbox";
 
+	property name="themeService" inject="themeService@contentbox";
+
+	property name="HTMLHelper" inject="HTMLHelper@coldbox";
+
+	property name="categoryService" inject="categoryService@contentbox";
+
+	property name="customFieldService" inject="customFieldService@contentbox";
+
+	property name="editorService" inject="editorService@contentbox";
+
+	property name="contentService" inject="contentService@contentbox";
+
+	property name="templateService" inject="ContentTemplateService@contentbox";
 	/**
 	 * --------------------------------------------------------------------------
 	 * ColdBox Properties
@@ -38,20 +43,26 @@ component extends="baseHandler" {
 	 */
 
 	// The handler controlling the requests
-	variables.handler         = "";
+	variables.handler = "";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity          = "";
+	variables.entity = "";
 	// The plural of the entity used for collections, ordering, etc.
-	variables.entityPlural    = "";
+	variables.entityPlural = "";
 	// The default ordering on collection searches, etc.
 	variables.defaultOrdering = "createdDate desc";
 	// The security prefix
-	variables.securityPrefix  = "";
+	variables.securityPrefix = "";
 
 	/**
 	 * Pre Handler interceptions
 	 */
-	function preHandler( event, action, eventArguments, rc, prc ){
+	function preHandler(
+		event,
+		action,
+		eventArguments,
+		rc,
+		prc
+	) {
 		// Light up the content tab in the sidebar
 		prc.tabContent = true;
 	}
@@ -59,7 +70,7 @@ component extends="baseHandler" {
 	/**
 	 * Show Content
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Params
 		event.paramValue( "parent", "" );
 
@@ -68,16 +79,19 @@ component extends="baseHandler" {
 
 		// Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
-			contentType = variables.ormService.new().getContentType(),
-			site        = prc.oCurrentSite,
-			fields      = "templateID,name"
-		);
+				contentType = variables
+					.ormService
+					.new()
+					.getContentType(),
+				site        = prc.oCurrentSite,
+				fields      = "templateID,name"
+			);
 
 		// get all categories
 		prc.categories = variables.categoryService.list(
-			criteria  = { "site" : prc.oCurrentSite },
-			sortOrder = "category"
-		);
+				criteria  = { "site": prc.oCurrentSite },
+				sortOrder = "category"
+			);
 
 		// View according to handler section
 		event.setView( "#variables.handler#/index" );
@@ -88,7 +102,7 @@ component extends="baseHandler" {
 	 *
 	 * @return HTML
 	 */
-	function contentTable( event, rc, prc ){
+	function contentTable( event, rc, prc ) {
 		// params
 		event
 			.paramValue( "page", 1 )
@@ -97,52 +111,53 @@ component extends="baseHandler" {
 			.paramValue( "fCategories", "all" )
 			.paramValue( "fCreators", "all" )
 			.paramValue( "fStatus", "any" )
-			.paramValue( "isFiltering", false, true )
+			.paramValue(
+				"isFiltering",
+				false,
+				true
+			)
 			.paramValue( "parent", "" )
 			.paramValue( "showAll", false );
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
+		prc.oPaging = getInstance( "Paging@contentbox" );
+		prc.paging = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:contentListHelper.contentPaginate(@page@)";
 
 		// JS null checks
-		if ( rc.parent eq "undefined" ) {
+		if ( rc.parent EQ "undefined" ) {
 			rc.parent = "";
 		}
 
 		// Are we Filtering?
 		if (
-			rc.fAuthors neq "all" OR
-			rc.fStatus neq "any" OR
-			rc.fCategories neq "all" OR
-			rc.fCreators neq "all" OR
-			rc.showAll
+			rc.fAuthors NEQ "all" || rc.fStatus NEQ "any" || rc.fCategories NEQ "all" || rc.fCreators NEQ "all" ||
+				rc.showAll
 		) {
 			prc.isFiltering = true;
 		}
 
 		// Doing a search or filtering?
-		if ( len( rc.searchContent ) OR prc.isFiltering ) {
+		if ( len( rc.searchContent ) || prc.isFiltering ) {
 			// remove parent for searches, we go hierarchy wide
 			structDelete( rc, "parent" );
 		}
 
 		// search content with filters and all
 		var contentResults = variables.ormService.search(
-			search             : rc.searchContent,
-			isPublished        : rc.fStatus,
-			category           : rc.fCategories,
-			author             : rc.fAuthors,
-			creator            : rc.fCreators,
-			parent             : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
-			sortOrder          : variables.defaultOrdering,
-			siteID             : prc.oCurrentSite.getsiteID(),
-			offset             : prc.paging.startRow - 1,
-			max                : prc.cbSettings.cb_paging_maxrows,
-			searchActiveContent: false
-		);
-		prc.content      = contentResults[ variables.entityPlural ];
+				search              = rc.searchContent,
+				isPublished         = rc.fStatus,
+				category            = rc.fCategories,
+				author              = rc.fAuthors,
+				creator             = rc.fCreators,
+				parent              = ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
+				sortOrder           = variables.defaultOrdering,
+				siteID              = prc.oCurrentSite.getsiteID(),
+				offset              = prc.paging.startRow - 1,
+				max                 = prc.cbSettings.cb_paging_maxrows,
+				searchActiveContent = false
+			);
+		prc.content = contentResults[ variables.entityPlural ];
 		prc.contentCount = contentResults.count;
 
 		// Do we have a parent? Inflate it
@@ -162,8 +177,8 @@ component extends="baseHandler" {
 	 *
 	 * @return HTML
 	 */
-	function quickLook( event, rc, prc ){
-		prc.content          = variables.ormService.get( event.getValue( "contentID", 0 ) );
+	function quickLook( event, rc, prc ) {
+		prc.content = variables.ormService.get( event.getValue( "contentID", 0 ) );
 		prc.xehContentEditor = "#prc.cbAdminEntryPoint#.#variables.handler#.editor";
 		event.setView( view = "content/quickLook", layout = "ajax" );
 	}
@@ -173,28 +188,38 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function changeOrder( event, rc, prc ){
+	function changeOrder( event, rc, prc ) {
 		// param values
 		event.paramValue( "tableID", variables.entityPlural ).paramValue( "newRulesOrder", "" );
 
 		// decode + cleanup incoming rules data
 		// We replace _ to - due to the js plugin issue of not liking dashes
 		var aOrderedContent = urlDecode( rc.newRulesOrder )
-			.replace( "_", "-", "all" )
+			.replace(
+				"_",
+				"-",
+				"all"
+			)
 			.listToArray( "&" )
-			.map( function( thisItem ){
-				return reReplaceNoCase(
-					arguments.thisItem,
-					"#rc.tableID#\[\]\=",
-					"",
-					"all"
-				);
-			} )
+			.map(
+				function( thisItem ) {
+					return reReplaceNoCase(
+						arguments.thisItem,
+						"#rc.tableID#\[\]\=",
+						"",
+						"all"
+					);
+				}
+			)
 			// Inflate
-			.map( function( thisId, index ){
-				return variables.ormService.get( arguments.thisId ).setOrder( arguments.index );
-			} );
-
+			.map(
+				function( thisId, index ) {
+					return variables
+						.ormService
+						.get( arguments.thisId )
+						.setOrder( arguments.index );
+				}
+			);
 
 		// save them
 		if ( arrayLen( aOrderedContent ) ) {
@@ -205,9 +230,11 @@ component extends="baseHandler" {
 		event
 			.getResponse()
 			.setData(
-				aOrderedContent.map( function( thisItem ){
-					return arguments.thisItem.getContentID();
-				} )
+				aOrderedContent.map(
+						function( thisItem ) {
+							return arguments.thisItem.getContentID();
+						}
+					)
 			)
 			.addMessage( "Content ordered successfully!" );
 	}
@@ -217,7 +244,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate when done updating
 	 */
-	function bulkStatus( event, rc, prc, required relocateTo ){
+	function bulkStatus( event, rc, prc, required relocateTo ) {
 		event
 			.paramValue( "parent", "" )
 			.paramValue( "contentID", "" )
@@ -225,14 +252,16 @@ component extends="baseHandler" {
 
 		// check if id list has length
 		if ( len( rc.contentID ) ) {
-			variables.ormService.bulkPublishStatus( contentID: rc.contentID, status: rc.contentStatus );
+			variables.ormService.bulkPublishStatus( contentID = rc.contentID, status = rc.contentStatus );
 			// announce event
 			announce(
 				"cbadmin_on#variables.entity#StatusUpdate",
-				{ contentID : rc.contentID, status : rc.contentStatus }
+				{ contentID: rc.contentID, status: rc.contentStatus }
 			);
 			// Message
-			cbMessageBox().info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
+			cbMessageBox().info(
+					"#listLen( rc.contentID )# content where set to '#rc.contentStatus#'"
+				);
 		} else {
 			cbMessageBox().warn( "No content selected!" );
 		}
@@ -248,12 +277,12 @@ component extends="baseHandler" {
 	/**
 	 * Show the editor
 	 */
-	function editor( event, rc, prc ){
+	function editor( event, rc, prc ) {
 		// get all categories
 		prc.categories = variables.categoryService.list(
-			criteria : { "site" : prc.oCurrentSite },
-			sortOrder: "category"
-		);
+				criteria  = { "site": prc.oCurrentSite },
+				sortOrder = "category"
+			);
 
 		// get new or persisted content object to edit
 		prc.oContent = variables.ormService.get( event.getValue( "contentID", 0 ) );
@@ -263,12 +292,12 @@ component extends="baseHandler" {
 			// Get Comments viewlet
 			prc.commentsViewlet = runEvent(
 				event          = "contentbox-admin:comments.pager",
-				eventArguments = { contentID : rc.contentID }
+				eventArguments = { contentID: rc.contentID }
 			);
 			// Get History Versions Viewlet
 			prc.versionsViewlet = runEvent(
 				event          = "contentbox-admin:versions.pager",
-				eventArguments = { contentID : rc.contentID }
+				eventArguments = { contentID: rc.contentID }
 			);
 		} else {
 			prc.oContent.setSite( prc.oCurrentSite );
@@ -280,26 +309,28 @@ component extends="baseHandler" {
 			}
 		}
 		// Get all content names for parent drop downs excluding yourself and your children
-		prc.allContent = variables.ormService
-			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
-			.filter( function( item ){
-				return prc.oContent.isLoaded() ? !reFindNoCase(
-					"#prc.oContent.getSlug()#\/?",
-					arguments.item[ "slug" ]
-				) : true;
-			} );
+		prc.allContent = variables
+			.ormService
+			.getAllFlatContent( sortOrder = "slug asc", siteID = prc.oCurrentSite.getsiteID() )
+			.filter(
+				function( item ) {
+					return prc.oContent.isLoaded()
+						? !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] )
+						: true;
+				}
+			);
 
 		// Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
-			contentType = prc.oContent.getContentType(),
-			site        = prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
-			fields      = "templateID,name"
-		);
+				contentType = prc.oContent.getContentType(),
+				site        = prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
+				fields      = "templateID,name"
+			);
 
 		// Provide JWT Tokens for communicating with the API
-		prc.jwtTokens     = jwtAuth().fromUser( prc.oCurrentAuthor );
+		prc.jwtTokens = jwtAuth().fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
-		prc.editors       = variables.editorService.getRegisteredEditorsMap();
+		prc.editors = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Check if the markup matches the choosen editor
@@ -307,30 +338,30 @@ component extends="baseHandler" {
 			prc.defaultEditor = "simplemde";
 		}
 		// Get the editor driver object
-		prc.oEditorDriver     = variables.editorService.getEditor( prc.defaultEditor );
+		prc.oEditorDriver = variables.editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
-		prc.markups           = variables.editorService.getRegisteredMarkups();
+		prc.markups = variables.editorService.getRegisteredMarkups();
 		// Get User's default markup
-		prc.defaultMarkup     = prc.oCurrentAuthor.getPreference( "markup", variables.editorService.getDefaultMarkup() );
+		prc.defaultMarkup = prc.oCurrentAuthor.getPreference( "markup", variables.editorService.getDefaultMarkup() );
 		// get all authors
-		prc.authors           = variables.authorService.getAll( sortOrder = "lastName" );
+		prc.authors = variables.authorService.getAll( sortOrder = "lastName" );
 		// get related content
-		prc.relatedContent    = prc.oContent.hasRelatedContent() ? prc.oContent.getRelatedContent() : [];
-		prc.linkedContent     = prc.oContent.hasLinkedContent() ? prc.oContent.getLinkedContent() : [];
+		prc.relatedContent = prc.oContent.hasRelatedContent() ? prc.oContent.getRelatedContent() : [];
+		prc.linkedContent = prc.oContent.hasLinkedContent() ? prc.oContent.getLinkedContent() : [];
 		prc.relatedContentIDs = prc.oContent.getRelatedContentIDs();
 
 		// Get default or overriden parent
 		prc.parentContentID = !isNull( rc.parentID ) ? rc.parentID : prc.oContent.getParentID();
 
 		// Exit Handlers
-		prc.xehContentList                = "#prc.cbAdminEntryPoint#.#variables.handler#";
-		prc.xehContentSave                = "#prc.cbAdminEntryPoint#.#variables.handler#.save";
-		prc.xehSlugify                    = "#prc.cbAdminEntryPoint#.#variables.handler#.slugify";
-		prc.xehAuthorEditorSave           = "#prc.cbAdminEntryPoint#.authors.changeEditor";
-		prc.xehSlugCheck                  = "#prc.cbAdminEntryPoint#.content.slugUnique";
-		prc.xehRelatedContentSelector     = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.xehContentList = "#prc.cbAdminEntryPoint#.#variables.handler#";
+		prc.xehContentSave = "#prc.cbAdminEntryPoint#.#variables.handler#.save";
+		prc.xehSlugify = "#prc.cbAdminEntryPoint#.#variables.handler#.slugify";
+		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+		prc.xehSlugCheck = "#prc.cbAdminEntryPoint#.content.slugUnique";
+		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
-		prc.xehBreakContentLink           = "#prc.cbAdminEntryPoint#.content.breakContentLink";
+		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
 		// View
 		event.setView( "content/editor" );
@@ -348,7 +379,7 @@ component extends="baseHandler" {
 		prc,
 		required adminPermission,
 		required relocateTo
-	){
+	) {
 		// form params
 		event
 			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
@@ -366,24 +397,21 @@ component extends="baseHandler" {
 			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
 			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
 			.paramValue( "saveAsTemplate", false )
-			.paramValue(
-				"publishedTime",
-				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-			)
+			.paramValue( "publishedTime",
+				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "slug", "" )
-		;
+			.paramValue( "slug", "" );
 
 		// If no published date found, then default it to NOW!
-		if ( NOT len( rc.publishedDate ) ) {
+		if ( !len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
 		}
 
 		// slugify the incoming title or slug
 		rc.slug = (
-			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(
-				listLast( rc.slug, "/" )
-			)
+			!len( rc.slug )
+				? variables.HTMLHelper.slugify( rc.title )
+				: variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) )
 		);
 
 		// Verify permission for publishing, else save as draft
@@ -392,29 +420,26 @@ component extends="baseHandler" {
 		}
 
 		// get new/persisted page and populate it with incoming data.
-		var oContent     = variables.ormService.get( rc.contentID );
+		var oContent = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		variables.ormService
+		variables
+			.ormService
 			.populate(
 				target           = oContent,
 				memento          = rc,
-				exclude          = "contentID,siteID",
+				exclude          = "contentID,siteID,contentVersions,activeContentVersions",
 				nullEmptyInclude = "expireDate"
 			)
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
-		var isNew = ( NOT oContent.isLoaded() );
+		var isNew = ( !oContent.isLoaded() );
 
 		// Attach creator if new page
 		if ( isNew ) {
 			oContent.setSite( prc.oCurrentSite ).setCreator( prc.oCurrentAuthor );
-		}
-		// Override creator if persisted?
-		else if (
-			!isNew and
-			prc.oCurrentAuthor.hasPermission( arguments.adminPermission ) and
-			len( rc.creatorID ) and
-			oContent.getCreator().getAuthorID() NEQ rc.creatorID
+		} else if (
+			!isNew && prc.oCurrentAuthor.hasPermission( arguments.adminPermission ) && len( rc.creatorID ) &&
+				oContent.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
 			oContent.setCreator( variables.authorService.get( rc.creatorID ) );
 		}
@@ -430,21 +455,21 @@ component extends="baseHandler" {
 		// Prettify content if json
 		if ( isJSON( rc.content ) ) {
 			rc.content = getInstance( "JSONPrettyPrint@JSONPrettyPrint" ).formatJson(
-				json           : rc.content,
-				lineEnding     : chr( 10 ),
-				spaceAfterColon: true
-			);
+					json            = rc.content,
+					lineEnding      = chr( 10 ),
+					spaceAfterColon = true
+				);
 		}
 
 		// Register a new content in the page, versionized!
 		oContent.addNewContentVersion(
-			content  : rc.content,
-			changelog: rc.changelog,
-			author   : prc.oCurrentAuthor
-		);
+				content   = rc.content,
+				changelog = rc.changelog,
+				author    = prc.oCurrentAuthor
+			);
 
 		// Inflate parent
-		if ( rc.parentContent EQ "null" OR rc.parentContent EQ "" ) {
+		if ( rc.parentContent EQ "null" || rc.parentContent EQ "" ) {
 			oContent.setParent( javacast( "null", "" ) );
 		} else {
 			oContent.setParent( variables.ormService.get( rc.parentContent ) );
@@ -466,41 +491,47 @@ component extends="baseHandler" {
 		// If directed to create a template from the content item, do this now and assign it
 		if ( rc.saveAsTemplate ) {
 			var template = templateService.newFromContentItem( oContent );
-			templateService.save( template )
+			templateService.save( template );
 			oContent.setContentTemplate( template );
 		}
 		// announce event
 		announce(
 			"cbadmin_pre#variables.Entity#Save",
 			{
-				content      : oContent,
-				isNew        : isNew,
-				originalSlug : originalSlug
+				content     : oContent,
+				isNew       : isNew,
+				originalSlug: originalSlug
 			}
 		);
 
 		// save content
-		variables.ormService.save( oContent, originalSlug != oContent.getSlug() ? originalSlug : "" );
+		variables.ormService.save(
+				oContent,
+				originalSlug != oContent.getSlug() ? originalSlug : ""
+			);
 
 		// announce event
 		announce(
 			"cbadmin_post#variables.entity#Save",
 			{
-				content      : oContent,
-				isNew        : isNew,
-				originalSlug : originalSlug
+				content     : oContent,
+				isNew       : isNew,
+				originalSlug: originalSlug
 			}
 		);
 
 		// Ajax?
 		if ( event.isAjax() ) {
-			var rData = { "CONTENTID" : oContent.getContentID() };
+			var rData = { "CONTENTID": oContent.getContentID() };
 			event.renderData( type = "json", data = rData );
 		} else {
 			// relocate
 			cbMessageBox().info( "Page Saved!" );
 			if ( oContent.hasParent() ) {
-				relocate( event = arguments.relocateTo, querystring = "parent=#oContent.getParent().getContentID()#" );
+				relocate(
+					event       = arguments.relocateTo,
+					querystring = "parent=#oContent.getParent().getContentID()#"
+				);
 			} else {
 				relocate( event = arguments.relocateTo );
 			}
@@ -512,13 +543,18 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function clone( event, rc, prc, required relocateTo ){
+	function clone( event, rc, prc, required relocateTo ) {
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getsiteID() );
+		event.paramValue( "site", prc.oCurrentSite.getsiteID() )
+			.paramValue( "contentID", "" )
+			.paramValue( "title", "" )
+			.paramValue( "contentStatus", "draft" );
 
 		// validation
-		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
-			cbMessageBox().warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+		if ( !trim( rc.contentID ).len() || !trim( rc.title ).len() ) {
+			cbMessageBox().warn(
+				"Can't clone the unclonable, meaning no contentID or title passed."
+			);
 			relocate( arguments.relocateTo );
 			return;
 		}
@@ -527,27 +563,30 @@ component extends="baseHandler" {
 		var original = variables.ormService.get( rc.contentID );
 
 		// Verify new Title, else do a new copy of it, but only if it's in the same site.
-		if ( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
+		if ( original.isSameSite( rc.site ) && rc.title EQ original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 
 		// get a clone
-		var clone = variables.ormService
-			.new( {
-				title   : rc.title,
-				slug    : variables.HTMLHelper.slugify( rc.title ),
-				creator : prc.oCurrentAuthor,
-				site    : variables.siteService.get( rc.site )
-			} )
+		var clone = variables
+			.ormService
+			.new(
+				{
+					title  : rc.title,
+					slug   : variables.HTMLHelper.slugify( rc.title ),
+					creator: prc.oCurrentAuthor,
+					site   : variables.siteService.get( rc.site )
+				}
+			)
 			.setParent( original.getParent() );
 
 		clone.clone(
-			author          : prc.oCurrentAuthor,
-			original        : original,
-			originalService : variables.ormService,
-			publish         : rc.contentStatus,
-			originalSlugRoot: original.getSlug(),
-			newSlugRoot     : clone.getSlug()
+			author           = prc.oCurrentAuthor,
+			original         = original,
+			originalService  = variables.ormService,
+			publish          = rc.contentStatus,
+			originalSlugRoot = original.getSlug(),
+			newSlugRoot      = clone.getSlug()
 		);
 
 		// relocate
@@ -555,7 +594,10 @@ component extends="baseHandler" {
 
 		// Relocate
 		if ( original.hasParent() ) {
-			relocate( event = arguments.relocateTo, querystring = "parent=#original.getParent().getContentID()#" );
+			relocate(
+				event       = arguments.relocateTo,
+				querystring = "parent=#original.getParent().getContentID()#"
+			);
 		} else {
 			relocate( event = arguments.relocateTo );
 		}
@@ -566,7 +608,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function remove( event, rc, prc, required relocateTo ){
+	function remove( event, rc, prc, required relocateTo ) {
 		// params
 		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
 
@@ -584,13 +626,19 @@ component extends="baseHandler" {
 		for ( var thisContentID in rc.contentID ) {
 			var oContent = variables.ormService.get( thisContentID );
 			if ( isNull( oContent ) ) {
-				arrayAppend( messages, "Invalid contentID sent: #thisContentID#, so skipped removal" );
+				arrayAppend(
+					messages,
+					"Invalid contentID sent: #thisContentID#, so skipped removal"
+				);
 			} else {
 				// GET id to be sent for announcing later
 				var contentID = oContent.getContentID();
-				var title     = oContent.getTitle();
+				var title = oContent.getTitle();
 				// announce event
-				announce( "cbadmin_pre#variables.entity#Remove", { content : oContent } );
+				announce(
+					"cbadmin_pre#variables.entity#Remove",
+					{ content: oContent }
+				);
 				// Diassociate it, bi-directional relationship
 				if ( oContent.hasParent() ) {
 					oContent.getParent().removeChild( oContent );
@@ -599,7 +647,10 @@ component extends="baseHandler" {
 				variables.ormService.delete( oContent );
 				arrayAppend( messages, "Content '#title#' removed" );
 				// announce event
-				announce( "cbadmin_post#variables.entity#Remove", { contentID : contentID } );
+				announce(
+					"cbadmin_post#variables.entity#Remove",
+					{ contentID: contentID }
+				);
 			}
 		}
 
@@ -614,7 +665,7 @@ component extends="baseHandler" {
 	 *
 	 * @return plain
 	 */
-	function slugify( event, rc, prc ){
+	function slugify( event, rc, prc ) {
 		param rc.slug = "";
 		return trim( variables.HTMLHelper.slugify( rc.slug ) );
 	}
@@ -626,7 +677,7 @@ component extends="baseHandler" {
 	 *
 	 * @return html
 	 */
-	function editorSelector( event, rc, prc, sortOrder ){
+	function editorSelector( event, rc, prc, sortOrder ) {
 		// paging default
 		event
 			.paramValue( "page", 1 )
@@ -637,27 +688,27 @@ component extends="baseHandler" {
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.#variables.handler#.editorSelector";
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
+		prc.oPaging = getInstance( "Paging@contentbox" );
+		prc.paging = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:pagerLink(@page@)";
 
 		// search entries with filters and all
 		var results = variables.ormService.search(
-			search             : rc.search,
-			offset             : prc.paging.startRow - 1,
-			max                : prc.cbSettings.cb_paging_maxrows,
-			sortOrder          : arguments.sortOrder,
-			searchActiveContent: false,
-			siteID             : prc.oCurrentSite.getsiteID()
-		);
+				search              = rc.search,
+				offset              = prc.paging.startRow - 1,
+				max                 = prc.cbSettings.cb_paging_maxrows,
+				sortOrder           = arguments.sortOrder,
+				searchActiveContent = false,
+				siteID              = prc.oCurrentSite.getsiteID()
+			);
 		// setup data for display
-		prc.content      = results[ variables.entityPlural ];
+		prc.content = results[ variables.entityPlural ];
 		prc.contentCount = results.count;
-		prc.CBHelper     = variables.CBHelper;
-		prc.contentType  = variables.entityPlural;
+		prc.CBHelper = variables.CBHelper;
+		prc.contentType = variables.entityPlural;
 
 		// if ajax and searching, just return tables
-		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
+		if ( event.isAjax() && len( rc.search ) || rc.clear ) {
 			event.setView( view = "content/editorSelectorEntries", layout = "ajax" );
 		} else {
 			event.setView( view = "content/editorSelector", layout = "ajax" );
@@ -669,24 +720,33 @@ component extends="baseHandler" {
 	 *
 	 * @return json
 	 */
-	function export( event, rc, prc ){
-		return variables.ormService.get( event.getValue( "contentID", 0 ) ).getMemento( profile: "export" );
+	function export( event, rc, prc ) {
+		return variables
+			.ormService
+			.get( event.getValue( "contentID", 0 ) )
+			.getMemento( profile = "export" );
 	}
 
 	/**
 	 * Export All or Selected Content
 	 */
-	function exportAll( event, rc, prc ){
+	function exportAll( event, rc, prc ) {
 		// Set a high timeout for long exports
 		setting requestTimeout="9999";
-		param rc.contentID    = "";
+		param rc.contentID = "";
 		// Export all or some
 		if ( len( rc.contentID ) ) {
-			return rc.contentID
+			return rc
+				.contentID
 				.listToArray()
-				.map( function( id ){
-					return variables.ormService.get( arguments.id ).getMemento( profile: "export" );
-				} );
+				.map(
+					function( id ) {
+						return variables
+							.ormService
+							.get( arguments.id )
+							.getMemento( profile = "export" );
+					}
+				);
 		} else {
 			return variables.ormService.getAllForExport( prc.oCurrentSite );
 		}
@@ -697,7 +757,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function importAll( event, rc, prc, required relocateTo ){
+	function importAll( event, rc, prc, required relocateTo ) {
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 
@@ -712,10 +772,10 @@ component extends="baseHandler" {
 				flash.put( "importLog", importLog );
 			} else {
 				cbMessageBox().error(
-					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
-				);
+						"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
+					);
 			}
-		} catch ( any e ) {
+		} catch (any e) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			cbMessageBox().error( errorMessage );
@@ -739,12 +799,12 @@ component extends="baseHandler" {
 		event,
 		rc,
 		prc,
-		authorID = "all",
+		authorID   = "all",
 		parent,
 		max        = 0,
 		pagination = true,
 		latest     = false
-	){
+	) {
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if ( event.valueExists( "contentPager_authorID" ) ) {
 			arguments.authorID = rc.contentPager_authorID;
@@ -759,7 +819,7 @@ component extends="baseHandler" {
 		}
 
 		// Max rows incoming or take default for pagination.
-		if ( arguments.max eq 0 ) {
+		if ( arguments.max EQ 0 ) {
 			arguments.max = prc.cbSettings.cb_paging_maxrows;
 		}
 
@@ -768,40 +828,43 @@ component extends="baseHandler" {
 		prc.contentPager_id = createUUID();
 
 		// prepare paging object
-		prc.contentPager_oPaging    = getInstance( "Paging@contentbox" );
-		prc.contentPager_paging     = prc.contentPager_oPaging.getBoundaries( page: rc.contentPager_page );
+		prc.contentPager_oPaging = getInstance( "Paging@contentbox" );
+		prc.contentPager_paging = prc.contentPager_oPaging.getBoundaries( page = rc.contentPager_page );
 		prc.contentPager_pagingLink = "javascript:pagerLink(@page@)";
 		prc.contentPager_pagination = arguments.pagination;
 
 		// search entries with filters and all
 		var results = variables.ormService.search(
-			author   : arguments.authorID,
-			parent   : ( !isNull( arguments.parent ) ? arguments.parent : javacast( "null", "" ) ),
-			offset   : prc.contentPager_paging.startRow - 1,
-			max      : arguments.max,
-			sortOrder: ( arguments.latest ? "modifiedDate desc" : "title asc" )
-		);
-		prc.contentPager_content      = results[ variables.entityPlural ];
+				author    = arguments.authorID,
+				parent    = ( !isNull( arguments.parent ) ? arguments.parent : javacast( "null", "" ) ),
+				offset    = prc.contentPager_paging.startRow - 1,
+				max       = arguments.max,
+				sortOrder = ( arguments.latest ? "modifiedDate desc" : "title asc" )
+			);
+		prc.contentPager_content = results[ variables.entityPlural ];
 		prc.contentPager_contentCount = results.count;
 		// author info
-		prc.contentPager_authorID     = arguments.authorID;
+		prc.contentPager_authorID = arguments.authorID;
 		// parent filters se	// parent filters setup
-		event.paramValue( "pager_parentID", "", true );
+		event.paramValue(
+				"pager_parentID",
+				"",
+				true
+			);
 		if ( !isNull( arguments.parent ) ) {
 			prc.contentPager_parentID = arguments.parent;
 		}
 		// Exit Handlers
-		prc.xehContentPager             = "#prc.cbAdminEntryPoint#.#variables.handler#.pager";
-		prc.xehContentPagerHistory      = "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehContentPagerEditor       = "#prc.cbAdminEntryPoint#.#variables.handler#.editor";
-		prc.xehContentPagerQuickLook    = "#prc.cbAdminEntryPoint#.#variables.handler#.quickLook";
+		prc.xehContentPager = "#prc.cbAdminEntryPoint#.#variables.handler#.pager";
+		prc.xehContentPagerHistory = "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehContentPagerEditor = "#prc.cbAdminEntryPoint#.#variables.handler#.editor";
+		prc.xehContentPagerQuickLook = "#prc.cbAdminEntryPoint#.#variables.handler#.quickLook";
 		// Security Prefix
 		prc.contentPager_securityPrefix = variables.securityPrefix;
 
 		// view pager
 		return view( view = "content/pager", module = "contentbox-admin" );
 	}
-
 
 	/****************************************************************/
 	/* PRIVATE FUNCTIONS */
@@ -814,7 +877,7 @@ component extends="baseHandler" {
 	 *
 	 * @return The default editor in string format
 	 */
-	private function getUserDefaultEditor( required author ){
+	private function getUserDefaultEditor( required author ) {
 		// get user default editor
 		var userEditor = arguments.author.getPreference( "editor", editorService.getDefaultEditor() );
 

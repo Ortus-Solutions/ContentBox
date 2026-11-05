@@ -6,7 +6,6 @@
  * The official ContentBox Search Results Object
  */
 component accessors="true" {
-
 	property
 		name="results"
 		type="any"
@@ -22,10 +21,7 @@ component accessors="true" {
 		type="numeric"
 		hint="The amount of time it took for the search in milliseconds";
 
-	property
-		name="searchTerm"
-		type="string"
-		hint="The search term used";
+	property name="searchTerm" type="string" hint="The search term used";
 
 	property
 		name="error"
@@ -45,14 +41,14 @@ component accessors="true" {
 	/**
 	 * Constructor
 	 */
-	function init(){
-		variables.results       = [];
-		variables.searchTime    = 0;
-		variables.total         = 0;
-		variables.metadata      = {};
-		variables.error         = false;
+	function init() {
+		variables.results = [];
+		variables.searchTime = 0;
+		variables.total = 0;
+		variables.metadata = {};
+		variables.error = false;
 		variables.errorMessages = [];
-		variables.searchTerm    = "";
+		variables.searchTerm = "";
 
 		return this;
 	}
@@ -62,7 +58,7 @@ component accessors="true" {
 	 *
 	 * @return SearchResults
 	 */
-	any function populate( required struct memento ){
+	any function populate( required struct memento ) {
 		for ( var key in arguments.memento ) {
 			if ( structKeyExists( variables, key ) ) {
 				variables[ key ] = arguments.memento[ key ];
@@ -76,15 +72,15 @@ component accessors="true" {
 	 *
 	 * @return struct of { "results","searchTime","total","metadata","error","errorMessages","searchTerm" }
 	 */
-	struct function getMemento(){
+	struct function getMemento() {
 		return {
-			"results"       : results,
-			"searchTime"    : searchTime,
-			"total"         : total,
-			"metadata"      : metadata,
-			"error"         : error,
-			"errorMessages" : errorMessages,
-			"searchTerm"    : searchTerm
+			"results"      : results,
+			"searchTime"   : searchTime,
+			"total"        : total,
+			"metadata"     : metadata,
+			"error"        : error,
+			"errorMessages": errorMessages,
+			"searchTerm"   : searchTerm
 		};
 	}
 

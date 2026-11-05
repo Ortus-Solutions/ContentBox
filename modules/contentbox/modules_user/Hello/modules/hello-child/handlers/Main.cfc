@@ -6,7 +6,7 @@ component extends="coldbox.system.EventHandler" {
 	/**
 	 * Index
 	 */
-	any function index( event, rc, prc ){
+	any function index( event, rc, prc ) {
 		return "Hello Child";
 	}
 
