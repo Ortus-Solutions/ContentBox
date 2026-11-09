@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   API and JWT logins no longer create a persistent HTML admin session. Only the HTML login flow, after its password-reset and two-factor gates, persists a login
+
 ## [6.3.3] - 2026-09-18
 
 ## [6.3.2] - 2025-12-05
