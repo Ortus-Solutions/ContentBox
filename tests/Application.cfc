@@ -48,8 +48,8 @@ component {
 	this.mappings[ "/root" ]       = rootPath;
 	this.mappings[ "/cbapp" ]      = rootPath;
 	this.mappings[ "/tests" ]      = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.mappings[ "/coldbox" ]    = rootPath & "coldbox";
-	this.mappings[ "/testbox" ]    = rootPath & "testbox";
+	this.mappings[ "/coldbox" ]    = rootPath & "lib/coldbox";
+	this.mappings[ "/testbox" ]    = rootPath & "lib/testbox";
 	this.mappings[ "/contentbox" ] = rootPath & "modules/contentbox";
 	// Modular ORM Dependencies
 	this.mappings[ "/cborm" ]      = this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
@@ -91,7 +91,7 @@ component {
 
 		// Force reinit to clear out caches, reload ORM and restart virtual app.
 		if ( structKeyExists( url, "fwreinit" ) ) {
-			if ( structKeyExists( server, "lucee" ) ) {
+			if ( getFunctionList().keyExists( "pagePoolClear" ) ) {
 				pagePoolClear();
 			}
 			ormReload();

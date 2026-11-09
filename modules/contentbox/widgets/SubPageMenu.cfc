@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	function init(){
+	function init() {
 		// Widget Properties
 		setName( "SubPageMenu" );
 		setVersion( "1.0" );
-		setDescription( "A widget that renders sub pages according to where it is rendered." );
+		setDescription(
+			"A widget that renders sub pages according to where it is rendered."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "list" );
@@ -46,7 +48,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		parentClass                = "parent",
 		activeClass                = "active",
 		boolean activeShowChildren = false
-	){
+	) {
 		return variables.cb.subPageMenu( argumentCollection = arguments );
 	}
 
@@ -55,7 +57,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 *
 	 * @cbignore
 	 */
-	array function getSlugList(){
+	array function getSlugList() {
 		return variables.pageService.getAllFlatSlugs();
 	}
 

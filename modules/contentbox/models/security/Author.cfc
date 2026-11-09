@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -14,214 +14,212 @@ component
 	cachename ="cbAuthor"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **							DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							DI
+	 **********************************************************************/
 
 	property
-		name      ="authorService"
-		inject    ="provider:authorService@contentbox"
+		name="authorService"
+		inject="provider:authorService@contentbox"
 		persistent="false";
 
 	property
-		name      ="avatar"
-		inject    ="provider:Avatar@contentbox"
+		name="avatar"
+		inject="provider:Avatar@contentbox"
 		persistent="false";
 
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="authorID"
-		column   ="authorID"
+		name="authorID"
+		column="authorID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	property
-		name   ="firstName"
-		column ="firstName"
-		length ="100"
+		name="firstName"
+		column="firstName"
+		length="100"
 		notnull="true"
 		default="";
 
 	property
-		name   ="lastName"
-		column ="lastName"
-		length ="100"
+		name="lastName"
+		column="lastName"
+		length="100"
 		notnull="true"
 		default="";
 
 	property
-		name   ="email"
-		column ="email"
-		length ="255"
+		name="email"
+		column="email"
+		length="255"
 		notnull="true"
-		index  ="idx_email"
+		index="idx_email"
 		default="";
 
 	property
-		name   ="username"
-		column ="username"
-		length ="100"
+		name="username"
+		column="username"
+		length="100"
 		notnull="true"
-		index  ="idx_login"
-		unique ="true"
+		index="idx_login"
+		unique="true"
 		default="";
 
 	property
-		name   ="password"
-		column ="password"
-		length ="100"
+		name="password"
+		column="password"
+		length="100"
 		notnull="true"
-		index  ="idx_login"
+		index="idx_login"
 		default="";
 
 	property
-		name   ="isActive"
-		column ="isActive"
+		name="isActive"
+		column="isActive"
 		ormtype="boolean"
 		notnull="true"
 		default="false"
-		index  ="idx_login,idx_activeAuthor";
+		index="idx_login,idx_activeAuthor";
 
 	property
-		name   ="lastLogin"
-		column ="lastLogin"
+		name="lastLogin"
+		column="lastLogin"
 		ormtype="timestamp"
 		notnull="false";
 
 	property
-		name   ="biography"
-		column ="biography"
+		name="biography"
+		column="biography"
 		ormtype="text"
 		notnull="false"
-		length ="8000"
+		length="8000"
 		default="";
 
 	property
-		name   ="preferences"
-		column ="preferences"
+		name="preferences"
+		column="preferences"
 		ormtype="text"
 		notnull="false"
-		length ="8000"
+		length="8000"
 		default="";
 
 	property
-		name   ="isPasswordReset"
-		column ="isPasswordReset"
+		name="isPasswordReset"
+		column="isPasswordReset"
 		ormtype="boolean"
 		notnull="true"
 		default="false"
-		index  ="idx_passwordReset";
+		index="idx_passwordReset";
 
 	property
-		name   ="is2FactorAuth"
-		column ="is2FactorAuth"
+		name="is2FactorAuth"
+		column="is2FactorAuth"
 		ormtype="boolean"
 		notnull="true"
 		default="false"
-		index  ="idx_2factorauth";
+		index="idx_2factorauth";
 
-	/* *********************************************************************
-	 **							RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							RELATIONSHIPS
+	 **********************************************************************/
 
 	// O2M -> Entries
 	property
-		name        ="entries"
+		name="entries"
 		singularName="entry"
-		type        ="array"
-		fieldtype   ="one-to-many"
-		cfc         ="contentbox.models.content.Entry"
-		fkcolumn    ="FK_authorID"
-		inverse     ="true"
-		lazy        ="true"
-		cascade     ="save-update"
-		batchsize   ="10"
-		orderby     ="publishedDate DESC";
+		type="array"
+		fieldtype="one-to-many"
+		cfc="contentbox.models.content.Entry"
+		fkcolumn="FK_authorID"
+		inverse="true"
+		lazy="true"
+		cascade="save-update"
+		batchsize="10"
+		orderby="publishedDate DESC";
 
 	// O2M -> Pages
 	property
-		name        ="pages"
+		name="pages"
 		singularName="page"
-		type        ="array"
-		fieldtype   ="one-to-many"
-		cfc         ="contentbox.models.content.Page"
-		fkcolumn    ="FK_authorID"
-		inverse     ="true"
-		lazy        ="true"
-		cascade     ="save-update"
-		batchsize   ="10"
-		orderby     ="publishedDate DESC";
+		type="array"
+		fieldtype="one-to-many"
+		cfc="contentbox.models.content.Page"
+		fkcolumn="FK_authorID"
+		inverse="true"
+		lazy="true"
+		cascade="save-update"
+		batchsize="10"
+		orderby="publishedDate DESC";
 
 	// M20 -> Role
 	property
-		name     ="role"
-		notnull  ="true"
+		name="role"
+		notnull="true"
 		fieldtype="many-to-one"
-		cfc      ="contentbox.models.security.Role"
-		fkcolumn ="FK_roleID"
-		lazy     ="true";
+		cfc="contentbox.models.security.Role"
+		fkcolumn="FK_roleID"
+		lazy="true";
 
 	// M2M -> A-la-carte Author Permissions
 	property
-		name             ="permissions"
-		fieldtype        ="many-to-many"
-		cascade          ="save-update"
-		type             ="array"
-		lazy             ="true"
-		cfc              ="contentbox.models.security.Permission"
-		fkcolumn         ="FK_authorID"
-		linktable        ="cb_authorPermissions"
+		name="permissions"
+		fieldtype="many-to-many"
+		cascade="save-update"
+		type="array"
+		lazy="true"
+		cfc="contentbox.models.security.Permission"
+		fkcolumn="FK_authorID"
+		linktable="cb_authorPermissions"
 		inversejoincolumn="FK_permissionID"
-		orderby          ="permission";
+		orderby="permission";
 
 	// M2M -> A-la-carte Author Permission Groups
 	property
-		name             ="permissionGroups"
-		singularName     ="permissionGroup"
-		fieldtype        ="many-to-many"
-		type             ="array"
-		lazy             ="true"
-		inverse          ="true"
-		cfc              ="contentbox.models.security.PermissionGroup"
-		cascade          ="all"
-		fkcolumn         ="FK_authorID"
-		linktable        ="cb_authorPermissionGroups"
+		name="permissionGroups"
+		singularName="permissionGroup"
+		fieldtype="many-to-many"
+		type="array"
+		lazy="true"
+		inverse="true"
+		cfc="contentbox.models.security.PermissionGroup"
+		cascade="all"
+		fkcolumn="FK_authorID"
+		linktable="cb_authorPermissionGroups"
 		inversejoincolumn="FK_permissionGroupID"
-		orderby          ="name";
+		orderby="name";
 
-	/* *********************************************************************
-	 **							CALCULATED FIELDS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							CALCULATED FIELDS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							NON PERSISTED PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							NON PERSISTED PROPERTIES
+	 **********************************************************************/
 
 	// Non-persisted properties
 	property
-		name      ="loggedIn"
+		name="loggedIn"
 		persistent="false"
-		default   ="false"
-		type      ="boolean";
+		default="false"
+		type="boolean";
 
 	property name="permissionList" persistent="false";
-
-	/* *********************************************************************
-	 **							PK + CONSTRAINTS + MEMENTO
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PK + CONSTRAINTS + MEMENTO
+	 **********************************************************************/
 
 	this.pk = "authorID";
 
 	this.memento = {
 		// Default properties to serialize
-		defaultIncludes : [
+		defaultIncludes: [
 			"firstName",
 			"lastName",
 			"email",
@@ -238,7 +236,7 @@ component
 			"numberOfContentStore"
 		],
 		// Default Exclusions
-		defaultExcludes : [
+		defaultExcludes: [
 			"entries",
 			"pages",
 			"permissions",
@@ -247,43 +245,43 @@ component
 			"isPasswordReset",
 			"is2FactorAuth"
 		],
-		neverInclude : [ "password" ],
+		neverInclude: [ "password"],
 		// Defaults
-		defaults     : { "role" : {} }
+		defaults    : { "role": {} }
 	};
 
 	this.constraints = {
-		"firstName" : { required : true, size : "1..100" },
-		"lastName"  : { required : true, size : "1..100" },
-		"email"     : {
-			required  : true,
-			size      : "1..255",
-			type      : "email",
-			validator : "UniqueValidator@cborm"
+		"firstName": { required: true, size: "1..100" },
+		"lastName" : { required: true, size: "1..100" },
+		"email"    : {
+			required : true,
+			size     : "1..255",
+			type     : "email",
+			validator: "UniqueValidator@cborm"
 		},
-		"username" : {
-			required  : true,
-			size      : "1..100",
-			validator : "UniqueValidator@cborm"
+		"username": {
+			required : true,
+			size     : "1..100",
+			validator: "UniqueValidator@cborm"
 		},
-		"password" : { required : true, size : "1..100" },
-		"role"     : { required : true }
+		"password": { required: true, size: "1..100" },
+		"role"    : { required: true }
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	function init(){
-		variables.permissionList   = [];
-		variables.loggedIn         = false;
-		variables.isActive         = true;
+	function init() {
+		variables.permissionList = [];
+		variables.loggedIn = false;
+		variables.isActive = true;
 		variables.permissionGroups = [];
-		variables.isPasswordReset  = false;
-		variables.is2FactorAuth    = false;
+		variables.isPasswordReset = false;
+		variables.is2FactorAuth = false;
 
 		// Setup empty preferences
 		setPreferences( {} );
@@ -296,28 +294,28 @@ component
 	/**
 	 * Get the total number of content items this author has created
 	 */
-	numeric function getNumberOfContent(){
+	numeric function getNumberOfContent() {
 		return ( isLoaded() ? variables.authorService.getTotalContent( getAuthorId() ) : 0 );
 	}
 
 	/**
 	 * Get the total number of entries this author has created
 	 */
-	numeric function getNumberOfEntries(){
+	numeric function getNumberOfEntries() {
 		return ( isLoaded() ? variables.authorService.getTotalEntries( getAuthorId() ) : 0 );
 	}
 
 	/**
 	 * Get the total number of pages this author has created
 	 */
-	numeric function getNumberOfPages(){
+	numeric function getNumberOfPages() {
 		return ( isLoaded() ? variables.authorService.getTotalPages( getAuthorId() ) : 0 );
 	}
 
 	/**
 	 * Get the total number of content store items this author has created
 	 */
-	numeric function getNumberOfContentStore(){
+	numeric function getNumberOfContentStore() {
 		return ( isLoaded() ? variables.authorService.getTotalContentStoreItems( getAuthorId() ) : 0 );
 	}
 
@@ -326,9 +324,9 @@ component
 	 *
 	 * @permission One or a list of permissions to check for access
 	 */
-	boolean function hasPermission( required permission ){
+	boolean function hasPermission( required permission ) {
 		// cache deconstructed permissions in case it's called many times during a request.
-		if ( !arrayLen( variables.permissionList ) AND hasPermissions() ) {
+		if ( !arrayLen( variables.permissionList ) && hasPermissions() ) {
 			variables.permissionList = arrayReduce(
 				getPermissions(),
 				( result, item ) => {
@@ -340,11 +338,9 @@ component
 
 		// checks via role, then group permissions and then local permissions
 		if (
-			( hasRole() && getRole().hasPermission( arguments.permission ) )
-			OR
-			checkGroupPermissions( arguments.permission )
-			OR
-			inPermissionList( arguments.permission )
+			( hasRole() && getRole().hasPermission( arguments.permission ) ) ||
+					checkGroupPermissions( arguments.permission ) ||
+				inPermissionList( arguments.permission )
 		) {
 			return true;
 		}
@@ -357,7 +353,7 @@ component
 	 *
 	 * @slug The slug to check
 	 */
-	boolean function checkGroupPermissions( required slug ){
+	boolean function checkGroupPermissions( required slug ) {
 		// If no groups, just return false
 		if ( !hasPermissionGroup() ) {
 			return false;
@@ -378,16 +374,16 @@ component
 	 *
 	 * @permission A list or array of permission to check
 	 */
-	public function inPermissionList( required permission ){
-		return arrayWrap( arguments.permission )
-			.filter( ( item ) => variables.permissionList.findNoCase( arguments.item ) )
-			.len();
+	public function inPermissionList( required permission ) {
+		return arrayWrap( arguments.permission ).filter(
+				( item ) => variables.permissionList.findNoCase( arguments.item )
+			).len();
 	}
 
 	/**
 	 * Remove all permissions
 	 */
-	Author function clearPermissions(){
+	Author function clearPermissions() {
 		if ( hasPermissions() ) {
 			variables.permissions.clear();
 		} else {
@@ -400,7 +396,7 @@ component
 	/**
 	 * Remove all permission groups
 	 */
-	Author function clearPermissionGroups(){
+	Author function clearPermissionGroups() {
 		if ( hasPermissionGroup() ) {
 			variables.permissionGroups.clear();
 		} else {
@@ -414,7 +410,7 @@ component
 	 *
 	 * @permissions The permissions array to override
 	 */
-	Author function setPermissions( required array permissions ){
+	Author function setPermissions( required array permissions ) {
 		if ( hasPermissions() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
@@ -427,7 +423,7 @@ component
 	/**
 	 * Shortcut Utlity function to get a list of all the permission groups this user belongs to.
 	 */
-	string function getPermissionGroupsList( delimiter = "," ){
+	string function getPermissionGroupsList( delimiter = "," ) {
 		if ( hasPermissionGroup() ) {
 			return arrayReduce(
 				variables.permissionGroups,
@@ -443,7 +439,7 @@ component
 	 *
 	 * @group The permission group to add
 	 */
-	Author function addPermissionGroup( required group ){
+	Author function addPermissionGroup( required group ) {
 		// Only add if not already there.
 		if ( !hasPermissionGroup( arguments.group ) ) {
 			arrayAppend( variables.permissionGroups, arguments.group );
@@ -457,7 +453,7 @@ component
 	 *
 	 * @group The permission group to add
 	 */
-	Author function removePermissionGroup( required group ){
+	Author function removePermissionGroup( required group ) {
 		// Only add if not already there.
 		if ( hasPermissionGroup( arguments.group ) ) {
 			arrayDelete( variables.permissionGroups, arguments.group );
@@ -470,17 +466,20 @@ component
 	 * Utility method to verify if an author has been logged in to the system or not.
 	 * This method does not account for permissions.  Only for logged in status.
 	 */
-	function isLoggedIn(){
+	function isLoggedIn() {
 		return getLoggedIn();
 	}
 
 	/**
 	 * Get formatted lastLogin
 	 */
-	string function getDisplayLastLogin( dateFormat = this.DATE_FORMAt, timeFormat = this.TIME_FORMAT ){
+	string function getDisplayLastLogin(
+		dateFormat = this.DATE_FORMAt,
+		timeFormat = this.TIME_FORMAT
+	) {
 		var lastLogin = getLastLogin();
 
-		if ( NOT isNull( lastLogin ) ) {
+		if ( !isNull( lastLogin ) ) {
 			return dateFormat( lastLogin, arguments.dateFormat ) & " " & timeFormat( lastLogin, arguments.timeFormat );
 		}
 
@@ -494,8 +493,13 @@ component
 	 *
 	 * @preferences.hint A struct of data or a JSON packet to store
 	 */
-	Author function setPreferences( required any preferences ){
-		lock name="user.#getAuthorID()#.preferences" type="exclusive" throwontimeout="true" timeout="5" {
+	Author function setPreferences( required any preferences ) {
+		lock
+			name          ="user.#getAuthorID()#.preferences"
+			type          ="exclusive"
+			throwontimeout="true"
+			timeout       ="5"
+		{
 			if ( isStruct( arguments.preferences ) ) {
 				arguments.preferences = serializeJSON( arguments.preferences );
 			}
@@ -508,18 +512,28 @@ component
 	/**
 	 * Get all user preferences in inflated format
 	 */
-	struct function getAllPreferences(){
-		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5" {
-			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structNew() );
+	struct function getAllPreferences() {
+		lock
+			name          ="user.#getAuthorID()#.preferences"
+			type          ="readonly"
+			throwontimeout="true"
+			timeout       ="5"
+		{
+			return ( !isNull( preferences ) && isJSON( preferences ) ? deserializeJSON( preferences ) : structNew() );
 		}
 	}
 
 	/**
 	 * Get a preference, you can pass a default value if preference does not exist
 	 */
-	any function getPreference( required name, defaultValue ){
+	any function getPreference( required name, defaultValue ) {
 		// get preference
-		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5" {
+		lock
+			name          ="user.#getAuthorID()#.preferences"
+			type          ="readonly"
+			throwontimeout="true"
+			timeout       ="5"
+		{
 			var allPreferences = getAllPreferences();
 			if ( structKeyExists( allPreferences, arguments.name ) ) {
 				return allPreferences[ arguments.name ];
@@ -540,8 +554,8 @@ component
 	/**
 	 * Set a preference in the user preferences
 	 */
-	Author function setPreference( required name, required value ){
-		var allPreferences               = getAllPreferences();
+	Author function setPreference( required name, required value ) {
+		var allPreferences = getAllPreferences();
 		allPreferences[ arguments.name ] = arguments.value;
 		// store in lock mode
 		return setPreferences( allPreferences );
@@ -552,14 +566,14 @@ component
 	/**
 	 * A struct of custom claims to add to the JWT token
 	 */
-	struct function getJwtCustomClaims(){
+	struct function getJwtCustomClaims() {
 		return {};
 	}
 
 	/**
 	 * This function returns an array of all the scopes that should be attached to the JWT token that will be used for authorization.
 	 */
-	array function getJwtScopes(){
+	array function getJwtScopes() {
 		return [];
 	}
 
@@ -568,14 +582,14 @@ component
 	/**
 	 * Get the user's role name
 	 */
-	string function getRoleName(){
+	string function getRoleName() {
 		return ( hasRole() ? getRole().getRole() : "" );
 	}
 
 	/**
 	 * Retrieve full name
 	 */
-	string function getFullName(){
+	string function getFullName() {
 		return getFirstname() & " " & getLastName();
 	}
 
@@ -584,20 +598,20 @@ component
 	 *
 	 * @size The size of the avatar, defaults to 40
 	 */
-	string function getAvatarLink( numeric size = 40 ){
+	string function getAvatarLink( numeric size = 40 ) {
 		return ( isNull( getEmail() ) ? "" : variables.avatar.generateLink( getEmail(), arguments.size ) );
 	}
 
 	/**
 	 * Utility method to get a snapshot of the user information
 	 */
-	struct function getInfoSnapshot(){
+	struct function getInfoSnapshot() {
 		if ( isLoaded() ) {
 			return {
-				"authorID"   : getAuthorID(),
-				"name"       : getFullName(),
-				"email"      : getEmail(),
-				"avatarLink" : getAvatarLink()
+				"authorID"  : getAuthorID(),
+				"name"      : getFullName(),
+				"email"     : getEmail(),
+				"avatarLink": getAvatarLink()
 			};
 		}
 

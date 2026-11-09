@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -16,27 +16,26 @@ component
 	joinColumn        ="contentID"
 	discriminatorValue="Page"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	/**
 	 * The layout in a theme that will be used to render the page out
 	 */
 	property
-		name   ="layout"
-		column ="layout"
+		name="layout"
+		column="layout"
 		notnull="false"
-		length ="200"
+		length="200"
 		default="";
 
 	/**
 	 * The ordering numeric sequence
 	 */
 	property
-		name   ="order"
-		column ="order"
+		name="order"
+		column="order"
 		notnull="false"
 		ormtype="integer"
 		default="0";
@@ -45,60 +44,59 @@ component
 	 * If true, this page is used when building automated menus. Else it is ignored.
 	 */
 	property
-		name   ="showInMenu"
-		column ="showInMenu"
+		name="showInMenu"
+		column="showInMenu"
 		notnull="true"
 		ormtype="boolean"
 		default="true"
-		index  ="idx_showInMenu";
+		index="idx_showInMenu";
 
 	/**
 	 * The excerpt for this page. This can be empty.
 	 */
 	property
-		name   ="excerpt"
-		column ="excerpt"
+		name="excerpt"
+		column="excerpt"
 		notnull="false"
 		ormtype="text"
 		default=""
-		length ="8000";
+		length="8000";
 
-	/* *********************************************************************
-	 **							NON PERSISTED PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							NON PERSISTED PROPERTIES
+	 **********************************************************************/
 
 	property name="renderedExcerpt" persistent="false";
+	/**********************************************************************
+	 * **							CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							CONSTRAINTS
-	 ********************************************************************* */
+	this.constraints[ "layout" ] = { required: false, size: "1..200" };
+	this.constraints[ "order" ] = { required: true, type: "numeric" };
+	this.constraints[ "showInMenu" ] = { required: false, type: "boolean" };
 
-	this.constraints[ "layout" ]     = { required : false, size : "1..200" };
-	this.constraints[ "order" ]      = { required : true, type : "numeric" };
-	this.constraints[ "showInMenu" ] = { required : false, type : "boolean" };
+	/**********************************************************************
+	 * **							CONSTRUCTOR
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							CONSTRUCTOR
-	 ********************************************************************* */
-
-	function init(){
-		var props = [ "excerpt", "layout", "order", "showInMenu" ];
+	function init() {
+		var props = [ "excerpt", "layout", "order", "showInMenu"];
 		appendToMemento( props, "defaultIncludes" );
 		appendToMementoProfile( props, "export" );
 		appendToMementoProfile( props, "response" );
 
 		super.init();
 
-		variables.categories      = [];
-		variables.customFields    = [];
+		variables.categories = [];
+		variables.customFields = [];
 		variables.renderedContent = "";
 		variables.renderedExcerpt = "";
-		variables.allowComments   = false;
-		variables.createdDate     = now();
-		variables.layout          = "pages";
-		variables.contentType     = "Page";
-		variables.order           = 0;
-		variables.showInMenu      = true;
+		variables.allowComments = false;
+		variables.createdDate = now();
+		variables.layout = "pages";
+		variables.contentType = "Page";
+		variables.order = 0;
+		variables.showInMenu = true;
 
 		// INHERITANCE LAYOUT STATIC
 		variables.LAYOUT_INHERITANCE_KEY = "-inherit-";
@@ -106,29 +104,34 @@ component
 		return this;
 	}
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Verifies an excerpt exists in this content object via length checks
 	 */
-	boolean function hasExcerpt(){
+	boolean function hasExcerpt() {
 		return len( getExcerpt() ) GT 0;
 	}
 
-	any function renderExcerpt(){
+	any function renderExcerpt() {
 		// Check if we need to translate
-		if ( NOT len( variables.renderedExcerpt ) ) {
-			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10" {
-				if ( NOT len( variables.renderedExcerpt ) ) {
+		if ( !len( variables.renderedExcerpt ) ) {
+			lock
+				name          ="contentbox.excerptrendering.#getContentID()#"
+				type          ="exclusive"
+				throwontimeout="true"
+				timeout       ="10"
+			{
+				if ( !len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
 					var builder = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
-						"cb_onContentRendering",
-						{ builder : builder, content : this }
-					);
+							"cb_onContentRendering",
+							{ builder: builder, content: this }
+						);
 					// store processed content
 					variables.renderedExcerpt = builder.toString();
 				}
@@ -141,17 +144,17 @@ component
 	/**
 	 * Get the layout or if empty the default convention of "pages"
 	 */
-	function getLayoutWithDefault(){
+	function getLayoutWithDefault() {
 		return ( len( getLayout() ) ? getLayout() : "pages" );
 	}
 
 	/**
 	 * Get layout with layout inheritance, if none found return normal saved layout
 	 */
-	function getLayoutWithInheritance(){
+	function getLayoutWithInheritance() {
 		var thisLayout = getLayout();
 		// check for inheritance and parent?
-		if ( thisLayout eq variables.LAYOUT_INHERITANCE_KEY AND hasParent() ) {
+		if ( thisLayout EQ variables.LAYOUT_INHERITANCE_KEY && hasParent() ) {
 			return getParent().getLayoutWithInheritance();
 		}
 		// Else return the layout
@@ -175,7 +178,7 @@ component
 		required boolean publish,
 		required any originalSlugRoot,
 		required any newSlugRoot
-	){
+	) {
 		// Do page property cloning
 		setLayout( arguments.original.getLayout() );
 		setShowInMenu( arguments.original.getShowInMenu() );
@@ -190,11 +193,11 @@ component
 	/**
 	 * Verifies if the current page is the current site homepage
 	 */
-	boolean function isHomepage(){
+	boolean function isHomepage() {
 		if ( !hasSite() ) {
 			return false;
 		}
-		return ( getSite().getHomePage() eq getSlug() );
+		return ( getSite().getHomePage() EQ getSlug() );
 	}
 
 }

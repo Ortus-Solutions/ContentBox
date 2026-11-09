@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,15 +6,15 @@
  * Security rules manager
  */
 component extends="cborm.models.VirtualEntityService" singleton {
-
 	// DI
 	property name="populator" inject="wirebox:populator";
+
 	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	SecurityRuleService function init(){
+	SecurityRuleService function init() {
 		// init it
 		super.init( entityName = "cbSecurityRule" );
 
@@ -24,8 +24,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the maximum used order
 	 */
-	numeric function getMaxOrder(){
-		var q = executeQuery( query = "select max( sr.order ) from cbSecurityRule as sr", asQuery = false );
+	numeric function getMaxOrder() {
+		var q = executeQuery(
+			query   = "select max( sr.order ) from cbSecurityRule as sr",
+			asQuery = false
+		);
 		if ( arrayIsDefined( q, 1 ) ) {
 			return q[ 1 ];
 		}
@@ -35,7 +38,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the next maximum used order
 	 */
-	numeric function getNextMaxOrder(){
+	numeric function getNextMaxOrder() {
 		return getMaxOrder() + 1;
 	}
 
@@ -47,7 +50,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		boolean forceInsert   = false,
 		boolean flush         = false,
 		boolean transactional = getUseTransactions()
-	){
+	) {
 		// determine new or not
 		if ( !arguments.entity.isLoaded() ) {
 			// new, so add next max order if not default
@@ -62,14 +65,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get all rules in firing order
 	 */
-	query function getSecurityRules(){
+	query function getSecurityRules() {
 		return list( sortOrder = "order asc", asQuery = true );
 	}
 
 	/**
 	 * Reset rules to factory shipping standards, this will remove all rules also
 	 */
-	any function resetRules(){
+	any function resetRules() {
 		transaction {
 			// Get rules path
 			var rulesPath = getDirectoryFromPath( getMetadata( this ).path ) & "data/securityRules.json";
@@ -83,7 +86,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				if ( structKeyExists( thisRule, "ruleID" ) ) {
 					structDelete( thisRule, "ruleID" );
 				}
-				var oRule = new ( properties = thisRule );
+				var oRule = new( properties = thisRule );
 				save( entity = oRule, transactional = false );
 			}
 		}
@@ -94,10 +97,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get all data prepared for export
 	 */
-	array function getAllForExport(){
-		return getAll().map( function( thisItem ){
-			return thisItem.getMemento( profile: "export" );
-		} );
+	array function getAllForExport() {
+		return getAll().map(
+				function( thisItem ) {
+					return thisItem.getMemento( profile = "export" );
+				}
+			);
 	}
 
 	/**
@@ -110,14 +115,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws InvalidImportFormat
 	 */
-	string function importFromFile( required importFile, boolean override = false ){
-		var data      = fileRead( arguments.importFile );
+	string function importFromFile( required importFile, boolean override = false ) {
+		var data = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
-			"Starting import with override = #arguments.override#...<br>"
-		);
+				"Starting import with override = #arguments.override#...<br>"
+			);
 
 		if ( !isJSON( data ) ) {
-			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
+			throw(
+				message = "Cannot import file as the contents is not JSON",
+				type    = "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -141,12 +149,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required importData,
 		boolean override = false,
 		importLog
-	){
+	) {
 		var allRules = [];
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
-			arguments.importData = [ arguments.importData ];
+			arguments.importData = [ arguments.importData];
 		}
 
 		transaction {
@@ -154,34 +162,38 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisRule in arguments.importData ) {
 				// Get new or persisted with enough info to match
 				var oRule = this.findWhere(
-					criteria = {
-						match       : thisRule.match,
-						whitelist   : thisRule.whitelist,
-						securelist  : thisRule.securelist,
-						redirect    : thisRule.redirect,
-						roles       : thisRule.roles,
-						permissions : thisRule.permissions
-					}
-				);
-				oRule = ( isNull( oRule ) ? new () : oRule );
+						criteria = {
+							match      : thisRule.match,
+							whitelist  : thisRule.whitelist,
+							securelist : thisRule.securelist,
+							redirect   : thisRule.redirect,
+							roles      : thisRule.roles,
+							permissions: thisRule.permissions
+						}
+					);
+				oRule = ( isNull( oRule ) ? new() : oRule );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
-					target               = oRule,
-					memento              = thisRule,
-					exclude              = "ruleID",
-					composeRelationships = false
-				);
+						target               = oRule,
+						memento              = thisRule,
+						exclude              = "ruleID",
+						composeRelationships = false
+					);
 
 				// if new or persisted with override then save.
 				if ( !oRule.isLoaded() ) {
 					arguments.importLog.append( "New security rule imported: #thisRule.toString()#<br>" );
 					arrayAppend( allRules, oRule );
-				} else if ( oRule.isLoaded() and arguments.override ) {
-					arguments.importLog.append( "Persisted security rule overriden: #thisRule.toString()#<br>" );
+				} else if ( oRule.isLoaded() && arguments.override ) {
+					arguments.importLog.append(
+							"Persisted security rule overriden: #thisRule.toString()#<br>"
+						);
 					arrayAppend( allRules, oRule );
 				} else {
-					arguments.importLog.append( "Skipping persisted security rule: #thisRule.toString()#<br>" );
+					arguments.importLog.append(
+							"Skipping persisted security rule: #thisRule.toString()#<br>"
+						);
 				}
 			}
 			// end import loop
@@ -192,8 +204,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				arguments.importLog.append( "Saved all imported and overriden security rules!" );
 			} else {
 				arguments.importLog.append(
-					"No security rules imported as none where found or able to be overriden from the import file."
-				);
+						"No security rules imported as none where found or able to be overriden from the import file."
+					);
 			}
 		}
 		// end transaction

@@ -15,7 +15,6 @@ component
 	cacheuse           ="read-write"
 	discriminatorColumn="contentType"
 {
-
 	/**
 	 * --------------------------------------------------------------------------
 	 * DI
@@ -24,48 +23,55 @@ component
 	 */
 
 	property
-		name      ="categoryService"
-		inject    ="provider:categoryService@contentbox"
+		name="categoryService"
+		inject="provider:categoryService@contentbox"
 		persistent="false";
 
 	property
-		name      ="contentService"
-		inject    ="provider:contentService@contentbox"
+		name="contentService"
+		inject="provider:contentService@contentbox"
 		persistent="false";
 
 	property
-		name      ="contentVersionService"
-		inject    ="provider:contentVersionService@contentbox"
+		name="contentVersionService"
+		inject="provider:contentVersionService@contentbox"
 		persistent="false";
 
 	property
-		name      ="contentTemplateService"
-		inject    ="provider:ContentTemplateService@contentbox"
+		name="contentTemplateService"
+		inject="provider:ContentTemplateService@contentbox"
 		persistent="false";
 
 	property
-		name      ="customFieldService"
-		inject    ="provider:customFieldService@contentbox"
+		name="commentService"
+		inject="provider:commentService@contentbox"
 		persistent="false";
 
 	property
-		name      ="i18n"
-		inject    ="provider:i18n@cbi18n"
+		name="customFieldService"
+		inject="provider:customFieldService@contentbox"
+		persistent="false";
+
+	property name="i18n" inject="provider:i18n@cbi18n" persistent="false";
+
+	property
+		name="JSONPrettyPrint"
+		inject="provider:JSONPrettyPrint@JSONPrettyPrint"
 		persistent="false";
 
 	property
-		name      ="JSONPrettyPrint"
-		inject    ="provider:JSONPrettyPrint@JSONPrettyPrint"
+		name="settingService"
+		inject="provider:settingService@contentbox"
 		persistent="false";
 
 	property
-		name      ="settingService"
-		inject    ="provider:settingService@contentbox"
+		name="mediaService"
+		inject="provider:MediaService@contentbox"
 		persistent="false";
 
 	property
-		name      ="mediaService"
-		inject    ="provider:MediaService@contentbox"
+		name="statsService"
+		inject="provider:statsService@contentbox"
 		persistent="false";
 
 	/**
@@ -74,10 +80,7 @@ component
 	 * --------------------------------------------------------------------------
 	 */
 
-	property
-		name      ="renderedContent"
-		persistent="false"
-		default   ="";
+	property name="renderedContent" persistent="false" default="";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -88,23 +91,23 @@ component
 	 */
 
 	property
-		name   ="createdDate"
-		column ="createdDate"
-		type   ="date"
+		name="createdDate"
+		column="createdDate"
+		type="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false";
+		update="false";
 
 	property
-		name   ="modifiedDate"
-		column ="modifiedDate"
-		type   ="date"
+		name="modifiedDate"
+		column="modifiedDate"
+		type="date"
 		ormtype="timestamp"
 		notnull="true";
 
 	property
-		name   ="isDeleted"
-		column ="isDeleted"
+		name="isDeleted"
+		column="isDeleted"
 		ormtype="boolean"
 		notnull="true"
 		default="false";
@@ -116,141 +119,141 @@ component
 	 */
 
 	property
-		name     ="contentID"
-		column   ="contentID"
+		name="contentID"
+		column="contentID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	property
-		name   ="contentType"
-		column ="contentType"
-		setter ="false"
-		update ="false"
-		insert ="false"
-		index  ="idx_discriminator,idx_published"
+		name="contentType"
+		column="contentType"
+		setter="false"
+		update="false"
+		insert="false"
+		index="idx_discriminator,idx_published"
 		default="";
 
 	property
-		name   ="title"
-		column ="title"
+		name="title"
+		column="title"
 		notnull="true"
-		length ="500"
+		length="500"
 		default=""
-		index  ="idx_search";
+		index="idx_search";
 
 	property
-		name   ="slug"
-		column ="slug"
+		name="slug"
+		column="slug"
 		notnull="true"
-		length ="500"
+		length="500"
 		default=""
-		index  ="idx_slug,idx_publishedSlug";
+		index="idx_slug,idx_publishedSlug";
 
 	property
-		name   ="publishedDate"
-		column ="publishedDate"
+		name="publishedDate"
+		column="publishedDate"
 		notnull="false"
 		ormtype="timestamp"
-		index  ="idx_publishedDate";
+		index="idx_publishedDate";
 
 	property
-		name   ="expireDate"
-		column ="expireDate"
+		name="expireDate"
+		column="expireDate"
 		notnull="false"
 		ormtype="timestamp"
-		index  ="idx_expireDate";
+		index="idx_expireDate";
 
 	property
-		name   ="isPublished"
-		column ="isPublished"
+		name="isPublished"
+		column="isPublished"
 		notnull="true"
 		ormtype="boolean"
 		default="true"
-		index  ="idx_published,idx_search,idx_publishedSlug";
+		index="idx_published,idx_search,idx_publishedSlug";
 
 	property
-		name   ="allowComments"
-		column ="allowComments"
+		name="allowComments"
+		column="allowComments"
 		notnull="true"
 		ormtype="boolean"
 		default="true";
 
 	property
-		name   ="passwordProtection"
-		column ="passwordProtection"
+		name="passwordProtection"
+		column="passwordProtection"
 		notnull="false"
-		length ="100"
+		length="100"
 		default="";
 
 	property
-		name   ="HTMLKeywords"
-		column ="HTMLKeywords"
+		name="HTMLKeywords"
+		column="HTMLKeywords"
 		notnull="false"
-		length ="160"
+		length="160"
 		default="";
 
 	property
-		name   ="HTMLDescription"
-		column ="HTMLDescription"
+		name="HTMLDescription"
+		column="HTMLDescription"
 		notnull="false"
-		length ="160"
+		length="160"
 		default="";
 
 	property
-		name   ="HTMLTitle"
-		column ="HTMLTitle"
+		name="HTMLTitle"
+		column="HTMLTitle"
 		notnull="false"
-		length ="255"
+		length="255"
 		default="";
 
 	property
-		name   ="cache"
-		column ="cache"
+		name="cache"
+		column="cache"
 		notnull="true"
 		ormtype="boolean"
 		default="true"
-		index  ="idx_cache";
+		index="idx_cache";
 
 	property
-		name   ="cacheTimeout"
-		column ="cacheTimeout"
+		name="cacheTimeout"
+		column="cacheTimeout"
 		notnull="false"
 		ormtype="integer"
 		default="0"
-		index  ="idx_cachetimeout";
+		index="idx_cachetimeout";
 
 	property
-		name   ="cacheLastAccessTimeout"
-		column ="cacheLastAccessTimeout"
+		name="cacheLastAccessTimeout"
+		column="cacheLastAccessTimeout"
 		notnull="false"
 		ormtype="integer"
 		default="0"
-		index  ="idx_cachelastaccesstimeout";
+		index="idx_cachelastaccesstimeout";
 
 	property
-		name   ="markup"
-		column ="markup"
+		name="markup"
+		column="markup"
 		notnull="true"
-		length ="100"
+		length="100"
 		default="HTML";
 
 	property
-		name   ="showInSearch"
-		column ="showInSearch"
+		name="showInSearch"
+		column="showInSearch"
 		notnull="true"
 		ormtype="boolean"
 		default="true"
-		index  ="idx_showInSearch";
+		index="idx_showInSearch";
 
 	property
-		name   ="featuredImage"
-		column ="featuredImage"
+		name="featuredImage"
+		column="featuredImage"
 		notnull="false"
 		default=""
-		length ="500";
+		length="500";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -260,162 +263,159 @@ component
 
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property
-		name     ="creator"
-		notnull  ="true"
-		cfc      ="contentbox.models.security.Author"
+		name="creator"
+		notnull="true"
+		cfc="contentbox.models.security.Author"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_authorID"
-		lazy     ="true";
+		fkcolumn="FK_authorID"
+		lazy="true";
 
 	// M20 -> site loaded as a proxy and fetched immediately
 	property
-		name     ="site"
-		notnull  ="true"
-		cfc      ="contentbox.models.system.Site"
+		name="site"
+		notnull="true"
+		cfc="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteID"
-		fetch    ="join";
+		fkcolumn="FK_siteID"
+		lazy="true";
 
 	// O2M -> Comments
 	property
-		name        ="comments"
+		name="comments"
 		singularName="comment"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="true"
-		batchsize   ="25"
-		orderby     ="createdDate"
-		cfc         ="contentbox.models.comments.Comment"
-		fkcolumn    ="FK_contentID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
+		fieldtype="one-to-many"
+		type="array"
+		lazy="true"
+		batchsize="25"
+		orderby="createdDate"
+		cfc="contentbox.models.comments.Comment"
+		fkcolumn="FK_contentID"
+		inverse="true"
+		cascade="all-delete-orphan";
 
 	// O2M -> CustomFields
 	property
-		name        ="customFields"
+		name="customFields"
 		singularName="customField"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="extra"
-		batchsize   ="25"
-		cfc         ="contentbox.models.content.CustomField"
-		fkcolumn    ="FK_contentID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
+		fieldtype="one-to-many"
+		type="array"
+		lazy="extra"
+		batchsize="25"
+		cfc="contentbox.models.content.CustomField"
+		fkcolumn="FK_contentID"
+		inverse="true"
+		cascade="all-delete-orphan";
 
 	// O2M -> ContentVersions
 	property
-		name        ="contentVersions"
+		name="contentVersions"
 		singularName="contentVersion"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="extra"
-		batchsize   ="25"
-		cfc         ="contentbox.models.content.ContentVersion"
-		orderby     ="version desc"
-		fkcolumn    ="FK_contentID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
+		fieldtype="one-to-many"
+		type="array"
+		lazy="extra"
+		batchsize="25"
+		cfc="contentbox.models.content.ContentVersion"
+		orderby="version desc"
+		fkcolumn="FK_contentID"
+		inverse="true"
+		cascade="all-delete-orphan";
 
+	// Transient property for active content versions
 	property name="activeContentVersions" persistent="false";
 
 	// M20 -> Parent Page loaded as a proxy
 	property
-		name     ="parent"
-		cfc      ="contentbox.models.content.BaseContent"
+		name="parent"
+		cfc="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_parentID"
-		lazy     ="true";
+		fkcolumn="FK_parentID"
+		lazy="true";
 
 	// O2M -> Sub Content Inverse
 	property
-		name        ="children"
+		name="children"
 		singularName="child"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="extra"
-		batchsize   ="25"
-		orderby     ="createdDate"
-		cfc         ="contentbox.models.content.BaseContent"
-		fkcolumn    ="FK_parentID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
+		fieldtype="one-to-many"
+		type="array"
+		lazy="extra"
+		batchsize="25"
+		orderby="createdDate"
+		cfc="contentbox.models.content.BaseContent"
+		fkcolumn="FK_parentID"
+		inverse="true"
+		cascade="all-delete-orphan";
 
 	// O2M -> Comment Subscribers
 	property
-		name        ="commentSubscriptions"
+		name="commentSubscriptions"
 		singularName="commentSubscription"
-		fieldtype   ="one-to-many"
-		type        ="array"
-		lazy        ="true"
-		batchsize   ="25"
-		cfc         ="contentbox.models.subscriptions.CommentSubscription"
-		fkcolumn    ="FK_contentID"
-		inverse     ="true"
-		cascade     ="all-delete-orphan";
+		fieldtype="one-to-many"
+		type="array"
+		lazy="true"
+		batchsize="25"
+		cfc="contentbox.models.subscriptions.CommentSubscription"
+		fkcolumn="FK_contentID"
+		inverse="true"
+		cascade="all-delete-orphan";
 
 	// M2M -> Categories
 	property
-		name             ="categories"
-		fieldtype        ="many-to-many"
-		type             ="array"
-		lazy             ="true"
-		orderby          ="category"
-		cascade          ="save-update"
-		cfc              ="contentbox.models.content.Category"
-		fkcolumn         ="FK_contentID"
-		linktable        ="cb_contentCategories"
+		name="categories"
+		fieldtype="many-to-many"
+		type="array"
+		lazy="true"
+		batchsize="25"
+		orderby="category"
+		cascade="save-update"
+		cfc="contentbox.models.content.Category"
+		fkcolumn="FK_contentID"
+		linktable="cb_contentCategories"
 		inversejoincolumn="FK_categoryID";
 
 	// M2M -> Related Content - Content related from this content to other content
 	property
-		name             ="relatedContent"
-		fieldtype        ="many-to-many"
-		type             ="array"
-		lazy             ="true"
-		orderby          ="title"
-		cascade          ="save-update"
-		cfc              ="contentbox.models.content.BaseContent"
-		fkcolumn         ="FK_contentID"
-		linktable        ="cb_relatedContent"
+		name="relatedContent"
+		fieldtype="many-to-many"
+		type="array"
+		lazy="true"
+		batchsize="25"
+		orderby="title"
+		cascade="save-update"
+		cfc="contentbox.models.content.BaseContent"
+		fkcolumn="FK_contentID"
+		linktable="cb_relatedContent"
 		inversejoincolumn="FK_relatedContentID";
 
 	// M2M -> Linked Content - Content related to this content from other content
 	property
-		name             ="linkedContent"
-		fieldtype        ="many-to-many"
-		type             ="array"
-		lazy             ="true"
-		cascade          ="save-update"
-		inverse          ="true"
-		orderby          ="title"
-		cfc              ="contentbox.models.content.BaseContent"
-		fkcolumn         ="FK_relatedContentID"
-		linktable        ="cb_relatedContent"
+		name="linkedContent"
+		fieldtype="many-to-many"
+		type="array"
+		lazy="true"
+		batchsize="25"
+		cascade="save-update"
+		inverse="true"
+		orderby="title"
+		cfc="contentbox.models.content.BaseContent"
+		fkcolumn="FK_relatedContentID"
+		linktable="cb_relatedContent"
 		inversejoincolumn="FK_contentID";
 
-	// O2O -> Content Stats
+	// M2O -> Content Template - The template associated with this content
 	property
-		name     ="stats"
-		notnull  ="true"
-		cfc      ="contentbox.models.content.Stats"
-		fieldtype="one-to-one"
-		mappedBy ="relatedContent"
-		cascade  ="all-delete-orphan";
-
-	property
-		name     ="contentTemplate"
+		name="contentTemplate"
 		fieldtype="many-to-one"
-		cfc      ="contentbox.models.content.ContentTemplate"
-		fkcolumn ="FK_contentTemplateID"
-		lazy     ="true";
+		cfc="contentbox.models.content.ContentTemplate"
+		fkcolumn="FK_contentTemplateID"
+		lazy="true";
 
+	// M2O -> Child Content Template - The template associated with child content
 	property
-		name     ="childContentTemplate"
+		name="childContentTemplate"
 		fieldtype="many-to-one"
-		cfc      ="contentbox.models.content.ContentTemplate"
-		fkcolumn ="FK_childContentTemplateID"
-		lazy     ="true";
+		cfc="contentbox.models.content.ContentTemplate"
+		fkcolumn="FK_childContentTemplateID"
+		lazy="true";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -424,37 +424,21 @@ component
 	 */
 
 	property
-		name   ="numberOfHits"
-		formula="select cbStats.hits
-			from cb_stats cbStats
-			where cbStats.FK_contentID=contentID"
-		default="0";
-
-	property
-		name   ="numberOfChildren"
-		formula="select count(*) from cb_content content where content.FK_parentID=contentID"
-		default="0";
-
-	property
-		name   ="numberOfComments"
+		name="numberOfComments"
 		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID"
-		default="0";
-
-	property
-		name   ="numberOfVersions"
-		formula="select count(*) from cb_contentVersion versions where versions.FK_contentID=contentID"
 		default="0";
 
 	/**
 	 * --------------------------------------------------------------------------
-	 * MEMENTIFIER + CONSTRAINTS
+	 * Mementifier Options
 	 * --------------------------------------------------------------------------
+	 * https://forgebox.io/view/mementifier
 	 */
 
 	this.pk = "contentID";
 
 	this.memento = {
-		defaultIncludes : [
+		defaultIncludes: [
 			"allowComments",
 			"cache",
 			"cacheLastAccessTimeout",
@@ -489,20 +473,19 @@ component
 			"siteID",
 			"title"
 		],
-		defaultExcludes : [
+		defaultExcludes: [
 			"comments",
 			"commentSubscriptions",
 			"contentVersions",
 			"contentTemplate",
-			"site",
-			"stats"
+			"site"
 		],
-		neverInclude : [ "passwordProtection" ],
-		mappers      : {},
-		defaults     : { "stats" : {}, "contentTemplate" : {} },
-		profiles     : {
-			response : {
-				defaultIncludes : [
+		neverInclude   : [ "passwordProtection"],
+		mappers        : {},
+		defaults       : { "contentTemplate": {} },
+		profiles       : {
+			response: {
+				defaultIncludes: [
 					"categoriesArray:categories",
 					"contentID",
 					"contentType",
@@ -525,10 +508,10 @@ component
 					"renderedExcerpt",
 					"childrenSnapshot:children"
 				],
-				defaultExcludes : []
+				defaultExcludes: []
 			},
-			export : {
-				defaultIncludes : [
+			export: {
+				defaultIncludes: [
 					"allowComments",
 					"cache",
 					"cacheLastAccessTimeout",
@@ -562,10 +545,9 @@ component
 					"contentTemplate",
 					"customFields",
 					"linkedContentSnapshot:linkedContent",
-					"relatedContentSnapshot:relatedContent",
-					"stats"
+					"relatedContentSnapshot:relatedContent"
 				],
-				defaultExcludes : [
+				defaultExcludes: [
 					"commentSubscriptions.relatedContentSnapshot:relatedContent",
 					"children.parentSnapshot:parent",
 					"linkedContent",
@@ -578,83 +560,107 @@ component
 		}
 	};
 
+	/**
+	 * --------------------------------------------------------------------------
+	 * Validation Constraints
+	 * --------------------------------------------------------------------------
+	 * https://coldbox-validation.ortusbooks.com/overview/valid-constraints
+	 */
 	this.constraints = {
-		"cacheLastAccessTimeout" : { required : false, type : "numeric" },
-		"cacheTimeout"           : { required : false, type : "numeric" },
-		"expireDate"             : { required : false, type : "date" },
-		"featuredImage"          : { required : false, size : "1..255" },
-		"HTMLDescription"        : { required : false, size : "1..160" },
-		"HTMLKeywords"           : { required : false, size : "1..160" },
-		"markup"                 : { required : true, size : "1..100" },
-		"passwordProtection"     : { required : false, size : "1..100" },
-		"publishedDate"          : { required : false, type : "date" },
-		"site"                   : { required : true },
-		"slug"                   : {
-			required   : true,
-			size       : "1..200",
-			udfMessage : "The 'slug' is not unique",
-			udf        : function( value, target ){
-				return arguments.target
+		"cacheLastAccessTimeout": { required: false, type: "numeric" },
+		"cacheTimeout"          : { required: false, type: "numeric" },
+		"expireDate"            : { required: false, type: "date" },
+		"featuredImage"         : { required: false, size: "1..255" },
+		"HTMLDescription"       : { required: false, size: "1..160" },
+		"HTMLKeywords"          : { required: false, size: "1..160" },
+		"markup"                : { required: true, size: "1..100" },
+		"passwordProtection"    : { required: false, size: "1..100" },
+		"publishedDate"         : { required: false, type: "date" },
+		"site"                  : { required: true },
+		"slug"                  : {
+			required  : true,
+			size      : "1..200",
+			udfMessage: "The 'slug' is not unique",
+			udf       : function( value, target ) {
+				return arguments
+					.target
 					.getContentService()
 					.isSlugUnique(
-						contentType: arguments.target.getContentType(),
-						slug       : arguments.value,
-						contentID  : arguments.target.isLoaded() ? arguments.target.getContentID() : "",
-						siteID     : arguments.target.hasSite() ? arguments.target.getSite().getSiteID() : ""
+						contentType = arguments.target.getContentType(),
+						slug        = arguments.value,
+						contentID   = arguments.target.isLoaded() ? arguments.target.getContentID() : "",
+						siteID      = arguments.target.hasSite()
+							? arguments
+								.target
+								.getSite()
+								.getSiteID()
+							: ""
 					);
 			}
 		},
-		"title" : { required : true, size : "1..200" }
+		"title": { required: true, size: "1..200" }
 	};
 
 	/**
 	 * Base constructor
+	 * Initialize the base content object with default values
 	 */
-	function init(){
-		super.init();
-		variables.isPublished            = true;
-		variables.publishedDate          = now();
-		variables.allowComments          = true;
-		variables.cache                  = true;
-		variables.cacheTimeout           = 0;
-		variables.cacheLastAccessTimeout = 0;
-		variables.markup                 = "HTML";
-		variables.contentType            = "";
-		variables.showInSearch           = true;
-		variables.renderedContent        = "";
-		variables.children               = [];
-		return this;
+	function init() {
+		super.init()
+		variables.isPublished = true
+		variables.publishedDate = now()
+		variables.allowComments = true
+		variables.cache = true
+		variables.cacheTimeout = 0
+		variables.cacheLastAccessTimeout = 0
+		variables.markup = "HTML"
+		variables.contentType = ""
+		variables.showInSearch = true
+		variables.renderedContent = ""
+		variables.featuredImageURL = ""
+		// Initialize relationships
+		variables.categories = []
+		variables.children = []
+		variables.comments = []
+		variables.commentSubscriptions = []
+		variables.contentVersions = []
+		variables.customFields = []
+		variables.linkedContent = []
+		variables.relatedContent = []
+		return this
 	}
 
 	/**
 	 * Prepare the instance for usage
 	 */
-	function onDIComplete(){
+	function onDIComplete() {
 		// Load up content helpers
-		variables.wirebox
-			.getInstance( dsl: "coldbox:moduleSettings:contentbox" )
+		variables
+			.wirebox
+			.getInstance( dsl = "coldbox:moduleSettings:contentbox" )
 			.contentHelpers
-			.each( function( thisHelper ){
-				includeMixin( arguments.thisHelper );
-			} );
+			.each(
+				function( thisHelper ) {
+					includeMixin( arguments.thisHelper );
+				}
+			);
 	}
-
 
 	/**
 	 * Utility method to get a snapshot of this content object
 	 */
-	struct function getInfoSnapshot(){
+	struct function getInfoSnapshot() {
 		if ( isLoaded() ) {
 			return {
-				"contentID"     : getContentID(),
-				"title"         : getTitle(),
-				"slug"          : getSlug(),
-				"isPublished"   : getIsPublished(),
-				"publishedDate" : getPublishedDate(),
-				"createdDate"   : getCreatedDate(),
-				"modifiedDate"  : getModifiedDate(),
-				"expireDate"    : getExpireDate(),
-				"contentType"   : getContentType()
+				"contentID"    : getContentID(),
+				"title"        : getTitle(),
+				"slug"         : getSlug(),
+				"isPublished"  : getIsPublished(),
+				"publishedDate": getPublishedDate(),
+				"createdDate"  : getCreatedDate(),
+				"modifiedDate" : getModifiedDate(),
+				"expireDate"   : getExpireDate(),
+				"contentType"  : getContentType()
 			};
 		}
 		return {};
@@ -663,21 +669,21 @@ component
 	/**
 	 * Build a parent snapshot
 	 */
-	struct function getParentSnapshot(){
+	struct function getParentSnapshot() {
 		return ( hasParent() ? getParent().getInfoSnapshot() : {} );
 	}
 
 	/**
 	 * Build a creator snapshot
 	 */
-	struct function getCreatorSnapshot(){
+	struct function getCreatorSnapshot() {
 		return ( hasCreator() ? getCreator().getInfoSnapshot() : {} );
 	}
 
 	/**
 	 * Build a last editor snapshot
 	 */
-	struct function getLastEditorSnapshot(){
+	struct function getLastEditorSnapshot() {
 		var activeContent = getActiveContent();
 		return ( activeContent.hasAuthor() ? activeContent.getAuthor().getInfoSnapshot() : {} );
 	}
@@ -685,95 +691,108 @@ component
 	/**
 	 * Build a site snapshot
 	 */
-	struct function getSiteSnapshot(){
+	struct function getSiteSnapshot() {
 		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
 	}
 
 	/**
-	 * Get the number of hits
+	 * Get the number of hits from the stats service
 	 */
-	numeric function getNumberOfHits(){
-		return ( isNull( variables.numberOfHits ) ? 0 : variables.numberOfHits );
+	numeric function getNumberOfHits() {
+		if ( !isLoaded() ) {
+			return 0;
+		}
+		return variables.statsService.getTotalHitsByContent( getContentID() );
 	}
 
 	/**
-	 * Get the number of children
+	 * Get the number of children from the children relationship
 	 */
-	numeric function getNumberOfChildren(){
-		return ( isNull( variables.numberOfChildren ) ? 0 : variables.numberOfChildren );
+	numeric function getNumberOfChildren() {
+		if ( !isLoaded() || !hasChild() ) {
+			return 0;
+		}
+		return arrayLen( variables.children );
 	}
 
 	/**
 	 * Get the total number of comments this content object has
 	 */
-	numeric function getNumberOfComments(){
+	numeric function getNumberOfComments() {
 		return ( isNull( variables.numberOfComments ) ? 0 : variables.numberOfComments );
 	}
 
 	/**
 	 * Get the total number of approved comments this content object has
 	 */
-	numeric function getNumberOfApprovedComments(){
+	numeric function getNumberOfApprovedComments() {
 		if ( !isLoaded() ) {
 			return 0;
 		}
-		return variables.comments
-			.filter( function( comment ){
-				return comment.getIsApproved();
-			} )
-			.len();
+		return variables
+			.commentService
+			.newCriteria()
+			.isEq( "relatedContent.contentID", getContentID() )
+			.isEq( "isApproved", javacast( "boolean", true ) )
+			.count();
 	}
 
 	/**
-	 * Get the total number of versions this content object has
+	 * Get the total number of versions this content object has from the contentVersions relationship
 	 */
-	numeric function getNumberOfVersions(){
-		return ( isNull( variables.numberOfVersions ) ? 0 : variables.numberOfVersions );
+	numeric function getNumberOfVersions() {
+		if ( !isLoaded() || !hasContentVersion() ) {
+			return 0;
+		}
+		return arrayLen( variables.contentVersions );
 	}
 
 	/**
 	 * Get the total number of active versions this content object has
 	 */
-	numeric function getNumberOfActiveVersions(){
+	numeric function getNumberOfActiveVersions() {
 		return ( isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0 );
 	}
-
 
 	/**
 	 * Getter overload to return either the assigned template or the global template for the site
 	 *
 	 * @note The hierarchy for templates is local, parent assigned, and then any globals
 	 */
-	any function getContentTemplate(){
+	any function getContentTemplate() {
 		return !isNull( variables.contentTemplate )
-		 ? variables.contentTemplate
-		 : (
-			!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
-			 ? getParent().getChildContentTemplate()
-			 : getContentTemplateService()
-				.newCriteria()
-				.isEq( "contentType", getContentType() )
-				.isEq( "site", getSite() )
-				.isEq( "isGlobal", javacast( "boolean", true ) )
-				.get()
-		);
+			? variables.contentTemplate
+			: (
+				!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
+					? getParent().getChildContentTemplate()
+					: getContentTemplateService()
+						.newCriteria()
+						.isEq( "contentType", getContentType() )
+						.isEq( "site", getSite() )
+						.isEq( "isGlobal", javacast( "boolean", true ) )
+						.get()
+			);
 	}
 
 	/**
 	 * Returns the URL of the featured image
 	 */
-	function getFeaturedImageURL(){
+	function getFeaturedImageURL() {
 		var featured = getFeaturedImage();
 		if ( isNull( featured ) || !len( featured ) ) {
 			return "";
 		}
-		var mediaRoot         = mediaService.getCoreMediaRoot();
+		var mediaRoot = mediaService.getCoreMediaRoot();
 		var expandedMediaRoot = expandPath( mediaRoot );
 		// We have three scenarios in how the featured image entries are stored.
 		// The first is that the image was stored with a fully expanded path
 		if ( findNoCase( expandedMediaRoot, featured ) ) {
 			return replaceNoCase(
-				replaceNoCase( featured, expandedMediaRoot, "/__media" ),
+				replaceNoCase(
+					featured,
+					expandedMediaRoot,
+					"/__media"
+				),
 				"\",
 				"/",
 				"All"
@@ -783,16 +802,18 @@ component
 		if ( findNoCase( mediaRoot, featured ) ) {
 			// Replace and change any windows delimiters that might be in the path
 			return replaceNoCase(
-				replaceNoCase( featured, mediaRoot, "/__media" ),
+				replaceNoCase(
+					featured,
+					mediaRoot,
+					"/__media"
+				),
 				"\",
 				"/",
 				"All"
 			);
 		}
 		// The last is that it is modern cbfs disk paths
-		return find( ":", featured )
-		 ? "/__media/" & featured
-		 : featured;
+		return find( ":", featured ) ? "/__media/" & featured : featured;
 	}
 
 	/**
@@ -810,12 +831,23 @@ component
 	 */
 	BaseContent function addNewContentVersion(
 		required content,
-		changelog = "",
+		changelog         = "",
 		required author,
-		boolean isPreview = false
-	){
+		boolean isPreview = false,
+		array contentVersions = []
+	) {
 		// lock it for new content creation to avoid version overlaps
-		lock name="contentbox.addNewContentVersion.#getSlug()#" type="exclusive" timeout="10" throwOnTimeout=true {
+		lock
+			name          ="contentbox.addNewContentVersion.#getSlug()#"
+			type          ="exclusive"
+			timeout       ="10"
+			throwOnTimeout="#true#"
+		{
+			// Defensive guard for BoxLang populate edge cases where relationship values can become simple values.
+			if ( !isArray( variables.contentVersions ) ) {
+				variables.contentVersions = [];
+			}
+
 			// Do we already have an active version?
 			if ( hasActiveContent() ) {
 				// cap checks if not in preview mode
@@ -823,18 +855,19 @@ component
 					maxContentVersionChecks();
 				}
 				// deactive the curent version, we do it after in case the content versions check kick off a transaction
-				getContentVersions()
-					.filter( ( version ) => version.getIsActive() )
-					.each( ( version ) => version.setIsActive( false ) );
+				getContentVersions().filter( ( version ) => version.getIsActive() ).each( ( version
+							 ) => version.setIsActive( false ) );
 			}
 
 			// get a new version object with our incoming content + relationships
-			var oNewVersion = variables.contentVersionService.new( {
-				content        : arguments.content,
-				changelog      : arguments.changelog,
-				author         : arguments.author,
-				relatedContent : this
-			} );
+			var oNewVersion = variables.contentVersionService.new(
+					{
+						content       : arguments.content,
+						changelog     : arguments.changelog,
+						author        : arguments.author,
+						relatedContent: this
+					}
+				);
 
 			// Get the latest content version, to increase the new version number, collection is ordered by 'version' descending
 			if ( hasContentVersion() ) {
@@ -843,7 +876,7 @@ component
 
 			// Activate the new version
 			oNewVersion.setIsActive( true );
-			variables.activeContent   = oNewVersion;
+			variables.activeContent = oNewVersion;
 			variables.renderedContent = "";
 			// Add it to the content versions array so it can be saved as part of this content object
 			addContentVersion( oNewVersion );
@@ -859,11 +892,14 @@ component
 	/**
 	 * Build the array of linked content snapshots
 	 */
-	array function getLinkedContentSnapshot(){
+	array function getLinkedContentSnapshot() {
 		if ( hasLinkedContent() ) {
-			return arrayMap( variables.linkedContent, function( thisItem ){
-				return arguments.thisItem.getInfoSnapshot();
-			} );
+			return arrayMap(
+				variables.linkedContent,
+				function( thisItem ) {
+					return arguments.thisItem.getInfoSnapshot();
+				}
+			);
 		}
 		return [];
 	}
@@ -871,11 +907,14 @@ component
 	/**
 	 * Build the array of children snapshots
 	 */
-	array function getChildrenSnapshot(){
+	array function getChildrenSnapshot() {
 		if ( hasChild() ) {
-			return arrayMap( variables.children, function( thisItem ){
-				return arguments.thisItem.getInfoSnapshot();
-			} );
+			return arrayMap(
+				variables.children,
+				function( thisItem ) {
+					return arguments.thisItem.getInfoSnapshot();
+				}
+			);
 		}
 		return [];
 	}
@@ -883,11 +922,14 @@ component
 	/**
 	 * Build the array of related content snapshots
 	 */
-	array function getRelatedContentSnapshot(){
+	array function getRelatedContentSnapshot() {
 		if ( hasRelatedContent() ) {
-			return arrayMap( variables.relatedContent, function( thisItem ){
-				return arguments.thisItem.getInfoSnapshot();
-			} );
+			return arrayMap(
+				variables.relatedContent,
+				function( thisItem ) {
+					return arguments.thisItem.getInfoSnapshot();
+				}
+			);
 		}
 		return [];
 	}
@@ -895,11 +937,14 @@ component
 	/**
 	 * Returns a list of active related content for this piece of content
 	 */
-	string function getRelatedContentIDs(){
+	string function getRelatedContentIDs() {
 		if ( hasRelatedContent() ) {
-			return arrayMap( variables.relatedContent, function( thisItem ){
-				return arguments.thisItem.getContentID();
-			} ).toList();
+			return arrayMap(
+				variables.relatedContent,
+				function( thisItem ) {
+					return arguments.thisItem.getContentID();
+				}
+			).toList();
 		}
 		return "";
 	}
@@ -909,7 +954,7 @@ component
 	 *
 	 * @relatedContent The related content to set
 	 */
-	BaseContent function setRelatedContent( required array relatedContent ){
+	BaseContent function setRelatedContent( required array relatedContent ) {
 		if ( hasRelatedContent() ) {
 			variables.relatedContent.clear();
 			variables.relatedContent.addAll( arguments.relatedContent );
@@ -924,7 +969,7 @@ component
 	 *
 	 * @relatedContent The list or array of relatedContent ids
 	 */
-	BaseContent function inflateRelatedContent( required any relatedContent ){
+	BaseContent function inflateRelatedContent( required any relatedContent ) {
 		var allContent = [];
 		// convert to array
 		if ( isSimpleValue( arguments.relatedContent ) ) {
@@ -932,7 +977,7 @@ component
 		}
 		// iterate over array
 		for ( var x = 1; x <= arrayLen( arguments.relatedContent ); x++ ) {
-			var id            = trim( arguments.relatedContent[ x ] );
+			var id = trim( arguments.relatedContent[ x ] );
 			// get content from id
 			var extantContent = contentService.get( id );
 			// if found, add to array
@@ -948,21 +993,21 @@ component
 	/**
 	 * Determines if the content object can have comments or not
 	 */
-	boolean function commentsAllowed(){
+	boolean function commentsAllowed() {
 		return !isContentStore();
 	}
 
 	/**
 	 * Determines if the content object is a content store type
 	 */
-	boolean function isContentStore(){
+	boolean function isContentStore() {
 		return getContentType() == "contentStore";
 	}
 
 	/**
 	 * Override the setComments
 	 */
-	BaseContent function setComments( required array comments ){
+	BaseContent function setComments( required array comments ) {
 		if ( hasComment() ) {
 			variables.comments.clear();
 			variables.comments.addAll( arguments.comments );
@@ -975,7 +1020,7 @@ component
 	/**
 	 * Override the setter
 	 */
-	BaseContent function setCustomFields( required array customFields ){
+	BaseContent function setCustomFields( required array customFields ) {
 		if ( hasCustomField() ) {
 			variables.customFields.clear();
 			variables.customFields.addAll( arguments.customFields );
@@ -988,7 +1033,7 @@ component
 	/**
 	 * Get custom fields as a structure representation
 	 */
-	struct function getCustomFieldsAsStruct(){
+	struct function getCustomFieldsAsStruct() {
 		var results = {};
 
 		// if no fields, just return empty
@@ -1010,7 +1055,7 @@ component
 	 * @key          The custom field key to get
 	 * @defaultValue The default value if the key is not found.
 	 */
-	any function getCustomField( required key, defaultValue ){
+	any function getCustomField( required key, defaultValue ) {
 		var fields = getCustomFieldsAsStruct();
 		if ( structKeyExists( fields, arguments.key ) ) {
 			return fields[ arguments.key ];
@@ -1028,7 +1073,12 @@ component
 	/**
 	 * Override the setContentVersions
 	 */
-	BaseContent function setContentVersions( required array contentVersions ){
+	BaseContent function setContentVersions( required array contentVersions ) {
+
+		if ( !isArray( arguments.contentVersions ) ) {
+			arguments.contentVersions = [];
+		}
+
 		if ( hasContentVersion() ) {
 			variables.contentVersions.clear();
 			variables.contentVersions.addAll( arguments.contentVersions );
@@ -1041,7 +1091,7 @@ component
 	/**
 	 * Only adds it if not found in content object
 	 */
-	BaseContent function addCategories( required category ){
+	BaseContent function addCategories( required category ) {
 		if ( !hasCategories( arguments.category ) ) {
 			arrayAppend( variables.categories, arguments.category );
 		}
@@ -1051,7 +1101,7 @@ component
 	/**
 	 * Remove only if it's found in the content object
 	 */
-	BaseContent function removeCategories( required category ){
+	BaseContent function removeCategories( required category ) {
 		if ( hasCategories( arguments.category ) ) {
 			arrayDelete( variables.categories, arguments.category );
 		}
@@ -1061,7 +1111,7 @@ component
 	/*
 	 * I remove all category associations
 	 */
-	BaseContent function removeAllCategories(){
+	BaseContent function removeAllCategories() {
 		if ( hasCategories() ) {
 			variables.categories.clear();
 		} else {
@@ -1073,7 +1123,7 @@ component
 	/*
 	 * I remove all custom fields
 	 */
-	BaseContent function removeAllCustomFields(){
+	BaseContent function removeAllCustomFields() {
 		if ( hasCustomField() ) {
 			variables.customFields.clear();
 		} else {
@@ -1085,7 +1135,7 @@ component
 	/*
 	 * I remove all linked content associations
 	 */
-	BaseContent function removeAllLinkedContent(){
+	BaseContent function removeAllLinkedContent() {
 		if ( hasLinkedContent() ) {
 			for ( var item in variables.linkedContent ) {
 				item.removeRelatedContent( this );
@@ -1097,7 +1147,7 @@ component
 	/**
 	 * Override the setChildren
 	 */
-	BaseContent function setChildren( required array children ){
+	BaseContent function setChildren( required array children ) {
 		if ( hasChild() ) {
 			variables.children.clear();
 			variables.children.addAll( arguments.children );
@@ -1108,39 +1158,9 @@ component
 	}
 
 	/**
-	 * Verify and rotate maximum content versions
-	 */
-	private function maxContentVersionChecks(){
-		if ( !len( variables.settingService.getSetting( "cb_versions_max_history" ) ) ) {
-			return;
-		}
-
-		// How many versions do we have?
-		var versionCounts = contentVersionService
-			.newCriteria()
-			.isEq( "relatedContent.contentID", getContentID() )
-			.count();
-
-		// Have we passed the limit?
-		if ( ( versionCounts + 1 ) GT variables.settingService.getSetting( "cb_versions_max_history" ) ) {
-			var oldestVersion = contentVersionService
-				.newCriteria()
-				.isEq( "relatedContent.contentID", getContentID() )
-				.isEq( "isActive", javacast( "boolean", false ) )
-				.withProjections( id = "true" )
-				.list(
-					sortOrder = "createdDate DESC",
-					offset    = variables.settingService.getSetting( "cb_versions_max_history" ) - 2
-				);
-			// delete by primary key IDs found
-			contentVersionService.deleteByID( arrayToList( oldestVersion ) );
-		}
-	}
-
-	/**
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
-	string function getContent(){
+	string function getContent() {
 		return getActiveContent( true );
 	}
 
@@ -1149,7 +1169,7 @@ component
 	 *
 	 * @asString Default false.  When provided as true, a projection list query to retrieve only the string content will be executed
 	 */
-	any function getActiveContent( asString = false ){
+	any function getActiveContent( asString = false ) {
 		// If we don't have any versions, send back a new one
 		if ( variables.keyExists( "activeContent" ) && !isSimpleValue( variables.activeContent ) ) {
 			return arguments.asString ? variables.activeContent.getContent() : variables.activeContent;
@@ -1167,12 +1187,21 @@ component
 				.first();
 			return activeContentStruct[ "content" ];
 		} else {
-			var activeVersions = getContentVersions().filter( ( version ) => version.getIsActive() );
-			return activeVersions.len() ? activeVersions.first() : variables.contentVersionService.new();
+			var activeVersion = variables
+				.contentVersionService
+				.newCriteria()
+				.isEq( "relatedContent.contentID", getContentID() )
+				.isEq( "isActive", javacast( "boolean", true ) )
+				.order( "version", "desc" )
+				.list( max = 1 );
+			return arrayLen( activeVersion ) ? activeVersion[ 1 ] : variables.contentVersionService.new();
 		}
 	}
 
-	function hasActiveContentVersion(){
+	/**
+	 * Verify if this content object has any content versions or not
+	 */
+	boolean function hasActiveContentVersion() {
 		return ( isLoaded() && hasContentVersion() && getActiveContent().getIsActive() );
 	}
 
@@ -1181,7 +1210,7 @@ component
 	 *
 	 * @content The content to set as the active version
 	 */
-	BaseContent function setActiveContent( required content ){
+	BaseContent function setActiveContent( required content ) {
 		variables.activeContent = arguments.content;
 		return this;
 	}
@@ -1189,14 +1218,14 @@ component
 	/**
 	 * Verify if this content object has an active version with content
 	 */
-	boolean function hasActiveContent(){
+	boolean function hasActiveContent() {
 		return isLoaded() && hasActiveContentVersion();
 	}
 
 	/**
 	 * Shorthand Creator name
 	 */
-	string function getCreatorName(){
+	string function getCreatorName() {
 		if ( hasCreator() ) {
 			return getCreator().getFullName();
 		}
@@ -1206,7 +1235,7 @@ component
 	/**
 	 * Shorthand Creator email
 	 */
-	string function getCreatorEmail(){
+	string function getCreatorEmail() {
 		if ( hasCreator() ) {
 			return getCreator().getEmail();
 		}
@@ -1216,21 +1245,21 @@ component
 	/**
 	 * Shorthand Author name from latest version
 	 */
-	string function getAuthorName(){
+	string function getAuthorName() {
 		return getActiveContent().getAuthorName();
 	}
 
 	/**
 	 * Shorthand Author email from latest version
 	 */
-	string function getAuthorEmail(){
+	string function getAuthorEmail() {
 		return getActiveContent().getAuthorEmail();
 	}
 
 	/**
 	 * Shorthand Author from latest version or null if any yet
 	 */
-	any function getAuthor(){
+	any function getAuthor() {
 		return getActiveContent().getAuthor();
 	}
 
@@ -1241,7 +1270,7 @@ component
 	 *
 	 * @return The parent ID or empty value if none attached
 	 */
-	function getParentID(){
+	function getParentID() {
 		return ( hasParent() ? getParent().getContentID() : "" );
 	}
 
@@ -1250,47 +1279,45 @@ component
 	 *
 	 * @return The parent name or empty value if none attached
 	 */
-	function getParentName(){
+	function getParentName() {
 		return ( hasParent() ? getParent().getTitle() : "" );
 	}
 
 	/**
 	 * Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
 	 */
-	boolean function isExpired(){
+	boolean function isExpired() {
 		return (
-			isContentPublished() AND
-			!isNull( variables.expireDate ) AND
-			len( variables.expireDate ) AND // In case of some odd empty string cases
-			dateCompare( variables.expireDate, now() ) lte 0
-		) ? true : false;
+				isContentPublished() && !isNull( variables.expireDate ) && len( variables.expireDate ) &&
+					dateCompare( variables.expireDate, now() ) LTE 0
+			)
+			? true
+			: false;
 	}
 
 	/**
 	 * Bit that denotes if the content has been published or not
 	 */
-	boolean function isContentPublished(){
+	boolean function isContentPublished() {
 		return (
-			getIsPublished() AND
-			!isNull( variables.publishedDate ) AND
-			dateCompare( variables.publishedDate, now() ) lte 0
-		) ? true : false;
+				getIsPublished() && !isNull( variables.publishedDate ) &&
+					dateCompare( variables.publishedDate, now() ) LTE 0
+			)
+			? true
+			: false;
 	}
 
 	/**
 	 * Bit that denotes if the content has been published or not in the future
 	 */
-	boolean function isPublishedInFuture(){
-		return (
-			getIsPublished() AND
-			dateCompare( variables.publishedDate, now() ) eq 1
-		) ? true : false;
+	boolean function isPublishedInFuture() {
+		return ( getIsPublished() && dateCompare( variables.publishedDate, now() ) EQ 1 ) ? true : false;
 	}
 
 	/**
 	 * Is entity loaded
 	 */
-	boolean function isLoaded(){
+	boolean function isLoaded() {
 		return ( len( getContentID() ) ? true : false );
 	}
 
@@ -1315,26 +1342,26 @@ component
 		required boolean publish,
 		required any originalSlugRoot,
 		required any newSlugRoot
-	){
+	) {
 		transaction {
 			// Base Content Property cloning
-			variables.isPublished            = arguments.publish;
-			variables.createdDate            = now();
-			variables.modifiedDate           = variables.createdDate;
-			variables.HTMLKeywords           = arguments.original.getHTMLKeywords();
-			variables.HTMLDescription        = arguments.original.getHTMLDescription();
-			variables.HTMLTitle              = arguments.original.getHTMLTitle();
-			variables.markup                 = arguments.original.getMarkup();
-			variables.cache                  = arguments.original.getCache();
-			variables.cacheTimeout           = arguments.original.getCacheTimeout();
+			variables.isPublished = arguments.publish;
+			variables.createdDate = now();
+			variables.modifiedDate = variables.createdDate;
+			variables.HTMLKeywords = arguments.original.getHTMLKeywords();
+			variables.HTMLDescription = arguments.original.getHTMLDescription();
+			variables.HTMLTitle = arguments.original.getHTMLTitle();
+			variables.markup = arguments.original.getMarkup();
+			variables.cache = arguments.original.getCache();
+			variables.cacheTimeout = arguments.original.getCacheTimeout();
 			variables.cacheLastAccessTimeout = arguments.original.getCacheLastAccessTimeout();
-			variables.showInSearch           = arguments.original.getShowInSearch();
-			variables.featuredImage          = arguments.original.getFeaturedImage();
-			variables.featuredImageURL       = arguments.original.getFeaturedImageURL();
-			variables.contentTemplate        = arguments.original.getContentTemplate();
-			variables.childContentTemplate   = arguments.original.getChildContentTemplate();
-			variables.comments               = [];
-			variables.children               = [];
+			variables.showInSearch = arguments.original.getShowInSearch();
+			variables.featuredImage = arguments.original.getFeaturedImage();
+			variables.featuredImageURL = arguments.original.getFeaturedImageURL();
+			variables.contentTemplate = arguments.original.getContentTemplate();
+			variables.childContentTemplate = arguments.original.getChildContentTemplate();
+			variables.comments = [];
+			variables.children = [];
 
 			// Are we publishing?
 			if ( arguments.publish ) {
@@ -1342,9 +1369,12 @@ component
 			}
 
 			// get latest content versioning
-			var latestContent = arguments.original.getActiveContent().getContent();
+			var latestContent = arguments
+				.original
+				.getActiveContent()
+				.getContent();
 			// Original slug updates on all content
-			latestContent     = reReplaceNoCase(
+			latestContent = reReplaceNoCase(
 				latestContent,
 				"page\:\[#arguments.originalSlugRoot#\/",
 				"page:[#arguments.newSlugRoot#/",
@@ -1353,65 +1383,78 @@ component
 
 			// reset versioning, and start with a new one
 			addNewContentVersion(
-				content  : latestContent,
-				changelog: "Content Cloned!",
-				author   : arguments.author
+				content   = latestContent,
+				changelog = "Content Cloned!",
+				author    = arguments.author
 			);
 
 			// safe clone custom fields
-			variables.customFields = arguments.original
+			variables.customFields = arguments
+				.original
 				.getCustomFields()
-				.map( function( thisField ){
-					return variables.customFieldService
-						.new( {
-							key   : arguments.thisField.getKey(),
-							value : arguments.thisField.getValue()
-						} )
-						.setRelatedContent( this );
-				} );
+				.map(
+					function( thisField ) {
+						return variables
+							.customFieldService
+							.new(
+								{
+									key  : arguments.thisField.getKey(),
+									value: arguments.thisField.getValue()
+								}
+							)
+							.setRelatedContent( this );
+					}
+				);
 
 			// clone related content
-			arguments.original
+			arguments
+				.original
 				.getRelatedContent()
-				.each( function( thisRelatedContent ){
-					addRelatedContent( arguments.thisRelatedContent );
-				} );
+				.each(
+					function( thisRelatedContent ) {
+						addRelatedContent( arguments.thisRelatedContent );
+					}
+				);
 
 			// clone categories
-			arguments.original
+			arguments
+				.original
 				.getCategories()
-				.each( function( thisCategory ){
-					addCategories( variables.categoryService.getOrCreate( arguments.thisCategory, getSite() ) );
-				} );
+				.each(
+					function( thisCategory ) {
+						addCategories( variables.categoryService.getOrCreate( arguments.thisCategory, getSite() ) );
+					}
+				);
 
 			// now clone children
 			if ( arguments.original.hasChild() ) {
 				// Save the parent first to avoid cascade issues
 				arguments.originalService.save( this );
 				// Continue down to clone the original children and attach them
-				arguments.original
+				arguments
+					.original
 					.getChildren()
-					.each( function( thisChild ){
-						// Clone the child
-						var newChild = originalService
-							.new( {
-								creator : author,
-								title   : arguments.thisChild.getTitle(),
-								slug    : listLast( arguments.thisChild.getSlug(), "/" ),
-								site    : getSite()
-							} )
-							.setParent( this );
+					.each(
+						function( thisChild ) {
+							var newChild = originalService.new(
+									{
+										creator: author,
+										title  : arguments.thisChild.getTitle(),
+										slug   : listLast( arguments.thisChild.getSlug(), "/" ),
+										site   : getSite()
+									}
+								).setParent( this );
 
-						// now deep clone until no more children are left behind.
-						newChild.clone(
-							author           = author,
-							original         = arguments.thisChild,
-							originalService  = originalService,
-							publish          = publish,
-							originalSlugRoot = arguments.thisChild.getSlug(),
-							newSlugRoot      = newChild.getSlug()
-						);
-					} );
+							newChild.clone(
+									author           = author,
+									original         = arguments.thisChild,
+									originalService  = originalService,
+									publish          = publish,
+									originalSlugRoot = arguments.thisChild.getSlug(),
+									newSlugRoot      = newChild.getSlug()
+								);
+						}
+					);
 			} else {
 				arguments.originalService.save( this );
 			}
@@ -1428,7 +1471,7 @@ component
 	 *
 	 * @return The published date time as {hour}:{minute}.
 	 */
-	string function getPublishedDateTime(){
+	string function getPublishedDateTime() {
 		if ( isNull( variables.publishedDate ) || !len( variables.publishedDate ) ) {
 			return "";
 		}
@@ -1441,7 +1484,7 @@ component
 	 *
 	 * @return The expire date time as {hour}:{minute}.
 	 */
-	string function getExpireDateTime(){
+	string function getExpireDateTime() {
 		if ( isNull( variables.expireDate ) || !len( variables.expireDate ) ) {
 			return "";
 		}
@@ -1460,17 +1503,15 @@ component
 		dateFormat       = this.DATE_FORMAT,
 		timeFormat       = this.TIME_FORMAT,
 		boolean showTime = true
-	){
+	) {
 		if ( isNull( variables.publishedDate ) || !len( variables.publishedDate ) ) {
 			return "";
 		}
 		if ( !arguments.showTime ) {
 			return dateFormat( variables.publishedDate, arguments.dateFormat );
 		}
-		return dateFormat( variables.publishedDate, arguments.dateFormat ) & " " & timeFormat(
-			variables.publishedDate,
-			arguments.timeFormat
-		);
+		return dateFormat( variables.publishedDate, arguments.dateFormat ) & " " & timeFormat( variables.publishedDate,
+			arguments.timeFormat );
 	}
 
 	/**
@@ -1485,30 +1526,28 @@ component
 		dateFormat       = this.DATE_FORMAT,
 		timeFormat       = this.TIME_FORMAT,
 		boolean showTime = true
-	){
+	) {
 		if ( isNull( variables.expireDate ) || !len( variables.expireDate ) ) {
 			return "";
 		}
 		if ( !arguments.showTime ) {
 			return dateFormat( variables.expireDate, arguments.dateFormat );
 		}
-		return dateFormat( variables.expireDate, arguments.dateFormat ) & " " & timeFormat(
-			variables.expireDate,
-			arguments.timeFormat
-		);
+		return dateFormat( variables.expireDate, arguments.dateFormat ) & " " & timeFormat( variables.expireDate,
+			arguments.timeFormat );
 	}
 
 	/**
 	 * isPassword Protected
 	 */
-	boolean function isPasswordProtected(){
+	boolean function isPasswordProtected() {
 		return len( getPasswordProtection() );
 	}
 
 	/**
 	 * add published timestamp to property
 	 */
-	any function addPublishedTime( required hour, required minute ){
+	any function addPublishedTime( required hour, required minute ) {
 		if ( !isDate( getPublishedDate() ) ) {
 			return this;
 		}
@@ -1522,7 +1561,7 @@ component
 	 *
 	 * @timeString The joined time string (e.g., 12:00)
 	 */
-	any function addJoinedPublishedTime( required string timeString ){
+	any function addJoinedPublishedTime( required string timeString ) {
 		var splitTime = listToArray( arguments.timeString, ":" );
 		if ( arrayLen( splitTime ) == 2 ) {
 			return addPublishedTime( splitTime[ 1 ], splitTime[ 2 ] );
@@ -1534,7 +1573,7 @@ component
 	/**
 	 * add expired timestamp to property
 	 */
-	any function addExpiredTime( required hour, required minute ){
+	any function addExpiredTime( required hour, required minute ) {
 		if ( !isDate( getExpireDate() ) ) {
 			return this;
 		}
@@ -1556,7 +1595,7 @@ component
 	 *
 	 * @timeString The joined time string (e.g., 12:00)
 	 */
-	any function addJoinedExpiredTime( required string timeString ){
+	any function addJoinedExpiredTime( required string timeString ) {
 		var splitTime = listToArray( arguments.timeString, ":" );
 		if ( arrayLen( splitTime ) == 2 ) {
 			return addExpiredTime( splitTime[ 1 ], splitTime[ 2 ] );
@@ -1568,7 +1607,7 @@ component
 	/**
 	 * Build content cache keys according to sent content object
 	 */
-	string function buildContentCacheKey(){
+	string function buildContentCacheKey() {
 		var inputHash = hash( cgi.HTTP_HOST & cgi.query_string );
 		return "cb-content-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#-#inputHash#";
 	}
@@ -1576,20 +1615,20 @@ component
 	/**
 	 * This builds a partial cache key so we can clean from the cache many permutations of the content object
 	 */
-	string function buildContentCacheCleanupKey(){
+	string function buildContentCacheCleanupKey() {
 		return "cb-content-#getContentType()#-#getContentID()#";
 	}
 
 	/**
 	 * Verify we can do content caching on this content object using global and local rules
 	 */
-	boolean function canCacheContent(){
+	boolean function canCacheContent() {
 		var settings = variables.settingService.getAllSettings();
 
 		// check global caching first
 		if (
-			( getContentType() eq "page" AND settings.cb_content_caching ) OR
-			( getContentType() eq "entry" AND settings.cb_entry_caching )
+			( getContentType() EQ "page" && settings.cb_content_caching ) ||
+				( getContentType() EQ "entry" && settings.cb_entry_caching )
 		) {
 			// check override in local content bit
 			return ( getCache() ? true : false );
@@ -1600,14 +1639,14 @@ component
 	/**
 	 * Shortcut to get the rendered content
 	 */
-	any function getRenderedContent(){
+	any function getRenderedContent() {
 		return this.renderContent();
 	}
 
 	/**
 	 * Shortcut to get the rendered excerpt
 	 */
-	any function getRenderedExcerpt(){
+	any function getRenderedExcerpt() {
 		if ( !isNull( variables.excerpt ) ) {
 			return this.renderExcerpt();
 		}
@@ -1617,25 +1656,25 @@ component
 	/**
 	 * Render content out using translations, caching, etc.
 	 */
-	any function renderContent(){
+	any function renderContent() {
 		var settings = variables.settingService.getAllSettings();
 
 		// caching enabled?
 		if ( canCacheContent() ) {
 			// Build Cache Key
-			var cacheKey      = buildContentCacheKey();
+			var cacheKey = buildContentCacheKey();
 			// Get appropriate cache provider
-			var cache         = cacheBox.getCache( settings.cb_content_cacheName );
+			var cache = cacheBox.getCache( settings.cb_content_cacheName );
 			// Try to get content?
 			var cachedContent = cache.get( cacheKey );
 			// Verify it exists, if it does, return it
-			if ( !isNull( cachedContent ) AND len( cachedContent ) ) {
+			if ( !isNull( cachedContent ) && len( cachedContent ) ) {
 				return cachedContent;
 			}
 		}
 
 		// Check if we need to translate
-		if ( NOT len( variables.renderedContent ) ) {
+		if ( !len( variables.renderedContent ) ) {
 			// save content
 			variables.renderedContent = renderContentSilent();
 		}
@@ -1644,11 +1683,15 @@ component
 		if ( canCacheContent() ) {
 			// Store content in cache, of local timeouts are 0 then use global timeouts.
 			cache.set(
-				cacheKey,
-				variables.renderedContent,
-				( getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout() ),
-				( getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout() )
-			);
+					cacheKey,
+					variables.renderedContent,
+					( getCacheTimeout() EQ 0 ? settings.cb_content_cachingTimeout : getCacheTimeout() ),
+					(
+						getCacheLastAccessTimeout() EQ 0
+							? settings.cb_content_cachingTimeoutIdle
+							: getCacheLastAccessTimeout()
+					)
+				);
 		}
 
 		// renturn translated content
@@ -1660,11 +1703,14 @@ component
 	 *
 	 * @content The content markup to translate, by default it uses the active content version's content
 	 */
-	any function renderContentSilent( any content = getContent() ) profile{
+	any function renderContentSilent( any content = getContent() ) profile {
 		// render content out, prepare builder
 		var builder = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
 		// announce renderings with data, so content renderers can process them
-		interceptorService.announce( "cb_onContentRendering", { builder : builder, content : this } );
+		interceptorService.announce(
+				"cb_onContentRendering",
+				{ builder: builder, content: this }
+			);
 		// return processed content
 		return builder.toString();
 	}
@@ -1672,16 +1718,19 @@ component
 	/**
 	 * Inflate custom fields from the incoming count and memento structure
 	 */
-	any function inflateCustomFields( required numeric fieldCount, required struct memento ){
+	any function inflateCustomFields(
+		required numeric fieldCount,
+		required struct memento
+	) {
 		// remove original custom fields
 		getCustomFields().clear();
 
 		// inflate custom fields start at 0 as it is incoming javascript counting of arrays
-		for ( var x = 0; x lt arguments.fieldCount; x++ ) {
+		for ( var x = 0; x LT arguments.fieldCount; x++ ) {
 			// get custom field from incoming data
 			var args = {
-				key   : arguments.memento[ "CustomFieldKeys_#x#" ],
-				value : arguments.memento[ "CustomFieldValues_#x#" ]
+				key  : arguments.memento[ "CustomFieldKeys_#x#" ],
+				value: arguments.memento[ "CustomFieldValues_#x#" ]
 			};
 			// only add if key has value
 			if ( len( trim( args.key ) ) ) {
@@ -1697,13 +1746,16 @@ component
 	/**
 	 * Get an array of category slugs for this content object
 	 */
-	array function getCategoriesArray(){
-		if ( NOT hasCategories() ) {
+	array function getCategoriesArray() {
+		if ( !hasCategories() ) {
 			return [];
 		}
-		return arrayMap( variables.categories, function( item ){
-			return arguments.item.getCategory();
-		} );
+		return arrayMap(
+			variables.categories,
+			function( item ) {
+				return arguments.item.getCategory();
+			}
+		);
 	}
 
 	/**
@@ -1711,28 +1763,28 @@ component
 	 *
 	 * @return The category list or `Uncategorized` if it doesn't have any
 	 */
-	string function getCategoriesList(){
+	string function getCategoriesList() {
 		return getCategoriesArray().toList();
 	}
 
 	/**
 	 * Shortcut to get the site name
 	 */
-	function getSiteName(){
+	function getSiteName() {
 		return getSite().getName();
 	}
 
 	/**
 	 * Shortcut to get the site slug
 	 */
-	function getSiteSlug(){
+	function getSiteSlug() {
 		return getSite().getSlug();
 	}
 
 	/**
 	 * Shortcut to get the site id
 	 */
-	function getSiteID(){
+	function getSiteID() {
 		if ( hasSite() ) {
 			return getSite().getsiteID();
 		}
@@ -1744,7 +1796,7 @@ component
 	 *
 	 * @site The site id or site object to verify
 	 */
-	boolean function isSameSite( required site ){
+	boolean function isSameSite( required site ) {
 		// If no site attached, break.
 		if ( !hasSite() ) {
 			return false;
@@ -1764,12 +1816,12 @@ component
 	 *
 	 * @parent The parent object or null
 	 */
-	BaseContent function setParent( parent ){
+	BaseContent function setParent( parent ) {
 		// Nulllify?
 		if ( isNull( arguments.parent ) ) {
 			variables.parent = javacast( "null", "" );
 			// remove the hierarchical information from our slug as we are promoting to the root
-			variables.slug   = listLast( variables.slug, "/" );
+			variables.slug = listLast( variables.slug, "/" );
 			return this;
 		} else {
 			// Welcome home papa!
@@ -1789,7 +1841,7 @@ component
 	/**
 	 * Apply any assigned content templates to this instance
 	 */
-	BaseContent function applyContentTemplate(){
+	BaseContent function applyContentTemplate() {
 		var template = getContentTemplate();
 		if ( !isNull( template ) ) {
 			var definition = template.getDefintion();
@@ -1799,36 +1851,43 @@ component
 					invoke(
 						this,
 						"populate",
-						{ "memento" : { "#key#" : definition[ key ].value } }
+						{ "memento": { "#key#": definition[ key ].value } }
 					);
 				} else if ( isArray( currentVal ) ) {
 					switch ( key ) {
 						case "customFields": {
 							var existingFields = getCustomFieldsAsStruct().keyArray();
-							definition[ key ].each( function( item ){
-								if ( !existingFields.contains( item.name ) ) {
-									var thisField = customFieldService.new(
-										properties = { "key" : item.name, "value" : item.defaultValue ?: "" }
-									);
-									thisField.setRelatedContent( this );
-									addCustomField( thisField );
-								}
-							} );
+							definition[ key ].each(
+									function( item ) {
+										if ( !existingFields.contains( item.name ) ) {
+											var thisField = customFieldService.new(
+													properties = {
+														"key"  : item.name,
+														"value": item.defaultValue ?: ""
+													}
+												);
+											thisField.setRelatedContent( this );
+											addCustomField( thisField );
+										}
+									}
+								);
 							break;
 						}
 						case "categories": {
 							if ( hasCategories() ) {
-								var existingCategories = getCategories().map( function( cat ){
-									return cat.getCategoryID();
-								} );
+								var existingCategories = getCategories().map(
+										function( cat ) {
+											return cat.getCategoryID();
+										}
+									);
 								definition[ key ].value.append( existingCategories, true );
 							}
 							invoke(
 								this,
 								"populate",
 								{
-									"memento" : {
-										"#key#" : listToArray(
+									"memento": {
+										"#key#": listToArray(
 											listRemoveDuplicates( arrayToList( definition[ key ].value ) )
 										)
 									}
@@ -1839,14 +1898,48 @@ component
 							invoke(
 								this,
 								"populate",
-								{ "memento" : { "#key#" : definition[ key ].value } }
+								{ "memento": { "#key#": definition[ key ].value } }
 							);
 						}
 					}
 				} else if ( !len( currentVal ) ) {
-					invoke( this, "set" & key, [ definition[ key ].value ] );
+					invoke(
+						this,
+						"set" & key,
+						[ definition[ key ].value]
+					);
 				}
 			}
+		}
+	}
+
+	/**
+	 * Verify and rotate maximum content versions
+	 */
+	private function maxContentVersionChecks() {
+		if ( !len( variables.settingService.getSetting( "cb_versions_max_history" ) ) ) {
+			return;
+		}
+
+		// How many versions do we have?
+		var versionCounts = contentVersionService
+			.newCriteria()
+			.isEq( "relatedContent.contentID", getContentID() )
+			.count();
+
+		// Have we passed the limit?
+		if ( ( versionCounts + 1 ) GT variables.settingService.getSetting( "cb_versions_max_history" ) ) {
+			var oldestVersion = contentVersionService
+				.newCriteria()
+				.isEq( "relatedContent.contentID", getContentID() )
+				.isEq( "isActive", javacast( "boolean", false ) )
+				.withProjections( id = "true" )
+				.list(
+					sortOrder = "createdDate DESC",
+					offset    = variables.settingService.getSetting( "cb_versions_max_history" ) - 2
+				);
+			// delete by primary key IDs found
+			contentVersionService.deleteByID( arrayToList( oldestVersion ) );
 		}
 	}
 

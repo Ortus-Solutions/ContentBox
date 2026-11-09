@@ -17,10 +17,10 @@ component {
 	 * MAKE SURE THIS FILE IS NOT WEB ACCESSIBLE!
 	 * Without this, your NON CommandBox ContentBox install will fail.
 	 */
-	this.cbLoadDynamicEnvironment = false;
-	this.cbEnvFile                = expandPath( "/.env" );
+	this.cbLoadDynamicEnvironment = false
+	this.cbEnvFile                = expandPath( "/.env" )
 	if ( this.cbLoadDynamicEnvironment ) {
-		loadEnv();
+		loadEnv()
 	}
 
 	/**
@@ -28,29 +28,20 @@ component {
 	 * Application Properties: Modify as you see fit!
 	 * --------------------------------------------------------------------------
 	 */
-	this.name              = "ContentBox CMS";
-	this.sessionManagement = true;
-	this.sessionTimeout    = createTimespan( 0, 1, 0, 0 );
-	this.setClientCookies  = true;
-	this.setDomainCookies  = true;
-	this.scriptProtect     = false;
-	this.secureJSON        = false;
-	this.timezone          = "UTC";
-
-	/**
-	 * --------------------------------------------------------------------------
-	 * Lucee Specific Settings
-	 * --------------------------------------------------------------------------
-	 */
-
+	this.name              = "ContentBox CMS"
+	this.sessionManagement = true
+	this.sessionTimeout    = createTimespan( 0, 1, 0, 0 )
+	this.setClientCookies  = true
+	this.setDomainCookies  = true
+	this.scriptProtect     = false
+	this.secureJSON        = false
+	this.timezone          = "UTC"
 	// buffer the output of a tag/function body to output in case of a exception
-	this.bufferOutput                   = true;
-	// Activate Gzip Compression
-	this.compression                    = false;
+	this.bufferOutput                   = true
 	// Turn on/off white space management
-	this.whiteSpaceManagement           = "smart";
+	this.whiteSpaceManagement           = "smart"
 	// Turn on/off remote cfc content whitespace
-	this.suppressRemoteComponentContent = false;
+	this.suppressRemoteComponentContent = false
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -58,12 +49,12 @@ component {
 	 * --------------------------------------------------------------------------
 	 * Modify only if you need to, else default them.
 	 */
-	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
-	COLDBOX_APP_MAPPING   = "";
-	COLDBOX_WEB_MAPPING   = "";
-	COLDBOX_CONFIG_FILE   = "";
-	COLDBOX_APP_KEY       = "";
-	COLDBOX_FAIL_FAST     = true;
+	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() )
+	COLDBOX_APP_MAPPING   = ""
+	COLDBOX_WEB_MAPPING   = ""
+	COLDBOX_CONFIG_FILE   = ""
+	COLDBOX_APP_KEY       = ""
+	COLDBOX_FAIL_FAST     = true
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -74,10 +65,10 @@ component {
 	 * - contentbox : Where the ContentBox module root is installed
 	 * - cborm : Where the cborm library is installed: Needed for ORM Event Handling.
 	 */
-	this.mappings[ "/cbapp" ]      = COLDBOX_APP_ROOT_PATH;
-	this.mappings[ "/coldbox" ]    = COLDBOX_APP_ROOT_PATH & "coldbox";
-	this.mappings[ "/contentbox" ] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
-	this.mappings[ "/cborm" ]      = this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
+	this.mappings[ "/cbapp" ]      = COLDBOX_APP_ROOT_PATH
+	this.mappings[ "/coldbox" ]    = COLDBOX_APP_ROOT_PATH & "lib/coldbox"
+	this.mappings[ "/contentbox" ] = COLDBOX_APP_ROOT_PATH & "modules/contentbox"
+	this.mappings[ "/cborm" ]      = this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm"
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -87,11 +78,11 @@ component {
 	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
 	 * So Make sure you select one.
 	 */
-	request.cbSystemHelper = new coldbox.system.core.delegates.Env();
+
 	// THE CONTENTBOX DATASOURCE NAME
-	this.datasource        = "contentbox";
+	this.datasource        = "contentbox"
 	// ORM SETTINGS
-	this.ormEnabled        = true;
+	this.ormEnabled        = true
 	// cfformat-ignore-start
 	this.ormSettings       = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
@@ -106,12 +97,12 @@ component {
 			"modules/contentbox/modules_user"
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
-		dialect              : request.cbSystemHelper.getSystemSetting( "ORM_DIALECT", "" ),
+		dialect              : _getSystemSetting( "ORM_DIALECT", "" ),
 		dbcreate             : "none",
-		secondarycacheenabled: request.cbSystemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
-		cacheprovider        : request.cbSystemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
-		logSQL               : request.cbSystemHelper.getSystemSetting( "ORM_LOGSQL", false ),
-		sqlScript            : request.cbSystemHelper.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
+		secondarycacheenabled: _getSystemSetting( "ORM_SECONDARY_CACHE", false ),
+		cacheprovider        : _getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
+		logSQL               : _getSystemSetting( "ORM_LOGSQL", false ),
+		sqlScript            : _getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
 		flushAtRequestEnd    : false,
 		autoManageSession    : false,
@@ -122,10 +113,10 @@ component {
 		skipCFCWithError     : true,
 		// TURN ON FOR Debugging if ORM mappings are not working.
 		savemapping          : false
-	};
+	}
 	// cfformat-ignore-end
 
-	// applicationStop();abort;
+	// applicationStop()abort
 
 	/*****************************************************************************************************/
 	/************************************** CF APP LISTENERS *********************************************/
@@ -140,9 +131,9 @@ component {
 			COLDBOX_APP_MAPPING,
 			COLDBOX_FAIL_FAST,
 			COLDBOX_WEB_MAPPING
-		);
-		application.cbBootstrap.loadColdbox();
-		return true;
+		)
+		application.cbBootstrap.loadColdbox()
+		return true
 	}
 
 	boolean function onRequestStart( string targetPage ){
@@ -153,9 +144,9 @@ component {
 			isNull( application.cbController )
 		) {
 			if ( this.cbLoadDynamicEnvironment ) {
-				loadEnv( force: true );
+				loadEnv( force: true )
 			}
-			reinitApplication();
+			reinitApplication()
 		}
 
 		// Development Reinit + ORM Reloads
@@ -167,36 +158,36 @@ component {
 			application.cbBootstrap.isFWReinit()
 		) {
 			if ( this.cbLoadDynamicEnvironment ) {
-				loadEnv( force: true );
+				loadEnv( force: true )
 			}
-			if ( structKeyExists( server, "lucee" ) ) {
-				pagePoolClear();
+			if ( getFunctionList().keyExists( "pagePoolClear" ) ) {
+				pagePoolClear()
 			}
-			ormReload();
+			ormReload()
 		}
 
 		// Process ColdBox Request
-		application.cbBootstrap.onRequestStart( arguments.targetPage );
+		application.cbBootstrap.onRequestStart( arguments.targetPage )
 
-		return true;
+		return true
 	}
 
 	function onSessionStart(){
 		if ( !isNull( application.cbBootstrap ) ) {
-			application.cbBootStrap.onSessionStart();
+			application.cbBootStrap.onSessionStart()
 		}
 	}
 
 	function onSessionEnd( struct sessionScope, struct appScope ){
-		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection = arguments );
+		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection = arguments )
 	}
 
 	boolean function onMissingTemplate( template ){
-		return application.cbBootstrap.onMissingTemplate( argumentCollection = arguments );
+		return application.cbBootstrap.onMissingTemplate( argumentCollection = arguments )
 	}
 
 	function onApplicationEnd( struct appScope ){
-		arguments.appScope.cbBootstrap.onApplicationEnd( arguments.appScope );
+		arguments.appScope.cbBootstrap.onApplicationEnd( arguments.appScope )
 	}
 
 	/*****************************************************************************************************/
@@ -207,36 +198,56 @@ component {
 	 * Application Reinitialization
 	 **/
 	private void function reinitApplication(){
-		onApplicationStart();
+		onApplicationStart()
 	}
 
 	/**
 	 * This method is only called if you are in a NON CommandBox install to load the environment variables
 	 */
 	private void function loadEnv( boolean force = false ){
-		var javaSystem = createObject( "java", "java.lang.System" );
-		var value      = javaSystem.getProperty( "contentbox_runtime_env" );
+		var javaSystem = createObject( "java", "java.lang.System" )
+		var value      = javaSystem.getProperty( "contentbox_runtime_env" )
 		// If not loaded, lock and load.
 		if ( isNull( value ) || arguments.force ) {
 			lock name="contentbox_runtime_env" timeout="15" throwOnTimeout="true" type="exclusive" {
 				// Double lock
 				if ( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) || arguments.force ) {
 					// Load .env file
-					var props = createObject( "java", "java.util.Properties" ).init();
-					props.load( createObject( "java", "java.io.FileInputStream" ).init( this.cbEnvFile ) );
+					var props = createObject( "java", "java.util.Properties" ).init()
+					props.load( createObject( "java", "java.io.FileInputStream" ).init( this.cbEnvFile ) )
 					// Iterate and add
-					var availableProps = props.propertyNames();
+					var availableProps = props.propertyNames()
 					while ( availableProps.hasNext() ) {
-						var propName = availableProps.next();
-						javaSystem.setProperty( propName, props.getProperty( propName ) );
+						var propName = availableProps.next()
+						javaSystem.setProperty( propName, props.getProperty( propName ) )
 					}
-					javaSystem.setProperty( "contentbox_runtime_env", true );
+					javaSystem.setProperty( "contentbox_runtime_env", true )
 				}
 				// end double lock
 			}
 			// end lock
 		}
 		// end lock check
+	}
+
+	/**
+	 * Helper to get system settings from either the environment or the java system properties, with an optional default value.
+	 * This is used to configure ORM settings via environment variables, which is especially useful in containerized environments.
+	 * The order of precedence is: Environment Variables > Java System Properties > Default Value
+	 */
+	private string function _getSystemSetting( string settingName, any defaultValue = "" ){
+		var env = server.system.environment
+		var properties = server.system.properties
+
+		if ( structKeyExists( env, settingName ) ) {
+			return env[ settingName ]
+		}
+		else if ( structKeyExists( properties, settingName ) ) {
+			return properties[ settingName ]
+		}
+		else {
+			return defaultValue
+		}
 	}
 
 }

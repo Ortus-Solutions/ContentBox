@@ -1,3 +1,3 @@
 <cfoutput>
-    #args.menuItem.getLabel()#
+	#args.menuItem.getLabel()#
 </cfoutput>

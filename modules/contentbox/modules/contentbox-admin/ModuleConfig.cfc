@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,51 +6,50 @@
  * ContentBox Admin Module
  */
 component {
-
 	// Module Properties
-	this.title              = "ContentBox Admin";
-	this.author             = "Ortus Solutions, Corp";
-	this.webURL             = "https://www.ortussolutions.com";
-	this.version            = "@version.number@+@build.number@";
-	this.description        = "ContentBox Administration Module";
-	this.viewParentLookup   = true;
+	this.title = "ContentBox Admin";
+	this.author = "Ortus Solutions, Corp";
+	this.webURL = "https://www.ortussolutions.com";
+	this.version = "@version.number@+@build.number@";
+	this.description = "ContentBox Administration Module";
+	this.viewParentLookup = true;
 	this.layoutParentLookup = true;
-	this.entryPoint         = "cbadmin";
-	this.modelNamespace     = "cbadmin";
-	this.cfmapping          = "cbadmin";
-	this.dependencies       = [];
+	this.entryPoint = "cbadmin";
+	this.modelNamespace = "cbadmin";
+	this.cfmapping = "cbadmin";
+	this.dependencies = [];
 
 	/**
 	 * Configure Module
 	 */
-	function configure(){
+	function configure() {
 		// Layout Settings
-		layoutSettings = { defaultLayout : "admin.cfm" };
+		layoutSettings = { defaultLayout: "admin.cfm" };
 
 		// Module Settings
 		settings = {
 			// Security for the admin: Rules are loaded by the core contentbox module as it impacts the entire set of modules
-			cbsecurity : {
-				firewall : {
+			cbsecurity: {
+				firewall: {
 					// The global invalid authentication event or URI or URL to go if an invalid authentication occurs
-					"invalidAuthenticationEvent"  : "cbadmin/security/login",
+					"invalidAuthenticationEvent" : "cbadmin/security/login",
 					// Default Auhtentication Action: override or redirect when a user has not logged in
-					"defaultAuthenticationAction" : "redirect",
+					"defaultAuthenticationAction": "redirect",
 					// The global invalid authorization event or URI or URL to go if an invalid authorization occurs
-					"invalidAuthorizationEvent"   : "cbadmin",
+					"invalidAuthorizationEvent"  : "cbadmin",
 					// Default Authorization Action: override or redirect when a user does not have enough permissions to access something
-					"defaultAuthorizationAction"  : "redirect"
+					"defaultAuthorizationAction" : "redirect"
 				}
 			}
 		};
 
 		// i18n
-		cbi18n = { resourceBundles : { "admin" : "#moduleMapping#/includes/i18n/admin" } };
+		cbi18n = { resourceBundles: { "admin": "#moduleMapping#/includes/i18n/admin" } };
 
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints : [
+			customInterceptionPoints: [
 				// Admin Layout HTML points
 				"cbadmin_beforeHeadEnd",
 				"cbadmin_afterBodyStart",
@@ -204,34 +203,34 @@ component {
 		interceptors = [
 			// CB Admin Request Interceptor
 			{
-				class      : "#moduleMapping#.interceptors.CBRequest",
-				properties : { entryPoint : this.entryPoint },
-				name       : "CBRequest@cbAdmin"
+				class     : "#moduleMapping#.interceptors.CBRequest",
+				properties: { entryPoint: this.entryPoint },
+				name      : "CBRequest@cbAdmin"
 			},
 			// Login Tracker and Preventer
 			{
-				class : "contentbox.models.security.LoginTracker",
-				name  : "LoginTracker@cbAdmin"
+				class: "contentbox.models.security.LoginTracker",
+				name : "LoginTracker@cbAdmin"
 			},
 			// Admin Notification services
 			{
-				class : "contentbox.models.system.NotificationService",
-				name  : "NotificationService@cbAdmin"
+				class: "contentbox.models.system.NotificationService",
+				name : "NotificationService@cbAdmin"
 			},
 			// Admin MenuBuilder Cleanups
 			{
-				class : "#moduleMapping#.interceptors.MenuCleanup",
-				name  : "MenuCleanup@cbAdmin"
+				class: "#moduleMapping#.interceptors.MenuCleanup",
+				name : "MenuCleanup@cbAdmin"
 			},
 			// Two Factor Authentication Enrollment Verifier
 			{
-				class : "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
-				name  : "CheckForForceTwoFactorEnrollment"
+				class: "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
+				name : "CheckForForceTwoFactorEnrollment"
 			},
 			// Unenroll Two Factor on Provider Change
 			{
-				class : "#moduleMapping#.interceptors.UnenrollTwoFactorOnProviderChange",
-				name  : "UnenrollTwoFactorOnProviderChange@cbAdmin"
+				class: "#moduleMapping#.interceptors.UnenrollTwoFactorOnProviderChange",
+				name : "UnenrollTwoFactorOnProviderChange@cbAdmin"
 			}
 		];
 	}
@@ -239,7 +238,7 @@ component {
 	/*
 	 * On Module Load
 	 */
-	function onLoad(){
+	function onLoad() {
 		// Startup the Editor Service, needed for markup translations support
 		wirebox.getInstance( "EditorService@contentbox" );
 		// Load Admin Helpers Manually: Renderer get's created and chicken and the egg issue again.

@@ -4,46 +4,53 @@
  * An incoming site identifier is required
  */
 component extends="baseContentHandler" {
-
 	// DI
 	property name="ormService" inject="PageService@contentbox";
-
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "publishedDate DESC";
+	variables.sortOrder = "publishedDate DESC";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity       = "Page";
+	variables.entity = "Page";
+	// The permission prefix used to check for full (admin/editor) content access
+	variables.contentType = "PAGES";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 
 	/**
 	 * Display all pages using different filters
 	 *
+	 * Publicly accessible: only published pages are returned, so no authentication is required.
+	 *
 	 * @tags      Pages
 	 * @responses contentbox/apidocs/pages/index/responses.json
-	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
-	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
-		param rc.page       = 1;
-		param rc.excludes   = "HTMLTitle,HTMLKeywords,HTMLDescription";
+	function index( event, rc, prc ) {
+		param rc.page = 1;
+		param rc.excludes = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
-		param rc.sortOrder  = "publishedDate DESC";
+		param rc.sortOrder = "publishedDate DESC";
 		// Search terms
-		param rc.search     = "";
+		param rc.search = "";
 		// One or a list of categories to filter on
-		param rc.category   = "";
+		param rc.category = "";
 		// Author ID to filter on
-		param rc.author     = "";
+		param rc.author = "";
 		// The parent to filter on, default is root pages
-		param rc.parent     = "";
+		param rc.parent = "";
 		// Show in menu boolean bit
 		param rc.showInMenu = "";
 		// If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 		param rc.slugPrefix = "";
 		// If passed, it's a slug operation
-		param rc.slug       = "";
+		param rc.slug = "";
 
 		// If we have a `slug` then we treat it as a /:slug route, due to hierarchical paths
-		if ( rc.slug.trim().length() > 0 ) {
+		if (
+			rc
+					.slug
+					.trim()
+					.length() >
+				0
+		) {
 			rc.id = rc.slug;
 			return show( argumentCollection = arguments );
 		}
@@ -55,17 +62,17 @@ component extends="baseContentHandler" {
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.findPublishedContent(
-			searchTerm = rc.search,
-			category   = rc.category,
-			offset     = getPageOffset( rc.page ),
-			max        = getMaxRows(),
-			sortOrder  = rc.sortOrder,
-			siteId     = prc.oCurrentSite.getSiteID(),
-			authorID   = rc.author,
-			parent     = rc.parent,
-			slugPrefix = rc.slugPrefix,
-			showInMenu = ( isBoolean( rc.showInMenu ) ? rc.showInMenu : javacast( "null", "" ) )
-		);
+				searchTerm = rc.search,
+				category   = rc.category,
+				offset     = getPageOffset( rc.page ),
+				max        = getMaxRows(),
+				sortOrder  = rc.sortOrder,
+				siteId     = prc.oCurrentSite.getSiteID(),
+				authorID   = rc.author,
+				parent     = rc.parent,
+				slugPrefix = rc.slugPrefix,
+				showInMenu = ( isBoolean( rc.showInMenu ) ? rc.showInMenu : javacast( "null", "" ) )
+			);
 
 		// Build to match interface
 		arguments.results.records = arguments.results.content;
@@ -77,19 +84,23 @@ component extends="baseContentHandler" {
 	/**
 	 * Show an page using the id
 	 *
+	 * Publicly accessible: anonymous requests only resolve pages that are published,
+	 * not expired, and not password protected. See baseContentHandler.show().
+	 *
 	 * @tags      Pages
 	 * @responses contentbox/apidocs/pages/show/responses.json
-	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
-	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
-		param rc.includes = arrayToList( [
-			"activeContent",
-			"childrenSnapshot:children",
-			"customFieldsAsStruct:customFields",
-			"linkedContentSnapshot:linkedContent",
-			"relatedContentSnapshot:relatedContent",
-			"renderedContent"
-		] );
+	function show( event, rc, prc ) {
+		param rc.includes = arrayToList(
+			[
+				"activeContent",
+				"childrenSnapshot:children",
+				"customFieldsAsStruct:customFields",
+				"linkedContentSnapshot:linkedContent",
+				"relatedContentSnapshot:relatedContent",
+				"renderedContent"
+			]
+		);
 		param rc.excludes = "";
 
 		super.show( argumentCollection = arguments );
@@ -103,9 +114,9 @@ component extends="baseContentHandler" {
 	 * @responses   contentbox/apidocs/pages/create/responses.json
 	 * @x           -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
-	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
+	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR" {
 		// Supersize it
-		arguments.contentType = "PAGES";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 
@@ -116,9 +127,9 @@ component extends="baseContentHandler" {
 	 * @responses contentbox/apidocs/pages/update/responses.json
 	 * @x         -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
-	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
+	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR" {
 		// Supersize it
-		arguments.contentType = "PAGES";
+		arguments.contentType = variables.contentType;
 		super.save( argumentCollection = arguments );
 	}
 
@@ -129,7 +140,7 @@ component extends="baseContentHandler" {
 	 * @responses contentbox/apidocs/pages/delete/responses.json
 	 * @x         -contentbox-permissions PAGES_ADMIN
 	 */
-	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
+	function delete( event, rc, prc ) secured="PAGES_ADMIN" {
 		super.delete( argumentCollection = arguments );
 	}
 

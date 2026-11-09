@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	EntryInclude function init(){
+	EntryInclude function init() {
 		// Widget Properties
 		setName( "EntryInclude" );
 		setVersion( "1.0" );
-		setDescription( "A widget that can render out ContentBox blog entries inline" );
+		setDescription(
+			"A widget that can render out ContentBox blog entries inline"
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "arrow-circle-left" );
@@ -26,12 +28,12 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 * @slug.optionsUDF   getSlugList
 	 * @defaultValue.hint The string to show if the page does not exist
 	 */
-	any function renderIt( required string slug, string defaultValue ){
+	any function renderIt( required string slug, string defaultValue ) {
 		var entry = entryService.findBySlug(
-			slug               = arguments.slug,
-			includeUnpublished = false,
-			siteId             = getSite().getSiteId()
-		);
+				slug               = arguments.slug,
+				includeUnpublished = false,
+				siteId             = getSite().getSiteId()
+			);
 
 		if ( !isNull( entry ) ) {
 			return entry.renderContent();
@@ -53,7 +55,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 *
 	 * @cbignore
 	 */
-	array function getSlugList(){
+	array function getSlugList() {
 		return entryService.getAllFlatSlugs();
 	}
 

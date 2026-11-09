@@ -12,61 +12,60 @@ component
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="Content"
 {
-
-	/* *********************************************************************
-	 **                          DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          DI
+	 **********************************************************************/
 
 	property
-		name      ="provider"
+		name="provider"
 		persistent="false"
-		inject    ="provider:contentbox.models.menu.providers.ContentProvider";
+		inject="provider:contentbox.models.menu.providers.ContentProvider";
+
 	property
-		name      ="contentService"
+		name="contentService"
 		persistent="false"
-		inject    ="provider:contentService@contentbox";
+		inject="provider:contentService@contentbox";
 
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name   ="contentSlug"
-		column ="contentSlug"
+		name="contentSlug"
+		column="contentSlug"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="target"
-		column ="target"
+		name="target"
+		column="target"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
-		name   ="urlClass"
-		column ="urlClass"
+		name="urlClass"
+		column="urlClass"
 		notnull="false"
 		ormtype="string"
 		default="";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+	this.constraints[ "contentSlug" ] = { required: false, size: "1..255" };
+	this.constraints[ "target" ] = { required: false, size: "1..255" };
+	this.constraints[ "urlClass" ] = { required: false, size: "1..255" };
 
-	this.constraints[ "contentSlug" ] = { required : false, size : "1..255" };
-	this.constraints[ "target" ]      = { required : false, size : "1..255" };
-	this.constraints[ "urlClass" ]    = { required : false, size : "1..255" };
+	/**********************************************************************
+	 * **                          PUBLIC FUNCTIONS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **                          PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
-	function init(){
+	function init() {
 		super.init();
 
-		appendToMemento( [ "contentSlug", "target", "urlClass" ], "defaultIncludes" );
+		appendToMemento( [ "contentSlug", "target", "urlClass"], "defaultIncludes" );
 
 		return this;
 	}
@@ -76,11 +75,11 @@ component
 	 *
 	 * @options.hint Additional arguments to be used in the method
 	 */
-	public boolean function canDisplay( required struct options = {} ){
+	public boolean function canDisplay( required struct options = {} ) {
 		var display = super.canDisplay( argumentCollection = arguments );
 		if ( display ) {
 			var content = contentService.findBySlug( slug = getContentSlug(), siteID = getMenu().getSiteID() );
-			var type    = content.getContentType();
+			var type = content.getContentType();
 			return content.isLoaded() && ( type == "Page" || type == "Entry" ) ? true : false;
 		}
 		return display;

@@ -8,25 +8,26 @@
 component
 	implements="contentbox.models.menu.providers.IMenuItemProvider"
 	extends   ="contentbox.models.menu.providers.BaseProvider"
-	accessors =true
+	accessors ="#true#"
 {
-
-	/* *********************************************************************
-	 **                      DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      DI
+	 **********************************************************************/
 
 	property name="contentService" inject="id:contentService@contentbox";
+
 	property name="CBHelper" inject="id:CBHelper@contentbox";
+
 	property name="requestService" inject="coldbox:requestService";
 
-	/* *********************************************************************
-	 **                      PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                      PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	public ContentProvider function init(){
+	public ContentProvider function init() {
 		setName( "Content" );
 		setType( "Content" );
 		setIconClass( "fa fa-archive" );
@@ -41,33 +42,37 @@ component
 	 * @menuItem The menu item object
 	 * @options  Additional arguments to be used in the method
 	 */
-	string function getAdminTemplate( required any menuItem, required struct options = {} ){
-		var prc   = requestService.getContext().getPrivateCollection();
+	string function getAdminTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
+		var prc = requestService.getContext().getPrivateCollection();
 		var title = "";
-		var slug  = "";
+		var slug = "";
 
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		if ( !isNull( arguments.menuItem.getContentSlug() ) ) {
-			var content = contentService.findBySlug(
-				slug   = arguments.menuItem.getContentSlug(),
-				siteID = arguments.menuItem.getMenu().getSiteID()
-			);
+			var content = contentService.findBySlug( slug = arguments.menuItem.getContentSlug(),
+					siteID = arguments
+						.menuItem
+						.getMenu()
+						.getSiteID() );
 			if ( !isNull( content ) ) {
 				title = content.getTitle();
-				slug  = arguments.menuItem.getContentSlug();
+				slug = arguments.menuItem.getContentSlug();
 			}
 		}
 
 		return variables.renderer.view(
-			view   = "menus/providers/content/admin",
-			module = "contentbox-admin",
-			args   = {
-				menuItem           : arguments.menuItem,
-				xehContentSelector : "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector",
-				title              : title,
-				slug               : slug
-			}
-		);
+				view   = "menus/providers/content/admin",
+				module = "contentbox-admin",
+				args   = {
+					menuItem          : arguments.menuItem,
+					xehContentSelector: "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector",
+					title             : title,
+					slug              : slug
+				}
+			);
 	}
 
 	/**
@@ -76,21 +81,25 @@ component
 	 * @menuItem The menu item object
 	 * @options  Additional arguments to be used in the method
 	 */
-	string function getDisplayTemplate( required any menuItem, required struct options = {} ){
-		var content = variables.contentService.findBySlug(
-			slug   = arguments.menuItem.getContentSlug(),
-			siteID = arguments.menuItem.getMenu().getSiteID()
-		);
+	string function getDisplayTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
+		var content = variables.contentService.findBySlug( slug = arguments.menuItem.getContentSlug(),
+				siteID = arguments
+					.menuItem
+					.getMenu()
+					.getSiteID() );
 
 		return variables.renderer.externalView(
-			view   = "/contentbox/models/menu/views/content/display",
-			module = "contentbox",
-			args   = {
-				menuItem    : arguments.menuItem,
-				contentLink : variables.CBHelper.linkContent( content: content ),
-				data        : arguments.menuItem.getMemento()
-			}
-		);
+				view   = "/contentbox/models/menu/views/content/display",
+				module = "contentbox",
+				args   = {
+					menuItem   : arguments.menuItem,
+					contentLink: variables.CBHelper.linkContent( content = content ),
+					data       : arguments.menuItem.getMemento()
+				}
+			);
 	}
 
 }

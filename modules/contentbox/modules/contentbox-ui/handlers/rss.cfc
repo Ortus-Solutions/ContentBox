@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,7 +10,7 @@ component extends="content" {
 	/**
 	 * Display the RSS feeds for the ContentBox
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// params
 		event.paramValue( "category", "" );
 		event.paramValue( "contentSlug", "" );
@@ -18,25 +18,25 @@ component extends="content" {
 
 		// Build out the site RSS feeds
 		var feed = variables.RSSService.getRSS(
-			comments: rc.commentRSS,
-			category: rc.category,
-			slug    : rc.contentSlug,
-			siteID  : prc.oCurrentSite.getsiteID()
-		);
+				comments = rc.commentRSS,
+				category = rc.category,
+				slug     = rc.contentSlug,
+				siteID   = prc.oCurrentSite.getsiteID()
+			);
 
 		// Render out the feed xml
 		rc.format = "rss";
 		event.renderData(
-			type        = "plain",
-			data        = feed,
-			contentType = "text/xml"
-		);
+				type        = "plain",
+				data        = feed,
+				contentType = "text/xml"
+			);
 	}
 
 	/**
 	 * Display the RSS feeds for the pages
 	 */
-	function pages( event, rc, prc ){
+	function pages( event, rc, prc ) {
 		// params
 		event.paramValue( "category", "" );
 		event.paramValue( "commentRSS", false );
@@ -44,20 +44,20 @@ component extends="content" {
 
 		// Build out the site RSS feeds
 		var feed = variables.RSSService.getRSS(
-			category   : rc.category,
-			slug       : rc.slug,
-			comments   : rc.commentRSS,
-			contentType: "Page",
-			siteID     : prc.oCurrentSite.getsiteID()
-		);
+				category    = rc.category,
+				slug        = rc.slug,
+				comments    = rc.commentRSS,
+				contentType = "Page",
+				siteID      = prc.oCurrentSite.getsiteID()
+			);
 
 		// Render out the feed xml
 		rc.format = "rss";
 		event.renderData(
-			type        = "plain",
-			data        = feed,
-			contentType = "text/xml"
-		);
+				type        = "plain",
+				data        = feed,
+				contentType = "text/xml"
+			);
 	}
 
 }

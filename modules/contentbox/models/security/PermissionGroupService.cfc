@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,15 +6,15 @@
  * Permission Group Service for contentbox
  */
 component extends="cborm.models.VirtualEntityService" singleton {
-
 	// DI
 	property name="permissionService" inject="permissionService@contentbox";
+
 	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	PermissionGroupService function init(){
+	PermissionGroupService function init() {
 		// init it
 		super.init( entityName = "cbPermissionGroup" );
 
@@ -24,10 +24,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get all data prepared for export
 	 */
-	array function getAllForExport(){
-		return getAll().map( function( thisItem ){
-			return thisItem.getMemento();
-		} );
+	array function getAllForExport() {
+		return getAll().map(
+				function( thisItem ) {
+					return thisItem.getMemento();
+				}
+			);
 	}
 
 	/**
@@ -40,14 +42,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws InvalidImportFormat
 	 */
-	string function importFromFile( required importFile, boolean override = false ){
-		var data      = fileRead( arguments.importFile );
+	string function importFromFile( required importFile, boolean override = false ) {
+		var data = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
-			"Starting import with override = #arguments.override#...<br>"
-		);
+				"Starting import with override = #arguments.override#...<br>"
+			);
 
 		if ( !isJSON( data ) ) {
-			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
+			throw(
+				message = "Cannot import file as the contents is not JSON",
+				type    = "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -71,12 +76,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required importData,
 		boolean override = false,
 		importLog
-	){
+	) {
 		var allGroups = [];
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
-			arguments.importData = [ arguments.importData ];
+			arguments.importData = [ arguments.importData];
 		}
 
 		transaction {
@@ -84,15 +89,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisGroup in arguments.importData ) {
 				// Get new or persisted
 				var oGroup = this.findByName( thisGroup.name );
-				oGroup     = ( isNull( oGroup ) ? new () : oGroup );
+				oGroup = ( isNull( oGroup ) ? new() : oGroup );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
-					target               = oGroup,
-					memento              = thisGroup,
-					exclude              = "permissionGroupID,permissions",
-					composeRelationships = false
-				);
+						target               = oGroup,
+						memento              = thisGroup,
+						exclude              = "permissionGroupID,permissions",
+						composeRelationships = false
+					);
 
 				// PERMISSIONS
 				if ( arrayLen( thisGroup.permissions ) ) {
@@ -100,12 +105,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					var allPermissions = [];
 					for ( var thisPermission in thisGroup.permissions ) {
 						var oPerm = variables.permissionService.findByPermission( thisPermission.permission );
-						oPerm     = (
-							isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
-								target  = variables.permissionService.new(),
-								memento = thisPermission,
-								exclude = "permissionID"
-							) : oPerm
+						oPerm = (
+							isNull( oPerm )
+								? getBeanPopulator().populateFromStruct(
+										target  = variables.permissionService.new(),
+										memento = thisPermission,
+										exclude = "permissionID"
+									)
+								: oPerm
 						);
 						// save oPerm if new only
 						if ( !oPerm.isLoaded() ) {
@@ -122,8 +129,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				if ( !oGroup.isLoaded() ) {
 					arguments.importLog.append( "New permission group imported: #thisGroup.name#<br>" );
 					arrayAppend( allGroups, oGroup );
-				} else if ( oGroup.isLoaded() and arguments.override ) {
-					arguments.importLog.append( "Persisted permission group overriden: #thisGroup.name#<br>" );
+				} else if ( oGroup.isLoaded() && arguments.override ) {
+					arguments.importLog.append(
+							"Persisted permission group overriden: #thisGroup.name#<br>"
+						);
 					arrayAppend( allGroups, oGroup );
 				} else {
 					arguments.importLog.append( "Skipping permission group: #thisGroup.name#<br>" );
@@ -137,8 +146,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				arguments.importLog.append( "Saved all imported and overriden permission groups!" );
 			} else {
 				arguments.importLog.append(
-					"No permission groups imported as none where found or able to be overriden from the import file."
-				);
+						"No permission groups imported as none where found or able to be overriden from the import file."
+					);
 			}
 		}
 		// end of transaction
