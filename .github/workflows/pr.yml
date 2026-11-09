@@ -1,16 +1,14 @@
 name: Pull Requests
 
 on:
-  push:
-    branches-ignore:
-      - "main"
-      - "master"
-      - "development"
-      - "releases/**"
+  # PR runs only. A `push` trigger on the same branches ran every PR twice (push + pull_request).
   pull_request:
     branches:
       - development
+      - master
       - "releases/**"
+  # Manual runs for branches that do not have a PR yet
+  workflow_dispatch:
 
 jobs:
   tests:
