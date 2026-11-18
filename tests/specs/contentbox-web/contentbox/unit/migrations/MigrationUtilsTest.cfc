@@ -7,7 +7,7 @@
  */
 component extends="testbox.system.BaseSpec" {
 	// Mix the helpers into this spec, the same way the migrations include them
-	include template="/contentbox/migrations/util/MigrationUtils.cfm";
+	include "/contentbox/migrations/util/MigrationUtils.cfm";
 
 	/*********************************** BDD SUITES ***********************************/
 
