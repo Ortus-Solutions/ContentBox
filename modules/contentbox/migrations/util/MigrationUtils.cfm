@@ -25,10 +25,12 @@
 	boolean function hasColumn( targetTable, targetColumn ) {
 
 		try{
-			// Use information_schema directly so the check is dialect-safe and preserves
-			// identifier case (cfdbinfo lowercases table names which breaks on PostgreSQL).
+			// Use information_schema directly so the check is dialect-safe (cfdbinfo lowercases
+			// table names which breaks on PostgreSQL). Compare names case-insensitively, like the
+			// dbinfo fallback below: callers pass camel-case names ("FK_siteID") while PostgreSQL
+			// stores unquoted or lowercased identifiers in lowercase ("fk_siteid").
 			var result = queryExecute(
-				"SELECT 1 FROM information_schema.columns WHERE table_name = :tableName AND column_name = :columnName",
+				"SELECT 1 FROM information_schema.columns WHERE lower(table_name) = lower(:tableName) AND lower(column_name) = lower(:columnName)",
 				{
 					tableName  : arguments.targetTable,
 					columnName : arguments.targetColumn
