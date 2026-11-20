@@ -6,33 +6,41 @@
  * @author  Luis Majano
  */
 component {
-
 	// DI
 	property name="migrationService" inject="MigrationService@cfmigrations";
-
 	// Include Utils
 	include template="./util/MigrationUtils.cfm";
 
-	function up( schema, qb ){
+	function up( schema, qb ) {
 		// Update permission descriptions
-		arguments.qb
+		arguments
+			.qb
 			.newQuery()
 			.from( "cb_permission" )
 			.where( "permission", "CONTENTSTORE_EDITOR" )
-			.update( { "description" : "Ability to create, edit and publish content store elements" } );
-		arguments.qb
+			.update(
+				{ "description": "Ability to create, edit and publish content store elements" }
+			);
+		arguments
+			.qb
 			.newQuery()
 			.from( "cb_permission" )
 			.where( "permission", "ENTRIES_EDITOR" )
-			.update( { "description" : "Ability to create, edit and publish blog entries" } );
-		arguments.qb
+			.update(
+				{ "description": "Ability to create, edit and publish blog entries" }
+			);
+		arguments
+			.qb
 			.newQuery()
 			.from( "cb_permission" )
 			.where( "permission", "PAGES_EDITOR" )
-			.update( { "description" : "Ability to create, edit and publish pages" } );
+			.update(
+				{ "description": "Ability to create, edit and publish pages" }
+			);
 	}
 
-	function down( schema, qb ){
+	function down( schema, qb ) {
+
 	}
 
 }

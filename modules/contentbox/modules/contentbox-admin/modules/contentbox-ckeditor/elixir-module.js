@@ -15,7 +15,7 @@ module.exports = function( mix ) {
 	const destination = "modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor";
 
 	if ( fs.existsSync( destination ) ){
-		fs.rmdirSync( destination, { recursive: true } );
+		fs.rmSync( destination, { recursive: true, force: true } );
 	}
 	fs.ensureDirSync( destination );
 

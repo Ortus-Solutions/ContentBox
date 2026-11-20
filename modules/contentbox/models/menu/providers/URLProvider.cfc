@@ -11,14 +11,14 @@ component
 	accessors ="true"
 {
 
-	/* *********************************************************************
-	 **						PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **						PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	public URLProvider function init(){
+	public URLProvider function init() {
 		setName( "URL" );
 		setType( "URL" );
 		setIconClass( "fa fa-link" );
@@ -33,13 +33,16 @@ component
 	 * @menuItem.hint The menu item object
 	 * @options.hint  Additional arguments to be used in the method
 	 */
-	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
-		var viewArgs = { menuItem : arguments.menuItem };
+	public string function getAdminTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
+		var viewArgs = { menuItem: arguments.menuItem };
 		return variables.renderer.view(
-			view   = "menus/providers/url/admin",
-			module = "contentbox-admin",
-			args   = viewArgs
-		);
+				view   = "menus/providers/url/admin",
+				module = "contentbox-admin",
+				args   = viewArgs
+			);
 	}
 
 	/**
@@ -48,16 +51,19 @@ component
 	 * @menuItem.hint The menu item object
 	 * @options.hint  Additional arguments to be used in the method
 	 */
-	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
+	public string function getDisplayTemplate(
+		required any menuItem,
+		required struct options = {}
+	) {
 		var viewArgs = {
-			menuItem : arguments.menuItem,
-			data     : arguments.menuItem.getMemento()
+			menuItem: arguments.menuItem,
+			data    : arguments.menuItem.getMemento()
 		};
 		return variables.renderer.externalView(
-			view   = "/contentbox/models/menu/views/url/display",
-			module = "contentbox",
-			args   = viewArgs
-		);
+				view   = "/contentbox/models/menu/views/url/display",
+				module = "contentbox",
+				args   = viewArgs
+			);
 	}
 
 }

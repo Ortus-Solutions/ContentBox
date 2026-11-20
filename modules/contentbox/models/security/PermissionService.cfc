@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,14 +6,13 @@
  * Permissions service for contentbox
  */
 component extends="cborm.models.VirtualEntityService" singleton {
-
 	// DI
 	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	PermissionService function init(){
+	PermissionService function init() {
 		// init it
 		super.init( entityName = "cbPermission" );
 
@@ -25,28 +24,28 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @permissionID The permission ID to remove
 	 */
-	boolean function deletePermission( required permissionID ){
+	boolean function deletePermission( required permissionID ) {
 		transaction {
 			// We do SQL deletions as those relationships are not bi-directional
 
 			queryExecute(
 				"delete from cb_rolePermissions where FK_permissionID = :permissionID",
-				{ "permissionID" : arguments.permissionID }
+				{ "permissionID": arguments.permissionID }
 			);
 
 			queryExecute(
 				"delete from cb_authorPermissions where FK_permissionID = :permissionID",
-				{ "permissionID" : arguments.permissionID }
+				{ "permissionID": arguments.permissionID }
 			);
 
 			queryExecute(
 				"delete from cb_groupPermissions where FK_permissionID = :permissionID",
-				{ "permissionID" : arguments.permissionID }
+				{ "permissionID": arguments.permissionID }
 			);
 
 			queryExecute(
 				"delete from cb_permission where permissionID = :permissionID",
-				{ "permissionID" : arguments.permissionID }
+				{ "permissionID": arguments.permissionID }
 			);
 		}
 
@@ -58,17 +57,29 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return Array of struct permission data
 	 */
-	array function getAllForExport(){
+	array function getAllForExport() {
 		return newCriteria()
-			.withProjections( property = "permissionID,permission,description,createdDate,modifiedDate,isDeleted" )
+			.withProjections(
+				property = "permissionID,permission,description,createdDate,modifiedDate,isDeleted"
+			)
 			.asStruct()
 			.list( sortOrder = "permission" )
 			// output conversions
-			.map( function( item ){
-				item[ "createdDate" ]  = variables.dateUtil.toUTC( item[ "createdDate" ], "", "UTC" );
-				item[ "modifiedDate" ] = variables.dateUtil.toUTC( item[ "modifiedDate" ], "", "UTC" );
-				return item;
-			} );
+			.map(
+				function( item ) {
+					item[ "createdDate" ] = variables.dateUtil.toUTC(
+							item[ "createdDate" ],
+							"",
+							"UTC"
+						);
+					item[ "modifiedDate" ] = variables.dateUtil.toUTC(
+							item[ "modifiedDate" ],
+							"",
+							"UTC"
+						);
+					return item;
+				}
+			);
 	}
 
 	/**
@@ -81,14 +92,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @throws InvalidImportFormat
 	 */
-	string function importFromFile( required importFile, boolean override = false ){
-		var data      = fileRead( arguments.importFile );
+	string function importFromFile( required importFile, boolean override = false ) {
+		var data = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
-			"Starting import with override = #arguments.override#...<br>"
-		);
+				"Starting import with override = #arguments.override#...<br>"
+			);
 
 		if ( !isJSON( data ) ) {
-			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
+			throw(
+				message = "Cannot import file as the contents is not JSON",
+				type    = "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -114,12 +128,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required importData,
 		boolean override = false,
 		importLog
-	){
+	) {
 		var allPermissions = [];
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
-			arguments.importData = [ arguments.importData ];
+			arguments.importData = [ arguments.importData];
 		}
 
 		transaction {
@@ -127,21 +141,23 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisPermission in arguments.importData ) {
 				// Get new or persisted
 				var oPermission = this.findByPermission( thisPermission.permission );
-				oPermission     = ( isNull( oPermission ) ? new () : oPermission );
+				oPermission = ( isNull( oPermission ) ? new() : oPermission );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
-					target               = oPermission,
-					memento              = thisPermission,
-					exclude              = "permissionID",
-					composeRelationships = false
-				);
+						target               = oPermission,
+						memento              = thisPermission,
+						exclude              = "permissionID",
+						composeRelationships = false
+					);
 
 				// if new or persisted with override then save.
 				if ( !oPermission.isLoaded() ) {
-					arguments.importLog.append( "New permission imported: #thisPermission.permission#<br>" );
+					arguments.importLog.append(
+							"New permission imported: #thisPermission.permission#<br>"
+						);
 					arrayAppend( allPermissions, oPermission );
-				} else if ( oPermission.isLoaded() and arguments.override ) {
+				} else if ( oPermission.isLoaded() && arguments.override ) {
 					arguments.importLog.append( "Permission overriden: #thisPermission.permission#<br>" );
 					arrayAppend( allPermissions, oPermission );
 				} else {
@@ -156,8 +172,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				arguments.importLog.append( "Saved all imported and overriden permissions!" );
 			} else {
 				arguments.importLog.append(
-					"No permissions imported as none where found or able to be overriden from the import file."
-				);
+						"No permissions imported as none where found or able to be overriden from the import file."
+					);
 			}
 		}
 		// end of transaction

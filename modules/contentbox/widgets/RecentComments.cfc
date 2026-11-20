@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	RecentComments function init(){
+	RecentComments function init() {
 		// Widget Properties
 		setName( "RecentComments" );
 		setVersion( "1.0" );
-		setDescription( "A cool basic widget that shows N recent comments from any content object" );
+		setDescription(
+			"A cool basic widget that shows N recent comments from any content object"
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "comments" );
@@ -32,14 +34,14 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		numeric maxChars  = 80,
 		string title      = "",
 		string titleLevel = "2"
-	){
-		var event          = getRequestContext();
-		var cbSettings     = event.getValue( name = "cbSettings", private = true );
+	) {
+		var event = getRequestContext();
+		var cbSettings = event.getValue( name = "cbSettings", private = true );
 		var commentResults = commentService.findAllApproved( max = arguments.max );
-		var rString        = "";
+		var rString = "";
 
 		// iteration cap
-		if ( commentResults.count lt arguments.max ) {
+		if ( commentResults.count LT arguments.max ) {
 			arguments.max = commentResults.count;
 		}
 
@@ -53,26 +55,23 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				);
 			}
 			// UL start
-			writeOutput(
-				"<ul id=""recentComments"">
-	"
-			);
+			writeOutput( "<ul id=""recentComments"">
+	" );
 			// iterate and create
-			for ( var x = 1; x lte arguments.max; x++ ) {
+			for ( var x = 1; x LTE arguments.max; x++ ) {
 				writeOutput(
 					"<li class=""recentComments"">
 		#commentResults.comments[ x ].getAuthor()# said
-<a href=""#cb.linkComment( commentResults.comments[ x ] )#"">#left( commentResults.comments[ x ].getContent(), arguments.maxChars )#</a>
+<a href=""#cb.linkComment( commentResults.comments[ x ] )#"">#left( commentResults.comments[ x ].getContent(),
+						arguments.maxChars )#</a>
 	</li>
 	"
 				);
 			}
 			// close ul
-			writeOutput(
-				"
+			writeOutput( "
 </ul>
-"
-			);
+" );
 		}
 
 		return rString;

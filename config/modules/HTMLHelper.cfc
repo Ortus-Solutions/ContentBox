@@ -1,6 +1,6 @@
 component {
 
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox HTML Helper Settings
@@ -8,11 +8,11 @@ component {
 		 */
 		return {
 			// The base path of JS assets
-			js_path      : "",
+			js_path     : "",
 			// The base path of CSS assets
-			css_path     : "",
+			css_path    : "",
 			// Encode values on all dynamically generated tags in the HTML Helper
-			encodeValues : false
+			encodeValues: false
 		};
 	}
 

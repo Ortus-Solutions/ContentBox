@@ -7,7 +7,7 @@
  */
 component {
 
-	function configure(){
+	function configure() {
 		route( "/filelisting" ).to( "home.filelisting" );
 		route( "/createFolder" ).to( "home.createFolder" );
 		route( "/remove" ).to( "home.remove" );

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -16,38 +16,37 @@ component
 	joinColumn        ="contentID"
 	discriminatorValue="Entry"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name   ="excerpt"
-		column ="excerpt"
+		name="excerpt"
+		column="excerpt"
 		notnull="false"
 		ormtype="text"
 		default=""
-		length ="8000";
+		length="8000";
 
-	/* *********************************************************************
-	 **							NON PERSISTED PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							NON PERSISTED PROPERTIES
+	 **********************************************************************/
 
 	property name="renderedExcerpt" persistent="false";
 
-	/* *********************************************************************
-	 **							CONSTRAINTS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							CONSTRAINTS
+	 **********************************************************************/
 
-	/* *********************************************************************
-	 **							CONSTRUCTOR
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							CONSTRUCTOR
+	 **********************************************************************/
 
 	/**
 	 * constructor
 	 */
-	function init(){
-		var props = [ "excerpt" ];
+	function init() {
+		var props = [ "excerpt"];
 		appendToMemento( props, "defaultIncludes" );
 		appendToMemento( [], "defaultExcludes" );
 		appendToMementoProfile( props, "response" );
@@ -55,42 +54,47 @@ component
 
 		super.init();
 
-		variables.categories      = [];
-		variables.customFields    = [];
+		variables.categories = [];
+		variables.customFields = [];
 		variables.renderedContent = "";
 		variables.renderedExcerpt = "";
-		variables.createdDate     = now();
-		variables.contentType     = "Entry";
+		variables.createdDate = now();
+		variables.contentType = "Entry";
 
 		return this;
 	}
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCTIONS
+	 **********************************************************************/
 
 	/**
 	 * has excerpt
 	 */
-	boolean function hasExcerpt(){
+	boolean function hasExcerpt() {
 		return len( getExcerpt() ) GT 0;
 	}
 
 	/**
 	 * Render excerpt
 	 */
-	any function renderExcerpt(){
+	any function renderExcerpt() {
 		// Check if we need to translate
-		if ( NOT len( variables.renderedExcerpt ) ) {
-			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10" {
-				if ( NOT len( variables.renderedExcerpt ) ) {
+		if ( !len( variables.renderedExcerpt ) ) {
+			lock
+				name          ="contentbox.excerptrendering.#getContentID()#"
+				type          ="exclusive"
+				throwontimeout="true"
+				timeout       ="10"
+			{
+				if ( !len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
 					var builder = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
-						"cb_onContentRendering",
-						{ builder : builder, content : this }
-					);
+							"cb_onContentRendering",
+							{ builder: builder, content: this }
+						);
 					// store processed content
 					variables.renderedExcerpt = builder.toString();
 				}
@@ -117,7 +121,7 @@ component
 		required boolean publish,
 		required any originalSlugRoot,
 		required any newSlugRoot
-	){
+	) {
 		// Original cloning!
 		if ( arguments.original.hasExcerpt() ) {
 			setExcerpt( arguments.original.getExcerpt() );

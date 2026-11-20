@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -6,15 +6,15 @@
  * Handles media services
  */
 component singleton {
-
 	// DI
 	property name="mediaService" inject="id:mediaService@contentbox";
+
 	property name="settingService" inject="id:settingService@contentbox";
 
 	/**
 	 * Deliver Media
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Set to render so there is no attempt to find a view
 		event.noRender();
 		// Param cache purge
@@ -46,27 +46,41 @@ component singleton {
 		// Get the media provider
 		var mediaProvider = mediaService.getDefaultProvider();
 		// Check if media path detected
-		if ( !len( prc.mediaPath ) OR !mediaProvider.mediaExists( prc.mediaPath ) ) {
+		if ( !len( prc.mediaPath ) || !mediaProvider.mediaExists( prc.mediaPath ) ) {
 			// return invalid media
-			return invalidMedia( event, rc, prc );
+			return invalidMedia(
+				event,
+				rc,
+				prc
+			);
 		}
 
 		// Announce media delivery
-		var iData = { mediaPath : prc.mediaPath, mediaProvider : mediaProvider };
+		var iData = { mediaPath: prc.mediaPath, mediaProvider: mediaProvider };
 		announce( "cbui_onMediaRequest", iData );
 
 		// Media Caching Headers
-		if ( !rc.cbcache and settingService.getSetting( "cb_media_provider_caching" ) ) {
+		if ( !rc.cbcache && settingService.getSetting( "cb_media_provider_caching" ) ) {
 			// Set expiration for one year in advanced
 			event
-				.setHTTPHeader( name = "expires", value = "#getHTTPTimeString( dateAdd( "yyyy", 1, now() ) )#" )
+				.setHTTPHeader(
+					name  = "expires",
+					value = "#getHTTPTimeString( dateAdd(
+							"yyyy",
+							1,
+							now()
+						) )#"
+				)
 				.setHTTPHeader( name = "pragma", value = "cache" )
 				.setHTTPHeader( name = "cache-control", value = "public, max-age=2592000" );
 		} else {
 			event
 				.setHTTPHeader( name = "expires", value = "#getHTTPTimeString( now() )#" )
 				.setHTTPHeader( name = "pragma", value = "no-cache" )
-				.setHTTPHeader( name = "cache-control", value = "no-cache, no-store, must-revalidate" );
+				.setHTTPHeader(
+					name  = "cache-control",
+					value = "no-cache, no-store, must-revalidate"
+				);
 		}
 
 		// Deliver it baby!
@@ -76,12 +90,15 @@ component singleton {
 	/************************************** PRIVATE *********************************************/
 
 	// Invalid Media
-	private function invalidMedia( event, rc, prc ){
+	private function invalidMedia( event, rc, prc ) {
 		// Announce invalid media
-		var iData = { mediaPath : prc.mediaPath };
+		var iData = { mediaPath: prc.mediaPath };
 		announce( "cbui_onInvalidMediaRequest", iData );
 		// Render invalid media
-		event.renderData( data = "<h1>404: Requested path not found</h1>", statusCode = "404" );
+		event.renderData(
+				data       = "<h1>404: Requested path not found</h1>",
+				statusCode = "404"
+			);
 	}
 
 }

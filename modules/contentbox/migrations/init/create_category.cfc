@@ -1,33 +1,34 @@
 component {
 
-	function up( schema, query ){
-		schema.create( "cb_category", function( table ){
-			// Base Columns
-			table.string( "categoryID", 36 ).primaryKey();
-			table.datetime( "createdDate" ).withCurrent();
-			table.datetime( "modifiedDate" ).withCurrent();
-			table.boolean( "isDeleted" ).default( false );
+	function up( schema, query ) {
+		schema.create(
+				"cb_category",
+				function( table ) {
+					table.string( "categoryID", 36 ).primaryKey();
+					table.datetime( "createdDate" ).withCurrent();
+					table.datetime( "modifiedDate" ).withCurrent();
+					table.boolean( "isDeleted" ).default( false );
 
-			table.string( "slug" );
-			table.string( "category" );
-			table.boolean( "isPublic" ).default( true );
+					table.string( "slug" );
+					table.string( "category" );
+					table.boolean( "isPublic" ).default( true );
 
-			// Relationships
-			table.string( "FK_siteID", 36 );
-			table
-				.foreignKey( "FK_siteID" )
-				.references( "siteID" )
-				.onTable( "cb_site" );
+					table.string( "FK_siteID", 36 );
+					table
+						.foreignKey( "FK_siteID" )
+						.references( "siteID" )
+						.onTable( "cb_site" );
 
-			// Index
-			table.index( [ "isPublic" ], "idx_isPublic" );
-			table.index( [ "slug" ], "idx_categorySlug" );
-			table.index( [ "category" ], "idx_categoryName" );
-			table.index( [ "isDeleted" ], "idx_category_deleted" );
-		} );
+					table.index( [ "isPublic"], "idx_isPublic" );
+					table.index( [ "slug"], "idx_categorySlug" );
+					table.index( [ "category"], "idx_categoryName" );
+					table.index( [ "isDeleted"], "idx_category_deleted" );
+				}
+			);
 	}
 
-	function down( schema, query ){
+	function down( schema, query ) {
+
 	}
 
 }

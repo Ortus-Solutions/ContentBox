@@ -13,84 +13,82 @@ component
 	cachename ="cbPermission"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="permissionID"
-		column   ="permissionID"
+		name="permissionID"
+		column="permissionID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	property
-		name   ="permission"
-		column ="permission"
+		name="permission"
+		column="permission"
 		ormtype="string"
 		notnull="true"
-		length ="255"
-		unique ="true"
+		length="255"
+		unique="true"
 		default=""
-		index  ="idx_permissionName";
+		index="idx_permissionName";
 
 	property
-		name   ="description"
-		column ="description"
+		name="description"
+		column="description"
 		ormtype="string"
 		notnull="false"
 		default=""
-		length ="500";
+		length="500";
 
-	/* *********************************************************************
-	 **							CALCULATED FIELDS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							CALCULATED FIELDS
+	 **********************************************************************/
 
 	property
-		name   ="numberOfPermissionGroups"
+		name="numberOfPermissionGroups"
 		formula="select count(*) from cb_groupPermissions as gp where gp.FK_permissionID=permissionID";
 
 	property
-		name   ="numberOfRoles"
+		name="numberOfRoles"
 		formula="select count(*) from cb_rolePermissions as rolePermissions
 						where rolePermissions.FK_permissionID=permissionID";
 
 	property
-		name   ="numberOfGroups"
+		name="numberOfGroups"
 		formula="select count(*) from cb_groupPermissions as groupPermissions
 						where groupPermissions.FK_permissionID=permissionID";
-
-	/* *********************************************************************
-	 **							PK + CONSTRAINTS + MEMENTO
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PK + CONSTRAINTS + MEMENTO
+	 **********************************************************************/
 
 	this.pk = "permissionID";
 
 	this.memento = {
-		defaultIncludes : [ "permission", "description" ],
-		defaultExcludes : [ "" ]
+		defaultIncludes: [ "permission", "description"],
+		defaultExcludes: [ ""]
 	};
 
 	this.constraints = {
-		"permission" : {
-			required  : true,
-			size      : "1..255",
-			validator : "UniqueValidator@cborm"
+		"permission": {
+			required : true,
+			size     : "1..255",
+			validator: "UniqueValidator@cborm"
 		},
-		"description" : { required : false, size : "1..500" }
+		"description": { required: false, size: "1..500" }
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCITONS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PUBLIC FUNCITONS
+	 **********************************************************************/
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		super.init();
 		return this;
 	}

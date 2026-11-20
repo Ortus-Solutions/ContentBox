@@ -13,105 +13,95 @@ component
 	cachename ="cbSubscription"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **                          PROPERTIES again due to ACF Bug
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES again due to ACF Bug
+	 **********************************************************************/
 
 	property
-		name   ="createdDate"
-		column ="createdDate"
-		type   ="date"
+		name="createdDate"
+		column="createdDate"
+		type="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false";
+		update="false";
 
 	property
-		name   ="modifiedDate"
-		column ="modifiedDate"
-		type   ="date"
+		name="modifiedDate"
+		column="modifiedDate"
+		type="date"
 		ormtype="timestamp"
 		notnull="true";
 
 	property
-		name   ="isDeleted"
-		column ="isDeleted"
+		name="isDeleted"
+		column="isDeleted"
 		ormtype="boolean"
 		notnull="true"
 		default="false";
 
-	/* *********************************************************************
-	 **                          PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="subscriptionID"
-		column   ="subscriptionID"
+		name="subscriptionID"
+		column="subscriptionID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
 
 	/**
 	 * This token identifies subscribers (emails) to appropriate subscriptions
 	 */
 	property
-		name   ="subscriptionToken"
-		column ="subscriptionToken"
+		name="subscriptionToken"
+		column="subscriptionToken"
 		ormtype="string"
-		length ="255"
+		length="255"
 		notnull="true";
 
 	/**
 	 * The type of subscriptions. Available subscriptions are : comment
 	 */
-	property
-		name   ="type"
-		column ="type"
-		ormtype="string"
-		notnull="true";
+	property name="type" column="type" ormtype="string" notnull="true";
 
-	/* *********************************************************************
-	 **                          RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          RELATIONSHIPS
+	 **********************************************************************/
 
 	// M20 -> Content loaded as a proxy
 	property
-		name     ="subscriber"
-		notnull  ="true"
-		cfc      ="contentbox.models.subscriptions.Subscriber"
+		name="subscriber"
+		notnull="true"
+		cfc="contentbox.models.subscriptions.Subscriber"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_subscriberID"
-		lazy     ="true"
-		inverse  ="true"
-		orderBy  ="subscriberEmail";
-
-	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
-	 ********************************************************************* */
+		fkcolumn="FK_subscriberID"
+		lazy="true"
+		inverse="true"
+		orderBy="subscriberEmail";
+	/**********************************************************************
+	 * **                          PK + CONSTRAINTS
+	 **********************************************************************/
 
 	this.pk = "subscriptionID";
 
 	this.memento = {
-		defaultIncludes : [
-			"subscriptionToken",
-			"type",
-			"subscriberSnapshot:subscriber"
-		],
-		defaultExcludes : []
+		defaultIncludes: [ "subscriptionToken", "type", "subscriberSnapshot:subscriber"],
+		defaultExcludes: []
 	};
 
 	this.constraints = {
-		"subscriptionToken" : { required : true, size : "1..255" },
-		"type"              : { required : true, size : "1..255", regex : "^(comment)$" }
+		"subscriptionToken": { required: true, size: "1..255" },
+		"type"             : { required: true, size: "1..255", regex: "^(comment)$" }
 	};
 
-	/* *********************************************************************
-	 **                          METHODS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **                          METHODS
+	 **********************************************************************/
 
-	function init(){
+	function init() {
 		super.init();
 		return this;
 	}
@@ -119,7 +109,7 @@ component
 	/**
 	 * Build a snapshot of the subscriber
 	 */
-	struct function getSubscriberSnapshot(){
+	struct function getSubscriberSnapshot() {
 		if ( hasSubscriber() ) {
 			return getSubscriber().getInfoSnapshot();
 		}

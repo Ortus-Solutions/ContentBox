@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,7 +10,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Constructor
 	 */
-	ContentVersionService function init(){
+	ContentVersionService function init() {
 		// init it
 		super.init( entityName = "cbContentVersion" );
 
@@ -25,12 +25,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return The number of versions a content object has by filters
 	 */
-	numeric function getNumberOfVersions( string contentId = "", boolean isActive ){
+	numeric function getNumberOfVersions( string contentId = "", boolean isActive ) {
 		return newCriteria()
 			.isEq( "relatedContent.contentID", arguments.contentId )
-			.when( !isNull( arguments.isActive ), function( c ){
-				c.isEq( "isActive", javacast( "Boolean", isActive ) );
-			} )
+			.when(
+				!isNull( arguments.isActive ),
+				function( c ) {
+					c.isEq( "isActive", javacast( "Boolean", isActive ) );
+				}
+			)
 			.count();
 	}
 
@@ -41,7 +44,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return The active version if found, else a new ContentVersion object
 	 */
-	function getActiveVersion( required contentId ){
+	function getActiveVersion( required contentId ) {
 		// Get all the active versions
 		var aVersions = newCriteria()
 			.isEq( "relatedContent.contentID", arguments.contentId )
@@ -65,20 +68,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @return struct of { count : numeric, versions : array}
 	 */
-	struct function findRelatedVersions( required contentID, max = 0, offset = 0 ){
+	struct function findRelatedVersions( required contentID, max = 0, offset = 0 ) {
 		var results = {};
 
 		// Find it
 		var c = newCriteria().isEq( "relatedContent.contentID", arguments.contentId );
 
 		// run criteria query and projections count
-		results.count    = c.count();
+		results.count = c.count();
 		results.versions = c.list(
-			offset    = arguments.offset,
-			max       = arguments.max,
-			sortOrder = "version DESC",
-			asQuery   = false
-		);
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = "version DESC",
+				asQuery   = false
+			);
 
 		return results;
 	}

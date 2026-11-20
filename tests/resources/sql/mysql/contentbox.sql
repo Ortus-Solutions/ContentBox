@@ -966,7 +966,9 @@ VALUES
 	('pages',0,b'1','','779ce06c-a444-11eb-ab6f-0290cc502ae3'),
 	('pages',0,b'1','','779ce10c-a444-11eb-ab6f-0290cc502ae3'),
 	('pages',0,b'1','','779ce1ac-a444-11eb-ab6f-0290cc502ae3'),
-	('pages',0,b'1','','779ce256-a444-11eb-ab6f-0290cc502ae3');
+	('pages',0,b'1','','779ce256-a444-11eb-ab6f-0290cc502ae3'),
+	('pages',7,b'1','','779cd6c6-a444-11eb-ab6f-0290cc502ae3'),
+	('pages',1,b'1','','779cd766-a444-11eb-ab6f-0290cc502ae3');
 
 /*!40000 ALTER TABLE `cb_page` ENABLE KEYS */;
 UNLOCK TABLES;

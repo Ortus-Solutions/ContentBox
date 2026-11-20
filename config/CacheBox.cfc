@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,13 +10,13 @@ component {
 	/**
 	 * Configure CacheBox for ColdBox Application Operation
 	 */
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * CacheBox Configuration (https://cachebox.ortusbooks.com)
 		 * --------------------------------------------------------------------------
 		 */
-		cacheBox = {
+		variables.cacheBox = {
 			/**
 			 * --------------------------------------------------------------------------
 			 * Default Cache Configuration
@@ -25,17 +25,17 @@ component {
 			 * It also has a default provider of cachebox which cannot be changed.
 			 * All timeouts are in minutes
 			 */
-			defaultCache : {
-				objectDefaultTimeout           : 120, // two hours default
-				objectDefaultLastAccessTimeout : 30, // 30 minutes idle time
-				useLastAccessTimeouts          : true,
-				reapFrequency                  : 5,
-				freeMemoryPercentageThreshold  : 0,
-				evictionPolicy                 : "LRU",
-				evictCount                     : 5,
-				maxObjects                     : 5000,
-				objectStore                    : "ConcurrentStore", // guaranteed objects
-				coldboxEnabled                 : true
+			defaultCache: {
+				objectDefaultTimeout          : 120, // two hours default
+				objectDefaultLastAccessTimeout: 30, // 30 minutes idle time
+				useLastAccessTimeouts         : true,
+				reapFrequency                 : 5,
+				freeMemoryPercentageThreshold : 0,
+				evictionPolicy                : "LRU",
+				evictCount                    : 5,
+				maxObjects                    : 5000,
+				objectStore                   : "ConcurrentStore", // guaranteed objects
+				coldboxEnabled                : true
 			},
 			/**
 			 * --------------------------------------------------------------------------
@@ -44,7 +44,7 @@ component {
 			 * You can use this section to register different cache regions and map them
 			 * to different cache providers
 			 */
-			caches : {
+			caches: {
 				/**
 				 * --------------------------------------------------------------------------
 				 * ColdBox Template Cache
@@ -52,18 +52,18 @@ component {
 				 * The ColdBox Template cache region is used for event/view caching and
 				 * other internal facilities that might require a more elastic cache.
 				 */
-				template : {
-					provider   : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
-					properties : {
-						objectDefaultTimeout           : 120,
-						objectDefaultLastAccessTimeout : 30,
-						useLastAccessTimeouts          : true,
-						freeMemoryPercentageThreshold  : 0,
-						reapFrequency                  : 5,
-						evictionPolicy                 : "LRU",
-						evictCount                     : 5,
-						maxObjects                     : 5000,
-						objectStore                    : "ConcurrentSoftReferenceStore" // memory sensitive
+				template: {
+					provider  : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
+					properties: {
+						objectDefaultTimeout          : 120,
+						objectDefaultLastAccessTimeout: 30,
+						useLastAccessTimeouts         : true,
+						freeMemoryPercentageThreshold : 0,
+						reapFrequency                 : 5,
+						evictionPolicy                : "LRU",
+						evictCount                    : 5,
+						maxObjects                    : 5000,
+						objectStore                   : "ConcurrentSoftReferenceStore" // memory sensitive
 					}
 				},
 				/**
@@ -73,18 +73,18 @@ component {
 				 * Sessions are managed by CacheBox and not CFML so we can distribute to any
 				 * cache provider.
 				 */
-				sessions : {
-					provider   : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
-					properties : {
-						objectDefaultTimeout           : 60,
-						objectDefaultLastAccessTimeout : 0,
-						useLastAccessTimeouts          : false,
-						freeMemoryPercentageThreshold  : 0,
-						reapFrequency                  : 5,
-						evictionPolicy                 : "LRU",
-						evictCount                     : 5,
-						maxObjects                     : 5000, // Can support up to 5000 user sessions concurrently.  Modify if needed. 0 = unlimited
-						objectStore                    : "ConcurrentStore"
+				sessions: {
+					provider  : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
+					properties: {
+						objectDefaultTimeout          : 60,
+						objectDefaultLastAccessTimeout: 0,
+						useLastAccessTimeouts         : false,
+						freeMemoryPercentageThreshold : 0,
+						reapFrequency                 : 5,
+						evictionPolicy                : "LRU",
+						evictCount                    : 5,
+						maxObjects                    : 5000, // Can support up to 5000 user sessions concurrently.  Modify if needed. 0 = unlimited
+						objectStore                   : "ConcurrentStore"
 					}
 				}
 			}

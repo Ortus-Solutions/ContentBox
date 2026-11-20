@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -14,87 +14,75 @@ component
 	cachename ="cbComment"
 	cacheuse  ="read-write"
 {
-
-	/* *********************************************************************
-	 **							DI
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							DI
+	 **********************************************************************/
 
 	property
-		name      ="markdown"
-		inject    ="provider:Processor@cbmarkdown"
+		name="markdown"
+		inject="provider:Processor@cbmarkdown"
 		persistent="false";
 
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							PROPERTIES
+	 **********************************************************************/
 
 	property
-		name     ="commentID"
-		column   ="commentID"
+		name="commentID"
+		column="commentID"
 		fieldtype="id"
 		generator="uuid"
-		length   ="36"
-		ormtype  ="string"
-		update   ="false";
+		length="36"
+		ormtype="string"
+		update="false";
+
+	property name="content" ormtype="text" notnull="true";
+
+	property name="author" length="100" notnull="true";
+
+	property name="authorIP" column="authorIP" length="100" notnull="true";
 
 	property
-		name   ="content"
-		ormtype="text"
+		name="authorEmail"
+		column="authorEmail"
+		length="255"
 		notnull="true";
 
 	property
-		name   ="author"
-		length ="100"
-		notnull="true";
-
-	property
-		name   ="authorIP"
-		column ="authorIP"
-		length ="100"
-		notnull="true";
-
-	property
-		name   ="authorEmail"
-		column ="authorEmail"
-		length ="255"
-		notnull="true";
-
-	property
-		name   ="authorURL"
-		column ="authorURL"
-		length ="255"
+		name="authorURL"
+		column="authorURL"
+		length="255"
 		notnull="false";
 
 	property
-		name   ="isApproved"
-		column ="isApproved"
+		name="isApproved"
+		column="isApproved"
 		notnull="true"
 		ormtype="boolean"
 		default="false"
-		index  ="idx_contentComment,idx_approved";
+		index="idx_contentComment,idx_approved";
 
-	/* *********************************************************************
-	 **							RELATIONSHIPS
-	 ********************************************************************* */
+	/**********************************************************************
+	 * **							RELATIONSHIPS
+	 **********************************************************************/
 
 	// M20 -> Content loaded as a proxy
 	property
-		name     ="relatedContent"
-		notnull  ="true"
-		cfc      ="contentbox.models.content.BaseContent"
+		name="relatedContent"
+		notnull="true"
+		cfc="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_contentID"
-		lazy     ="true"
-		index    ="idx_contentComment";
-
-	/* *********************************************************************
-	 **							CONSTRAINTS + PK
-	 ********************************************************************* */
+		fkcolumn="FK_contentID"
+		lazy="true"
+		index="idx_contentComment";
+	/**********************************************************************
+	 * **							CONSTRAINTS + PK
+	 **********************************************************************/
 
 	this.pk = "commentID";
 
 	this.memento = {
-		defaultIncludes : [
+		defaultIncludes: [
 			"content",
 			"displayContent:renderedContent",
 			"author",
@@ -103,21 +91,21 @@ component
 			"authorURL",
 			"isApproved"
 		],
-		defaultExcludes : [ "relatedContent" ]
+		defaultExcludes: [ "relatedContent"]
 	};
 
 	this.constraints = {
-		"content"        : { required : true },
-		"author"         : { required : true, size : "1..100" },
-		"authorIP"       : { required : true, size : "1..100" },
-		"authorEmail"    : { required : true, size : "1..255", type : "email" },
-		"authorURL"      : { required : true, size : "1..255", type : "URL" },
-		"isApproved"     : { required : true, type : "boolean" },
-		"relatedContent" : { required : true }
+		"content"       : { required: true },
+		"author"        : { required: true, size: "1..100" },
+		"authorIP"      : { required: true, size: "1..100" },
+		"authorEmail"   : { required: true, size: "1..255", type: "email" },
+		"authorURL"     : { required: true, size: "1..255", type: "URL" },
+		"isApproved"    : { required: true, type: "boolean" },
+		"relatedContent": { required: true }
 	};
 
-	function init(){
-		variables.isApproved  = false;
+	function init() {
+		variables.isApproved = false;
 		variables.createdDate = now();
 
 		super.init();
@@ -128,7 +116,7 @@ component
 	/**
 	 * Build a snapshot of the related content
 	 */
-	struct function getRelatedContentSnapshot(){
+	struct function getRelatedContentSnapshot() {
 		if ( hasRelatedContent() ) {
 			return getRelatedContent().getInfoSnapshot();
 		}
@@ -138,14 +126,20 @@ component
 	/**
 	 * Render the comment using markdown and encoding it for HTML output
 	 */
-	string function getDisplayContent(){
-		return variables.markdown.toHTML( getContent().reReplace( "##{1,6}\s", "", "all" ) );
+	string function getDisplayContent() {
+		return variables.markdown.toHTML(
+				getContent().reReplace(
+						"##{1,6}\s",
+						"",
+						"all"
+					)
+			);
 	}
 
 	/**
 	 * Get parent slug from either the page it belongs or the entry it belongs to.
 	 */
-	function getParentSlug(){
+	function getParentSlug() {
 		if ( hasRelatedContent() ) {
 			return getRelatedContent().getSlug();
 		}
@@ -155,7 +149,7 @@ component
 	/**
 	 * Get parent title from either the page it belongs or the entry it belongs to.
 	 */
-	function getParentTitle(){
+	function getParentTitle() {
 		if ( hasRelatedContent() ) {
 			return getRelatedContent().getTitle();
 		}

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -10,11 +10,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Constructor
 	 */
-	ContentStore function init(){
+	ContentStore function init() {
 		// Widget Properties
 		setName( "ContentStore" );
 		setVersion( "1.0" );
-		setDescription( "A widget that renders ContentStore content anywhere you like." );
+		setDescription(
+			"A widget that renders ContentStore content anywhere you like."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "hdd-o" );
@@ -34,12 +36,15 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 *
 	 * @throws InvalidContentStoreException
 	 */
-	any function renderIt( required string slug, string defaultValue ){
+	any function renderIt( required string slug, string defaultValue ) {
 		var content = variables.contentStoreService.findBySlug(
-			slug            = arguments.slug,
-			showUnpublished = true,
-			siteID          = variables.cb.site().getsiteID()
-		);
+				slug            = arguments.slug,
+				showUnpublished = true,
+				siteID          = variables
+					.cb
+					.site()
+					.getsiteID()
+			);
 
 		// Return if loaded and published
 		if ( content.isLoaded() && content.isContentPublished() && !content.isExpired() ) {
@@ -57,7 +62,10 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		}
 
 		// else throw
-		throw( message = "The content slug '#arguments.slug#' does not exist", type = "InvalidContentStoreException" );
+		throw(
+			message = "The content slug '#arguments.slug#' does not exist",
+			type    = "InvalidContentStoreException"
+		);
 	}
 
 	/**
@@ -65,7 +73,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 *
 	 * @cbignore
 	 */
-	array function getSlugList(){
+	array function getSlugList() {
 		return variables.contentStoreService.getAllFlatSlugs();
 	}
 

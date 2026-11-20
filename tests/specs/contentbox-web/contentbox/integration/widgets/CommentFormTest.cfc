@@ -9,37 +9,51 @@ component extends="tests.resources.BaseTest" {
 	/*********************************** LIFE CYCLE Methods ***********************************/
 
 	// executes before all suites+specs in the run() method
-	function beforeAll(){
+	function beforeAll() {
 		super.beforeAll();
 		widgetService = getInstance( "widgetService@contentbox" );
-		cbHelper      = getInstance( "CBHelper@contentbox" );
+		cbHelper = getInstance( "CBHelper@contentbox" );
 
 		cbHelper.prepareUIRequest();
 	}
 
 	/*********************************** BDD SUITES ***********************************/
 
-	function run( testResults, testBox ){
-		describe( "Comment Form Widget", function(){
-			beforeEach( function( currentSpec ){
-				widget = widgetService.getWidget( "CommentForm" );
-			} );
+	function run( testResults, testBox ) {
+		describe(
+			"Comment Form Widget",
+			() => {
+				beforeEach(
+					( currentSpec ) => {
+						widget = widgetService.getWidget( "CommentForm" );
+					}
+				);
 
-			it( "can render a form with no content object passed", function(){
-				var r = widget.renderIt( "" );
-				expect( r.len() ).toBeGT( 0 );
-			} );
+				it(
+					"can render a form with no content object passed",
+					() => {
+						var r = widget.renderIt( "" );
+						expect( r.len() ).toBeGT( 0 );
+					}
+				);
 
-			it( "can render a form with an invalid slug", function(){
-				var r = widget.renderIt( "bogus" );
-				expect( r ).toInclude( "bogus was not found, cannot generate comment form" );
-			} );
+				it(
+					"can render a form with an invalid slug",
+					() => {
+						var r = widget.renderIt( "bogus" );
+						expect( r ).toInclude( "bogus was not found, cannot generate comment form" );
+					}
+				);
 
-			it( "can render a form with an valid slug", function(){
-				var r = widget.renderIt( "support" );
-				expect( r ).toInclude( "<form " ).toInclude( "action=" );
-			} );
-		} );
+				it(
+					"can render a form with an valid slug",
+					() => {
+						var r = widget.renderIt( "support" );
+						expect( r ).toInclude( "<form " ).toInclude( "action=" );
+					}
+				);
+			}
+		);
 	}
 
 }

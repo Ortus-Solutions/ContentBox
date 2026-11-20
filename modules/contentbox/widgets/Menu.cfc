@@ -7,11 +7,13 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	Menu function init(){
+	Menu function init() {
 		// Widget Properties
 		setName( "Menu" );
 		setVersion( "1.0" );
-		setDescription( "A widget that can render out a ContentBox menu anywhere you like." );
+		setDescription(
+			"A widget that can render out a ContentBox menu anywhere you like."
+		);
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "bars" );
@@ -26,7 +28,10 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 * @slug.optionsUDF   getSlugList
 	 * @defaultValue.hint The string to show if the menu does not exist
 	 */
-	any function renderIt( string slug = "EmptyMenuList", string defaultValue ){
+	any function renderIt(
+		string slug = "EmptyMenuList",
+		string defaultValue
+	) {
 		var menu = menuService.findBySlug( slug = arguments.slug, siteId = getSite().getSiteId() );
 
 		if ( !isNull( menu ) ) {
@@ -34,7 +39,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				savecontent variable="menuContent" {
 					writeOutput( "#cb.menu( slug = arguments.slug, type = "html" )#" );
 				}
-			} catch ( any e ) {
+			} catch (any e) {
 				return arguments.defaultValue;
 			}
 			return menuContent;
@@ -49,7 +54,10 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			return arguments.defaultValue;
 		}
 
-		throw( message = "The menu slug '#arguments.slug#' does not exist", type = "MenuWidget.InvalidMenuSlug" );
+		throw(
+			message = "The menu slug '#arguments.slug#' does not exist",
+			type    = "MenuWidget.InvalidMenuSlug"
+		);
 	}
 
 	/**
@@ -57,7 +65,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 *
 	 * @cbignore
 	 */
-	array function getSlugList(){
+	array function getSlugList() {
 		return menuService.getAllSlugs();
 	}
 

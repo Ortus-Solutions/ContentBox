@@ -67,5 +67,4 @@ interface {
 	 * @author The author to verify challenge
 	 */
 	function finalize( required string code, required author );
-
 }

@@ -8,16 +8,17 @@
  * @see contentbox.models.search.ISearchAdapter
  */
 component accessors="true" singleton {
-
 	// DI
 	property name="contentService" inject="contentService@contentbox";
+
 	property name="cb" inject="cbHelper@contentbox";
+
 	property name="wirebox" inject="wirebox";
 
 	/**
 	 * Constructor
 	 */
-	DBSearch function init(){
+	DBSearch function init() {
 		return this;
 	}
 
@@ -36,32 +37,36 @@ component accessors="true" singleton {
 		numeric max    = 0,
 		numeric offset = 0,
 		string siteID  = ""
-	){
+	) {
 		// get new search results object
 		var searchResults = variables.wirebox.getInstance( "SearchResults@contentbox" );
-		var sTime         = getTickCount();
+		var sTime = getTickCount();
 
 		try {
 			var results = variables.contentService.searchContent(
-				offset      : arguments.offset,
-				max         : arguments.max,
-				searchTerm  : arguments.searchTerm,
-				showInSearch: true,
-				contentTypes: "Page,Entry",
-				siteID      : arguments.siteID
-			);
+					offset       = arguments.offset,
+					max          = arguments.max,
+					searchTerm   = arguments.searchTerm,
+					showInSearch = true,
+					contentTypes = "Page,Entry",
+					siteID       = arguments.siteID
+				);
 
 			// populate the search results
-			searchResults.populate( {
-				results    : results.content,
-				total      : results.count,
-				searchTime : getTickCount() - sTime,
-				searchTerm : arguments.searchTerm,
-				error      : false
-			} );
-		} catch ( Any e ) {
+			searchResults.populate(
+					{
+						results   : results.content,
+						total     : results.count,
+						searchTime: getTickCount() - sTime,
+						searchTerm: arguments.searchTerm,
+						error     : false
+					}
+				);
+		} catch (Any e) {
 			searchResults.setError( true );
-			searchResults.setErrorMessages( [ "Error executing content search: #e.detail# #e.message#" ] );
+			searchResults.setErrorMessages(
+					[ "Error executing content search: #e.detail# #e.message#"]
+				);
 		}
 
 		return searchResults;
@@ -72,7 +77,8 @@ component accessors="true" singleton {
 	 *
 	 * @return contentbox.models.search.ISearchAdapter
 	 */
-	DBSearch function refresh(){
+	DBSearch function refresh() {
+
 	}
 
 	/**
@@ -84,7 +90,7 @@ component accessors="true" singleton {
 		required string searchTerm,
 		numeric max    = 0,
 		numeric offset = 0
-	){
+	) {
 		var searchResults = search( argumentCollection = arguments );
 		return renderSearchWithResults( searchResults );
 	}
@@ -94,63 +100,66 @@ component accessors="true" singleton {
 	 *
 	 * @searchResults The search results object
 	 */
-	any function renderSearchWithResults( required SearchResults searchResults ){
-		var results     = "";
+	any function renderSearchWithResults( required SearchResults searchResults ) {
+		var results = "";
 		var searchItems = arguments.searchResults.getResults();
-		var total       = arguments.searchResults.getTotal();
-		var searchTerm  = arguments.searchResults.getSearchTerm();
-
+		var total = arguments.searchResults.getTotal();
+		var searchTerm = arguments.searchResults.getSearchTerm();
 		// cfformat-ignore-start
 		savecontent variable="results" {
+// Render out the results or error if the results had errors
+if ( arguments.searchResults.getError() ) {
+writeOutput(
+"
+<div class='searchResults'>
+<h2>Error Running Search</h2>
+<p>
+#arrayToList( arguments.searchResults.getErrorMessages(), "<br>" )#
+</p>
+</div>
+"
+);
+} else {
+writeOutput(
+"
+<div class=""searchResults"">
+<div class=""well well-sm searchResultsCount"">
+Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
+</div>
+"
+);
+}
 
-			// Render out the results or error if the results had errors
-			if( arguments.searchResults.getError() ){
-				writeOutput( "
-					<div class='searchResults'>
-						<h2>Error Running Search</h2>
-						<p>
-							#arrayToList(
-								arguments.searchResults.getErrorMessages(),
-								"<br>"
-							)#
-						</p>
-					</div>
-				" );
-			} else {
-				writeOutput( "
-				<div class=""searchResults"">
-					<div class=""well well-sm searchResultsCount"">
-						Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
-				</div>
-				" );
-			}
+// Render out the items
+for ( var item in searchItems ) {
+writeOutput(
+"
+<div class=""panel panel-default"">
+<div class=""panel-heading"">
+<a href=""#cb.linkContent( item )#"" class=""panel-title"">#item.getTitle()#</a>
+</div>
+<div class=""panel-body"">
+<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ) )#</p>
+<cite><span class=""label label-primary"">#item.getContentType()#</span> : <a href=""#cb.linkContent( item )#"">#cb.linkContent( item )#</a></cite><br/>
+</div>
+"
+);
 
-			// Render out the items
-			for ( var item in searchItems ) {
-				writeOutput("
-					<div class=""panel panel-default"">
-						<div class=""panel-heading"">
-							<a href=""#cb.linkContent( item )#"" class=""panel-title"">#item.getTitle()#</a>
-						</div>
-						<div class=""panel-body"">
-							<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ) )#</p>
-							<cite><span class=""label label-primary"">#item.getContentType()#</span> : <a href=""#cb.linkContent( item )#"">#cb.linkContent( item )#</a></cite><br/>
-						</div>
-				");
+if ( item.hasCategories() ) {
+writeOutput( "<div class=""panel-footer""><cite>Categories: " );
+for ( var categoryItem in item.getCategoriesList() ) {
+writeOutput(
+" <span class=""label label-primary"">#categoryItem#</span>"
+);
+}
+writeOutput( "</cite></div>" );
+}
 
-				if ( item.hasCategories() ) {
-					writeOutput( "<div class=""panel-footer""><cite>Categories: " );
-					for ( var categoryItem in #item.getCategoriesList()# ) {
-						writeOutput( " <span class=""label label-primary"">#categoryItem#</span>" );
-					}
-					writeOutput( "</cite></div>" );
-				}
+writeOutput( "</div>" );
+}
 
-				writeOutput( "</div>" );
-			};
-
-			writeOutput( "</div>" );
-		}
+writeOutput( "</div>" );
+}
 		// cfformat-ignore-end
 
 		return results;
@@ -159,8 +168,13 @@ component accessors="true" singleton {
 	/**
 	 * utility to strip HTML
 	 */
-	private function stripHTML( stringTarget ){
-		return reReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" );
+	private function stripHTML( stringTarget ) {
+		return reReplaceNoCase(
+			arguments.stringTarget,
+			"<[^>]*>",
+			"",
+			"ALL"
+		);
 	}
 
 	/**
@@ -169,23 +183,27 @@ component accessors="true" singleton {
 	 * @term    The search term
 	 * @content The content searched
 	 */
-	private function highlightSearchTerm( required term, required content ){
-		var match   = findNoCase( arguments.term, arguments.content );
-		var end     = 0;
+	private function highlightSearchTerm( required term, required content ) {
+		var match = findNoCase( arguments.term, arguments.content );
+		var end = 0;
 		var excerpt = "";
 
-		if ( match lte 250 ) {
+		if ( match LTE 250 ) {
 			match = 1;
 		}
 		end = match + len( arguments.term ) + 500;
 
-		if ( len( arguments.content ) gt 500 ) {
-			if ( match gt 1 ) {
-				excerpt = "..." & mid( arguments.content, match - 250, end - match );
+		if ( len( arguments.content ) GT 500 ) {
+			if ( match GT 1 ) {
+				excerpt = "..." & mid(
+					arguments.content,
+					match - 250,
+					end - match
+				);
 			} else {
 				excerpt = left( arguments.content, end );
 			}
-			if ( len( arguments.content ) gt end ) {
+			if ( len( arguments.content ) GT end ) {
 				excerpt = excerpt & "...";
 			}
 		} else {
@@ -199,7 +217,8 @@ component accessors="true" singleton {
 				"<span class='highlight'>\1</span>",
 				"all"
 			);
-		} catch ( Any e ) {
+		} catch (Any e) {
+
 		}
 
 		// remove images

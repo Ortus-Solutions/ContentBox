@@ -1,16 +1,16 @@
-﻿/*
+/*
  * An avatar model object for ContentBox
  */
 component singleton {
-
 	// DI
 	property name="requestService" inject="coldbox:requestService";
+
 	property name="requestStorage" inject="requestStorage@cbStorages";
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		return this;
 	}
 
@@ -24,7 +24,7 @@ component singleton {
 		required email,
 		numeric size = 80,
 		rating       = "PG"
-	){
+	) {
 		return "//www.gravatar.com/avatar.php?gravatar_id=#lCase( hash( arguments.email ) )#&s=#arguments.size#&r=#rating#";
 	}
 
@@ -39,29 +39,38 @@ component singleton {
 		required email,
 		numeric size = 80,
 		string class = "gravatar"
-	){
+	) {
 		// check settings
-		var prc = variables.requestService.getContext().getPrivateCollection();
-		if ( NOT prc.cbSettings.cb_gravatar_display ) {
+		var prc = variables
+			.requestService
+			.getContext()
+			.getPrivateCollection();
+		if ( !prc.cbSettings.cb_gravatar_display ) {
 			return "";
 		}
 		// Build out avatar
-		return variables.requestStorage.getOrSet( "avatar-#hash( arguments.toString() )#", function(){
-			// render it out
-			savecontent variable="local.avatar" {
-				writeOutput(
-					"
+		return variables.requestStorage.getOrSet(
+				"avatar-#hash( arguments.toString() )#",
+				function() {
+					savecontent variable="local.avatar" {
+						writeOutput(
+							"
 					<img
 						class=""#class#""
 						align=""middle""
 						width=""#size#""
 						height=""#size#""
-						src=""#generateLink( email, size, prc.cbSettings.cb_gravatar_rating )#""
+						src=""#generateLink(
+								email,
+								size,
+								prc.cbSettings.cb_gravatar_rating
+							)#""
 					/>"
-				);
-			}
-			return local.avatar;
-		} );
+						);
+					}
+					return local.avatar;
+				}
+			);
 	}
 
 }

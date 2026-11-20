@@ -7,17 +7,16 @@
  * dependencies required in ContentBox, via the `this.dependencies` property.
  */
 component {
-
 	// Module Properties
-	this.title         = "contentbox-deps";
-	this.author        = "Ortus Solutions, Corp";
-	this.webURL        = "https://www.ortussolutions.com";
-	this.version       = "@version.number@+@build.number@";
-	this.description   = "ContentBox Dependencies Module";
+	this.title = "contentbox-deps";
+	this.author = "Ortus Solutions, Corp";
+	this.webURL = "https://www.ortussolutions.com";
+	this.version = "@version.number@+@build.number@";
+	this.description = "ContentBox Dependencies Module";
 	// No models to map
 	this.automapModels = false;
 	// The order of the dependencies to load before ContentBox loads.
-	this.dependencies  = [
+	this.dependencies = [
 		"cborm",
 		"cbjavaloader",
 		"cbmailservices",
@@ -33,13 +32,15 @@ component {
 	/**
 	 * Configure Module
 	 */
-	function configure(){
+	function configure() {
+
 	}
 
 	/**
 	 * Fired when the module is registered and activated.
 	 */
-	function onLoad(){
+	function onLoad() {
+
 	}
 
 }

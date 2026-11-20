@@ -1,6 +1,4 @@
 {
-	"systemErr":"System",
-	"systemOut":"System",
 	"componentCacheEnabled":false,
 	"saveClassFiles":false,
 	"robustExceptionEnabled":true,
@@ -12,6 +10,7 @@
     "whitespaceManagement":"white-space-pref",
 	"postParametersLimit" : 200,
 	"cacheDefaultObject":"contentbox",
+    "enableNestedTransactions" : false,
     "caches":{
         "contentbox":{
             "storage":"true",

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -7,7 +7,7 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-	SearchForm function init(){
+	SearchForm function init() {
 		// Widget Properties
 		setName( "SearchForm" );
 		setVersion( "2.0" );
@@ -40,9 +40,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		string querycss    = "",
 		string buttoncss   = "",
 		string formcss     = ""
-	){
+	) {
 		var rString = "";
-		var event   = getRequestContext();
+		var event = getRequestContext();
 
 		// Check type
 		if ( !reFindNoCase( "^(content|blog)$", arguments.type ) ) {
@@ -54,35 +54,42 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		}
 		// Action
 		var action = cb.linkContentSearch();
-		if ( arguments.type eq "blog" ) {
+		if ( arguments.type EQ "blog" ) {
 			action = cb.linkSearch();
 		}
-
 		// cfformat-ignore-start
-
 		// Check incoming query
 		local.q = htmlEditFormat( event.getValue( "q", "" ) );
-
 		// generate recent comments
-		saveContent variable="rString"{
-			writeOutput('
-			#html.startForm( name="searchForm", action=action, class=arguments.formcss )#
-<div class="input-group">
-	#html.textField( name="q", placeholder="Search", value=local.q, class="form-control")#
-<span class="input-group-btn">
-		<button class="btn btn-primary" type="submit">
-			<i class="fa fa-search"></i>
-		</button>
-	</span>
+		saveContent variable="rString" {
+writeOutput(
+"
+#html.startForm(
+name   = "searchForm",
+action = action,
+class  = arguments.formcss
+)#
+<div class=""input-group"">
+#html.textField(
+name        = "q",
+placeholder = "Search",
+value       = local.q,
+class       = "form-control"
+)#
+<span class=""input-group-btn"">
+<button class=""btn btn-primary"" type=""submit"">
+<i class=""fa fa-search""></i>
+</button>
+</span>
 </div>
-			#html.endForm()#
-			');
+#html.endForm()#
+"
+);
 
-			// cfformat-ignore-end
-	}
 
-	return rString;
-
+// cfformat-ignore-end
 }
+		return rString;
+	}
 
 }

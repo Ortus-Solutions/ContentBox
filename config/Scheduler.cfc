@@ -3,7 +3,7 @@ component {
 	/**
 	 * Configure the ColdBox Scheduler
 	 */
-	function configure(){
+	function configure() {
 		/**
 		 * --------------------------------------------------------------------------
 		 * Configuration Methods
@@ -12,8 +12,6 @@ component {
 		 * - setTimezone( ) : change the timezone for ALL tasks
 		 * - setExecutor( executorObject ) : change the executor if needed
 		 */
-
-
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -27,13 +25,14 @@ component {
 	/**
 	 * Called before the scheduler is going to be shutdown
 	 */
-	function onShutdown(){
+	function onShutdown() {
+
 	}
 
 	/**
 	 * Called after the scheduler has registered all schedules
 	 */
-	function onStartup(){
+	function onStartup() {
 		log.info( "√ ColdBox Core Scheduler started successfully!" );
 	}
 
@@ -43,11 +42,11 @@ component {
 	 * @task      The task that got executed
 	 * @exception The ColdFusion exception object
 	 */
-	function onAnyTaskError( required task, required exception ){
+	function onAnyTaskError( required task, required exception ) {
 		log.error(
-			"The global task (#arguments.task.getname()#) failed to executed. Caused by: #exception.message & exception.detail#",
-			exception.stacktrace
-		);
+				"The global task (#arguments.task.getname()#) failed to executed. Caused by: #exception.message & exception.detail#",
+				exception.stacktrace
+			);
 	}
 
 	/**
@@ -56,11 +55,11 @@ component {
 	 * @task   The task that got executed
 	 * @result The result (if any) that the task produced
 	 */
-	function onAnyTaskSuccess( required task, result ){
+	function onAnyTaskSuccess( required task, result ) {
 		log.info(
-			"Global task (#arguments.task.getName()#) completed succesfully in #arguments.task.getStats().lastExecutionTime# ms",
-			arguments.task.getStats()
-		);
+				"Global task (#arguments.task.getName()#) completed succesfully in #arguments.task.getStats().lastExecutionTime# ms",
+				arguments.task.getStats()
+			);
 	}
 
 	/**
@@ -68,8 +67,10 @@ component {
 	 *
 	 * @task The task about to be executed
 	 */
-	function beforeAnyTask( required task ){
-		log.info( "Starting to execute global task (#arguments.task.getName()#)..." );
+	function beforeAnyTask( required task ) {
+		log.info(
+				"Starting to execute global task (#arguments.task.getName()#)..."
+			);
 	}
 
 	/**
@@ -78,7 +79,8 @@ component {
 	 * @task   The task that got executed
 	 * @result The result (if any) that the task produced
 	 */
-	function afterAnyTask( required task, result ){
+	function afterAnyTask( required task, result ) {
+
 	}
 
 }

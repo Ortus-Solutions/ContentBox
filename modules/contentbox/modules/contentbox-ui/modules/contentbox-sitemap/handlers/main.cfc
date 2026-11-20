@@ -6,20 +6,29 @@
  * Manages the creations of dynamic sitemaps in ContentBox
  */
 component {
-
 	// DI
 	property name="entryService" inject="id:entryService@contentbox";
+
 	property name="pageService" inject="id:pageService@contentbox";
+
 	property name="contentService" inject="id:contentService@contentbox";
+
 	property name="CBHelper" inject="id:CBHelper@contentbox";
+
 	property name="settingService" inject="id:settingService@contentbox";
 
 	/**
 	 * Executes before all handler actions
 	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
+	any function preHandler(
+		event,
+		rc,
+		prc,
+		action,
+		eventArguments
+	) {
 		// params
-		param name="rc.format" default="html";
+		param name   ="rc.format" default="html";
 		// Prepare UI Request
 		CBHelper.prepareUIRequest( "pages" );
 		// Verify if sitemap is enabled, else, proxy into the page event
@@ -33,15 +42,16 @@ component {
 	/**
 	 * Sitemap Wrapper
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Caching Enabled? Then test if data is in cache.
 		var cacheEnabled = ( !event.valueExists( "cbCache" ) );
 
 		if ( cacheEnabled ) {
 			// Get appropriate cache provider from settings
-			var cache    = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-			var cacheKey = "cb-content-sitemap-#cgi.HTTP_HOST#" &
-			hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash );
+			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
+			var cacheKey = "cb-content-sitemap-#cgi.HTTP_HOST##hash(
+				".#rc.format#.#event.isSSL()##prc.cbox_incomingContextHash#"
+			)#";
 
 			// get content data from cache
 			var results = cache.get( cacheKey );
@@ -53,10 +63,10 @@ component {
 				}
 				// return cache content to be displayed
 				event.renderData(
-					data        = results.data,
-					contentType = results.contentType,
-					statusCode  = prc.cbSettings.cb_content_cachingHeader ? 203 : 200
-				);
+						data        = results.data,
+						contentType = results.contentType,
+						statusCode  = prc.cbSettings.cb_content_cachingHeader ? 203 : 200
+					);
 				return;
 			}
 		}
@@ -68,11 +78,11 @@ component {
 		if ( cacheEnabled ) {
 			// Cache data
 			cache.set(
-				cachekey,
-				results,
-				( prc.cbSettings.cb_content_cachingTimeout ),
-				( prc.cbSettings.cb_content_cachingTimeoutIdle )
-			);
+					cachekey,
+					results,
+					( prc.cbSettings.cb_content_cachingTimeout ),
+					( prc.cbSettings.cb_content_cachingTimeoutIdle )
+				);
 		}
 
 		// Render it out
@@ -84,24 +94,24 @@ component {
 	 *
 	 * @return { data, contentType }
 	 */
-	private struct function _index( event, rc, prc ){
+	private struct function _index( event, rc, prc ) {
 		// store UI module root
-		prc.cbRoot       = getContextRoot() & event.getModuleRoot( "contentbox" );
+		prc.cbRoot = getContextRoot() & event.getModuleRoot( "contentbox" );
 		// store module entry point
 		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 
 		// Several Link Defs
-		prc.linkHome    = CBHelper.linkHome();
+		prc.linkHome = CBHelper.linkHome();
 		prc.siteBaseURL = CBHelper.siteBaseURL();
 		prc.disableBlog = !prc.oCurrentSite.getIsBlogEnabled();
 
 		// Get Content Data
 		prc.aPages = pageService.getAllFlatContent(
-			sortOrder    = "order asc",
-			isPublished  = true,
-			showInSearch = true,
-			siteID       = prc.oCurrentSite.getsiteID()
-		);
+				sortOrder    = "order asc",
+				isPublished  = true,
+				showInSearch = true,
+				siteID       = prc.oCurrentSite.getsiteID()
+			);
 
 		// Blog data if enabled
 		if ( prc.disableBlog == false ) {
@@ -111,38 +121,41 @@ component {
 			}
 			// Entry Content
 			prc.aEntries = entryService.getAllFlatContent(
-				sortOrder    = "createdDate asc",
-				isPublished  = true,
-				showInSearch = true,
-				siteID       = prc.oCurrentSite.getsiteID()
-			);
+					sortOrder    = "createdDate asc",
+					isPublished  = true,
+					showInSearch = true,
+					siteID       = prc.oCurrentSite.getsiteID()
+				);
 		}
 
 		// Render it out in specific format
 		switch ( rc.format ) {
 			case "xml": {
 				return {
-					data        : view( view = "sitemap_xml", module = "contentbox-sitemap" ),
-					contentType : "application/xml"
+					data       : view( view = "sitemap_xml", module = "contentbox-sitemap" ),
+					contentType: "application/xml"
 				};
 			}
 			case "json": {
 				return {
-					data        : view( view = "sitemap_json", module = "contentbox-sitemap" ),
-					contentType : "application/json"
+					data       : view( view = "sitemap_json", module = "contentbox-sitemap" ),
+					contentType: "application/json"
 				};
 			}
 			case "txt": {
 				return {
-					data        : view( view = "sitemap_txt", module = "contentbox-sitemap" ),
-					contentType : "text/plain"
+					data       : view( view = "sitemap_txt", module = "contentbox-sitemap" ),
+					contentType: "text/plain"
 				};
 			}
 			default: {
 				event.setView( "sitemap_html" );
 				return {
-					data        : layout( module = event.getCurrentLayoutModule(), viewModule = event.getCurrentViewModule() ),
-					contentType : "text/html"
+					data: layout(
+						module     = event.getCurrentLayoutModule(),
+						viewModule = event.getCurrentViewModule()
+					),
+					contentType: "text/html"
 				};
 			}
 		}

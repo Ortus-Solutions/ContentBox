@@ -6,26 +6,29 @@
  * Limits and prevents DOS attacks
  */
 component extends="coldbox.system.Interceptor" {
-
 	// DI
 	property name="settingService" inject="id:settingService@contentbox";
+
 	property name="securityService" inject="id:securityService@contentbox";
+
 	property name="cachebox" inject="Cachebox";
 
 	/**
 	 * onRequestCapture
 	 * fires before any event caching or processing
 	 */
-	function onRequestCapture( event, data, buffer ){
+	function onRequestCapture( event, data, buffer ) {
 		var allSettings = variables.settingService.getAllSettings();
 
 		// If turned off, just exist
-		if ( !structKeyExists( allSettings, "cb_security_rate_limiter" ) || allSettings.cb_security_rate_limiter == false ) {
+		if (
+			!structKeyExists( allSettings, "cb_security_rate_limiter" ) || allSettings.cb_security_rate_limiter == false
+		) {
 			return false;
 		}
 
 		// do we limit bot OR normal requests as well?
-		if ( !len( cgi.http_cookie ) OR !allSettings.cb_security_rate_limiter_bots_only ) {
+		if ( !len( cgi.http_cookie ) || !allSettings.cb_security_rate_limiter_bots_only ) {
 			// limit it now.
 			limiter(
 				count    = allSettings[ "cb_security_rate_limiter_count" ],
@@ -46,15 +49,18 @@ component extends="coldbox.system.Interceptor" {
 	 * @event    The request context object
 	 * @settings The settings structure
 	 */
-	private function limiter( count, duration, event, settings ){
+	private function limiter( count, duration, event, settings ) {
 		// Get real IP address of requester
-		var realIP   = variables.securityService.getRealIP();
-		var cache    = cachebox.getDefaultCache();
+		var realIP = variables.securityService.getRealIP();
+		var cache = cachebox.getDefaultCache();
 		var cacheKey = "limiter" & realIP;
 
-		var targetData = cache.getOrSet( cacheKey, function(){
-			return { attempts : 0, lastAttempt : now() }
-		} );
+		var targetData = cache.getOrSet(
+				cacheKey,
+				function() {
+					return { attempts: 0, lastAttempt: now() };
+				}
+			);
 
 		// on first visit no further processing
 		if ( targetData.attempts == 0 ) {
@@ -68,12 +74,22 @@ component extends="coldbox.system.Interceptor" {
 		// log.info( "Within Duration " & dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration );
 
 		// Are we executing another request withing our duration in seconds? Ex: Has X seconds passed before last attempt
-		if ( dateDiff( "s", targetData.lastAttempt, now() ) LT arguments.duration ) {
+		if (
+			dateDiff(
+					"s",
+					targetData.lastAttempt,
+					now()
+				) LT
+				arguments.duration
+		) {
 			// Limit by count?
 			if ( targetData.attempts GT arguments.count ) {
 				if ( settings.cb_security_rate_limiter_logging && log.canInfo() ) {
 					// Log it to app logs
-					log.info( "'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listLen( cgi.http_cookie, ";" )#" );
+					log.info(
+							"'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listLen( cgi.http_cookie,
+								";" )#"
+						);
 				}
 
 				// Log attempt
@@ -100,7 +116,8 @@ component extends="coldbox.system.Interceptor" {
 						"all"
 					)
 				);
-				arguments.event
+				arguments
+					.event
 					.setHTTPHeader( statusCode = "503" )
 					.setHTTPHeader( name = "Retry-After", value = arguments.duration );
 
@@ -116,7 +133,7 @@ component extends="coldbox.system.Interceptor" {
 			}
 		} else {
 			// Reset attempts counter, since we are in the safe zone, just log the last attempt timestamp
-			targetData.attempts    = 0;
+			targetData.attempts = 0;
 			targetData.lastAttempt = now();
 		}
 

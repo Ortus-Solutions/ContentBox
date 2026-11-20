@@ -6,12 +6,7 @@
  * This is our security validator that works with CBSecurity in order to validate
  * rules and annotations.
  */
-component
-	singleton
-	threadsafe
-	extends="cbsecurity.models.validators.AuthValidator"
-{
-
+component singleton threadsafe extends="cbsecurity.models.validators.AuthValidator" {
 	// Dependencies
 	property name="securityService" inject="securityService@contentbox";
 
@@ -27,11 +22,11 @@ component
 	 *
 	 * @return { allow:boolean, type:string(authentication|authorization), messages:string }
 	 */
-	struct function ruleValidator( required rule, required controller ){
+	struct function ruleValidator( required rule, required controller ) {
 		return validateSecurity(
-			rule        : arguments.rule,
-			securedValue: arguments.rule.permissions,
-			controller  : arguments.controller
+			rule         = arguments.rule,
+			securedValue = arguments.rule.permissions,
+			controller   = arguments.controller
 		);
 	}
 
@@ -46,8 +41,8 @@ component
 	 *
 	 * @return { allow:boolean, type:string(authentication|authorization), messages:string }
 	 */
-	struct function annotationValidator( required securedValue, required controller ){
-		return validateSecurity( securedValue: arguments.securedValue, controller: arguments.controller );
+	struct function annotationValidator( required securedValue, required controller ) {
+		return validateSecurity( securedValue = arguments.securedValue, controller = arguments.controller );
 	}
 
 	/**
@@ -59,7 +54,7 @@ component
 	 *
 	 * @return Validation struct of: { allow:boolean, type:(authentication|authorization), messages }
 	 */
-	struct function validateSecurity( struct rule, securedValue = "", any controller ){
+	struct function validateSecurity( struct rule, securedValue = "", any controller ) {
 		var results = super.validateSecurity( arguments.securedValue );
 
 		// If we are allowing, then continue to test the ContentBox roles
@@ -70,9 +65,12 @@ component
 			// Check if the rule requires roles
 			if ( !isNull( arguments.rule ) && len( arguments.rule.roles ) ) {
 				results.allow = false;
-				results.type  = "authorization";
-				for ( var thisRole in arguments.rule.roles.listToArray() ) {
-					if ( oAuthor.getRoleName() eq thisRole ) {
+				results.type = "authorization";
+				for ( var thisRole in arguments
+					.rule
+					.roles
+					.listToArray() ) {
+					if ( oAuthor.getRoleName() EQ thisRole ) {
 						results.allow = true;
 						break;
 					}
@@ -82,17 +80,18 @@ component
 
 		// If the rule has a message, then set a messagebox
 		if (
-			!results.allow &&
-			!isNull( arguments.rule ) &&
-			!isNull( arguments.rule.message ) &&
-			len( arguments.rule.message )
+			!results.allow && !isNull( arguments.rule ) && !isNull( arguments.rule.message ) &&
+				len( arguments.rule.message )
 		) {
-			arguments.controller
+			arguments
+				.controller
 				.getWireBox()
 				.getInstance( "messagebox@cbmessagebox" )
 				.setMessage(
-					type   : ( structKeyExists( rule, "messageType" ) && len( rule.messageType ) ? rule.messageType : "info" ),
-					message: rule.message
+					type    = (
+						structKeyExists( rule, "messageType" ) && len( rule.messageType ) ? rule.messageType : "info"
+					),
+					message = rule.message
 				);
 		}
 

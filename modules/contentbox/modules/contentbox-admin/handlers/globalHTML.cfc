@@ -6,15 +6,15 @@
  * Manage global HTML in the system
  */
 component extends="baseHandler" {
-
 	// Dependencies
 	property name="settingsService" inject="settingService@contentbox";
+
 	property name="contentService" inject="contentService@contentbox";
 
 	/**
 	 * View HTML
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) {
 		// Exit Handler
 		prc.xehSaveHTML = "#prc.cbAdminEntryPoint#.globalHTML.save";
 
@@ -28,16 +28,21 @@ component extends="baseHandler" {
 	/**
 	 * Save HTML
 	 */
-	function save( event, rc, prc ){
+	function save( event, rc, prc ) {
 		// announce event
-		announce( "cbadmin_preGlobalHTMLSave", { oldSettings : prc.cbSettings, newSettings : rc } );
+		announce(
+			"cbadmin_preGlobalHTMLSave",
+			{ oldSettings: prc.cbSettings, newSettings: rc }
+		);
 		// bulk save the options
 		settingsService.bulkSave(
-			rc.filter( function( item ){
-				return item.findNoCase( "cb_html" );
-			} ),
-			prc.oCurrentSite
-		);
+				rc.filter(
+						function( item ) {
+							return item.findNoCase( "cb_html" );
+						}
+					),
+				prc.oCurrentSite
+			);
 		// clear caches
 		contentService.clearAllCaches( async = false );
 		settingsService.flushSettingsCache();

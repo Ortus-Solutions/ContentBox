@@ -5,24 +5,32 @@
  * ---
  * Static content exporter service
  */
-component accessors=true threadSafe singleton {
-
+component accessors="#true#" threadSafe singleton {
 	// DI
 	property name="settingService" inject="SettingService@contentbox";
+
 	property name="pageService" inject="PageService@contentbox";
+
 	property name="siteService" inject="siteService@contentbox";
+
 	property name="entryService" inject="entryService@contentbox";
+
 	property name="themeService" inject="ThemeService@contentbox";
+
 	property name="categoryService" inject="CategoryService@contentbox";
+
 	property name="uiConfig" inject="coldbox:moduleconfig:contentbox-ui";
+
 	property name="interceptorService" inject="coldbox:interceptorService";
+
 	property name="zipUtil" inject="zipUtil@contentbox";
+
 	property name="Renderer" inject="Provider:Renderer@coldbox";
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	function init() {
 		return this;
 	}
 
@@ -47,14 +55,14 @@ component accessors=true threadSafe singleton {
 		required rc,
 		required prc,
 		required site
-	){
-		var lb      = chr( 13 ) & chr( 10 );
+	) {
+		var lb = chr( 13 ) & chr( 10 );
 		var results = {
-			"exportLog" : createObject( "java", "java.lang.StringBuilder" ).init(
-				"Starting static site generation with the following options: #arguments.toString()#. #lb#"
-			),
-			"exportDirectory" : arguments.exportDirectory,
-			"exportFile"      : getTempDirectory() & "/" & createUUID() & ".zip"
+			"exportLog": createObject( "java", "java.lang.StringBuilder" ).init(
+					"Starting static site generation with the following options: #arguments.toString()#. #lb#"
+				),
+			"exportDirectory": arguments.exportDirectory,
+			"exportFile"     : getTempDirectory() & "/" & createUUID() & ".zip"
 		};
 		var allSettings = variables.settingService.getAllSettings();
 
@@ -64,31 +72,37 @@ component accessors=true threadSafe singleton {
 		}
 		directoryCreate( arguments.exportDirectory );
 
-		results.exportLog.append( "Created export directory: #arguments.exportDirectory# #lb#" );
+		results.exportLog.append(
+				"Created export directory: #arguments.exportDirectory# #lb#"
+			);
 
 		// ************ Prepare as if we are doing a UI request ******************
 		// store UI module root
-		arguments.prc.cbRoot         = getContextRoot() & arguments.event.getModuleRoot( "contentbox" );
+		arguments.prc.cbRoot = getContextRoot() & arguments.event.getModuleRoot( "contentbox" );
 		// store module entry point
-		arguments.prc.cbEntryPoint   = variables.uiConfig.entryPoint;
+		arguments.prc.cbEntryPoint = variables.uiConfig.entryPoint;
 		// Place global cb options on scope
-		arguments.prc.cbSettings     = allSettings;
+		arguments.prc.cbSettings = allSettings;
 		// Place the site to export
-		arguments.prc.oCurrentSite   = arguments.site;
+		arguments.prc.oCurrentSite = arguments.site;
 		// Place the default theme
-		arguments.prc.cbTheme        = arguments.prc.oCurrentSite.getActiveTheme();
+		arguments.prc.cbTheme = arguments
+			.prc
+			.oCurrentSite
+			.getActiveTheme();
 		// Place the default theme record
-		arguments.prc.cbThemeRecord  = variables.themeService.getThemeRecord( arguments.prc.cbTheme );
+		arguments.prc.cbThemeRecord = variables.themeService.getThemeRecord( arguments.prc.cbTheme );
 		// Place theme root location
-		arguments.prc.cbthemeRoot    = arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
+		arguments.prc.cbthemeRoot = arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
 		// Place widgets root location
-		arguments.prc.cbWidgetRoot   = arguments.prc.cbRoot & "/widgets";
+		arguments.prc.cbWidgetRoot = arguments.prc.cbRoot & "/widgets";
 		// Marker to tell layouts we are in static export mode
-		arguments.prc.staticExport   = true;
+		arguments.prc.staticExport = true;
 		// Current Site
-		arguments.prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
-			arguments.prc.oCurrentSite.getSlug()
-		);
+		arguments.prc.cbSiteSettings = variables.settingService.getAllSiteSettings( arguments
+					.prc
+					.oCurrentSite
+					.getSlug() );
 
 		/******************************************************************************/
 
@@ -100,7 +114,10 @@ component accessors=true threadSafe singleton {
 		);
 		// Copy over the theme
 		directoryCopy(
-			arguments.prc.cbThemeRecord.path,
+			arguments
+				.prc
+				.cbThemeRecord
+				.path,
 			arguments.exportDirectory & "/__theme",
 			true
 		);
@@ -112,20 +129,21 @@ component accessors=true threadSafe singleton {
 		}
 
 		// Announce export
-		interceptorService.announce( "cbadmin_preStaticSiteExport", { options : arguments } );
+		interceptorService.announce( "cbadmin_preStaticSiteExport", { options: arguments } );
 
 		// Get root pages, we need objects in order to render out the site
 		var aPages = variables.pageService.search(
-			parent   = "",
-			siteID   : arguments.site.getSiteID(),
-			sortOrder= "order asc"
-		);
+				parent    = "",
+				siteID    = arguments.site.getSiteID(),
+				sortOrder = "order asc"
+			);
 
 		// Process Homepage
-		var oHomePage = variables.pageService.findBySlug(
-			slug  : arguments.prc.oCurrentSite.getHomepage(),
-			siteID: arguments.site.getSiteID()
-		);
+		var oHomePage = variables.pageService.findBySlug( slug = arguments
+					.prc
+					.oCurrentSite
+					.getHomepage(),
+				siteID = arguments.site.getSiteID() );
 		if ( !isNull( oHomePage ) && oHomepage.isLoaded() ) {
 			// put in scope for fake access
 			prc.page = oHomePage;
@@ -159,13 +177,14 @@ component accessors=true threadSafe singleton {
 
 		// Process blog entries
 		if ( arguments.includeBlog ) {
-			var aEntries   = variables.entryService.search( siteID: arguments.site.getSiteID() );
+			var aEntries = variables.entryService.search( siteID = arguments.site.getSiteID() );
 			// Put all categories in prc for processing
-			prc.categories = variables.categoryService.search( isPublic: true, siteId: arguments.site.getSiteId() ).categories;
+			prc.categories = variables.categoryService.search( isPublic = true,
+					siteId = arguments.site.getSiteId() ).categories;
 			// Process all entries
 			for ( var thisEntry in aEntries.entries ) {
 				// put in scope for fake access
-				prc.entry    = thisEntry;
+				prc.entry = thisEntry;
 				prc.comments = prc.entry.getComments();
 				// process it
 				processStaticEntry(
@@ -181,13 +200,16 @@ component accessors=true threadSafe singleton {
 
 		// zip archive
 		zipUtil.addFiles(
-			zipFilePath = results.exportFile,
-			directory   = arguments.exportDirectory,
-			recurse     = true
-		);
+				zipFilePath = results.exportFile,
+				directory   = arguments.exportDirectory,
+				recurse     = true
+			);
 
 		// Announce export
-		interceptorService.announce( "cbadmin_postStaticSiteExport", { options : arguments, results : results } );
+		interceptorService.announce(
+				"cbadmin_postStaticSiteExport",
+				{ options: arguments, results: results }
+			);
 
 		// Remove creation Folder now
 		directoryDelete( arguments.exportDirectory, true );
@@ -195,7 +217,7 @@ component accessors=true threadSafe singleton {
 		return results;
 	}
 
-	/*************************************** PRIVATE *************************************** */
+	/*************************************** PRIVATE ****************************************/
 
 	/**
 	 * Process a static entry export
@@ -214,8 +236,8 @@ component accessors=true threadSafe singleton {
 		required prc,
 		required exportDir,
 		required settings
-	){
-		var allSettings   = arguments.settings;
+	) {
+		var allSettings = arguments.settings;
 		var outputContent = "";
 
 		// announce event
@@ -223,21 +245,35 @@ component accessors=true threadSafe singleton {
 
 		// Render out entry
 		arguments.event.setView(
-			view   = "#arguments.prc.cbTheme#/views/entry",
-			module = arguments.prc.cbThemeRecord.module
-		);
+				view   = "#arguments.prc.cbTheme#/views/entry",
+				module = arguments
+					.prc
+					.cbThemeRecord
+					.module
+			);
 		outputContent = renderer.layout(
-			layout = "#arguments.prc.cbTheme#/layouts/blog",
-			module = arguments.prc.cbThemeRecord.module
-		);
+				layout = "#arguments.prc.cbTheme#/layouts/blog",
+				module = arguments
+					.prc
+					.cbThemeRecord
+					.module
+			);
 
 		// ****** Content Conversions ******
 		// replace base tags
-		outputContent = reReplaceNoCase( outputContent, "<base [^>]+?>", "", "all" );
+		outputContent = reReplaceNoCase(
+			outputContent,
+			"<base [^>]+?>",
+			"",
+			"all"
+		);
 		// replace local server addresses
 		outputContent = replaceNoCase(
 			outputContent,
-			arguments.content.getSite().getSiteRoot(),
+			arguments
+				.content
+				.getSite()
+				.getSiteRoot(),
 			"/",
 			"all"
 		);
@@ -256,7 +292,7 @@ component accessors=true threadSafe singleton {
 		}
 		// Write it out
 		fileWrite( arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html", outputContent );
-	};
+	}
 
 	/**
 	 * Process a static page export
@@ -277,35 +313,49 @@ component accessors=true threadSafe singleton {
 		required prc,
 		required exportDir,
 		required settings
-	){
-		var allSettings   = arguments.settings;
-		var thisLayout    = arguments.content.getLayoutWithInheritance();
+	) {
+		var allSettings = arguments.settings;
+		var thisLayout = arguments.content.getLayoutWithInheritance();
 		var outputContent = "";
 
 		// announce event
 		interceptorService.announce( "cbui_preRequest" );
 
 		// Verify No Layout
-		if ( thisLayout eq "-no-layout-" ) {
+		if ( thisLayout EQ "-no-layout-" ) {
 			outputContent = arguments.content.renderContent();
 		} else {
 			arguments.event.setView(
-				view   = "#arguments.prc.cbTheme#/views/page",
-				module = arguments.prc.cbThemeRecord.module
-			);
+					view   = "#arguments.prc.cbTheme#/views/page",
+					module = arguments
+						.prc
+						.cbThemeRecord
+						.module
+				);
 			outputContent = renderer.layout(
-				layout = "#arguments.prc.cbTheme#/layouts/#thisLayout#",
-				module = arguments.prc.cbThemeRecord.module
-			);
+					layout = "#arguments.prc.cbTheme#/layouts/#thisLayout#",
+					module = arguments
+						.prc
+						.cbThemeRecord
+						.module
+				);
 		}
 
 		// ****** Content Conversions ******
 		// replace base tags
-		outputContent = reReplaceNoCase( outputContent, "<base [^>]+?>", "", "all" );
+		outputContent = reReplaceNoCase(
+			outputContent,
+			"<base [^>]+?>",
+			"",
+			"all"
+		);
 		// replace local server addresses
 		outputContent = replaceNoCase(
 			outputContent,
-			arguments.content.getSite().getSiteRoot(),
+			arguments
+				.content
+				.getSite()
+				.getSiteRoot(),
 			"/",
 			"all"
 		);
@@ -346,6 +396,6 @@ component accessors=true threadSafe singleton {
 				);
 			}
 		}
-	};
+	}
 
 }
