@@ -9,13 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.3.4] - 2026-11-20
+
 ### Fixed
 
--   `SubscriberService.getUniqueSubscriberCount()` projected a property named `email`; the property is `subscriberEmail`. bx-orm 2 checks projection paths, so the Subscribers admin page returned a 500.
-
-## [6.3.4] - 2026-09-19
-
-### Fixe
 -   [CONTENTBOX-1573](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1573) - Chunked bulk deletes in LoginTrackerService to avoid "Too many parameters were provided in this RPC request" errors
 
 ## [6.3.3] - 2026-09-18
@@ -138,7 +135,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   [CONTENTBOX-1478](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1478) Remove old tuckey urlrewrite.xml as this is now in the CommandBox Core
 -   [CONTENTBOX-1493](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1493) ContentBox Express removed since we now have CommandBox
 
-[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.3...HEAD
+[Unreleased]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.4...HEAD
+
+[6.3.4]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.3...v6.3.4
 
 [6.3.3]: https://github.com/Ortus-Solutions/ContentBox/compare/v6.3.2...v6.3.3
 
