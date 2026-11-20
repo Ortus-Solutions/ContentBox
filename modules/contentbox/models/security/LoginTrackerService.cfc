@@ -101,8 +101,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			return this;
 		}
 
-		var maxLogs = variables.settingService.getSetting( "cb_security_max_auth_logs" );
-		var maxLogs = 2;
+		var maxLogs   = variables.settingService.getSetting( "cb_security_max_auth_logs" );
 		var totalLogs = count();
 
 		// only if we have a max logs and we have gone above max logs, let's truncate
@@ -117,12 +116,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			WHERE id IN :idsToDelete
 			";
 
-			// run it
-			var results = executeQuery(
-				query   = hql,
-				params  = { "idsToDelete": aToDelete },
-				asQuery = false
-			);
+			// The query must be chunked to avoid "Too many parameters were provided in this RPC request" since some DBMS' have limits on the number of parameters in a single query
+			var results   = 0;
+			var chunkSize = 1000;
+
+			for ( var offset = 1; offset <= arrayLen( aToDelete ); offset += chunkSize ) {
+				results += executeQuery(
+					query  : hql,
+					params : { "idsToDelete" : arraySlice( aToDelete, offset, chunkSize ) },
+					asQuery: false
+				);
+			}
 
 			// log it
 			log.info( "Rotated auth logs", results );

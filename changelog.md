@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   `SubscriberService.getUniqueSubscriberCount()` projected a property named `email`; the property is `subscriberEmail`. bx-orm 2 checks projection paths, so the Subscribers admin page returned a 500.
 
+## [6.3.4] - 2026-09-19
+
+### Fixe
+-   [CONTENTBOX-1573](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1573) - Chunked bulk deletes in LoginTrackerService to avoid "Too many parameters were provided in this RPC request" errors
+
 ## [6.3.3] - 2026-09-18
 
 ## [6.3.2] - 2025-12-05
